@@ -1,0 +1,69 @@
+package me.deejack.animeviewer.gui.controllers.streaming;
+
+import java.io.IOException;
+import java.net.URL;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import me.deejack.animeviewer.gui.controllers.download.DownloadUtility;
+import me.deejack.animeviewer.gui.utils.WebBypassUtility;
+import me.deejack.animeviewer.logic.anime.Episode;
+import me.deejack.animeviewer.logic.anime.SiteElement;
+import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
+
+import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
+import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
+import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
+
+public class AnimePlayer {
+  private final Episode episode;
+  private final SiteElement anime;
+
+  public AnimePlayer(Episode episode, SiteElement anime) {
+    this.episode = episode;
+    this.anime = anime;
+  }
+
+  public AnimePlayer(String link) {
+    this(null, null);
+    showWaitAndLoad("Loading...");
+    extractVideo(link);
+  }
+
+  public boolean streaming() {
+    String link = "";
+    try {
+      StreamingLink choice = DownloadUtility.chooseSource(episode);
+      if (choice == null)
+        return false;
+      link = choice.getLink();
+    } catch (IOException e) {
+      handleException(e);
+    }
+    showWaitAndLoad("Caricando streaming...");
+    extractVideo(link);
+    showWaitAndLoad("Loading...");
+    return true;
+  }
+
+  private void extractVideo(String link) {
+    try {
+      new URL(link);
+    } catch (IOException invalidUrl) {
+      handleException(new Exception("URL invalido! " + link));
+      return;
+    }
+    if (link.contains("openload")) {
+      WebBypassUtility.getOpenloadLink(link, "https://openload.co", (resultLink) -> setRoot(setupPlayer(resultLink)));
+    } else if (link.contains("streamango")) {
+      WebBypassUtility.getOpenloadLink(link, "", (resultLink) -> setRoot(setupPlayer(resultLink)));
+    } else {
+      setRoot(setupPlayer(link));
+    }
+  }
+
+  private StreamingController setupPlayer(String link) {
+    StreamingController streaming = new StreamingController(new MediaPlayer(new Media(link)), episode, anime);
+    streaming.setUpPlayer();
+    return streaming;
+  }
+}

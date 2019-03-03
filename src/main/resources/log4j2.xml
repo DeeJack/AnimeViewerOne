@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration strict="true" name="XMLConfigTest">
+    <!-- status="debug"-->
+    <Properties>
+        <Property name="filePath">${sys:user.home}/.animeviewer/logs/</Property>
+    </Properties>
+    <Appenders>
+        <Appender type="Console" name="STDOUT">
+            <Layout type="PatternLayout"
+                    pattern="%d{dd/MM/yyyy HH:mm:ss:SSS} %C:%L [%t] [%p]: %m%n"/> <!--https://www.tutorialspoint.com/log4j/log4j_patternlayout.htm-->
+        </Appender>
+        <Appender type="File" name="FileInfo" fileName="${filePath}/info.log">
+            <Layout type="PatternLayout" pattern="%d{dd/MM/yyyy HH:mm:ss:SSS} %C:%L [%p]: %m%n"/>
+        </Appender>
+        <Appender type="File" name="FileError" fileName="${filePath}/error.log">
+            <Layout type="PatternLayout" pattern="%d{dd/MM/yyyy HH:mm:ss:SSS} %C:%L [%p]: %m%n"/>
+        </Appender>
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef level="all" ref="STDOUT"/>
+            <AppenderRef level="info" ref="FileInfo"/>
+            <AppenderRef level="error" ref="FileError"/>
+        </Root>
+    </Loggers>
+</Configuration>

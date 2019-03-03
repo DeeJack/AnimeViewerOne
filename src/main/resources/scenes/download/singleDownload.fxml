@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="81.0" prefWidth="582.0" xmlns="http://javafx.com/javafx/8.0.171">
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="24.0" prefWidth="284.0" spacing="400.0" BorderPane.alignment="CENTER">
+            <Label fx:id="lblPerc" text="0%"/>
+            <Label fx:id="lblSize" text="0/0 MB"/>
+        </HBox>
+    </bottom>
+    <center>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="3.0" BorderPane.alignment="CENTER">
+            <ProgressBar fx:id="progressBar" prefHeight="39.0" prefWidth="531.0" progress="0.0"/>
+            <StackPane fx:id="layerToggle">
+                <ImageView fx:id="imageCancel" fitHeight="21.0" fitWidth="24.0">
+                    <Image url="/assets/cancel.png"/>
+                </ImageView>
+            </StackPane>
+        </HBox>
+    </center>
+    <top>
+        <Label fx:id="lblTitle" text="Title">
+            <BorderPane.margin>
+                <Insets left="10.0" top="4.0"/>
+            </BorderPane.margin>
+        </Label>
+    </top>
+</BorderPane>

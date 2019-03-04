@@ -3,13 +3,36 @@ package me.deejack.animeviewer.logic.models.anime;
 import java.util.List;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.anime.Episode;
+import me.deejack.animeviewer.logic.favorite.Favorite;
 
+/**
+ * Di un anime puoi prendere i dettagli, gli episodi oppure gli anime correlati ma per ora lasciamo perdere
+ */
 public interface Anime {
-  void fetchAnimeDetails();
+  AnimeInformation fetchAnimeDetails();
 
   List<Episode> fetchAnimeEpisodes();
 
-  AnimeInformation getAnimeInformation();
+  /**
+   * Toggle the favorite, if it was one, it removes it, otherwise it adds the element to the favorite list
+   *
+   * @return true if the element has been added to the favorite list, false if it has been removed
+   */
+  /*default boolean toggleFavorite() {
+    if (isFavorite()) {
+      Favorite.getInstance().removeFavorite(this);
+      return true;
+    }
+    Favorite.getInstance().addFavorite(this);
+    return false;
+  }
 
-  String episodeSelector();
+  /**
+   * Get if it's in the favorite list
+   *
+   * @return true if is in the favorite list, false otherwise
+   */
+  /*default boolean isFavorite() {
+    return Favorite.getInstance().getFavorites().contains(this);
+  }*/
 }

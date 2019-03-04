@@ -30,27 +30,4 @@ public interface Anime {
    * A method that will set the infos such as the plot, the genres or anything that hasn't been already set before
    */
   void setInfos();
-
-  /**
-   * Toggle the favorite, if it was one, it removes it, otherwise it adds the element to the favorite list
-   *
-   * @return true if the element has been added to the favorite list, false if it has been removed
-   */
-  default boolean toggleFavorite() {
-    if (isFavorite()) {
-      Favorite.getInstance().removeFavorite(this);
-      return true;
-    }
-    Favorite.getInstance().addFavorite(this);
-    return false;
-  }
-
-  /**
-   * Get if it's in the favorite list
-   *
-   * @return true if is in the favorite list, false otherwise
-   */
-  default boolean isFavorite() {
-    return Favorite.getInstance().getFavorites().contains(this);
-  }
 }

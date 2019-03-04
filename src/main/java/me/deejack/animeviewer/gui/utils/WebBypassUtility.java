@@ -52,8 +52,10 @@ public final class WebBypassUtility {
     WebEngine engine = pair.getKey().getEngine();
     URL finalUrl = url;
     engine.locationProperty().addListener(listener -> {
-      if (!engine.getLocation().contains(finalUrl.getHost()))
+      if (!engine.getLocation().contains(finalUrl.getHost())) {
+        System.out.println("Redirected to " + engine.getLocation() + ", reloading " + link);
         engine.load(link);
+      }
     });
     engine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {
       if (newValue == Worker.State.SUCCEEDED && (engine.getLocation().contains(finalUrl.getHost()))) {

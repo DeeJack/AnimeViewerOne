@@ -1,8 +1,9 @@
 package me.deejack.animeviewer.logic.models.source;
 
 import java.util.List;
+import me.deejack.animeviewer.gui.components.filters.Filter;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
-import me.deejack.animeviewer.logic.anime.Anime;
+import me.deejack.animeviewer.logic.models.anime.Anime;
 
 /**
  * Contains the methods to filter a source
@@ -40,4 +41,6 @@ public interface FilteredSource extends AnimeSource {
    * @return the number of pages
    */
   int getPages();
+
+  Filter[] getFilters();
 }

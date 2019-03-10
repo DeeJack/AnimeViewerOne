@@ -1,9 +1,5 @@
 package me.deejack.animeviewer.logic.models.source;
 
-import java.util.List;
-import me.deejack.animeviewer.logic.anime.Anime;
-import me.deejack.animeviewer.logic.anime.Episode;
-
 /**
  * methods to get more information of an anime
  */
@@ -14,7 +10,7 @@ public interface AnimeSource {
    * @param anime the anime that needs the details
    * @return the updated anime
    */
-  Anime fetchAnimeDetails(Anime anime);
+  /*Anime fetchAnimeDetails(Anime anime);*/
 
   /**
    * Get the episodes of an anime
@@ -22,7 +18,7 @@ public interface AnimeSource {
    * @param anime
    * @return the list of the episode
    */
-  List<Episode> fetchAnimeEpisodes(Anime anime);
+  /*List<Episode> fetchAnimeEpisodes(Anime anime);*/
 
   /**
    * Get the name of this source
@@ -30,4 +26,8 @@ public interface AnimeSource {
    * @return the name of the source
    */
   String getName();
+
+  String getIconUrl();
+
+  String getBaseUrl();
 }

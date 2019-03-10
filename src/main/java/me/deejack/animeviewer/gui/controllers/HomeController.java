@@ -12,7 +12,7 @@ import me.deejack.animeviewer.gui.async.LoadSiteAsync;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.models.source.AnimeSource;
+import me.deejack.animeviewer.logic.models.source.FilteredSource;
 
 import static me.deejack.animeviewer.gui.App.getSite;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.getStage;
@@ -36,7 +36,6 @@ public class HomeController implements BaseScene {
     root = SceneUtility.loadParent("/scenes/home.fxml");
     ((Region) root).heightProperty().addListener((event) -> root.getChildrenUnmodifiable().get(0).prefWidth(((Region) root).getWidth()));
     ImageView icon = (ImageView) root.lookup("#imgSite");
-    //((Pane) root.lookup("#paneSearch")).getChildren().add((SceneUtility.loadParent("/scenes/search.fxml")));
     Task<Image> task = SceneUtility.loadImage(getSite().getIconUrl());
     setRoot(this);
     getStage().show();
@@ -46,7 +45,7 @@ public class HomeController implements BaseScene {
     });
   }
 
-  private void onSelectionChange(AnimeSource oldSite, AnimeSource newSite) {
+  private void onSelectionChange(FilteredSource oldSite, FilteredSource newSite) {
     if (getSite() != newSite)
       new Thread(new LoadSiteAsync(newSite)).start();
   }

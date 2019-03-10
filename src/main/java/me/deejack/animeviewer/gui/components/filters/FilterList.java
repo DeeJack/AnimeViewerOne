@@ -1,38 +1,28 @@
 package me.deejack.animeviewer.gui.components.filters;
 
-import java.util.HashMap;
-import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import me.deejack.animeviewer.gui.App;
+import me.deejack.animeviewer.gui.async.FilterAsync;
+import me.deejack.animeviewer.gui.components.HiddenSideBar;
 
-public class FilterList extends VBox {
+public class FilterList {
   private final Filter[] filters;
+  private final HiddenSideBar sideBar;
 
-  public FilterList() {
-    Map<String, String> items = new HashMap<>();
-    items.put("asd", "sda");
-    items.put("asd2", "sda2");
-    filters = new Filter[]{
-            new MultiSelectionFilter("asd", "Multi", items),
-            new ComboBoxFilter("Test", "Generi", items),
-            new TextBoxFilter("Test", "Test", "Sort"),
-            new TextBoxFilter("Test", "Test", "Cerca"),
-    };
+  public FilterList(Button controlButton) {
+    sideBar = new HiddenSideBar(controlButton);
+    filters = App.getSite().getFilters();
     initialize();
-  }
-
-  public FilterList(Filter... filters) {
-    this.filters = filters;
-    addChildren();
   }
 
   private void initialize() {
     addChildren();
-    setSpacing(30);
-    setPadding(new Insets(20));
+    sideBar.setSpacing(30);
+    sideBar.setPadding(new Insets(20));
+    sideBar.setPrefWidth(200);
   }
 
   public void addChildren() {
@@ -42,10 +32,18 @@ public class FilterList extends VBox {
       HBox box = new HBox(label, filter.getNode());
       box.setSpacing(50);
 
-      getChildren().add(box);
+      sideBar.getChildren().add(box);
     }
     Button button = new Button("Applica filtri");
+    button.setOnAction((event) -> new Thread(new FilterAsync(this, 1)).start());
+    sideBar.getChildren().add(button);
+  }
 
-    getChildren().add(button);
+  public Filter[] getFilters() {
+    return filters;
+  }
+
+  public HiddenSideBar getSideBar() {
+    return sideBar;
   }
 }

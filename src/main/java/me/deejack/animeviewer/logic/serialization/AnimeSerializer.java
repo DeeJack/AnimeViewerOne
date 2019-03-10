@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
-import me.deejack.animeviewer.logic.anime.Anime;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
-import me.deejack.animeviewer.logic.anime.Episode;
+import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 
 public final class AnimeSerializer<T> {
   private static final Gson gson;

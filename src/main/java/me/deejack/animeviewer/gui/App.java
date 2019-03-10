@@ -11,7 +11,7 @@ import me.deejack.animeviewer.gui.scenes.EventHandler;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.history.History;
-import me.deejack.animeviewer.logic.models.source.ParsedHttpSource;
+import me.deejack.animeviewer.logic.models.source.FilteredSource;
 import me.deejack.animeviewer.logic.models.source.asd.DreamSubSource;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import org.apache.logging.log4j.LogManager;
@@ -19,18 +19,18 @@ import org.apache.logging.log4j.LogManager;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
 public class App extends Application {
-  public static final ParsedHttpSource[] SITES = {new DreamSubSource()};
-  private static ParsedHttpSource site;
+  public static final FilteredSource[] SITES = {new DreamSubSource()};
+  private static FilteredSource site;
 
   public static void main(String[] args) {
     launch(args);
   }
 
-  public static ParsedHttpSource getSite() {
+  public static FilteredSource getSite() {
     return site;
   }
 
-  public static void setSite(ParsedHttpSource site) {
+  public static void setSite(FilteredSource site) {
     App.site = site;
   }
 

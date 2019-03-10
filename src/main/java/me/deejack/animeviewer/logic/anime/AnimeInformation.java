@@ -21,6 +21,10 @@ public class AnimeInformation {
    * The rating, if present, -1 if not present
    */
   private final double rating;
+  @Expose
+  private final String url;
+  @Expose
+  private final String imageUrl;
   /**
    * When it was released TODO in LocalDate?
    */
@@ -35,23 +39,19 @@ public class AnimeInformation {
    * The list of genres of this anime
    */
   private List<Genre> genres;
-  @Expose
-  private final String url;
-  @Expose
-  private final String imageUrl;
   /**
    * The plot for this anime
    */
   @Expose
   private String plot;
   /**
-   * The status of the anime, like COMPLETE or ON_GOING
+   * The animeStatus of the anime, like COMPLETE or ON_GOING
    */
-  private Status status;
+  private Status animeStatus;
 
   public AnimeInformation(short releaseYear, String name, int episodes, double rating,
-                          String url, List<Genre> genres, boolean isFilm, String imageUrl,
-                          Status status) {
+                          String url, List<Genre> genres, String imageUrl,
+                          Status animeStatus) {
     this.releaseYear = releaseYear;
     this.name = name;
     this.episodes = episodes;
@@ -59,7 +59,7 @@ public class AnimeInformation {
     this.genres = genres;
     this.url = url;
     this.imageUrl = imageUrl;
-    this.status = status;
+    this.animeStatus = animeStatus;
   }
 
   /*public abstract AnimeImpl getAnime();*/
@@ -67,6 +67,10 @@ public class AnimeInformation {
   // Getters
   public short getReleaseYear() {
     return releaseYear;
+  }
+
+  public void setReleaseYear(short releaseYear) {
+    this.releaseYear = releaseYear;
   }
 
   public String getName() {
@@ -85,6 +89,10 @@ public class AnimeInformation {
     return genres;
   }
 
+  public void setGenres(List<Genre> genres) {
+    this.genres = genres;
+  }
+
   public String getUrl() {
     return url;
   }
@@ -93,20 +101,12 @@ public class AnimeInformation {
     return imageUrl;
   }
 
-  public void setGenres(List<Genre> genres) {
-    this.genres = genres;
-  }
-
-  public void setReleaseYear(short releaseYear) {
-    this.releaseYear = releaseYear;
-  }
-
   public void setEpisodes(int episodes) {
     this.episodes = episodes;
   }
 
-  public void setStatus(Status status) {
-    this.status = status;
+  public void setAnimeStatus(Status animeStatus) {
+    this.animeStatus = animeStatus;
   }
 
   public String getPlot() {
@@ -121,6 +121,6 @@ public class AnimeInformation {
   public String toString() {
     return String.format("Titolo: %s, Voto: %s\nEpisodi: %d\nGeneri: %s\nStato: %s\nUrl: %s",
             name, new DecimalFormat("#.##").format(rating), episodes,
-            GeneralUtility.genreListToString(genres, ", "), status, url);
+            GeneralUtility.genreListToString(genres, ", "), animeStatus, url);
   }
 }

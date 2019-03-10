@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
-import me.deejack.animeviewer.logic.anime.Episode;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,7 +21,7 @@ public abstract class ParsedHttpAnime extends HttpAnime {
   }
 
   @Override
-  public List<Episode> parseEpisodes(Connection.Response response) {
+  protected List<Episode> parseEpisodes(Connection.Response response) {
     Elements episodesElements;
     try {
       episodesElements = response.parse().select(episodeSelector());
@@ -34,7 +34,7 @@ public abstract class ParsedHttpAnime extends HttpAnime {
   }
 
   @Override
-  public AnimeInformation parseAnimeDetails(Connection.Response response) {
+  protected AnimeInformation parseAnimeDetails(Connection.Response response) {
     try {
       return parseAnimeDetails(response.parse());
     } catch (IOException e) {
@@ -42,9 +42,9 @@ public abstract class ParsedHttpAnime extends HttpAnime {
     }
   }
 
-  public abstract AnimeInformation parseAnimeDetails(Document document);
+  protected abstract AnimeInformation parseAnimeDetails(Document document);
 
-  public abstract String episodeSelector();
+  protected abstract String episodeSelector();
 
-  public abstract Episode parseEpisode(Element element);
+  protected abstract Episode parseEpisode(Element element);
 }

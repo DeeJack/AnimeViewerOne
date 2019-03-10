@@ -3,7 +3,8 @@ package me.deejack.animeviewer.logic.models.source;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import me.deejack.animeviewer.logic.anime.Anime;
+import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.utils.GeneralUtility;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -30,19 +31,16 @@ public abstract class ParsedHttpSource extends HttpSource {
     Elements animeElements = document.select(animeSelector());
     List<Anime> animeList = new ArrayList<>();
     for (Element animeElement : animeElements) {
-      System.out.println(animeElement.text());
       animeList.add(animeFromElement(animeElement));
     }
-
+    Elements pages = document.select(pagesSelector());
+    GeneralUtility.tryParse(pages.get(pages.size() - 1).text()).ifPresent(this::setPages);
     return animeList;
   }
 
-  @Override
-  public List<Anime> searchAnime(String search, int page) {
-    return parseAnimeList(searchAnimeRequest(page, search));
-  }
+  protected abstract String animeSelector();
 
-  public abstract String animeSelector();
+  protected abstract String pagesSelector();
 
   public abstract Anime animeFromElement(Element element);
 }

@@ -28,7 +28,6 @@ public class ControlsLayerTask extends Thread {
     this.root = root;
   }
 
-
   @Override
   public void run() {
     Timer timer = new Timer();

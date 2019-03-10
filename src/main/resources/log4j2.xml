@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration strict="true" name="XMLConfigTest">
-    <!-- status="debug"-->
+    <!-- animeStatus="debug"-->
     <Properties>
         <Property name="filePath">${sys:user.home}/.animeviewer/logs/</Property>
     </Properties>

@@ -19,9 +19,6 @@ public class SelectController {
   @FXML
   private TextField txtLink;
 
-  public SelectController() {
-  }
-
   @FXML
   public void initialize() {
     btnHistory.setOnAction((event) -> {

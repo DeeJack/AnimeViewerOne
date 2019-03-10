@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
-import me.deejack.animeviewer.logic.anime.dto.Season;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.async.events.SuccessListener;
 import org.jsoup.nodes.Document;
 
 /**
  * Represent an anime in the source
  */
-public abstract class AnimeImpl implements Anime {
+public abstract class AnimeImpl extends ParsedHttpAnime {
   /**
    * A list containing some anime correlated at this one
    */
@@ -22,16 +22,17 @@ public abstract class AnimeImpl implements Anime {
    * in the list of the anime of the sites, without loading the anime page
    */
   @Expose
-  private final AnimeInformation animeInformation;
+  private AnimeInformation animeInformation;
   /**
    * The page that contains the info and the streaming links of this anime, initialize this only when it is necessary,
    * otherwise it can be source of lag
    */
-  protected Document animePage;
+  /*protected Document animePage;*/
   /**
    * A list containing the seasons of this anime
    */
-  private List<Season> seasons = new ArrayList<>();
+  private List<Episode> episodes = new ArrayList<>();
+  private boolean hasBeenLoaded = false;
 
   /**
    * Main constructor for an anime
@@ -39,17 +40,16 @@ public abstract class AnimeImpl implements Anime {
    * @param animeInformation An instance of AnimeInformation that contains the basic infos about the anime, create an instance
    */
   public AnimeImpl(AnimeInformation animeInformation) {
+    super(animeInformation.getUrl());
     this.animeInformation = animeInformation;
   }
 
-  protected void addSeason(Season season) {
-    if (seasons == null)
-      seasons = new ArrayList<>();
-    seasons.add(season);
+  protected void addEpisode(Episode episode) {
+    episodes.add(episode);
   }
 
-  public List<Season> getSeasons() {
-    return seasons == null ? Collections.unmodifiableList(new ArrayList<>()) : Collections.unmodifiableList(seasons);
+  public List<Episode> getEpisodes() {
+    return Collections.unmodifiableList(episodes);
   }
 
   /**
@@ -57,19 +57,32 @@ public abstract class AnimeImpl implements Anime {
    *
    * @param callback The callback to be called when the method has finished
    */
+  @Override
   public void loadAsync(SuccessListener callback) {
     new Thread(() -> {
-      fetchAnimeDetails();
-      fetchAnimeEpisodes();
+      animeInformation = fetchAnimeDetails();
+      episodes = fetchAnimeEpisodes();
+      hasBeenLoaded = true;
       callback.onSuccess();
     }).start();
+  }
+
+  @Override
+  public void load() {
+    animeInformation = fetchAnimeDetails();
+    episodes = fetchAnimeEpisodes();
+    hasBeenLoaded = true;
   }
 
   public AnimeInformation getAnimeInformation() {
     return animeInformation;
   }
 
-  public void setAnimePage(Document animePage) {
+  /*public void setAnimePage(Document animePage) {
     this.animePage = animePage;
+  }*/
+
+  public boolean hasBeenLoaded() {
+    return hasBeenLoaded;
   }
 }

@@ -9,7 +9,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import java.util.Collection;
-import me.deejack.animeviewer.logic.anime.Episode;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 
 public class EpisodeTypeAdapter implements JsonSerializer<Collection<Episode>>, JsonDeserializer<Collection<Episode>> {
   @Override

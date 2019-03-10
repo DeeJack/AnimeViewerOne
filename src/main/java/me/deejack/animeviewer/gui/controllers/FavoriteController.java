@@ -19,11 +19,11 @@ import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.anime.Episode;
-import me.deejack.animeviewer.logic.anime.SiteElement;
 import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.history.HistoryElement;
+import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
@@ -48,12 +48,12 @@ public class FavoriteController implements BaseScene {
       for (HistoryElement element : History.getHistory().getViewedElements())
         createHistoryElement(element);
     } else {
-      for (SiteElement element : Favorite.getInstance().getFavorites())
+      for (Anime element : Favorite.getInstance().getFavorites())
         createFavorite(element);
     }
   }
 
-  private void createFavorite(SiteElement element) {
+  private void createFavorite(Anime element) {
     Pane singleFav = (Pane) SceneUtility.loadParent("/scenes/favorite/singleFavorite.fxml");
     ImageView image = (ImageView) singleFav.lookup("#imgAnime");
     registerEvents(image, singleFav, element);
@@ -64,7 +64,7 @@ public class FavoriteController implements BaseScene {
     Label lblEpisodes = (Label) singleFav.lookup("#lblEpisodes");
     lblEpisodes.setText("Episodi: " + element.getAnimeInformation().getNumberOfEpisodes());
     TextArea lblPlot = (TextArea) singleFav.lookup("#lblPlot");
-    lblPlot.setText("Trama: " + element.getPlot());
+    lblPlot.setText("Trama: " + element.getAnimeInformation().getPlot());
     Button btnResume = (Button) singleFav.lookup("#btnResume");
     btnResume.setOnAction((event) -> resume(element));
     Button btnRemove = (Button) root.lookup("#btnRemove");
@@ -83,7 +83,7 @@ public class FavoriteController implements BaseScene {
     loadImage.setOnSucceeded((value) -> image.setImage(loadImage.getValue()));
     Label lblEpisodes = (Label) singleFav.lookup("#lblEpisodes");
     TextArea lblPlot = (TextArea) singleFav.lookup("#lblPlot");
-    lblPlot.setText("Trama: " + (historyElement.getViewedElement()).getPlot());
+    lblPlot.setText("Trama: " + (historyElement.getViewedElement()).getAnimeInformation().getPlot());
     Button btnResume = (Button) singleFav.lookup("#btnResume");
     btnResume.setOnAction((event) -> resume(historyElement.getViewedElement()));
     singleFav.setPrefWidth(boxFavorite.getPrefWidth());
@@ -122,18 +122,15 @@ public class FavoriteController implements BaseScene {
       setValues(lblEpisodiVisti, element);
   }
 
-  private void resume(SiteElement element) {
+  private void resume(Anime element) {
     Episode episode;
     if (History.getHistory().contains(element))
       episode = History.getHistory().get(element).getEpisodesHistory().get(History.getHistory().get(element).getEpisodesHistory().size() - 1);
     else {
       CountDownLatch countDownLatch = new CountDownLatch(1);
-      if (!element.hasLoadedEpisodes()) {
+      if (!element.hasBeenLoaded()) {
         showWaitAndLoad("Loading episodes....");
-        new Thread(() -> {
-          element.loadEpisodes();
-          countDownLatch.countDown();
-        }).start();
+        element.loadAsync(countDownLatch::countDown);
       }
       try {
         countDownLatch.await();
@@ -141,13 +138,13 @@ public class FavoriteController implements BaseScene {
         handleException(e);
       }
       hideWaitLoad();
-      episode = element.getSeasons().get(0).getEpisodes().get(0);
+      episode = element.getEpisodes().get(0);
     }
     showWaitAndLoad("Caricando link");
     new AnimePlayer(episode, element).streaming();
   }
 
-  private void registerEvents(Node imageNode, Parent root, SiteElement element) {
+  private void registerEvents(Node imageNode, Parent root, Anime element) {
     root.setOnMouseClicked((event) -> {
       if (event.isPrimaryButtonDown())
         new AnimeDetailController(element).loadAsync();

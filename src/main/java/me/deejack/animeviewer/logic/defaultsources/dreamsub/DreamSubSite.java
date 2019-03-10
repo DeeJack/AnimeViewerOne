@@ -44,7 +44,7 @@ public class DreamSubSite extends Site {
 
   @Override
   public void loadSortByList() {
-    addSort(new Sort("Popolarità", "popolarita"),
+      addSort(new Sort("Popolarità", "popolarita"),
             new Sort("Alfabetico", "A-Z"),
             new Sort("Voto", "rating"),
             new Sort("Ultime aggiunte", "recenti"),

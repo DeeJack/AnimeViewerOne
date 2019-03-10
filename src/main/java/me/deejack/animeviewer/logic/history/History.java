@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import me.deejack.animeviewer.logic.anime.Anime;
+import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
 
 public final class History {

@@ -21,9 +21,9 @@ import javafx.stage.Stage;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
-import me.deejack.animeviewer.logic.anime.Episode;
-import me.deejack.animeviewer.logic.async.DownloadAsync;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
+import me.deejack.animeviewer.logic.async.DownloadAsync;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
@@ -71,20 +71,16 @@ public final class DownloadController {
     if (destination == null)
       return;
     for (Episode episode : episodes) {
-      try {
-        List<StreamingLink> links = episode.getStreamingLinks();
-        if (links.isEmpty())
-          return;
-        AtomicReference<StreamingLink> link = new AtomicReference<>(links.get(0));
-        links.forEach((streamingLink -> {
-          if (Math.abs(streamingLink.getResolution() - prefResolution) < Math.abs(link.get().getResolution() - prefResolution))
-            link.set(streamingLink);
-        }));
-        DownloadAsync finalPreviousDownload = previousDownload.get();
-        processLink(link.get(), (resultLink) -> previousDownload.set(startDownload(resultLink, episode, animeName, destination, finalPreviousDownload)));
-      } catch (IOException e) {
-        handleException(e);
-      }
+      List<StreamingLink> links = episode.getStreamingLinks();
+      if (links.isEmpty())
+        return;
+      AtomicReference<StreamingLink> link = new AtomicReference<>(links.get(0));
+      links.forEach((streamingLink -> {
+        if (Math.abs(streamingLink.getResolution() - prefResolution) < Math.abs(link.get().getResolution() - prefResolution))
+          link.set(streamingLink);
+      }));
+      DownloadAsync finalPreviousDownload = previousDownload.get();
+      processLink(link.get(), (resultLink) -> previousDownload.set(startDownload(resultLink, episode, animeName, destination, finalPreviousDownload)));
     }
   }
 

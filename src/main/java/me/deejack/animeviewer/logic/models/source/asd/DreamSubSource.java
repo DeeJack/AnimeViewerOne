@@ -1,39 +1,39 @@
 package me.deejack.animeviewer.logic.models.source.asd;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import me.deejack.animeviewer.gui.components.filters.ComboBoxFilter;
+import me.deejack.animeviewer.gui.components.filters.Filter;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
-import me.deejack.animeviewer.logic.anime.Anime;
-import me.deejack.animeviewer.logic.anime.Episode;
+import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.source.ParsedHttpSource;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import org.jsoup.Connection;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class DreamSubSource extends ParsedHttpSource {
 
   public DreamSubSource() {
-    super("https://www.dreamsub.stream");
-  }
-
-  public static void main(String[] args) {
-    new DreamSubSource().searchAnime("one", 1);
+    super("https://www.dreamsub.stream", "https://www.dreamsub.stream/res/img/logoDS2.png");
   }
 
   @Override
   public String animeSelector() {
-    return "div.tvSeriesList > li";
+    return "ul.tvSeriesList > li";
   }
 
   @Override
   public Anime animeFromElement(Element element) {
     String name = element.getElementsByClass("tvTitle").first().text();
-    String url = element.getElementsByClass("showStreaming").first()
+    String url = getBaseUrl() + element.getElementsByClass("showStreaming").first()
             .getElementsByTag("a").get(1).attr("href");
-    String imageUrl = getBaseUrl().substring(0, getBaseUrl().length() - 1) +
+    String imageUrl = getBaseUrl() +
             element.getElementsByClass("cover").get(0).attr("style")
                     .replaceAll("background: url\\(", "").replaceAll("\\) no-repeat center", "");
 
-    return new DreamsubAnime(name, url, url.contains("/movie/"), imageUrl);
+    return new DreamsubAnime(name, url, imageUrl);
   }
 
   @Override
@@ -48,37 +48,55 @@ public class DreamSubSource extends ParsedHttpSource {
 
   @Override
   public Connection.Response filterRequest(int page, FilterList filters) {
-    return null;
+    StringBuilder url = new StringBuilder(getBaseUrl() + "/filter?");
+    for (Filter filter : filters.getFilters()) {
+      url.append(filter.getFilterId()).append("=").append(filter.getFilterValue()).append("&");
+    }
+    return ConnectionUtility.connect(url.toString(), false);
   }
 
   @Override
-  public Anime parseAnimeDetails(Connection.Response response) {
-    return null;
+  public Filter[] getFilters() {
+    return new Filter[]{
+            new ComboBoxFilter("genres", "Genres", getGenres()),
+            new ComboBoxFilter("status", "Status", getStatus()),
+            new ComboBoxFilter("sort", "Sort", getSort())
+    };
+  }
+
+  private Map<String, String> getGenres() {
+    Document homePage = ConnectionUtility.getPage(getBaseUrl(), false);
+    Map<String, String> genres = new HashMap<>();
+    Elements genreElements = homePage.getElementById("genere").getElementsByTag("option");
+    for (Element el : genreElements)
+      genres.put(el.text(), el.text());
+    return genres;
+  }
+
+  private Map<String, String> getStatus() {
+    Map<String, String> status = new HashMap<>();
+    status.put("Tutto", "tutti");
+    status.put("Completati", "conclusi");
+    status.put("In Corso", "in-corso");
+    status.put("Future Release", "prossimamente");
+    return status;
+  }
+
+  private Map<String, String> getSort() {
+    Map<String, String> sorts = new HashMap<>();
+    sorts.put("Popolarità", "popolarità");
+    sorts.put("Alfabetico", "A-Z");
+    sorts.put("Voto", "rating");
+    sorts.put("Ultime Aggiunte", "recenti");
+    sorts.put("Anno", "anno");
+    sorts.put("Numero Episodi", "episodi");
+    sorts.put("Visualizzazione", "views");
+    return sorts;
   }
 
   @Override
-  public List<Episode> parseEpisodes(Connection.Response response) {
-    return null;
-  }
-
-  @Override
-  public Connection.Response episodeListRequest(Anime anime) {
-    return null;
-  }
-
-  @Override
-  public Connection.Response getPagesRequest() {
-    return null;
-  }
-
-  @Override
-  public List<Anime> filter(int page, FilterList filters) {
-    return null;
-  }
-
-  @Override
-  public int getPages() {
-    return 0;
+  protected String pagesSelector() {
+    return "ul.pages > li:last-child";
   }
 
   @Override

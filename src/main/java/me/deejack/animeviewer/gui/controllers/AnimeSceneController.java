@@ -20,10 +20,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.App;
+import me.deejack.animeviewer.gui.async.LoadPageAsync;
+import me.deejack.animeviewer.gui.components.HiddenSideBar;
+import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.anime.Anime;
-import me.deejack.animeviewer.logic.anime.SiteElement;
+import me.deejack.animeviewer.logic.models.anime.Anime;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
@@ -31,26 +33,34 @@ import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 
 public class AnimeSceneController implements BaseScene {
   private final int currentPage;
+  private final int initialSize;
+  private final boolean isSearch;
+  private final FilterList filters;
+  private final String search;
   private StackPane root;
   private Pane content;
   private int elementsMultiplier = 1;
   private FlowPane elementsPane;
   private int loadedPage;
-  private final int initialSize;
+  private double startWidth;
   //private final List<ImageView> imageViews = new ArrayList<>();
 
-  public AnimeSceneController(List<Anime> elements, int elementsMultiplier) {
-    this(elements, 1, elementsMultiplier);
+  public AnimeSceneController(List<Anime> elements, int elementsMultiplier, boolean isSearch, FilterList filters, String search) {
+    this(elements, 1, elementsMultiplier, isSearch, filters, search);
   }
 
-  public AnimeSceneController(List<Anime> elements, int page, int elementsMultiplier) {
+  public AnimeSceneController(List<Anime> elements, int page, int elementsMultiplier, boolean isSearch, FilterList filters, String search) {
     currentPage = page;
     loadedPage = page;
     initialSize = elements.size();
+    this.isSearch = isSearch;
+    this.filters = filters;
+    this.search = search;
     hideWaitLoad();
     initialize(elements, elementsMultiplier);
     this.elementsMultiplier = elementsMultiplier;
     setRoot(this);
+
   }
 
   private void initialize(List<Anime> elements, int elementsMultiplier) {
@@ -84,15 +94,24 @@ public class AnimeSceneController implements BaseScene {
 
   private void addElements(List<? super Anime> elements, int oldElementsMultiplier, int newElementsMultiplier) {
     for (int i = oldElementsMultiplier; i < newElementsMultiplier; i++) {
-      elements.addAll(App.getSite().loadPage(++loadedPage));
+      List<Anime> animeList = isSearch ? App.getSite().filter(filters, ++loadedPage) : App.getSite().searchAnime(search, ++loadedPage);
+      elements.addAll(animeList);
     }
   }
 
   private void loadScene() {
     root = (StackPane) SceneUtility.loadParent("/scenes/animeFlex.fxml");
-    content = (Pane) ((ScrollPane) root.getChildren().get(0)).getContent();
+    content = (Pane) ((ScrollPane) root.lookup("#scrollPane")).getContent();
     //((Pane) content.lookup("#boxFilter")).getChildren().add(SceneUtility.loadParent("/scenes/search.fxml"));
     ((ButtonBase) content.lookup("#btnBack")).setOnAction((handler) -> SceneUtility.goToPreviousScene());
+    HiddenSideBar sideBar = new FilterList((Button) content.lookup("#controlSideBar")).getSideBar();
+    sideBar.setTranslateX(200);
+    ((Pane) root.lookup("#container")).getChildren().add(sideBar);
+    startWidth = ((ScrollPane) root.lookup("#scrollPane")).getPrefWidth();
+    sideBar.translateXProperty().addListener((event, oldValue, newValue) -> ((ScrollPane) root.lookup("#scrollPane"))
+            .setPrefWidth(startWidth -sideBar.getTranslateX() + 200));
+    System.out.println(sideBar.getWidth());
+
     ComboBox<Integer> cboMultiplier = (ComboBox<Integer>) content.lookup("#cboMultiplier");
     List<Integer> multipliers = new ArrayList<>();
     for (int i = 1; i < 5; i++) {
@@ -106,9 +125,9 @@ public class AnimeSceneController implements BaseScene {
     layoutFlex();
   }
 
-  private List<VBox> generateAnimeBox(List<? extends SiteElement> elements) {
+  private List<VBox> generateAnimeBox(List<? extends Anime> elements) {
     List<VBox> boxes = new ArrayList<>();
-    for (SiteElement element : elements) {
+    for (Anime element : elements) {
       VBox animeBox = new VBox();
       animeBox.setOnMousePressed((e) -> {
         if (e.isPrimaryButtonDown())
@@ -132,7 +151,7 @@ public class AnimeSceneController implements BaseScene {
     return boxes;
   }
 
-  private void loadImages(List<VBox> boxes, List<? extends SiteElement> elements) {
+  private void loadImages(List<VBox> boxes, List<? extends Anime> elements) {
     List<ImageView> views = new ArrayList<>();
     for (VBox row : boxes) {
       for (Node node : row.getChildren()) {
@@ -164,7 +183,7 @@ public class AnimeSceneController implements BaseScene {
     button.setOnMousePressed((a) -> {
       if (a.isPrimaryButtonDown()) {
         showWaitAndLoad("Cambiando pagina...");
-        new Thread(new LoadPageAsync(page + elementsMultiplier - 1, elementsMultiplier)).start();
+        new Thread(new LoadPageAsync(filters, search, isSearch, page + elementsMultiplier - 1, elementsMultiplier)).start();
       }
     });
     boxPages.getChildren().add(button);
@@ -174,7 +193,7 @@ public class AnimeSceneController implements BaseScene {
    * Load the image from the first to the last, I don't know if it's better this way o all at one
    * But I prefer this.
    */
-  private void loadImage(SiteElement element, ImageView view, List<? extends ImageView> views, List<? extends SiteElement> elements) {
+  private void loadImage(Anime element, ImageView view, List<? extends ImageView> views, List<? extends Anime> elements) {
     if (element == null || view == null) {
       return;
     }
@@ -195,7 +214,7 @@ public class AnimeSceneController implements BaseScene {
     root.widthProperty().addListener((observable -> elementsPane.setPrefWidth(root.getWidth())));
   }
 
-  private void loadElement(SiteElement element) {
+  private void loadElement(Anime element) {
     showWaitAndLoad("Caricando anime...");
     new AnimeDetailController(element).loadAsync();
   }

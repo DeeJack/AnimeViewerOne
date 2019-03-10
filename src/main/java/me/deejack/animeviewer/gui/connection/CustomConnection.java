@@ -13,9 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
-import me.deejack.animeviewer.logic.connection.Session;
 import me.deejack.animeviewer.logic.connection.SiteConnection;
 import me.deejack.animeviewer.logic.customexception.NoConnectionException;
 import me.deejack.animeviewer.logic.utils.UserAgents;
@@ -41,8 +39,8 @@ public class CustomConnection implements SiteConnection {
     lock = new CountDownLatch(1);
     CookieManager cookieManager = registerCookieManager();
 
-    if (App.getSite() != null && App.getSite().getSession() != null)
-      cookies.putAll(App.getSite().getSession().getCookies());
+    /*if (App.getSite() != null && App.getSite().getSession() != null)
+      cookies.putAll(App.getSite().getSession().getCookies());*/
     System.out.println("Connecting to " + pageLink);
     try {
       Connection.Response response = execute(pageLink, cookies, followRedirects);
@@ -87,9 +85,8 @@ public class CustomConnection implements SiteConnection {
   }
 
   private void saveToSession(String pageLink, Map<String, String> cookies) {
-    Session session = new Session(cookies, new HashMap<>(), pageLink);
-    if (App.getSite() != null)
-      App.getSite().setSession(session);
+    /*if (App.getSite() != null)
+      App.getSite().setSession(session);*/
   }
 
   private Connection.Response execute(String url, Map<String, String> cookies, boolean followRedirects) throws IOException {

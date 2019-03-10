@@ -21,8 +21,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.anime.Episode;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;

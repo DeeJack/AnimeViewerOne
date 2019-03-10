@@ -2,7 +2,7 @@ package me.deejack.animeviewer.logic.models.anime;
 
 import java.util.List;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
-import me.deejack.animeviewer.logic.anime.Episode;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import org.jsoup.Connection;
 
@@ -18,23 +18,22 @@ public abstract class HttpAnime implements Anime {
     this.url = url;
   }
 
-  @Override
-  public AnimeInformation fetchAnimeDetails() {
+  protected AnimeInformation fetchAnimeDetails() {
     return parseAnimeDetails(animePageRequest());
   }
 
-  @Override
-  public List<Episode> fetchAnimeEpisodes() {
+  protected List<Episode> fetchAnimeEpisodes() {
     return parseEpisodes(animePageRequest());
   }
 
-  public Connection.Response animePageRequest() {
+  protected Connection.Response animePageRequest() {
     if (animePageResponse == null || animePageResponse.statusCode() != 200)
       animePageResponse = ConnectionUtility.connect(url, false);
+    animePageResponse.bufferUp();
     return animePageResponse;
   }
 
-  public abstract List<Episode> parseEpisodes(Connection.Response response);
+  protected abstract List<Episode> parseEpisodes(Connection.Response response);
 
-  public abstract AnimeInformation parseAnimeDetails(Connection.Response response);
+  protected abstract AnimeInformation parseAnimeDetails(Connection.Response response);
 }

@@ -4,10 +4,11 @@ import javafx.event.Event;
 import javafx.scene.control.ListView;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.async.LoadSiteAsync;
+import me.deejack.animeviewer.logic.models.source.FilteredSource;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 
-public class ListViewSites extends ListView<Site> {
+public class ListViewSites extends ListView<FilteredSource> {
   private boolean selected = false;
 
   public ListViewSites() {

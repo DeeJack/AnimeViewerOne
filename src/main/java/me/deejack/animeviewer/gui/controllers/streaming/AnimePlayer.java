@@ -6,9 +6,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import me.deejack.animeviewer.gui.controllers.download.DownloadUtility;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
-import me.deejack.animeviewer.logic.anime.Episode;
-import me.deejack.animeviewer.logic.anime.SiteElement;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
+import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
@@ -16,9 +16,9 @@ import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 
 public class AnimePlayer {
   private final Episode episode;
-  private final SiteElement anime;
+  private final Anime anime;
 
-  public AnimePlayer(Episode episode, SiteElement anime) {
+  public AnimePlayer(Episode episode, Anime anime) {
     this.episode = episode;
     this.anime = anime;
   }
@@ -41,7 +41,7 @@ public class AnimePlayer {
     }
     showWaitAndLoad("Caricando streaming...");
     extractVideo(link);
-    showWaitAndLoad("Loading...");
+    //showWaitAndLoad("Loading...");
     return true;
   }
 
@@ -52,10 +52,8 @@ public class AnimePlayer {
       handleException(new Exception("URL invalido! " + link));
       return;
     }
-    if (link.contains("openload")) {
+    if (link.contains("openload") || link.contains("streamango")) {
       WebBypassUtility.getOpenloadLink(link, "https://openload.co", (resultLink) -> setRoot(setupPlayer(resultLink)));
-    } else if (link.contains("streamango")) {
-      WebBypassUtility.getOpenloadLink(link, "", (resultLink) -> setRoot(setupPlayer(resultLink)));
     } else {
       setRoot(setupPlayer(link));
     }

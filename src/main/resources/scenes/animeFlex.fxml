@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -10,6 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import me.deejack.animeviewer.gui.components.ButtonBack?>
 <StackPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxWidth="Infinity"
                 prefHeight="600.0" prefWidth="850.0">
@@ -18,10 +18,11 @@
 
                 <!-- Elements Multiplier, Sidebar Control, back button -->
                 <HBox>
-                    <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="18.0" prefWidth="30.0" text="&lt;"/>
+                    <!--<Button fx:id="btnBack" mnemonicParsing="false" prefHeight="18.0" prefWidth="30.0" text="&lt;"/>-->
+                    <ButtonBack prefHeight="18.0" prefWidth="30.0"/>
                     <HBox alignment="CENTER_RIGHT" prefWidth="400.0" spacing="10.0" HBox.hgrow="ALWAYS">
-                        <Label text="Anime per pagina:"/>
-                        <ComboBox fx:id="cboMultiplier" prefWidth="150.0"/>
+                        <!-- <Label text="Anime per pagina:"/>-->
+                        <!--<ComboBox fx:id="cboMultiplier" prefWidth="150.0"/>-->
                         <Button fx:id="controlSideBar" mnemonicParsing="false" text="&lt;"/>
                         <HBox.margin>
                             <Insets right="20.0"/>
@@ -42,7 +43,7 @@
                     <FlowPane fx:id="itemsPane" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
                               minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0">
                     </FlowPane>
-                    <HBox fx:id="hboxPages" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"/>
+                   <!-- <HBox fx:id="hboxPages" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"/>-->
                 </VBox>
                 <!-- Results not found -->
                 <HBox fx:id="searchNotFound" alignment="CENTER" visible="false">

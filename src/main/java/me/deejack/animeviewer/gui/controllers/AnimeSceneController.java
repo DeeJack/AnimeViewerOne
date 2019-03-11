@@ -1,6 +1,5 @@
 package me.deejack.animeviewer.gui.controllers;
 
-import com.sun.javafx.collections.ObservableListWrapper;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.concurrent.Task;
@@ -8,8 +7,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -17,12 +14,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.App;
-import me.deejack.animeviewer.gui.async.LoadPageAsync;
 import me.deejack.animeviewer.gui.components.HiddenSideBar;
+import me.deejack.animeviewer.gui.components.animescene.PagesBox;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
@@ -43,7 +39,6 @@ public class AnimeSceneController implements BaseScene {
   private int elementsMultiplier = 1;
   private FlowPane elementsPane;
   private int loadedPage;
-  private double startWidth;
   //private final List<ImageView> imageViews = new ArrayList<>();
 
   public AnimeSceneController(List<Anime> elements, int elementsMultiplier, boolean isSearch, FilterList filters, String search) {
@@ -57,11 +52,11 @@ public class AnimeSceneController implements BaseScene {
     this.isSearch = isSearch;
     this.filters = filters;
     this.search = search;
+
     hideWaitLoad();
     initialize(elements, elementsMultiplier);
     this.elementsMultiplier = elementsMultiplier;
     setRoot(this);
-
   }
 
   private void initialize(List<Anime> elements, int elementsMultiplier) {
@@ -83,7 +78,7 @@ public class AnimeSceneController implements BaseScene {
     List<VBox> boxes = generateAnimeBox(elements);
     elementsPane.getChildren().addAll(boxes);
     loadImages(boxes, elements);
-    loadPages();
+    //loadPages();
   }
 
   private void removeElements(int newElementsMultiplier) {
@@ -102,27 +97,18 @@ public class AnimeSceneController implements BaseScene {
 
   private void loadScene() {
     root = (StackPane) SceneUtility.loadParent("/scenes/animeFlex.fxml");
-    content = (Pane) ((Pane) ((ScrollPane) root.lookup("#scrollPane")).getContent()).getChildren().get(0);
-    //((Pane) content.lookup("#boxFilter")).getChildren().add(SceneUtility.loadParent("/scenes/search.fxml"));
-    ((ButtonBase) content.lookup("#btnBack")).setOnAction((handler) -> SceneUtility.goToPreviousScene());
+    Pane container = (Pane) ((ScrollPane) root.lookup("#scrollPane")).getContent();
+    content = (Pane) container.getChildren().get(0);
+
     HiddenSideBar sideBar = new FilterList((Button) content.lookup("#controlSideBar")).getSideBar();
-    ((Pane) ((ScrollPane) root.lookup("#scrollPane")).getContent()).getChildren().add(sideBar);
+    container.getChildren().add(sideBar);
 
-    startWidth = ((ScrollPane) root.lookup("#scrollPane")).getPrefWidth();
-    sideBar.translateXProperty().addListener((event, oldValue, newValue) -> ((ScrollPane) root.lookup("#scrollPane"))
-            .setPrefWidth(startWidth -sideBar.getTranslateX() + 200));
-    System.out.println(sideBar.getWidth());
+    VBox found = (VBox) content.lookup("#searchFound");
+    found.getChildren().add(new PagesBox(currentPage, elementsMultiplier, search, isSearch, filters));
 
-    ComboBox<Integer> cboMultiplier = (ComboBox<Integer>) content.lookup("#cboMultiplier");
-    List<Integer> multipliers = new ArrayList<>();
-    for (int i = 1; i < 5; i++) {
-      multipliers.add(i);
-    }
-    cboMultiplier.setItems(new ObservableListWrapper<>(multipliers));
-    cboMultiplier.getSelectionModel().select((Integer) elementsMultiplier);
-    cboMultiplier.getSelectionModel().selectedItemProperty().addListener((listener) -> {
+    /*cboMultiplier.getSelectionModel().selectedItemProperty().addListener((listener) -> {
       showFound(new ArrayList<>(), cboMultiplier.getSelectionModel().getSelectedItem());
-    });
+    });*/
     layoutFlex();
   }
 
@@ -162,32 +148,6 @@ public class AnimeSceneController implements BaseScene {
     }
     if (!elements.isEmpty() && !views.isEmpty())
       loadImage(elements.get(0), views.get(0), views, elements);
-  }
-
-  private void loadPages() {
-    int totalPages = App.getSite().getPages() / elementsMultiplier + ((App.getSite().getPages() % elementsMultiplier == 0) ? 0 : 1);
-    HBox boxPages = (HBox) content.lookup("#hboxPages");
-    boxPages.getChildren().clear();
-
-    addPage(1, currentPage != 1, currentPage != 1, boxPages);
-    addPage(currentPage - 1, true, currentPage > 2, boxPages);
-    addPage(currentPage, false, true, boxPages);
-    addPage(currentPage + 1, true, currentPage < totalPages - 1, boxPages);
-    addPage(totalPages, true, currentPage != totalPages, boxPages);
-  }
-
-  private void addPage(int page, boolean enable, boolean visible, HBox boxPages) {
-    if (!visible)
-      return;
-    Button button = new Button((page) + "");
-    button.setDisable(!enable);
-    button.setOnMousePressed((a) -> {
-      if (a.isPrimaryButtonDown()) {
-        showWaitAndLoad("Cambiando pagina...");
-        new Thread(new LoadPageAsync(filters, search, isSearch, page + elementsMultiplier - 1, elementsMultiplier)).start();
-      }
-    });
-    boxPages.getChildren().add(button);
   }
 
   /**

@@ -33,7 +33,7 @@ public class DreamsubAnime extends AnimeImpl {
 
   @Override
   public String episodeSelector() {
-    return "ul.seasEpisode > li > a";
+    return "ul.seasEpisode > li";
   }
 
   @Override

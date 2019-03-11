@@ -1,4 +1,4 @@
-package me.deejack.animeviewer.gui.controllers.streaming.components;
+package me.deejack.animeviewer.gui.components.streaming;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

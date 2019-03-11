@@ -19,12 +19,12 @@ public class HiddenSideBar extends VBox {
   public HiddenSideBar(Button btnOpen) {
     this.btnOpen = btnOpen;
     getChildren().add(btnClose);
-    setWidth(500);
-    setMinWidth(500);
+    setWidth(350);
+    setMinWidth(350);
     registerEvents();
     hideAnimation.setToX(getWidth());
     showAnimation.setToX(-getWidth());
-    setBackground(new Background(new BackgroundFill(Paint.valueOf("black"), CornerRadii.EMPTY, Insets.EMPTY)));
+    setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), CornerRadii.EMPTY, Insets.EMPTY)));
   }
 
   private void registerEvents() {

@@ -13,30 +13,28 @@ import javafx.util.Duration;
 public class HiddenSideBar extends VBox {
   private final TranslateTransition hideAnimation = new TranslateTransition(Duration.millis(250), this);
   private final TranslateTransition showAnimation = new TranslateTransition(Duration.millis(250), this);
-  private final Button controlButton;
+  private final Button btnClose = new Button(">");
+  private final Button btnOpen;
 
-  public HiddenSideBar(Button controlButton) {
-    this.controlButton = controlButton;
-    getChildren().add(controlButton);
+  public HiddenSideBar(Button btnOpen) {
+    this.btnOpen = btnOpen;
+    getChildren().add(btnClose);
+    setWidth(500);
+    setMinWidth(500);
     registerEvents();
-    System.out.println(getWidth() + " --- " + getPrefWidth() + " ---  ");
     hideAnimation.setToX(getWidth());
-    showAnimation.setToX(-getPrefWidth());
+    showAnimation.setToX(-getWidth());
     setBackground(new Background(new BackgroundFill(Paint.valueOf("black"), CornerRadii.EMPTY, Insets.EMPTY)));
   }
 
   private void registerEvents() {
-    controlButton.setOnAction((event) -> {
-      System.out.println(getWidth() + " --- " + getPrefWidth() + " ---  ");
+    btnOpen.setOnAction((event) -> {
+      showAnimation.setToX(-getWidth());
+      showAnimation.play();
+    });
+    btnClose.setOnAction((event) -> {
+      hideAnimation.play();
       hideAnimation.setToX(getWidth());
-      showAnimation.setToX(-getPrefWidth());
-      if (controlButton.getText().equalsIgnoreCase("<")) {
-        controlButton.setText(">");
-        hideAnimation.play();
-      } else {
-        controlButton.setText("<");
-        showAnimation.play();
-      }
     });
   }
 }

@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.App;
@@ -101,12 +102,22 @@ public class AnimeSceneController implements BaseScene {
 
   private void loadScene() {
     root = (StackPane) SceneUtility.loadParent("/scenes/animeFlex.fxml");
-    content = (Pane) ((ScrollPane) root.lookup("#scrollPane")).getContent();
+    content = (Pane) ((Pane) ((ScrollPane) root.lookup("#scrollPane")).getContent()).getChildren().get(0);
     //((Pane) content.lookup("#boxFilter")).getChildren().add(SceneUtility.loadParent("/scenes/search.fxml"));
     ((ButtonBase) content.lookup("#btnBack")).setOnAction((handler) -> SceneUtility.goToPreviousScene());
     HiddenSideBar sideBar = new FilterList((Button) content.lookup("#controlSideBar")).getSideBar();
-    sideBar.setTranslateX(200);
-    ((Pane) root.lookup("#container")).getChildren().add(sideBar);
+    //sideBar.setTranslateX(200);
+    /*((ScrollPane) root.lookup("#scrollPane")).prefWidthProperty().addListener((event, oldValue, newValue) -> {
+      System.out.println(newValue.doubleValue());
+      if(oldValue.doubleValue() > 0)
+        ((ScrollPane) root.lookup("#scrollPane")).setPrefWidth(oldValue.doubleValue());
+    });*/
+    content.widthProperty().addListener((event, oldValue, newValue) -> System.out.println(newValue.doubleValue()));
+    //content.prefWidthProperty().addListener((event, oldValue, newValue) -> System.out.println(newValue.doubleValue()));
+    /*sideBar.widthProperty().addListener((event, oldValue, newValue) ->
+            ((Region) root.lookup("#scrollPane")).setPrefWidth(((Region) root.lookup("#scrollPane")).getPrefWidth() + newValue.doubleValue()));
+    sideBar.widthProperty().addListener((event, oldValue, newValue) -> content.setPrefWidth(content.getPrefWidth() + newValue.doubleValue()));*/
+    ((Pane) ((ScrollPane) root.lookup("#scrollPane")).getContent()).getChildren().add(sideBar);
     startWidth = ((ScrollPane) root.lookup("#scrollPane")).getPrefWidth();
     sideBar.translateXProperty().addListener((event, oldValue, newValue) -> ((ScrollPane) root.lookup("#scrollPane"))
             .setPrefWidth(startWidth -sideBar.getTranslateX() + 200));

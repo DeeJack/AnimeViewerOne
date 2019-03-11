@@ -66,7 +66,6 @@ public class StreamingController implements BaseScene {
       mediaPlayer.seek(Duration.seconds(episode.getSecondsWatched()));
   }
 
-
   private void setupNodes() {
     ButtonPause btnPause = new ButtonPause(mediaPlayer);
     ButtonNext btnNext = new ButtonNext(anime, episode);

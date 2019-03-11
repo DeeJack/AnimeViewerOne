@@ -10,61 +10,56 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 <StackPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-      <HBox fx:id="container">
-         <children>
-              <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="600.0" prefWidth="850.0">
-                  <VBox>
-                      <HBox>
-                          <children>
-                              <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="18.0" prefWidth="28.0" text="&lt;" />
-                              <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
-                                  <children>
-                                      <Label text="Anime per pagina:" />
-                                      <ComboBox fx:id="cboMultiplier" prefWidth="150.0" />
-                              <Button fx:id="controlSideBar" mnemonicParsing="false" text="&lt;" />
-                                  </children>
-                              </HBox>
-                          </children>
-                      </HBox>
-                      <VBox alignment="CENTER">
-                          <VBox.margin>
-                              <Insets />
-                          </VBox.margin>
-                          <children>
-                              <!-- Search box -->
-                              <HBox fx:id="boxFilter" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="848.0" spacing="20.0">
-                                  <fx:include source="/scenes/search.fxml" />
-                                  <!--<Label text="Cerca:"/>
-                                  <TextField fx:id="txtSearchName" prefHeight="25.0" prefWidth="296.0"
-                                             promptText="Nome anime..."/>
-                                  <Button fx:id="btnSearchName" mnemonicParsing="false"
-                                          style="-fx-background-color: white; -fx-border-color: black;" text="Cerca"/>
-                                  <padding>
-                                      <Insets top="5.0"/>
-                                  </padding>-->
-                              </HBox>
-                          </children>
-                      </VBox>
-                      <!-- Results found -->
-                      <VBox fx:id="searchFound" alignment="CENTER">
-                          <FlowPane fx:id="itemsPane" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0">
-                    </FlowPane>
-                          <HBox fx:id="hboxPages" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
-                      </VBox>
-                      <!-- Results not found -->
-                      <HBox fx:id="searchNotFound" alignment="CENTER" visible="false">
-                          <Label layoutX="200.0" layoutY="92.0" prefHeight="39.0" prefWidth="449.0" text="Non è stato trovato nessun risultato." textAlignment="CENTER">
-                              <font>
-                                  <Font size="27.0" />
-                              </font>
-                          </Label>
-                      </HBox>
-                  </VBox>
-              </ScrollPane>
-         </children>
-      </HBox>
-    </children>
+    <!--<HBox fx:id="container" prefWidth="1050.0">-->
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="600.0"
+                    prefWidth="850.0" maxWidth="Infinity">
+            <HBox fx:id="container">
+                <VBox>
+                    <HBox>
+                        <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="18.0" prefWidth="30.0" text="&lt;"/>
+                        <HBox alignment="CENTER_RIGHT" prefWidth="400.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                            <!--<Button fx:id="controlSideBar" mnemonicParsing="false" text="&lt;"/>-->
+                            <Label text="Anime per pagina:"/>
+                            <ComboBox fx:id="cboMultiplier" prefWidth="150.0"/>
+                            <Button fx:id="controlSideBar" mnemonicParsing="false" text="&lt;"/>
+                        </HBox>
+                    </HBox>
+                    <VBox alignment="CENTER">
+                        <VBox.margin>
+                            <Insets/>
+                        </VBox.margin>
+                        <!-- Search box -->
+                        <HBox fx:id="boxFilter" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="848.0" spacing="20.0">
+                            <fx:include source="/scenes/search.fxml"/>
+                            <!--<Label text="Cerca:"/>
+                            <TextField fx:id="txtSearchName" prefHeight="25.0" prefWidth="296.0"
+                                       promptText="Nome anime..."/>
+                            <Button fx:id="btnSearchName" mnemonicParsing="false"
+                                    style="-fx-background-color: white; -fx-border-color: black;" text="Cerca"/>
+                            <padding>
+                                <Insets top="5.0"/>
+                            </padding>-->
+                        </HBox>
+                    </VBox>
+                    <!-- Results found -->
+                    <VBox fx:id="searchFound" alignment="CENTER">
+                        <FlowPane fx:id="itemsPane" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+                                  minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0">
+                        </FlowPane>
+                        <HBox fx:id="hboxPages" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"/>
+                    </VBox>
+                    <!-- Results not found -->
+                    <HBox fx:id="searchNotFound" alignment="CENTER" visible="false">
+                        <Label layoutX="200.0" layoutY="92.0" prefHeight="39.0" prefWidth="449.0"
+                               text="Non è stato trovato nessun risultato." textAlignment="CENTER">
+                            <font>
+                                <Font size="27.0"/>
+                            </font>
+                        </Label>
+                    </HBox>
+                </VBox>
+            </HBox>
+        </ScrollPane>
+    <!--</HBox>-->
 </StackPane>

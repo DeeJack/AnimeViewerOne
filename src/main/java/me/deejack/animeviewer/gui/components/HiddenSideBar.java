@@ -19,9 +19,10 @@ public class HiddenSideBar extends VBox {
   public HiddenSideBar(Button btnOpen) {
     this.btnOpen = btnOpen;
     getChildren().add(btnClose);
-    setTranslateX(200);
-    setWidth(350);
-    setMinWidth(350);
+    setWidth(0);
+    setTranslateX(getWidth());
+    setMinWidth(getWidth());
+    setMaxWidth(getWidth());
     registerEvents();
     hideAnimation.setToX(getWidth());
     showAnimation.setToX(-getWidth());
@@ -30,12 +31,18 @@ public class HiddenSideBar extends VBox {
 
   private void registerEvents() {
     btnOpen.setOnAction((event) -> {
-      showAnimation.setToX(-getWidth());
+      setWidth(350);
+      setMinWidth(getWidth());
+      setMaxWidth(getWidth());
+      showAnimation.setToX(0);
       showAnimation.play();
     });
     btnClose.setOnAction((event) -> {
       hideAnimation.play();
       hideAnimation.setToX(getWidth());
+      setWidth(0);
+      setMinWidth(getWidth());
+      setMaxWidth(getWidth());
     });
   }
 }

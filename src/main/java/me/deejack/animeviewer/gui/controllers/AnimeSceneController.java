@@ -1,9 +1,12 @@
 package me.deejack.animeviewer.gui.controllers;
 
 import java.util.List;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -28,7 +31,7 @@ public class AnimeSceneController implements BaseScene {
   private final FilterList filters;
   private final String search;
   private StackPane root;
-  private Pane content;
+  //private Pane content;
   private int elementsMultiplier = 1;
   private FlowPane elementsPane;
   private int loadedPage;
@@ -69,6 +72,7 @@ public class AnimeSceneController implements BaseScene {
       removeElements(newElementsMultiplier);
     elementsMultiplier = newElementsMultiplier;*/
 
+    BorderPane content = (BorderPane) root.getChildrenUnmodifiable().get(0);
     VBox found = (VBox) ((ScrollPane) content.lookup("#scrollPane")).getContent();
     AnimePane animePane = new AnimePane(elements);
     found.getChildren().add(0, animePane);
@@ -95,20 +99,23 @@ public class AnimeSceneController implements BaseScene {
 
   private void loadScene() {
     root = (StackPane) SceneUtility.loadParent("/scenes/animeFlex.fxml");
-    content = (Pane) root.getChildrenUnmodifiable().get(0);
+    BorderPane content = (BorderPane) root.getChildrenUnmodifiable().get(0);
     //root.widthProperty().addListener((event, oldValue, newValue) -> content.setPrefWidth(newValue.doubleValue()));
-    HiddenSideBar sideBar = new FilterList((Button) content.lookup("#controlSideBar")).getSideBar();
-    content.getChildren().add(sideBar);
+    HiddenSideBar sideBar = new FilterList((Button) content.getTop().lookup("#controlSideBar")).getSideBar();
+    content.setRight(sideBar);
+    //content.getChildren().add(sideBar);
+    BorderPane.setAlignment(sideBar, Pos.TOP_RIGHT);
 
-    VBox found = (VBox) ((ScrollPane) content.lookup("#scrollPane")).getContent();
+    VBox found = (VBox) ((ScrollPane) content.getCenter().lookup("#scrollPane")).getContent();
     found.getChildren().add(new PagesBox(currentPage, elementsMultiplier, search, isSearch, filters));
 
-    /*root.widthProperty().addListener((event, oldV, newV) -> {
+    root.widthProperty().addListener((event, oldV, newV) -> {
       System.out.println("StackPane: " + root.getPrefWidth() + " -  " + root.getWidth());
-      System.out.println("Hbox connteiner: " + content.getWidth() + " -  " + content.getPrefWidth());
-      //System.out.println("ScrollPane: " + ((ScrollPane) root.lookup("#scrollPane")).getPrefWidth() + " -  " + ((ScrollPane) root.lookup("#scrollPane")).getWidth());
+      System.out.println("HBox: " + content.getWidth() + " -  " + content.getPrefWidth());
+      System.out.println("Vbox container: " + ((Pane)content.getChildren().get(0)).getWidth() + " -  " + ((Pane)content.getChildren().get(0)).getPrefWidth());
+      System.out.println("ScrollPane: " + ((ScrollPane) root.lookup("#scrollPane")).getPrefWidth() + " -  " + ((ScrollPane) root.lookup("#scrollPane")).getWidth());
       System.out.println("Vbox found: " + found.getWidth());
-    });*/
+    });
     /*cboMultiplier.getSelectionModel().selectedItemProperty().addListener((listener) -> {
       showFound(new ArrayList<>(), cboMultiplier.getSelectionModel().getSelectedItem());
     });*/
@@ -155,6 +162,7 @@ public class AnimeSceneController implements BaseScene {
    * Show the "not found" page
    */
   private void showNotFound() {
+    BorderPane content = (BorderPane) root.getChildrenUnmodifiable().get(0);
     VBox found = (VBox) content.lookup("#searchFound");
     HBox notFound = (HBox) content.lookup("#searchNotFound");
     found.setVisible(false);

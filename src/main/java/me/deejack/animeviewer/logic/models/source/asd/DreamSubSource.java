@@ -52,15 +52,16 @@ public class DreamSubSource extends ParsedHttpSource {
     for (Filter filter : filters.getFilters()) {
       url.append(filter.getFilterId()).append("=").append(filter.getFilterValue()).append("&");
     }
+    System.out.println(url);
     return ConnectionUtility.connect(url.toString(), false);
   }
 
   @Override
   public Filter[] getFilters() {
     return new Filter[]{
-            new ComboBoxFilter("genres", "Genres", getGenres()),
-            new ComboBoxFilter("status", "Status", getStatus()),
-            new ComboBoxFilter("sort", "Sort", getSort())
+            new ComboBoxFilter("genere", "Genres", getGenres()),
+            new ComboBoxFilter("conclusi", "Status", getStatus()),
+            new ComboBoxFilter("ordina", "Sort", getSort())
     };
   }
 

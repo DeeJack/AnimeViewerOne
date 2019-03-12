@@ -1,9 +1,9 @@
 package me.deejack.animeviewer.gui.async;
 
-import java.util.Collections;
 import java.util.List;
 import javafx.concurrent.Task;
 import me.deejack.animeviewer.gui.controllers.AnimeSceneController;
+import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
 import static me.deejack.animeviewer.gui.App.getSite;
@@ -22,12 +22,13 @@ public class SearchByNameAsync extends Task<List<Anime>> {
 
   @Override
   public void succeeded() {
+    System.out.println(getValue().size());
     new AnimeSceneController(getValue(), 1, true, null, searchText);
   }
 
   @Override
   public void failed() {
-        /*SceneUtility.handleException(getException());
-        super.failed();*/
+    SceneUtility.handleException(getException());
+    super.failed();
   }
 }

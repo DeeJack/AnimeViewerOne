@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.controllers.AnimeDetailController;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
@@ -22,7 +23,7 @@ public class AnimeBox extends VBox {
 
   public void setUp() {
     setOnMouseReleased((e) -> {
-      if (e.isPrimaryButtonDown())
+      if (e.getButton() == MouseButton.PRIMARY)
         loadElement();
     });
     ImageView view = createView();

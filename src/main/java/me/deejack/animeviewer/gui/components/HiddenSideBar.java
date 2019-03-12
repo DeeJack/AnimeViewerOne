@@ -19,6 +19,7 @@ public class HiddenSideBar extends VBox {
   public HiddenSideBar(Button btnOpen) {
     this.btnOpen = btnOpen;
     getChildren().add(btnClose);
+    setTranslateX(200);
     setWidth(350);
     setMinWidth(350);
     registerEvents();

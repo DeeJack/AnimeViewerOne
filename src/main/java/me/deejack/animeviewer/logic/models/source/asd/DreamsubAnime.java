@@ -10,6 +10,7 @@ import me.deejack.animeviewer.logic.anime.dto.AnimeStatus;
 import me.deejack.animeviewer.logic.anime.dto.Genre;
 import me.deejack.animeviewer.logic.models.anime.AnimeImpl;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+import me.deejack.animeviewer.logic.utils.GeneralUtility;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -25,9 +26,11 @@ public class DreamsubAnime extends AnimeImpl {
     String subInfo = info.substring(info.indexOf("Genere:"));
     subInfo = subInfo.substring(0, subInfo.indexOf("\n"));
     getAnimeInformation().setGenres(Arrays.stream(subInfo.split(", ")).map(Genre::new).collect(Collectors.toList()));
-    String status = info.substring(info.indexOf("Episodi:"));
-    status = status.substring(0, status.indexOf("\n"));
+    String status = info.substring(info.indexOf("Episodi:") + "Episodi: ".length());
+    status = status.substring(0, status.indexOf("\n")).trim();
+    getAnimeInformation().setEpisodes(GeneralUtility.tryParse(status.substring(0, status.length() - 1)).orElse(-2));
     getAnimeInformation().setAnimeStatus(status.contains("+") ? AnimeStatus.ONGOING : AnimeStatus.COMPLETED);
+    getAnimeInformation().setPlot(document.getElementById("actContTrama").text());
     return getAnimeInformation();
   }
 

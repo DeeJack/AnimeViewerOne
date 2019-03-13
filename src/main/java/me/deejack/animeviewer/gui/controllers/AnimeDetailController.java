@@ -19,18 +19,20 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import me.deejack.animeviewer.gui.App;
+import me.deejack.animeviewer.gui.components.animedetail.ImageFavorite;
+import me.deejack.animeviewer.gui.components.animedetail.ListViewEpisodes;
 import me.deejack.animeviewer.gui.controllers.download.DownloadController;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.anime.dto.Season;
-import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
@@ -72,17 +74,10 @@ public class AnimeDetailController implements BaseScene {
   private void setupScene() {
     root = (Pane) SceneUtility.loadParent("/scenes/animeDetailResp.fxml");
     content = (Pane) ((ScrollPane) root.lookup("#scrollPane")).getContent();
-    ImageView imageFavorite = (ImageView) content.lookup("#imgFavorite");
-    if (anime.isFavorite())
-      imageFavorite.setImage(new Image(App.class.getResourceAsStream("/assets/favorite.png")));
-    imageFavorite.setOnMouseClicked((event) -> {
-      anime.toggleFavorite();
-      if (anime.isFavorite())
-        imageFavorite.setImage(new Image(App.class.getResourceAsStream("/assets/favorite.png")));
-      else
-        imageFavorite.setImage(new Image(App.class.getResourceAsStream("/assets/non-favorite.png")));
-      Favorite.getInstance().saveToFile();
-    });
+    //ImageView imageFavorite = (ImageView) content.lookup("#imgFavorite");
+    ImageFavorite imageFavorite = new ImageFavorite(anime);
+    ((VBox) content.lookup("#vBoxImg")).getChildren().add(imageFavorite);
+    ((BorderPane) content).setBottom(new ListViewEpisodes(anime));
   }
 
   private void layout() {
@@ -115,7 +110,7 @@ public class AnimeDetailController implements BaseScene {
       return;
     }
     setRoot(this);
-    lstViewEpisodes.setPrefHeight(158 + (SceneUtility.getStage().getScene().getHeight() - 530));
+    //lstViewEpisodes.setPrefHeight(158 + (SceneUtility.getStage().getScene().getHeight() - 530));
   }
 
   private void loadEpisodes() {
@@ -147,19 +142,19 @@ public class AnimeDetailController implements BaseScene {
     }
     Label download = new Label("Download");
     download.setOnMouseClicked((ex) -> download(episode));
-    Label streaming = new Label("Streaming");
-    streaming.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
+    //Label streaming = new Label("Streaming");
+    //streaming.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
     download.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
     Label releaseDate = new Label("");
-    if (episode.getReleaseDate() != null)
-      releaseDate.setText("[" + episode.getReleaseDate() + "]  -  ");
-    streaming.setOnMouseClicked((ex) -> {
+    /*if (episode.getReleaseDate() != null)
+      releaseDate.setText("[" + episode.getReleaseDate() + "]  -  ");*/
+    /*streaming.setOnMouseClicked((ex) -> {
       showWaitAndLoad("Caricando link");
       new AnimePlayer(episode, anime).streaming();
-    });
+    });*/
     lstViewEpisodes.widthProperty().addListener((event, oldValue, newValue) -> title.setMaxWidth(newValue.doubleValue() - (250)));
     title.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
-    HBox box = new HBox(title, releaseDate, download, new Label(" - "), streaming);
+    //HBox box = new HBox(title, releaseDate, download, new Label(" - "), streaming);
     if (History.getHistory().contains(anime) && History.getHistory().get(anime).getEpisodesHistory().contains(episode)) {
       long totalSeconds = (long) History.getHistory().get(anime).getEpisodesHistory().get(History.getHistory().get(anime).getEpisodesHistory().indexOf(episode)).getSecondsWatched();
       int seconds = (int) Duration.ofSeconds(totalSeconds).getSeconds() % 60 % 60;

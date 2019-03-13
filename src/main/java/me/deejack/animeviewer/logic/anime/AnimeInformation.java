@@ -1,7 +1,6 @@
 package me.deejack.animeviewer.logic.anime;
 
 import com.google.gson.annotations.Expose;
-import java.text.DecimalFormat;
 import java.util.List;
 import me.deejack.animeviewer.logic.anime.dto.Genre;
 import me.deejack.animeviewer.logic.anime.dto.Status;
@@ -43,7 +42,7 @@ public class AnimeInformation {
    * The plot for this anime
    */
   @Expose
-  private String plot;
+  private String plot = "";
   /**
    * The animeStatus of the anime, like COMPLETE or ON_GOING
    */
@@ -119,8 +118,8 @@ public class AnimeInformation {
 
   @Override
   public String toString() {
-    return String.format("Titolo: %s, Voto: %s\nEpisodi: %d\nGeneri: %s\nStato: %s\nUrl: %s",
-            name, new DecimalFormat("#.##").format(rating), episodes,
-            GeneralUtility.genreListToString(genres, ", "), animeStatus, url);
+    return String.format("Titolo: %s\nEpisodi: %d\nGeneri: %s\nStato: %s\nUrl: %s\nTrama: %s",
+            name/*, new DecimalFormat("#.##").format(rating)*/, episodes,
+            GeneralUtility.genreListToString(genres, ", "), animeStatus, url, getPlot());
   }
 }

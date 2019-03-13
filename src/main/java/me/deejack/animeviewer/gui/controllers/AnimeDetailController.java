@@ -45,10 +45,9 @@ public class AnimeDetailController implements BaseScene {
   private final Anime anime;
   private Pane root;
   private Pane content;
-  private Button btnBack;
   private TextArea info;
   private ImageView imageView;
-  private ListView<Node> lstViewEpisodes;
+ // private ListView<Node> lstViewEpisodes;
 
   public AnimeDetailController(Anime anime) {
     this.anime = anime;
@@ -81,11 +80,11 @@ public class AnimeDetailController implements BaseScene {
   }
 
   private void layout() {
-    btnBack = (Button) root.lookup("#btnBack");
+    /*btnBack = (Button) root.lookup("#btnBack");*/
     imageView = (ImageView) content.lookup("#image");
     info = (TextArea) content.lookup("#description");
-    lstViewEpisodes = (ListView<Node>) content.getChildren().get(2);
-    lstViewEpisodes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    //lstViewEpisodes = (ListView<Node>) content.getChildren().get(2);
+    //lstViewEpisodes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
   }
 
   private void setValues() {
@@ -99,9 +98,7 @@ public class AnimeDetailController implements BaseScene {
 
     Task<Image> task = SceneUtility.loadImage(anime.getAnimeInformation().getImageUrl());
     Platform.runLater(() -> task.setOnSucceeded((value) -> imageView.setImage(task.getValue())));
-    Platform.runLater(() -> {
-      info.setText(anime.getAnimeInformation().toString());
-    });
+    Platform.runLater(() -> info.setText(anime.getAnimeInformation().toString()));
   }
 
   private void loadScene() {
@@ -114,9 +111,9 @@ public class AnimeDetailController implements BaseScene {
   }
 
   private void loadEpisodes() {
-    for (Episode episode : anime.getEpisodes()) {
+    /*for (Episode episode : anime.getEpisodes()) {
       addEpisode(episode);
-    }
+    }*/
     /*int i = 1;
     for (Season season : anime.getEpisodes()) {
       Label labelSeas = new Label("Stagione " + (i++) + ": " + season.getName());
@@ -132,56 +129,47 @@ public class AnimeDetailController implements BaseScene {
     }*/
   }
 
-  private void addEpisode(Episode episode) {
+  /*private void addEpisode(Episode episode) {
     Label title = new Label(episode.getNumber() + " - " + episode.getTitle());
     if (episode.getTitle().isEmpty())
       title.setText("Episodio " + episode.getNumber());
     if (episode.getUrl().isEmpty()) {
       showNotReleased(episode, title);
       return;
-    }
-    Label download = new Label("Download");
-    download.setOnMouseClicked((ex) -> download(episode));
+      }
+      Label download = new Label("Download");
+      download.setOnMouseClicked((ex) -> download(episode));
     //Label streaming = new Label("Streaming");
     //streaming.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
     download.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
     Label releaseDate = new Label("");
-    /*if (episode.getReleaseDate() != null)
-      releaseDate.setText("[" + episode.getReleaseDate() + "]  -  ");*/
-    /*streaming.setOnMouseClicked((ex) -> {
+    *//*if (episode.getReleaseDate() != null)
+      releaseDate.setText("[" + episode.getReleaseDate() + "]  -  ");*//*
+    *//*streaming.setOnMouseClicked((ex) -> {
       showWaitAndLoad("Caricando link");
       new AnimePlayer(episode, anime).streaming();
-    });*/
+    });*//*
     lstViewEpisodes.widthProperty().addListener((event, oldValue, newValue) -> title.setMaxWidth(newValue.doubleValue() - (250)));
     title.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
     //HBox box = new HBox(title, releaseDate, download, new Label(" - "), streaming);
-    if (History.getHistory().contains(anime) && History.getHistory().get(anime).getEpisodesHistory().contains(episode)) {
-      long totalSeconds = (long) History.getHistory().get(anime).getEpisodesHistory().get(History.getHistory().get(anime).getEpisodesHistory().indexOf(episode)).getSecondsWatched();
-      int seconds = (int) Duration.ofSeconds(totalSeconds).getSeconds() % 60 % 60;
-      int minutes = (int) Duration.ofSeconds(totalSeconds).toMinutes() % 60;
-      int hours = (int) Duration.ofSeconds(totalSeconds).toHours();
-      Label watched = new Label(String.format("Visto per: %02d:%02d:%02d", hours, minutes, seconds));
-      box.getChildren().add(1, watched);
-      box.getChildren().add(2, new Label(" - "));
-    }
     HBox.setHgrow(title, Priority.ALWAYS);
     lstViewEpisodes.getItems().add(box);
-  }
+  }*/
 
-  private void showNotReleased(Episode episode, Label title) {
+  /*private void showNotReleased(Episode episode, Label title) {
     Label notReleased = new Label("[Non ancora disponibile]");
     Label releaseDate = new Label("[" + episode.getReleaseDate() + "]  -  ");
     HBox box = new HBox(title, releaseDate, notReleased);
     //title.setPrefWidth(lstViewEpisodes.getPrefWidth() - (notReleased.getWidth() + releaseDate.getWidth() + 25));
     HBox.setHgrow(title, Priority.ALWAYS);
     lstViewEpisodes.getItems().add(box);
-  }
+  }*/
 
   private void registerEvents() {
-    btnBack.setOnMouseClicked((event -> SceneUtility.goToPreviousScene()));
-    SceneUtility.getStage().getScene().heightProperty().addListener(((observable, oldValue, newValue) ->
+   /* btnBack.setOnMouseClicked((event -> SceneUtility.goToPreviousScene()));*/
+    /*SceneUtility.getStage().getScene().heightProperty().addListener(((observable, oldValue, newValue) ->
             lstViewEpisodes.setPrefHeight(158 + (newValue.doubleValue() - 523))
-    ));
+    ));*/
   }
 
   private void sagaRightClick(Season season, double x, double y) {

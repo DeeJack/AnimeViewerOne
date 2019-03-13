@@ -13,11 +13,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import me.deejack.animeviewer.gui.components.ButtonBack?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
     <HBox alignment="CENTER">
         <AnchorPane prefHeight="525.0" prefWidth="71.0" HBox.hgrow="ALWAYS">
-            <Button id="btnBack" fx:id="btnBack" alignment="CENTER" ellipsisString="&lt;" layoutY="2.0"
-                    mnemonicParsing="false" prefHeight="29.0" prefWidth="29.0" text="&lt;"/>
+            <!--<Button id="btnBack" fx:id="btnBack" alignment="CENTER" ellipsisString="&lt;" layoutY="2.0"
+                    mnemonicParsing="false" prefHeight="29.0" prefWidth="29.0" text="&lt;"/>-->
+            <ButtonBack/>
         </AnchorPane>
         <ScrollPane fx:id="scrollPane" fitToWidth="true" HBox.hgrow="ALWAYS">
             <BorderPane>

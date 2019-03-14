@@ -30,8 +30,6 @@ public class ItemEpisode extends HBox {
     this.anime = anime;
     this.parent = parent;
     setWidth(530);
-    setHeight(20);
-    setBackground(new Background(new BackgroundFill(Paint.valueOf("red"), CornerRadii.EMPTY, null)));
     initialize();
   }
 
@@ -61,7 +59,7 @@ public class ItemEpisode extends HBox {
   }
 
   public Label createReleaseDate() {
-    return new Label("[" + episode.getReleaseDate() + "]");
+    return new Label("[" + episode.getReleaseDate() + "] - ");
   }
 
   private HBox createStreamingDownload() {

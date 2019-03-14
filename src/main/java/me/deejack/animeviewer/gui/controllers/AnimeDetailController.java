@@ -1,39 +1,23 @@
 package me.deejack.animeviewer.gui.controllers;
 
-import java.awt.Desktop;
-import java.net.URI;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import me.deejack.animeviewer.gui.components.animedetail.ImageFavorite;
+import me.deejack.animeviewer.gui.components.animedetail.AnimeInfoBox;
+import me.deejack.animeviewer.gui.components.animedetail.ImageAnime;
 import me.deejack.animeviewer.gui.components.animedetail.ListViewEpisodes;
 import me.deejack.animeviewer.gui.controllers.download.DownloadController;
-import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.anime.dto.Season;
-import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 
@@ -44,10 +28,6 @@ import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 public class AnimeDetailController implements BaseScene {
   private final Anime anime;
   private Pane root;
-  private Pane content;
-  private TextArea info;
-  private ImageView imageView;
- // private ListView<Node> lstViewEpisodes;
 
   public AnimeDetailController(Anime anime) {
     this.anime = anime;
@@ -59,10 +39,12 @@ public class AnimeDetailController implements BaseScene {
 
   // TODO cambiare nome
   private void load() {
+    if (!Platform.isFxApplicationThread()) {
+      Platform.runLater(this::load);
+      return;
+    }
     setupScene();
     hideWaitLoad();
-    layout();
-    setValues();
     loadScene();
     showWaitAndLoad("Loading anime");
     loadEpisodes();
@@ -72,33 +54,13 @@ public class AnimeDetailController implements BaseScene {
 
   private void setupScene() {
     root = (Pane) SceneUtility.loadParent("/scenes/animeDetailResp.fxml");
-    content = (Pane) ((ScrollPane) root.lookup("#scrollPane")).getContent();
-    //ImageView imageFavorite = (ImageView) content.lookup("#imgFavorite");
-    ImageFavorite imageFavorite = new ImageFavorite(anime);
-    ((VBox) content.lookup("#vBoxImg")).getChildren().add(imageFavorite);
-    ((BorderPane) content).setBottom(new ListViewEpisodes(anime));
-  }
+    Pane content = (Pane) ((ScrollPane) root.lookup("#scrollPane")).getContent();
+    //ImageFavorite imageFavorite = new ImageFavorite(anime);
+    //((Pane) content.lookup("#vBoxImg")).getChildren().add(imageFavorite);
+    ((BorderPane) content).setBottom(new ListViewEpisodes(anime, root));
+    ((Pane) content.lookup("#boxImage")).getChildren().add(new ImageAnime(anime.getAnimeInformation().getImageUrl()));
+    ((BorderPane) content).setCenter(new AnimeInfoBox(anime));
 
-  private void layout() {
-    /*btnBack = (Button) root.lookup("#btnBack");*/
-    imageView = (ImageView) content.lookup("#image");
-    info = (TextArea) content.lookup("#description");
-    //lstViewEpisodes = (ListView<Node>) content.getChildren().get(2);
-    //lstViewEpisodes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-  }
-
-  private void setValues() {
-    ((ButtonBase) content.lookup("#hyperLink")).setOnAction((val) -> {
-      try {
-        Desktop.getDesktop().browse(new URI(anime.getAnimeInformation().getUrl()));
-      } catch (Exception e) {
-        SceneUtility.handleException(e);
-      }
-    });
-
-    Task<Image> task = SceneUtility.loadImage(anime.getAnimeInformation().getImageUrl());
-    Platform.runLater(() -> task.setOnSucceeded((value) -> imageView.setImage(task.getValue())));
-    Platform.runLater(() -> info.setText(anime.getAnimeInformation().toString()));
   }
 
   private void loadScene() {
@@ -145,7 +107,7 @@ public class AnimeDetailController implements BaseScene {
     Label releaseDate = new Label("");
     *//*if (episode.getReleaseDate() != null)
       releaseDate.setText("[" + episode.getReleaseDate() + "]  -  ");*//*
-    *//*streaming.setOnMouseClicked((ex) -> {
+   *//*streaming.setOnMouseClicked((ex) -> {
       showWaitAndLoad("Caricando link");
       new AnimePlayer(episode, anime).streaming();
     });*//*
@@ -166,7 +128,7 @@ public class AnimeDetailController implements BaseScene {
   }*/
 
   private void registerEvents() {
-   /* btnBack.setOnMouseClicked((event -> SceneUtility.goToPreviousScene()));*/
+    /* btnBack.setOnMouseClicked((event -> SceneUtility.goToPreviousScene()));*/
     /*SceneUtility.getStage().getScene().heightProperty().addListener(((observable, oldValue, newValue) ->
             lstViewEpisodes.setPrefHeight(158 + (newValue.doubleValue() - 523))
     ));*/

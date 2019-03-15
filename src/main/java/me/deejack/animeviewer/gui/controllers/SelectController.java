@@ -21,16 +21,7 @@ public class SelectController {
 
   @FXML
   public void initialize() {
-    btnHistory.setOnAction((event) -> {
-      showWaitAndLoad("Caricando cronologia, ricorda di cancellare gli hentai...");
-      setRoot(new FavoriteController(true));
-      hideWaitLoad();
-    });
-    btnFavorite.setOnAction((event) -> {
-      showWaitAndLoad("Caricando i preferiti");
-      setRoot(new FavoriteController(false));
-      hideWaitLoad();
-    });
+
     btnOpenStreaming.setOnAction((event) -> new AnimePlayer(txtLink.getText()));
   }
 }

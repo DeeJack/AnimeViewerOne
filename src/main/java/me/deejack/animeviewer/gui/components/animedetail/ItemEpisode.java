@@ -78,7 +78,7 @@ public class ItemEpisode extends HBox {
 
   private Label createDownload() {
     Label download = new Label("Download");
-    download.setOnMouseClicked((ex) -> download(episode));
+    download.setOnMouseClicked((ex) -> download());
     return download;
   }
 
@@ -86,8 +86,16 @@ public class ItemEpisode extends HBox {
     return new HBox(new Label("[Non ancora disponibile]"));
   }
 
-  private void download(Episode episode) {
+  public void download() {
     DownloadController controller = DownloadController.getDownloadController();
     controller.singleDownload(episode, anime.getAnimeInformation().getName());
+  }
+
+  public Episode getEpisode() {
+    return episode;
+  }
+
+  public Anime getAnime() {
+    return anime;
   }
 }

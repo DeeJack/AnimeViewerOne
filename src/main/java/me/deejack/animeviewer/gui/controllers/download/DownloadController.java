@@ -64,7 +64,7 @@ public final class DownloadController {
 
   public void addDownloads(Iterable<? extends Episode> episodes, String animeName) {
     int prefResolution = DownloadUtility.choseDownloadSettings();
-    AtomicReference<DownloadAsync> previousDownload = null;
+    AtomicReference<DownloadAsync> previousDownload = new AtomicReference<>();
     if (prefResolution == -1)
       return;
     File destination = DownloadUtility.saveDirectory();

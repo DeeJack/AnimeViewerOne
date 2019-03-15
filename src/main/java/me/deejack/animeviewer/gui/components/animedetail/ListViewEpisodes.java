@@ -3,21 +3,31 @@ package me.deejack.animeviewer.gui.components.animedetail;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
 public class ListViewEpisodes extends ListView<ItemEpisode> {
   private final Anime anime;
+  private final OptionMenu optionMenu = new OptionMenu(this);
 
   public ListViewEpisodes(Anime anime, Region root) {
     this.anime = anime;
-    root.heightProperty().addListener((observable, oldValue, newValue) -> {
-      setPrefHeight(getHeight() + ((newValue.doubleValue() - oldValue.doubleValue())));
-      System.out.print(getHeight() + (newValue.doubleValue() - oldValue.doubleValue()));
-      System.out.println("  -  " + (newValue.doubleValue() - oldValue.doubleValue()));
-    });
+    registerEvents(root);
     initialize();
+  }
+
+  private void registerEvents(Region root) {
+    root.heightProperty().addListener((observable, oldValue, newValue) -> {
+      if (oldValue.doubleValue() == 0)
+        return;
+      setPrefHeight(getHeight() + ((newValue.doubleValue() - oldValue.doubleValue())));
+    });
+    setOnMouseReleased((event) -> {
+      if (event.getButton() == MouseButton.SECONDARY)
+        optionMenu.open(event.getScreenX(), event.getScreenY());
+    });
   }
 
   private void initialize() {

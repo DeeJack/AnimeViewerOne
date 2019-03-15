@@ -1,15 +1,9 @@
 package me.deejack.animeviewer.gui.utils;
 
 import javafx.application.Platform;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
-import me.deejack.animeviewer.gui.App;
+import me.deejack.animeviewer.gui.components.loading.LoadingPane;
 
 public final class LoadingUtility {
 
@@ -21,25 +15,10 @@ public final class LoadingUtility {
       Platform.runLater(() -> showWaitAndLoad(msg));
       return;
     }
+    System.out.println("Showing load");
     hideWaitLoad();
-    Region root = (Region) SceneUtility.getStage().getScene().getRoot();
-    ImageView loadGif = new ImageView(new Image(App.class.getResourceAsStream("/assets/load.gif")));
-    loadGif.setFitHeight(100);
-    loadGif.setPreserveRatio(true);
-    Label info = new Label(msg);
-    VBox center = new VBox(loadGif, info);
-    center.setLayoutX(root.getWidth() / 2 + loadGif.getFitWidth());
-    center.setLayoutY(root.getHeight() / 2); //+ loadGif.getFitHeight());
-    AnchorPane layer = new AnchorPane(center);
-    layer.setId("loadingLayer");
-    layer.setPrefWidth(root.getWidth());
-    layer.setPrefHeight(root.getHeight());
-    layer.setStyle("-fx-background-color: rgba(169, 169, 169, 0.7)");
-    //layer.setBackground(new Background(new BackgroundFill(Paint.valueOf("grey"), null, null)));
-    if (root instanceof Pane)
-      ((Pane) root).getChildren().add(layer);
-    else
-      ((Pane) ((ScrollPane) root).getContent()).getChildren().add(layer);
+    Pane root = (Pane) SceneUtility.getStage().getScene().getRoot();
+    root.getChildren().add(new LoadingPane(msg, root));
   }
 
   public static void showWaitAndLoad() {
@@ -59,9 +38,7 @@ public final class LoadingUtility {
     Region root = (Region) SceneUtility.getStage().getScene().getRoot();
     if (root.lookup("#loadingLayer") == null)
       return;
-    if (root instanceof Pane)
-      ((Pane) root).getChildren().remove(root.lookup("#loadingLayer"));
-    else
-      ((Pane) ((ScrollPane) root).getContent()).getChildren().remove(root.lookup("#loadingLayer"));
+    System.out.println("Hiding load");
+    ((Pane) root).getChildren().remove(root.lookup("#loadingLayer"));
   }
 }

@@ -37,30 +37,21 @@ public class AnimeDetailController implements BaseScene {
     anime.loadAsync(this::load);
   }
 
-  // TODO cambiare nome
   private void load() {
     if (!Platform.isFxApplicationThread()) {
       Platform.runLater(this::load);
       return;
     }
     setupScene();
-    hideWaitLoad();
     loadScene();
-    showWaitAndLoad("Loading anime");
-    loadEpisodes();
-    registerEvents();
-    hideWaitLoad();
   }
 
   private void setupScene() {
     root = (Pane) SceneUtility.loadParent("/scenes/animeDetailResp.fxml");
-    Pane content = (Pane) ((ScrollPane) root.lookup("#scrollPane")).getContent();
-    //ImageFavorite imageFavorite = new ImageFavorite(anime);
-    //((Pane) content.lookup("#vBoxImg")).getChildren().add(imageFavorite);
-    ((BorderPane) content).setBottom(new ListViewEpisodes(anime, root));
+    BorderPane content = (BorderPane) ((ScrollPane) root.lookup("#scrollPane")).getContent();
+    content.setBottom(new ListViewEpisodes(anime, root));
     ((Pane) content.lookup("#boxImage")).getChildren().add(new ImageAnime(anime.getAnimeInformation().getImageUrl()));
-    ((BorderPane) content).setCenter(new AnimeInfoBox(anime));
-
+    content.setCenter(new AnimeInfoBox(anime));
   }
 
   private void loadScene() {
@@ -70,68 +61,6 @@ public class AnimeDetailController implements BaseScene {
     }
     setRoot(this);
     //lstViewEpisodes.setPrefHeight(158 + (SceneUtility.getStage().getScene().getHeight() - 530));
-  }
-
-  private void loadEpisodes() {
-    /*for (Episode episode : anime.getEpisodes()) {
-      addEpisode(episode);
-    }*/
-    /*int i = 1;
-    for (Season season : anime.getEpisodes()) {
-      Label labelSeas = new Label("Stagione " + (i++) + ": " + season.getName());
-      labelSeas.setStyle("font-weight: bold");
-      labelSeas.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
-      labelSeas.setOnContextMenuRequested((event) -> sagaRightClick(season, event.getScreenX(), event.getScreenY()));
-      //labelSeas.setPrefWidth(lstViewEpisodes.getPrefWidth());
-      HBox.setHgrow(labelSeas, Priority.ALWAYS);
-      lstViewEpisodes.getItems().add(labelSeas);
-      for (Episode episode : season.getEpisodes()) {
-        addEpisode(episode);
-      }
-    }*/
-  }
-
-  /*private void addEpisode(Episode episode) {
-    Label title = new Label(episode.getNumber() + " - " + episode.getTitle());
-    if (episode.getTitle().isEmpty())
-      title.setText("Episodio " + episode.getNumber());
-    if (episode.getUrl().isEmpty()) {
-      showNotReleased(episode, title);
-      return;
-      }
-      Label download = new Label("Download");
-      download.setOnMouseClicked((ex) -> download(episode));
-    //Label streaming = new Label("Streaming");
-    //streaming.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
-    download.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
-    Label releaseDate = new Label("");
-    *//*if (episode.getReleaseDate() != null)
-      releaseDate.setText("[" + episode.getReleaseDate() + "]  -  ");*//*
-   *//*streaming.setOnMouseClicked((ex) -> {
-      showWaitAndLoad("Caricando link");
-      new AnimePlayer(episode, anime).streaming();
-    });*//*
-    lstViewEpisodes.widthProperty().addListener((event, oldValue, newValue) -> title.setMaxWidth(newValue.doubleValue() - (250)));
-    title.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
-    //HBox box = new HBox(title, releaseDate, download, new Label(" - "), streaming);
-    HBox.setHgrow(title, Priority.ALWAYS);
-    lstViewEpisodes.getItems().add(box);
-  }*/
-
-  /*private void showNotReleased(Episode episode, Label title) {
-    Label notReleased = new Label("[Non ancora disponibile]");
-    Label releaseDate = new Label("[" + episode.getReleaseDate() + "]  -  ");
-    HBox box = new HBox(title, releaseDate, notReleased);
-    //title.setPrefWidth(lstViewEpisodes.getPrefWidth() - (notReleased.getWidth() + releaseDate.getWidth() + 25));
-    HBox.setHgrow(title, Priority.ALWAYS);
-    lstViewEpisodes.getItems().add(box);
-  }*/
-
-  private void registerEvents() {
-    /* btnBack.setOnMouseClicked((event -> SceneUtility.goToPreviousScene()));*/
-    /*SceneUtility.getStage().getScene().heightProperty().addListener(((observable, oldValue, newValue) ->
-            lstViewEpisodes.setPrefHeight(158 + (newValue.doubleValue() - 523))
-    ));*/
   }
 
   private void sagaRightClick(Season season, double x, double y) {

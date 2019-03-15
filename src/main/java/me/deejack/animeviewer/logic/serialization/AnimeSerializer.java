@@ -15,7 +15,7 @@ public final class AnimeSerializer<T> {
   static {
     gson = new GsonBuilder()
             .registerTypeAdapter(Anime.class, new GeneralTypeAdapter<Anime>())
-            .registerTypeAdapter(AnimeInformation.class, new GeneralTypeAdapter<AnimeInformation>())
+            //.registerTypeAdapter(AnimeInformation.class, new GeneralTypeAdapter<AnimeInformation>())
             .registerTypeAdapter(Episode.class, new GeneralTypeAdapter<Episode>())
             .disableHtmlEscaping()
             .setPrettyPrinting()

@@ -25,7 +25,7 @@ public class AnimeInformation {
   @Expose
   private final String imageUrl;
   /**
-   * When it was released TODO in LocalDate?
+   * When it ,was released TODO in LocalDate?
    */
   @Expose
   private short releaseYear;

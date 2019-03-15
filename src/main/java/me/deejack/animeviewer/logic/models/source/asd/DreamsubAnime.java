@@ -22,6 +22,8 @@ public class DreamsubAnime extends AnimeImpl {
 
   @Override
   public AnimeInformation parseAnimeDetails(Document document) {
+    if (document.getElementsByClass("innerText").isEmpty()) // MOVIE / OAV !!!
+      return new AnimeInformation((short) -1, "", 0, 0, "", new ArrayList<>(), "", AnimeStatus.UNKNOWN);
     String info = document.getElementsByClass("innerText").get(0).wholeText();
     String subInfo = info.substring(info.indexOf("Genere:"));
     subInfo = subInfo.substring(0, subInfo.indexOf("\n"));

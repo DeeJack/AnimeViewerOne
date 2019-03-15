@@ -29,7 +29,7 @@ public final class History {
 
   public boolean contains(Anime anime) {
     return viewedElements.stream().map(HistoryElement::getViewedElement).anyMatch(element -> element.equals(anime) ||
-            element.getAnimeInformation().getUrl().equals(anime.getAnimeInformation().getUrl()));
+            element.getUrl().equals(anime.getUrl()));
   }
 
   public void remove(Anime anime) {
@@ -41,7 +41,7 @@ public final class History {
   public HistoryElement get(Anime anime) {
     for (HistoryElement historyElement : viewedElements) {
       if (historyElement.getViewedElement().equals(anime) ||
-              historyElement.getViewedElement().getAnimeInformation().getUrl().equals(anime.getAnimeInformation().getUrl()))
+              historyElement.getViewedElement().getUrl().equals(anime.getUrl()))
         return historyElement;
     }
     return null;

@@ -21,8 +21,6 @@ public class AnimeInformation {
    */
   private final double rating;
   @Expose
-  private final String url;
-  @Expose
   private final String imageUrl;
   /**
    * When it ,was released TODO in LocalDate?
@@ -49,14 +47,13 @@ public class AnimeInformation {
   private Status animeStatus;
 
   public AnimeInformation(short releaseYear, String name, int episodes, double rating,
-                          String url, List<Genre> genres, String imageUrl,
+                          List<Genre> genres, String imageUrl,
                           Status animeStatus) {
     this.releaseYear = releaseYear;
     this.name = name;
     this.episodes = episodes;
     this.rating = rating;
     this.genres = genres;
-    this.url = url;
     this.imageUrl = imageUrl;
     this.animeStatus = animeStatus;
   }
@@ -92,10 +89,6 @@ public class AnimeInformation {
     this.genres = genres;
   }
 
-  public String getUrl() {
-    return url;
-  }
-
   public String getImageUrl() {
     return imageUrl;
   }
@@ -118,8 +111,8 @@ public class AnimeInformation {
 
   @Override
   public String toString() {
-    return String.format("Titolo: %s\nEpisodi: %d\nGeneri: %s\nStato: %s\nUrl: %s\nTrama: %s",
+    return String.format("Titolo: %s\nEpisodi: %d\nGeneri: %s\nStato: %s\nTrama: %s",
             name/*, new DecimalFormat("#.##").format(rating)*/, episodes,
-            GeneralUtility.genreListToString(genres, ", "), animeStatus, url, getPlot());
+            GeneralUtility.genreListToString(genres, ", "), animeStatus, getPlot());
   }
 }

@@ -20,7 +20,7 @@ public class AnimeInfoBox extends HBox {
     setMaxHeight(200);
     setBackground(new Background(new BackgroundFill(Paint.valueOf("red"), CornerRadii.EMPTY, null)));
     getChildren().addAll(createInformationArea(anime.getAnimeInformation().toString()),
-            new VBox(createImageFavorite(anime), createOpenInBrowser(anime.getAnimeInformation().getUrl())));
+            new VBox(createImageFavorite(anime), createOpenInBrowser(anime.getUrl())));
   }
 
   private TextArea createInformationArea(String text) {

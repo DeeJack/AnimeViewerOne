@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import me.deejack.animeviewer.gui.components.ListViewSites?>
+<?import me.deejack.animeviewer.gui.components.ButtonHistory?>
+<?import me.deejack.animeviewer.gui.components.ButtonFavorite?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: white;"
            xmlns="http://javafx.com/javafx/8.0.171"
            fx:controller="me.deejack.animeviewer.gui.controllers.SelectController">
@@ -13,8 +15,8 @@
           prefHeight="720.0" prefWidth="1000.0">
         <AnchorPane prefHeight="288.0" prefWidth="572.0">
             <ListViewSites fx:id="lstSites" layoutX="113.0" layoutY="40.0" prefHeight="321.0" prefWidth="347.0"/>
-            <Button fx:id="btnHistory" layoutX="87.0" layoutY="388.0" mnemonicParsing="false" text="Cronologia"/>
-            <Button fx:id="btnFavorite" layoutX="434.0" layoutY="388.0" mnemonicParsing="false" text="Preferiti"/>
+            <ButtonHistory fx:id="btnHistory" layoutX="87.0" layoutY="388.0" mnemonicParsing="false" />
+            <ButtonFavorite fx:id="btnFavorite" layoutX="434.0" layoutY="388.0" mnemonicParsing="false" />
             <TextField fx:id="txtLink" layoutX="87.0" layoutY="462.0" prefHeight="25.0" prefWidth="317.0"
                        promptText="Link streaming (openload, streamango...)"/>
             <Button fx:id="btnOpenStreaming" layoutX="434.0" layoutY="462.0" mnemonicParsing="false"

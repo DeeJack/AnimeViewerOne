@@ -74,14 +74,14 @@ public final class Favorite {
 
   public boolean contains(Anime anime) {
     for (Anime favorite : favorites)
-      if (favorite.getAnimeInformation().getUrl().equals(anime.getAnimeInformation().getUrl()))
+      if (favorite.getUrl().equals(anime.getUrl()))
         return true;
     return false;
   }
 
   public Anime get(String url) {
     for (Anime favorite : favorites)
-      if (favorite.getAnimeInformation().getUrl().equals(url))
+      if (favorite.getUrl().equals(url))
         return favorite;
     return null;
   }

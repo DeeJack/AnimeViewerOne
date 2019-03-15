@@ -20,10 +20,6 @@ import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 
 public class HomeController implements BaseScene {
   @FXML
-  private Button btnFavorites;
-  @FXML
-  private Button btnHistory;
-  @FXML
   private TextField txtStreaming;
   @FXML
   private Button btnStreaming;
@@ -52,8 +48,6 @@ public class HomeController implements BaseScene {
 
   @FXML
   private void initialize() {
-    btnFavorites.setOnAction((event) -> setRoot(new FavoriteController(false)));
-    btnHistory.setOnAction((event) -> setRoot(new FavoriteController(true)));
     btnStreaming.setOnAction((event) -> new AnimePlayer(txtStreaming.getText()));
   }
 

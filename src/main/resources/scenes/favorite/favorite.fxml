@@ -6,13 +6,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import me.deejack.animeviewer.gui.components.ButtonBack?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity"
            minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
            xmlns="http://javafx.com/javafx/8.0.171">
     <children>
         <HBox alignment="CENTER">
             <children>
-                <ScrollPane fx:id="scrollPane" prefHeight="400.0" prefWidth="703.0">
+                <ScrollPane fx:id="scrollPane" prefHeight="400.0" prefWidth="703.0" fitToWidth="true" fitToHeight="true">
                     <content>
                         <VBox fx:id="boxFavorite" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="585.0"
                               spacing="10.0"/>
@@ -20,10 +21,10 @@
                 </ScrollPane>
             </children>
         </HBox>
-        <Button fx:id="btnBack" mnemonicParsing="false" text="&lt;" StackPane.alignment="TOP_LEFT">
+        <ButtonBack fx:id="btnBack" mnemonicParsing="false" StackPane.alignment="TOP_LEFT">
             <StackPane.margin>
                 <Insets left="5.0" top="5.0"/>
             </StackPane.margin>
-        </Button>
+        </ButtonBack>
     </children>
 </StackPane>

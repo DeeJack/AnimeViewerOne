@@ -17,20 +17,20 @@ import org.jsoup.nodes.Element;
 public class DreamsubAnime extends AnimeImpl {
 
   public DreamsubAnime(String name, String url, String imageUrl) {
-    super(new AnimeInformation((short) -1, name, -1, -1, url, new ArrayList<>(), imageUrl, AnimeStatus.UNKNOWN));
+    super(url, new AnimeInformation((short) -1, name, -1, -1, new ArrayList<>(), imageUrl, AnimeStatus.UNKNOWN));
   }
 
   @Override
   public AnimeInformation parseAnimeDetails(Document document) {
     if (document.getElementsByClass("innerText").isEmpty()) // MOVIE / OAV !!!
-      return new AnimeInformation((short) -1, "", 0, 0, "", new ArrayList<>(), "", AnimeStatus.UNKNOWN);
+      return new AnimeInformation((short) -1, "", 0, 0, new ArrayList<>(), "", AnimeStatus.UNKNOWN);
     String info = document.getElementsByClass("innerText").get(0).wholeText();
     String subInfo = info.substring(info.indexOf("Genere:"));
     subInfo = subInfo.substring(0, subInfo.indexOf("\n"));
     getAnimeInformation().setGenres(Arrays.stream(subInfo.split(", ")).map(Genre::new).collect(Collectors.toList()));
     String status = info.substring(info.indexOf("Episodi:") + "Episodi: ".length());
     status = status.substring(0, status.indexOf("\n")).trim();
-    getAnimeInformation().setEpisodes(GeneralUtility.tryParse(status.substring(0, status.length() - 1)).orElse(-2));
+    getAnimeInformation().setEpisodes(GeneralUtility.tryParse(status.replaceAll("\\+", "")).orElse(-2));
     getAnimeInformation().setAnimeStatus(status.contains("+") ? AnimeStatus.ONGOING : AnimeStatus.COMPLETED);
     getAnimeInformation().setPlot(document.getElementById("actContTrama").text());
     return getAnimeInformation();

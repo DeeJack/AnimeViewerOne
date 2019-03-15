@@ -16,6 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import me.deejack.animeviewer.gui.components.favorites.FavoriteItem;
+import me.deejack.animeviewer.gui.components.favorites.HistoryItem;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
@@ -30,35 +32,42 @@ import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
 public class FavoriteController implements BaseScene {
-  private final boolean ishistory;
-  private VBox boxFavorite;
+  private final boolean isHistory;
   private StackPane root;
 
-  public FavoriteController(boolean history) {
-    ishistory = history;
+  public FavoriteController(boolean isHistory) {
+    this.isHistory = isHistory;
     initialize();
   }
 
   public void initialize() {
-    root = (StackPane) SceneUtility.loadParent("/scenes/favorite/favorite.fxml");
-    boxFavorite = (VBox) ((ScrollPane) root.lookup("#scrollPane")).getContent();
-    Button btnBack = (Button) root.lookup("#btnBack");
+    root = (StackPane) SceneUtility.loadParent("/scenes/favorite/favorite.fxml"); // Non serve neanche più
+
+    VBox boxFavorite = (VBox) ((ScrollPane) root.lookup("#scrollPane")).getContent();
+    if (isHistory) {
+      History.getHistory().getViewedElements().stream()
+              .map(HistoryItem::new)
+              .forEach(boxFavorite.getChildren()::add);
+    } else {
+      Favorite.getInstance().getFavorites().stream()
+              .map(FavoriteItem::new)
+              .forEach(boxFavorite.getChildren()::add);
+    }
+    /*Button btnBack = (Button) root.lookup("#btnBack");
     btnBack.setOnAction((event) -> SceneUtility.goToPreviousScene());
-    if (ishistory) {
+    if (isHistory) {
       for (HistoryElement element : History.getHistory().getViewedElements())
         createHistoryElement(element);
     } else {
       for (Anime element : Favorite.getInstance().getFavorites())
         createFavorite(element);
-    }
+    }*/
   }
 
-  private void createFavorite(Anime element) {
+  /*private void createFavorite(Anime element) {
     Pane singleFav = (Pane) SceneUtility.loadParent("/scenes/favorite/singleFavorite.fxml");
     ImageView image = (ImageView) singleFav.lookup("#imgAnime");
     registerEvents(image, singleFav, element);
-    Task<Image> loadImage = SceneUtility.loadImage(element.getAnimeInformation().getImageUrl());
-    loadImage.setOnSucceeded((value) -> image.setImage(loadImage.getValue()));
     Label lblTitle = (Label) singleFav.lookup("#lblTitle");
     lblTitle.setText("Titolo: " + element.getAnimeInformation().getName());
     Label lblEpisodes = (Label) singleFav.lookup("#lblEpisodes");
@@ -149,11 +158,7 @@ public class FavoriteController implements BaseScene {
       if (event.isPrimaryButtonDown())
         new AnimeDetailController(element).loadAsync();
     });
-    imageNode.setOnMousePressed((event) -> {
-      if (event.isPrimaryButtonDown())
-        new AnimeDetailController(element).loadAsync();
-    });
-  }
+  }*/
 
   @Override
   public Parent getRoot() {
@@ -162,7 +167,7 @@ public class FavoriteController implements BaseScene {
 
   @Override
   public String getTitle() {
-    return ishistory ? "Cronologia" : "Preferiti";
+    return isHistory ? "Cronologia" : "Preferiti";
   }
 
   @Override

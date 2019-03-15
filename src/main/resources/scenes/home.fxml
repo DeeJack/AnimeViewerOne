@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import me.deejack.animeviewer.gui.components.ButtonFavorite?>
+<?import me.deejack.animeviewer.gui.components.ButtonHistory?>
 <?import me.deejack.animeviewer.gui.components.ListViewSites?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: white;"
            xmlns="http://javafx.com/javafx/8.0.171"
@@ -41,12 +43,10 @@
             </BorderPane>
             <BorderPane>
                 <left>
-                    <Button fx:id="btnFavorites" mnemonicParsing="false"
-                            text="Vedi preferiti" alignment="CENTER_LEFT"/>
+                    <ButtonFavorite mnemonicParsing="false"/>
                 </left>
                 <right>
-                    <Button fx:id="btnHistory" mnemonicParsing="false"
-                            text="Vedi cronologia" alignment="BOTTOM_RIGHT"/>
+                    <ButtonHistory mnemonicParsing="false" alignment="BOTTOM_RIGHT"/>
                 </right>
             </BorderPane>
         </VBox>

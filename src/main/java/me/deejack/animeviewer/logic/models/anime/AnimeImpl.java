@@ -39,8 +39,8 @@ public abstract class AnimeImpl extends ParsedHttpAnime {
    *
    * @param animeInformation An instance of AnimeInformation that contains the basic infos about the anime, create an instance
    */
-  public AnimeImpl(AnimeInformation animeInformation) {
-    super(animeInformation.getUrl());
+  public AnimeImpl(String url, AnimeInformation animeInformation) {
+    super(url);
     this.animeInformation = animeInformation;
   }
 

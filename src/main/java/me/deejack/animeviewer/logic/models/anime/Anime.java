@@ -20,6 +20,8 @@ public interface  Anime {
 
   boolean hasBeenLoaded();
 
+  String getUrl();
+
   /**
    * Toggle the favorite, if it was one, it removes it, otherwise it adds the element to the favorite list
    *

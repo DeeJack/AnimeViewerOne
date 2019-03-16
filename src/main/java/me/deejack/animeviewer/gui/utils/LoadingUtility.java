@@ -15,7 +15,6 @@ public final class LoadingUtility {
       Platform.runLater(() -> showWaitAndLoad(msg));
       return;
     }
-    System.out.println("Showing load");
     hideWaitLoad();
     Pane root = (Pane) SceneUtility.getStage().getScene().getRoot();
     root.getChildren().add(new LoadingPane(msg, root));
@@ -35,10 +34,11 @@ public final class LoadingUtility {
       Platform.runLater(LoadingUtility::hideWaitLoad);
       return;
     }
+    if(SceneUtility.getStage().getScene() == null)
+      return;
     Region root = (Region) SceneUtility.getStage().getScene().getRoot();
     if (root.lookup("#loadingLayer") == null)
       return;
-    System.out.println("Hiding load");
     ((Pane) root).getChildren().remove(root.lookup("#loadingLayer"));
   }
 }

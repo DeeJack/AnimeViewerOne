@@ -4,25 +4,26 @@ import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import me.deejack.animeviewer.gui.components.favorites.FavoriteItem;
+import me.deejack.animeviewer.gui.components.favorites.HistoryItem;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.favorite.Favorite;
+import me.deejack.animeviewer.logic.history.History;
 
-public class FavoriteController implements BaseScene {
+public class HistoryController implements BaseScene {
   private StackPane root;
 
-  public FavoriteController() {
+  public HistoryController() {
     initialize();
   }
 
-  public void initialize() {
+  private void initialize() {
     root = (StackPane) SceneUtility.loadParent("/scenes/favorite/favorite.fxml"); // Non serve neanche più
 
     VBox boxFavorite = (VBox) ((ScrollPane) root.lookup("#scrollPane")).getContent();
-    Favorite.getInstance().getFavorites().stream()
-            .map(FavoriteItem::new)
+
+    History.getHistory().getViewedElements().stream()
+            .map(HistoryItem::new)
             .forEach(boxFavorite.getChildren()::add);
   }
 
@@ -33,11 +34,11 @@ public class FavoriteController implements BaseScene {
 
   @Override
   public String getTitle() {
-    return LocalizedApp.getInstance().getString("FavoriteWindowTitle");
+    return LocalizedApp.getInstance().getString("HistoryWindowTitle");
   }
 
   @Override
   public String getName() {
-    return "Favorite";
+    return "History";
   }
 }

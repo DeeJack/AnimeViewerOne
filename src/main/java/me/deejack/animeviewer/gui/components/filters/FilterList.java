@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.async.FilterAsync;
 import me.deejack.animeviewer.gui.components.HiddenSideBar;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 
 public class FilterList {
   private final Filter[] filters;
@@ -34,7 +35,7 @@ public class FilterList {
 
       sideBar.getChildren().add(box);
     }
-    Button button = new Button("Applica filtri");
+    Button button = new Button(LocalizedApp.getInstance().getString("ApplyFilterButton"));
     button.setOnAction((event) -> new Thread(new FilterAsync(this, 1)).start());
     sideBar.getChildren().add(button);
   }

@@ -9,6 +9,7 @@ public class AlwaysOnTopImage extends ImageView {
   public AlwaysOnTopImage() {
     setFitHeight(25);
     setFitWidth(31);
+    setPickOnBounds(true);
     setImage(new Image(App.class.getResourceAsStream("/assets/pin.png")));
     setOnMouseClicked((event) -> SceneUtility.getStage().setAlwaysOnTop(!SceneUtility.getStage().isAlwaysOnTop()));
   }

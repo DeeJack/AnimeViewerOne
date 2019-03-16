@@ -6,6 +6,7 @@ import javafx.scene.layout.HBox;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.async.LoadPageAsync;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 
@@ -47,7 +48,7 @@ public class PagesBox extends HBox {
       setDisable(!isOtherPage);
       setOnMousePressed((a) -> {
         if (a.isPrimaryButtonDown()) {
-          showWaitAndLoad("Cambiando pagina...");
+          showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingSwitchPage"));
           new Thread(new LoadPageAsync(filters, search, isSearch, page + elementsMultiplier - 1, elementsMultiplier)).start();
         }
       });

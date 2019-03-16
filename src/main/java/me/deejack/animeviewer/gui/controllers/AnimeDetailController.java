@@ -1,28 +1,17 @@
 package me.deejack.animeviewer.gui.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import me.deejack.animeviewer.gui.components.animedetail.AnimeInfoBox;
 import me.deejack.animeviewer.gui.components.animedetail.ImageAnime;
 import me.deejack.animeviewer.gui.components.animedetail.ListViewEpisodes;
-import me.deejack.animeviewer.gui.controllers.download.DownloadController;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.anime.dto.Season;
 import me.deejack.animeviewer.logic.models.anime.Anime;
-import me.deejack.animeviewer.logic.models.episode.Episode;
 
-import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
-import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 
 public class AnimeDetailController implements BaseScene {
@@ -60,39 +49,6 @@ public class AnimeDetailController implements BaseScene {
       return;
     }
     setRoot(this);
-    //lstViewEpisodes.setPrefHeight(158 + (SceneUtility.getStage().getScene().getHeight() - 530));
-  }
-
-  private void sagaRightClick(Season season, double x, double y) {
-    MenuItem downloadSaga = new MenuItem("Scarica intera saga");
-    downloadSaga.setOnAction((event) -> downloadSaga(season));
-    MenuItem downloadAll = new MenuItem("Scarica tutti gli episodi");
-    downloadAll.setOnAction((event) -> downloadAll());
-    ContextMenu menu = new ContextMenu(downloadSaga, downloadAll);
-    menu.show(SceneUtility.getStage(), x, y);
-  }
-
-  private void downloadSaga(Season season) {
-    List<Episode> episodes = new ArrayList<>(season.getEpisodes());
-    downloadEpisodes(episodes);
-  }
-
-  private void downloadEpisodes(List<Episode> episodes) {
-    DownloadController controller = DownloadController.getDownloadController();
-    controller.addDownloads(episodes, anime.getAnimeInformation().getName());
-  }
-
-  private void downloadAll() {
-    List<Episode> episodes = new ArrayList<>();
-    /*for (Season season : anime.getEpisodes()) {
-      episodes.addAll(season.getEpisodes());
-    }*/
-    downloadEpisodes(episodes);
-  }
-
-  private void download(Episode episode) {
-    DownloadController controller = DownloadController.getDownloadController();
-    controller.singleDownload(episode, anime.getAnimeInformation().getName());
   }
 
   @Override
@@ -102,7 +58,7 @@ public class AnimeDetailController implements BaseScene {
 
   @Override
   public String getTitle() {
-    return "Dettaglio " + anime.getAnimeInformation().getName();
+    return LocalizedApp.getInstance().getString("AnimeDetailWindowTitle") + " " + anime.getAnimeInformation().getName();
   }
 
   @Override

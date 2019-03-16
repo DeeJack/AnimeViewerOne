@@ -14,13 +14,13 @@
     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
           prefHeight="720.0" prefWidth="1000.0">
         <AnchorPane prefHeight="288.0" prefWidth="572.0">
-            <ListViewSites fx:id="lstSites" layoutX="113.0" layoutY="40.0" prefHeight="321.0" prefWidth="347.0"/>
+            <ListViewSites layoutX="113.0" layoutY="40.0" prefHeight="321.0" prefWidth="347.0"/>
             <ButtonHistory fx:id="btnHistory" layoutX="87.0" layoutY="388.0" mnemonicParsing="false" />
             <ButtonFavorite fx:id="btnFavorite" layoutX="434.0" layoutY="388.0" mnemonicParsing="false" />
             <TextField fx:id="txtLink" layoutX="87.0" layoutY="462.0" prefHeight="25.0" prefWidth="317.0"
-                       promptText="Link streaming (openload, streamango...)"/>
+                       promptText="%OpenExternalVidPromptText"/>
             <Button fx:id="btnOpenStreaming" layoutX="434.0" layoutY="462.0" mnemonicParsing="false"
-                    prefHeight="25.0" prefWidth="58.0" text="Apri"/>
+                    prefHeight="25.0" maxWidth="Infinity" text="%OpenExternalVidButtonText"/>
         </AnchorPane>
     </HBox>
 </StackPane>

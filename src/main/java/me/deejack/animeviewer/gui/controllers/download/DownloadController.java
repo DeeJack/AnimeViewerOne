@@ -19,6 +19,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import me.deejack.animeviewer.gui.App;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
@@ -29,6 +30,9 @@ import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
+/**
+ * Number of time this class has been rewritten: 3
+ */
 public final class DownloadController {
   private static final DownloadController downloadController = new DownloadController();
   private final Stage stage = new Stage();
@@ -85,7 +89,7 @@ public final class DownloadController {
   }
 
   public void singleDownload(Episode episode, String animeName) {
-    showWaitAndLoad("Iniziando download...");
+    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingStartDownload"));
     try {
       StreamingLink downloadLink = DownloadUtility.chooseSource(episode);
       if (downloadLink == null)
@@ -100,11 +104,8 @@ public final class DownloadController {
   }
 
   private void processLink(StreamingLink downloadLink, WebBypassUtility.CallBack<String> callBack) {
-    if (downloadLink.getSource().contains("openload")) {
+    if (downloadLink.getSource().contains("openload") || downloadLink.getSource().contains("streamango")) {
       WebBypassUtility.getOpenloadLink(downloadLink.getLink(), "https://openload.co",
-              callBack);
-    } else if (downloadLink.getSource().contains("streamango")) {
-      WebBypassUtility.getOpenloadLink(downloadLink.getLink(), "https://streamango.com",
               callBack);
     } else {
       callBack.onSuccess(downloadLink.getLink());

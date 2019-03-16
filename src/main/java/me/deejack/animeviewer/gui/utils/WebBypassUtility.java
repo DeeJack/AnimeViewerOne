@@ -102,7 +102,7 @@ public final class WebBypassUtility {
     }
     CookieManager cookieManager = registerCookieManager();
 
-    LoadingUtility.showWaitAndLoad("Loading cloudflare");
+    LoadingUtility.showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingCloudflare"));
     Pair<WebView, Stage> pair = createWebView();
     WebEngine engine = pair.getKey().getEngine();
     engine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {

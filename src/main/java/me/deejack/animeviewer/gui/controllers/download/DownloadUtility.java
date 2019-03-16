@@ -65,7 +65,7 @@ public final class DownloadUtility {
    */
   public static StreamingLink chooseSource(Episode episode) throws IOException {
     AtomicReference<StreamingLink> selectedLink = new AtomicReference<>(null);
-    if (episode.getUrl().isEmpty()) {
+    if (episode.getUrl() == null || episode.getUrl().isEmpty()) {
       Alert alert = new Alert(Alert.AlertType.WARNING, "Nessuno streaming disponibile, probabilmente deve ancora uscire l'episodio",
               ButtonType.OK);
       alert.showAndWait();

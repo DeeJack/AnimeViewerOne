@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.history.HistoryElement;
 
@@ -18,7 +19,7 @@ public class HistoryItem extends SingleFavorite {
     setAnimeInfo();
   }
 
-  private EventHandler<ActionEvent> getOnRemove() {
+  private EventHandler<ActionEvent> getOnRemove() { // TODO: rimuovere un episodio o tutti, non l'anime intero.
     return (event) -> {
       History.getHistory().remove(historyElement.getViewedElement());
       History.getHistory().saveToFile();
@@ -27,8 +28,9 @@ public class HistoryItem extends SingleFavorite {
   }
 
   private void setAnimeInfo() {
-    Label labelTitle = new Label("Titolo: " + historyElement.getViewedElement().getAnimeInformation().getName());
-    String episodes = String.format("Ultimo episodio visto: %d su %d",
+    String title = LocalizedApp.getInstance().getString("Title") + ": " + historyElement.getViewedElement().getAnimeInformation().getName();
+    Label labelTitle = new Label(title);
+    String episodes = String.format(LocalizedApp.getInstance().getString("LastEpisodeSeen") + ": %d su %d",
             historyElement.getEpisodesHistory().get(historyElement.getEpisodesHistory().size() - 1).getNumber(),
             historyElement.getViewedElement().getAnimeInformation().getNumberOfEpisodes());
     Label labelEpisodes = new Label(episodes);

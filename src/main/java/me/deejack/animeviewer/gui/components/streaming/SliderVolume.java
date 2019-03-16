@@ -2,6 +2,7 @@ package me.deejack.animeviewer.gui.components.streaming;
 
 import javafx.scene.control.Slider;
 import javafx.scene.media.MediaPlayer;
+import me.deejack.animeviewer.gui.controllers.streaming.StreamingUtility;
 
 public class SliderVolume extends Slider {
   private final MediaPlayer mediaPlayer;
@@ -13,10 +14,15 @@ public class SliderVolume extends Slider {
     setBlockIncrement(0.01);
 
     setOnChange();
+    setOnKeyPressed();
   }
 
   private void setOnChange() {
     mediaPlayer.volumeProperty().addListener((event) -> setValue(mediaPlayer.getVolume()));
     valueProperty().addListener((listener) -> mediaPlayer.setVolume(getValue()));
+  }
+
+  private void setOnKeyPressed() {
+    setOnKeyPressed((event) -> StreamingUtility.keyNavigation(event, mediaPlayer));
   }
 }

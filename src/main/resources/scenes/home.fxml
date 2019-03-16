@@ -20,7 +20,7 @@
           style="-fx-background-color: white;" StackPane.alignment="CENTER">
         <VBox alignment="CENTER" spacing="30">
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="384.0">
-                <ImageView id="imgSite" fx:id="imgSite" fitHeight="100.0" pickOnBounds="true"
+                <ImageView id="imgSite" fitHeight="100.0" pickOnBounds="true"
                            preserveRatio="true">
                     <Image url="/assets/load.gif"/>
                     <viewport>
@@ -29,15 +29,14 @@
                 </ImageView>
             </HBox>
             <fx:include source="/scenes/search.fxml"/>
-            <ListViewSites fx:id="lstSites" prefHeight="136.0"
-                           prefWidth="335.0"/>
+            <ListViewSites prefHeight="136.0" prefWidth="335.0"/>
             <BorderPane>
                 <left>
                     <TextField fx:id="txtStreaming" prefHeight="31.0" prefWidth="384.0"
-                               promptText="Link streaming:" alignment="CENTER_LEFT"/>
+                               promptText="%OpenExternalVidPromptText"/>
                 </left>
                 <right>
-                    <Button fx:id="btnStreaming" mnemonicParsing="false" text="Apri"
+                    <Button fx:id="btnStreaming" mnemonicParsing="false" text="%OpenExternalVidButtonText"
                             alignment="CENTER_RIGHT"/>
                 </right>
             </BorderPane>

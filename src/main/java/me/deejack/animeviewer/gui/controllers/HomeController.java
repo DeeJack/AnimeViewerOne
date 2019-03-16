@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import me.deejack.animeviewer.gui.async.LoadSiteAsync;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
 
@@ -58,7 +59,7 @@ public class HomeController implements BaseScene {
 
   @Override
   public String getTitle() {
-    return "Home " + getSite().getName();
+    return LocalizedApp.getInstance().getString("HomeWindowTitle");
   }
 
   @Override

@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.controllers.AnimeDetailController;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
@@ -47,7 +48,7 @@ public class AnimeBox extends VBox {
   }
 
   private void loadElement() {
-    showWaitAndLoad("Caricando anime...");
+    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingAnimeList"));
     new AnimeDetailController(anime).loadAsync();
   }
 }

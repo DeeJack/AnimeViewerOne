@@ -48,6 +48,7 @@ public class StreamingController implements BaseScene {
     if (anime != null)
       title = anime.getAnimeInformation().getName() + " - " + "Episodio " + episode.getNumber() + " - " + episode.getTitle();
     setupNodes();
+    afterInitialization();
     hideWaitLoad();
     mediaPlayer.play();
   }
@@ -63,7 +64,7 @@ public class StreamingController implements BaseScene {
     } else
       History.getHistory().add(new HistoryElement(anime, episode));
     if (episode.getSecondsWatched() > 0)
-      mediaPlayer.seek(Duration.seconds(episode.getSecondsWatched()));
+      mediaPlayer.setStartTime(Duration.seconds(episode.getSecondsWatched()));
   }
 
   private void setupNodes() {
@@ -73,6 +74,9 @@ public class StreamingController implements BaseScene {
     Button btnBack = (Button) root.lookup("#btnBack");
     MediaView mediaView = (MediaView) root.lookup("#mediaView");
     Label lblTitle = (Label) root.lookup("#lblTitle");
+
+    cursorTask = new ControlsLayerTask((Pane) root.lookup("#paneLayer"), root);
+    new Thread(cursorTask).start();
     lblTitle.setText(title);
     mediaView.setMediaPlayer(mediaPlayer);
 
@@ -82,22 +86,24 @@ public class StreamingController implements BaseScene {
 
     Node[] nodes = {
             btnPause, btnNext, stackPane, new LabelTime(mediaPlayer), new SliderVolume(mediaPlayer),
-            new FullScreenImage(), new StretchVideoImage(mediaView), new AlwaysOnTopImage()
+            new FullScreenImage(), new StretchVideoImage(mediaView, root), new AlwaysOnTopImage()
     };
     ((Pane) root.lookup("#bottomBar")).getChildren().addAll(nodes);
-    registerEvents(btnPause, btnNext, btnBack);
+    registerEvents(btnPause, btnNext, btnBack, mediaView);
   }
 
-  private void registerEvents(ButtonPause btnPause, ButtonNext btnNext, Button btnBack) {
+  private void registerEvents(ButtonPause btnPause, ButtonNext btnNext, Button btnBack, MediaView mediaView) {
     root.lookup("#pauseLayer").setOnMouseClicked((event) -> btnPause.pause());
     btnNext.setOnNextEpisode(this::onFinish);
-    if (episode != null)
-      mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) ->
-              episode.setSecondsWatched(mediaPlayer.getCurrentTime().toSeconds()));
     btnBack.setOnAction((event) -> {
       onFinish();
       SceneUtility.goToPreviousScene();
     });
+    root.setOnKeyPressed((event) -> StreamingUtility.keyNavigation(event, mediaPlayer));
+    mediaPlayer.statusProperty().addListener((event, oldValue, newValue) -> StreamingUtility.onChangeStatus(newValue, btnPause));
+    if (episode != null)
+      mediaPlayer.currentTimeProperty().addListener((event, oldValue, newValue) -> episode.setSecondsWatched(newValue.toSeconds()));
+    root.layoutBoundsProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
   }
 
   private void onFinish() {
@@ -109,6 +115,12 @@ public class StreamingController implements BaseScene {
     mediaPlayer.dispose();
     SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
     SceneUtility.goToPreviousScene();
+  }
+
+  private void onSizeChange(MediaView view) {
+    if (root.getWidth() > root.getHeight())
+      view.setFitHeight(root.getHeight());
+    else view.setFitWidth(root.getWidth());
   }
 
   @Override
@@ -175,37 +187,6 @@ public class StreamingController implements BaseScene {
     });
   }
 
-  private void keyNavigation(KeyEvent keyEvent) {
-    keyEvent.consume();
-    switch (keyEvent.getCode()) {
-      case UP:
-        if (mediaPlayer.getVolume() < 0.55)
-          mediaPlayer.setVolume(mediaPlayer.getVolume() + 0.05);
-        break;
-      case DOWN:
-        if (mediaPlayer.getVolume() > 0.05)
-          mediaPlayer.setVolume(mediaPlayer.getVolume() - 0.05);
-        break;
-      case RIGHT:
-        mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(4)));
-        break;
-      case LEFT:
-        mediaPlayer.seek(mediaPlayer.getCurrentTime().subtract(Duration.seconds(4)));
-        break;
-      case F11:
-        SceneUtility.getStage().setFullScreen(!SceneUtility.getStage().isFullScreen());
-        break;
-      case SPACE:
-        pause();
-        break;
-    }
-  }
-
-  private void onSizeChange(MediaView view) {
-    view.setFitHeight(SceneUtility.getStage().getHeight());
-    view.setFitWidth(SceneUtility.getStage().getWidth());
-  }
-
   private void onSliderTimeChange(Slider sliderTime) {
     if (sliderTime.isValueChanging())
       mediaPlayer.seek(Duration.seconds(sliderTime.getValue()));
@@ -227,29 +208,4 @@ public class StreamingController implements BaseScene {
       mediaPlayer.pause();
     else if (mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED)
       mediaPlayer.play();
-  }*//*
-
-  private void onChangeStatus(MediaPlayer.Status status, Button btnPause) {
-    switch (status) {
-      case PLAYING:
-        btnPause.setText("| |");
-        break;
-      case UNKNOWN:
-      case STALLED:
-        btnPause.setText(">");
-        showWaitAndLoad("Caricando video...");
-        break;
-      case READY:
-        hideWaitLoad();
-        break;
-      case PAUSED:
-      case STOPPED:
-        btnPause.setText(">");
-        break;
-      case HALTED:
-        Alert alert = new Alert(Alert.AlertType.ERROR,
-                "Errore critico, non so cosa sia sucesso ma lo streaming si è interrotto. Prova a riaprire lo streaming.");
-        alert.showAndWait();
-        goBack();
-    }
-  }*/
+  }*//**/

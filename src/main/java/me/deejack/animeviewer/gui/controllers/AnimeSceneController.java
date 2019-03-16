@@ -14,6 +14,7 @@ import me.deejack.animeviewer.gui.components.animescene.AnimePane;
 import me.deejack.animeviewer.gui.components.animescene.PagesBox;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
@@ -28,9 +29,9 @@ public class AnimeSceneController implements BaseScene {
   private final String search;
   private StackPane root;
   //private Pane content;
-  private int elementsMultiplier = 1;
+  private final int elementsMultiplier;
   private FlowPane elementsPane;
-  private int loadedPage;
+  private final int loadedPage;
   //private final List<ImageView> imageViews = new ArrayList<>();
 
   public AnimeSceneController(List<Anime> elements, int elementsMultiplier, boolean isSearch, FilterList filters, String search) {
@@ -160,7 +161,7 @@ public class AnimeSceneController implements BaseScene {
 
   @Override
   public String getTitle() {
-    return "Naviga";
+    return LocalizedApp.getInstance().getString("BrowseWindowTitle");
   }
 
   @Override

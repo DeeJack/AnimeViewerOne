@@ -5,6 +5,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
+import me.deejack.animeviewer.gui.controllers.streaming.StreamingUtility;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.async.events.SuccessListener;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -29,13 +31,13 @@ public class ButtonNext extends Button {
   private void askNextEpisode() {
     Optional<Episode> nextEpisode = findNextEpisode();
     if (!nextEpisode.isPresent()) {
-      new Alert(Alert.AlertType.NONE, "Hai raggiunto la fine, non è presente un prossimo episodio", ButtonType.OK).show();
+      new Alert(Alert.AlertType.NONE, LocalizedApp.getInstance().getString("AlertNoNextEpisode"), ButtonType.OK).show();
       return;
     }
-    Alert alert = new Alert(Alert.AlertType.NONE, "Vuoi guardare il prossimo episodio?", ButtonType.YES, ButtonType.NO);
+    Alert alert = new Alert(Alert.AlertType.NONE, LocalizedApp.getInstance().getString("AlertNextEpisode"), ButtonType.YES, ButtonType.NO);
     alert.showAndWait();
     if (alert.getResult() == ButtonType.YES) {
-      showWaitAndLoad("Loading next episode...");
+      showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingNextEpisode"));
       boolean selected = new AnimePlayer(nextEpisode.get(), anime).streaming();
       if (selected) {
         nextEpisodeListener.onSuccess();

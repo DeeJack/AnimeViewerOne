@@ -1,44 +1,73 @@
 package me.deejack.animeviewer.gui.controllers.streaming;
 
-import java.util.Optional;
-import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+import me.deejack.animeviewer.gui.components.streaming.ButtonPause;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.favorite.Favorite;
-import me.deejack.animeviewer.logic.history.History;
-import me.deejack.animeviewer.logic.models.anime.Anime;
-import me.deejack.animeviewer.logic.models.episode.Episode;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 
 public final class StreamingUtility {
-  public static void onFinish(Anime anime, MediaPlayer mediaPlayer, ControlsLayerTask cursorTask) {
-    /*Optional<Episode> nextEpisode = findNextEpisode();
-    if (!nextEpisode.isPresent()) {
-      new Alert(Alert.AlertType.NONE, "Hai raggiunto la fine, non è presente un prossimo episodio", ButtonType.OK).show();
-      return;
+
+  private StreamingUtility() {
+  }
+
+  public static void keyNavigation(KeyEvent keyEvent, MediaPlayer mediaPlayer) {
+    keyEvent.consume();
+    switch (keyEvent.getCode()) {
+      case UP:
+        if (mediaPlayer.getVolume() < 0.55)
+          mediaPlayer.setVolume(mediaPlayer.getVolume() + 0.05);
+        break;
+      case DOWN:
+        if (mediaPlayer.getVolume() > 0.05)
+          mediaPlayer.setVolume(mediaPlayer.getVolume() - 0.05);
+        break;
+      case RIGHT:
+        mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(4)));
+        break;
+      case LEFT:
+        mediaPlayer.seek(mediaPlayer.getCurrentTime().subtract(Duration.seconds(4)));
+        break;
+      case F11:
+        SceneUtility.getStage().setFullScreen(!SceneUtility.getStage().isFullScreen());
+        break;
+      case SPACE:
+        if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
+          mediaPlayer.pause();
+        else
+          mediaPlayer.play();
+        break;
     }
-    Alert alert = new Alert(Alert.AlertType.NONE, "Vuoi guardare il prossimo episodio?", ButtonType.YES, ButtonType.NO);
-    alert.showAndWait();
-    if (alert.getResult() == ButtonType.YES) {
-      cursorTask.setInterrupted(true);
-      mediaPlayer.dispose();
-      showWaitAndLoad("Loading next episode...");
-      boolean selected = new AnimePlayer(nextEpisode.get(), anime).streaming();
-      if (!selected) {
+  }
+
+  public static void onChangeStatus(MediaPlayer.Status status, ButtonPause buttonPause) {
+    switch (status) {
+      case PLAYING:
+        buttonPause.setText("| |");
+        break;
+      case UNKNOWN:
+      case STALLED:
+        buttonPause.setText(">");
+        showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingVideo"));
+        break;
+      case READY:
         hideWaitLoad();
-        close(anime, cursorTask, mediaPlayer);
-      }
-    }*/
-  }
-
-  public static Optional<Episode> findNextEpisode() {
-    return Optional.empty();
-  }
-
-  public static void close(Anime anime, ControlsLayerTask cursorTask, MediaPlayer mediaPlayer) {
+        break;
+      case PAUSED:
+      case STOPPED:
+        buttonPause.setText(">");
+        break;
+      case HALTED:
+        Alert alert = new Alert(Alert.AlertType.ERROR,
+                LocalizedApp.getInstance().getString("AlertErrorOnStreaming"),
+                ButtonType.OK);
+        alert.showAndWait();
+    }
   }
 }

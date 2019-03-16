@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
 import me.deejack.animeviewer.logic.connection.SiteConnection;
 import me.deejack.animeviewer.logic.customexception.NoConnectionException;
@@ -105,7 +106,7 @@ public class CustomConnection implements SiteConnection {
     try {
       return new URL(pageLink);
     } catch (IOException exception) {
-      handleException(new Exception("URL invalido! " + pageLink));
+      handleException(new Exception(LocalizedApp.getInstance().getString("ExceptionInvalidUrl") + " " + pageLink));
       return null;
     }
   }

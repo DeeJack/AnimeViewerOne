@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.async.SearchByNameAsync;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 
@@ -26,7 +27,7 @@ public class SearchController {
 
   @FXML
   public void onSearchNameClicked() {
-    showWaitAndLoad("Cercando per testo...");
+    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingSearchText"));
     new Thread(new SearchByNameAsync(txtSearchName.getText())).start();
   }
 }

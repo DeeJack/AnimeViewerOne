@@ -5,6 +5,7 @@ import java.net.URL;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import me.deejack.animeviewer.gui.controllers.download.DownloadUtility;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -25,7 +26,7 @@ public class AnimePlayer {
 
   public AnimePlayer(String link) {
     this(null, null);
-    showWaitAndLoad("Loading...");
+    showWaitAndLoad(LocalizedApp.getInstance().getString("Loading"));
     extractVideo(link);
   }
 
@@ -39,7 +40,7 @@ public class AnimePlayer {
     } catch (IOException e) {
       handleException(e);
     }
-    showWaitAndLoad("Caricando streaming...");
+    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingStreaming"));
     extractVideo(link);
     //showWaitAndLoad("Loading...");
     return true;
@@ -49,7 +50,7 @@ public class AnimePlayer {
     try {
       new URL(link);
     } catch (IOException invalidUrl) {
-      handleException(new Exception("URL invalido! " + link));
+      handleException(new Exception(LocalizedApp.getInstance().getString("ExceptionInvalidUrl") + " " + link));
       return;
     }
     if (link.contains("openload") || link.contains("streamango")) {

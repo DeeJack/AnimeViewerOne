@@ -10,8 +10,8 @@ public enum AnimeStatus implements Status {
   FUTURE("Future", "Future"),
   UNKNOWN("Unknown", "Unknown");
 
-  private String name;
-  private String value;
+  private final String name;
+  private final String value;
 
   AnimeStatus(String name, String value) {
     this.name = name;

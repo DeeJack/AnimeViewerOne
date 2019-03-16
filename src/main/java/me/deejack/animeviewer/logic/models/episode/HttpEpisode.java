@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.logic.models.episode;
 
+import com.google.gson.annotations.Expose;
 import java.io.File;
 import java.util.List;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
@@ -8,6 +9,7 @@ import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import org.jsoup.Connection;
 
 public abstract class HttpEpisode implements Episode {
+  @Expose
   private final String url;
 
   public HttpEpisode(String url) {
@@ -34,5 +36,10 @@ public abstract class HttpEpisode implements Episode {
   @Override
   public String getUrl() {
     return url;
+  }
+
+  @Override
+  public boolean equals(Object otherEpisode) {
+    return otherEpisode instanceof Episode && ((Episode) otherEpisode).getUrl().equalsIgnoreCase(getUrl());
   }
 }

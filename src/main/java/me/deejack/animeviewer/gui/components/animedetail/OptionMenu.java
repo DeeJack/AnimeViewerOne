@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import me.deejack.animeviewer.gui.controllers.download.DownloadController;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 
@@ -17,9 +18,9 @@ public class OptionMenu extends ContextMenu {
   }
 
   private void initialize() {
-    MenuItem thisEpisode = new MenuItem("Download");
-    MenuItem selectedEpisodes = new MenuItem("Download episodi selezionati");
-    MenuItem allEpisodes = new MenuItem("Download tutti gli episodi");
+    MenuItem thisEpisode = new MenuItem(LocalizedApp.getInstance().getString("Download"));
+    MenuItem selectedEpisodes = new MenuItem(LocalizedApp.getInstance().getString("MenuItemDownloadSelected"));
+    MenuItem allEpisodes = new MenuItem(LocalizedApp.getInstance().getString("MenuItemDownloadAll"));
     registerEvents(thisEpisode, selectedEpisodes, allEpisodes);
     getItems().addAll(thisEpisode, selectedEpisodes, allEpisodes);
   }

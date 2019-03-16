@@ -30,8 +30,13 @@ public final class Favorite {
     favorites.add(element);
   }
 
-  public void removeFavorite(Anime element) {
-    favorites.remove(element);
+  public void removeFavorite(Anime animeToRemove) {
+    for (Anime anime : favorites) {
+      if (anime.equals(animeToRemove)) {
+        favorites.remove(anime);
+        return;
+      }
+    }
   }
 
   public Set<Anime> getFavorites() {

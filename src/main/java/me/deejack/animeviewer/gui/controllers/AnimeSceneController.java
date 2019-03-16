@@ -45,10 +45,10 @@ public class AnimeSceneController implements BaseScene {
     this.isSearch = isSearch;
     this.filters = filters;
     this.search = search;
+    this.elementsMultiplier = elementsMultiplier;
 
     hideWaitLoad();
     initialize(elements, elementsMultiplier);
-    this.elementsMultiplier = elementsMultiplier;
     setRoot(this);
   }
 

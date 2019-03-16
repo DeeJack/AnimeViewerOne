@@ -43,4 +43,9 @@ public abstract class HttpAnime implements Anime {
   public String getUrl() {
     return url;
   }
+
+  @Override
+  public boolean equals(Object otherAnime) {
+    return otherAnime instanceof Anime && ((Anime)otherAnime).getUrl().equalsIgnoreCase(getUrl());
+  }
 }

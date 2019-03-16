@@ -48,7 +48,7 @@ public class DreamsubAnime extends AnimeImpl {
     String title = element.getElementsByTag("i").first().text();
     boolean alreadyReleased = !element.getElementsByTag("a").isEmpty() &&
             !element.getElementsByTag("a").get(0).attr("href").isEmpty();
-    String url = alreadyReleased ? "https://www.dreamsub.stream/" + element.getElementsByTag("a").get(0).attr("href") : "";
+    String url = alreadyReleased ? "https://www.dreamsub.stream" + element.getElementsByTag("a").get(0).attr("href") : "";
     return new DreamsubEpisode(title, Integer.parseInt(num), url,
             LocalDate.parse(releaseDate, DateTimeFormatter.ofPattern("d/M/y")));
   }

@@ -31,6 +31,7 @@ public abstract class AnimeImpl extends ParsedHttpAnime {
   /**
    * A list containing the seasons of this anime
    */
+  @Expose
   private List<Episode> episodes = new ArrayList<>();
   private boolean hasBeenLoaded = false;
 

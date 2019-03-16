@@ -42,6 +42,6 @@ public interface  Anime {
    * @return true if is in the favorite list, false otherwise
    */
   default boolean isFavorite() {
-    return Favorite.getInstance().getFavorites().contains(this);
+    return Favorite.getInstance().contains(this);
   }
 }

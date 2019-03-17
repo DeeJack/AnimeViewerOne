@@ -2,12 +2,11 @@ package me.deejack.animeviewer.gui;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import me.deejack.animeviewer.gui.connection.CustomConnection;
+import me.deejack.animeviewer.gui.controllers.AnimeUpdates;
 import me.deejack.animeviewer.gui.controllers.streaming.ControlsLayerTask;
 import me.deejack.animeviewer.gui.scenes.EventHandler;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
@@ -39,10 +38,9 @@ public class App extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-   // ResourceBundle bundle = ResourceBundle.getBundle("languages/messages", Locale.getDefault());
+    // ResourceBundle bundle = ResourceBundle.getBundle("languages/messages", Locale.getDefault());
     //ResourceBundle bundle = ResourceBundle.getBundle("languages/messages", new Locale("en", "us"));
 //    System.out.println(bundle.getString("hello"));
-
     ConnectionUtility.setSiteConnection(new CustomConnection());
     Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> handleException(throwable));
     SceneUtility.setStage(primaryStage);
@@ -77,6 +75,7 @@ public class App extends Application {
     } catch (IOException e) {
       LogManager.getLogger().error(e);
     }
+    new AnimeUpdates();
 
     // DA CAMBIARE, METTERE BASESCENE, magari mettere un metodo che la cambia così posso fare un listener...?
     /*SceneUtility.getStage().getScene().rootProperty().addListener((listener, oldValue, newValue) -> {

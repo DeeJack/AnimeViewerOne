@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import me.deejack.animeviewer.gui.connection.CustomConnection;
-import me.deejack.animeviewer.gui.controllers.AnimeUpdates;
 import me.deejack.animeviewer.gui.controllers.streaming.ControlsLayerTask;
 import me.deejack.animeviewer.gui.scenes.EventHandler;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
@@ -75,7 +74,6 @@ public class App extends Application {
     } catch (IOException e) {
       LogManager.getLogger().error(e);
     }
-    new AnimeUpdates();
 
     // DA CAMBIARE, METTERE BASESCENE, magari mettere un metodo che la cambia così posso fare un listener...?
     /*SceneUtility.getStage().getScene().rootProperty().addListener((listener, oldValue, newValue) -> {

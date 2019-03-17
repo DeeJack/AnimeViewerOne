@@ -18,7 +18,7 @@ public class FavoriteController implements BaseScene {
   }
 
   public void initialize() {
-    root = (StackPane) SceneUtility.loadParent("/scenes/favorite/favorite.fxml"); // Non serve neanche più
+    root = (StackPane) SceneUtility.loadParent("/scenes/favorite/favorite.fxml");
 
     VBox boxFavorite = (VBox) ((ScrollPane) root.lookup("#scrollPane")).getContent();
     Favorite.getInstance().getFavorites().stream()

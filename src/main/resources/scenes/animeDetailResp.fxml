@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import me.deejack.animeviewer.gui.components.ButtonBack?>
+<?import me.deejack.animeviewer.gui.components.general.ButtonBack?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
     <HBox alignment="CENTER">
         <AnchorPane prefHeight="525.0" prefWidth="71.0" HBox.hgrow="ALWAYS">

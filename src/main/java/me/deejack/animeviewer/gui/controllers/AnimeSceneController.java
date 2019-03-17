@@ -9,7 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import me.deejack.animeviewer.gui.components.HiddenSideBar;
+import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
 import me.deejack.animeviewer.gui.components.animescene.AnimePane;
 import me.deejack.animeviewer.gui.components.animescene.PagesBox;
 import me.deejack.animeviewer.gui.components.filters.FilterList;

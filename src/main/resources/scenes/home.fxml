@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import me.deejack.animeviewer.gui.components.ButtonFavorite?>
-<?import me.deejack.animeviewer.gui.components.ButtonHistory?>
-<?import me.deejack.animeviewer.gui.components.ListViewSites?>
+<?import me.deejack.animeviewer.gui.components.general.ButtonFavorite?>
+<?import me.deejack.animeviewer.gui.components.general.ButtonHistory?>
+<?import me.deejack.animeviewer.gui.components.general.ListViewSites?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: white;"
            xmlns="http://javafx.com/javafx/8.0.171"
            fx:controller="me.deejack.animeviewer.gui.controllers.HomeController">

@@ -1,4 +1,4 @@
-package me.deejack.animeviewer.gui.components;
+package me.deejack.animeviewer.gui.components.general;
 
 import javafx.scene.control.Button;
 import me.deejack.animeviewer.gui.controllers.FavoriteController;

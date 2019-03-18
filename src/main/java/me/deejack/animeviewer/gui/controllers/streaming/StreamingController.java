@@ -48,12 +48,14 @@ public class StreamingController implements BaseScene {
     if (anime != null)
       title = anime.getAnimeInformation().getName() + " - " + "Episodio " + episode.getNumber() + " - " + episode.getTitle();
     setupNodes();
-    afterInitialization();
+    setupEpisode();
     hideWaitLoad();
     mediaPlayer.play();
   }
 
-  public void afterInitialization() {
+  public void setupEpisode() {
+    if(anime == null)
+      return;
     HistoryElement historyElement = History.getHistory().get(anime);
     if (historyElement != null) {
       if (historyElement.getEpisodesHistory().contains(episode))
@@ -94,6 +96,7 @@ public class StreamingController implements BaseScene {
 
   private void registerEvents(ButtonPause btnPause, ButtonNext btnNext, Button btnBack, MediaView mediaView) {
     root.lookup("#pauseLayer").setOnMouseClicked((event) -> btnPause.pause());
+    root.layoutBoundsProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
     btnNext.setOnNextEpisode(this::onFinish);
     btnBack.setOnAction((event) -> {
       onFinish();
@@ -103,7 +106,6 @@ public class StreamingController implements BaseScene {
     mediaPlayer.statusProperty().addListener((event, oldValue, newValue) -> StreamingUtility.onChangeStatus(newValue, btnPause));
     if (episode != null)
       mediaPlayer.currentTimeProperty().addListener((event, oldValue, newValue) -> episode.setSecondsWatched(newValue.toSeconds()));
-    root.layoutBoundsProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
   }
 
   private void onFinish() {
@@ -138,74 +140,3 @@ public class StreamingController implements BaseScene {
     return "Streaming";
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /* private void setValues(MediaView mediaView, Slider sliderTime, Slider sliderVolume, Label lblTitle) {
-    lblTitle.setText(title + String.format(" [%dx%d]", mediaPlayer.getMedia().getWidth(), mediaPlayer.getMedia().getHeight()));
-    sliderTime.setMax(mediaPlayer.getTotalDuration().toSeconds());
-    sliderVolume.setMax(0.5);
-    sliderVolume.setValue(0.5);
-  }
-
-  private void registerEvents(Button btnBack, Button btnNext, Button btnPause, Slider sliderTime, Slider sliderVolume,
-                              Label lblTime, Label lblTitle, MediaView mediaView, ProgressBar videoProgress,
-                              ImageView imageFullScreen, ImageView stretchVideo) {
-    root.layoutBoundsProperty().addListener((obs, oldValue, newValue) -> onSizeChange(mediaView));
-    btnBack.setOnAction((event) -> goBack());
-    btnNext.setOnAction((event) -> onFinish());
-    *//*btnPause.setOnAction((event) -> pause());*//*
-    sliderTime.valueProperty().addListener((listener) -> onSliderTimeChange(sliderTime));
-    lblTime.setText(mediaPlayer.getTotalDuration().toMinutes() + " min");
-    mediaPlayer.statusProperty().addListener((obs) -> onChangeStatus(mediaPlayer.getStatus(), btnPause));
-    mediaPlayer.setOnEndOfMedia(this::onFinish);
-    mediaPlayer.setOnError(() -> SceneUtility.handleException(mediaPlayer.getError()));
-    cursorTask = new ControlsLayerTask((Pane) root.lookup("#paneLayer"), root);
-    new Thread(cursorTask).start();
-    SceneUtility.getStage().getScene().setOnKeyPressed(this::keyNavigation);
-    btnBack.setOnKeyPressed(this::keyNavigation);
-    sliderVolume.setOnKeyPressed(this::keyNavigation);
-    root.lookup("#pauseLayer").setOnMouseClicked((event) -> pause());
-    mediaPlayer.setOnReady(() -> {
-      setValues(mediaView, sliderTime, sliderVolume, lblTitle);
-      if (anime != null)
-        afterInitialization();
-    });
-  }
-
-  private void onSliderTimeChange(Slider sliderTime) {
-    if (sliderTime.isValueChanging())
-      mediaPlayer.seek(Duration.seconds(sliderTime.getValue()));
-  }
-
-  private void goBack() {
-    if (anime != null) {
-      History.getHistory().saveToFile();
-      Favorite.getInstance().saveToFile();
-    }
-    cursorTask.setInterrupted(true);
-    mediaPlayer.dispose();
-    SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
-    SceneUtility.goToPreviousScene();
-  }
-
-  *//*private void pause() {
-    if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
-      mediaPlayer.pause();
-    else if (mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED)
-      mediaPlayer.play();
-  }*//**/

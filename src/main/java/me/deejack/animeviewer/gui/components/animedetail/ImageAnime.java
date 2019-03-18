@@ -8,9 +8,7 @@ import me.deejack.animeviewer.gui.utils.SceneUtility;
 
 public class ImageAnime extends ImageView {
   public ImageAnime(String url) {
-    setFitHeight(213);
-    setFitWidth(673);
-    setPickOnBounds(true);
+    setPreserveRatio(true);
     Task<Image> task = SceneUtility.loadImage(url);
     Platform.runLater(() -> task.setOnSucceeded((value) -> setImage(task.getValue())));
   }

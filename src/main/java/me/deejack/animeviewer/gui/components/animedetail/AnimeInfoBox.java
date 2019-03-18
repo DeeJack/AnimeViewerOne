@@ -19,7 +19,6 @@ import me.deejack.animeviewer.logic.utils.GeneralUtility;
 public class AnimeInfoBox extends HBox {
 
   public AnimeInfoBox(Anime anime) {
-    setMaxHeight(200);
     setBackground(new Background(new BackgroundFill(Paint.valueOf("red"), CornerRadii.EMPTY, null)));
     getChildren().addAll(createInformationArea(anime),
             new VBox(createImageFavorite(anime), createOpenInBrowser(anime.getUrl())));
@@ -27,7 +26,6 @@ public class AnimeInfoBox extends HBox {
 
   private TextArea createInformationArea(Anime anime) {
     TextArea textArea = new TextArea(getInfoText(anime));
-    textArea.setMaxHeight(200);
     textArea.setEditable(false);
     textArea.setWrapText(true);
     HBox.setHgrow(textArea, Priority.ALWAYS);

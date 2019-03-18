@@ -19,11 +19,6 @@ public class ListViewEpisodes extends ListView<ItemEpisode> {
   }
 
   private void registerEvents(Region root) {
-    root.heightProperty().addListener((observable, oldValue, newValue) -> {
-      if (oldValue.doubleValue() == 0)
-        return;
-      setPrefHeight(getHeight() + ((newValue.doubleValue() - oldValue.doubleValue())));
-    });
     setOnMouseReleased((event) -> {
       if (event.getButton() == MouseButton.SECONDARY)
         optionMenu.open(event.getScreenX(), event.getScreenY());
@@ -33,7 +28,6 @@ public class ListViewEpisodes extends ListView<ItemEpisode> {
   private void initialize() {
     setMinHeight(100);
     setHeight(100);
-    setPrefWidth(530);
     BorderPane.setAlignment(this, Pos.CENTER);
     addChildren();
     getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

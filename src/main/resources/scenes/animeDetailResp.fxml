@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import me.deejack.animeviewer.gui.components.general.ButtonBack?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
-    <HBox alignment="CENTER">
-        <AnchorPane prefHeight="525.0" prefWidth="71.0" HBox.hgrow="ALWAYS">
-            <ButtonBack/>
-        </AnchorPane>
-        <ScrollPane fx:id="scrollPane" fitToWidth="true" fitToHeight="true" HBox.hgrow="ALWAYS">
-            <BorderPane prefHeight="630">
-                <top>
-                    <HBox fx:id="boxImage" alignment="CENTER" BorderPane.alignment="CENTER">
-                        <!--<ImageView fx:id="image" fitHeight="213.0" fitWidth="673.0" pickOnBounds="true"/>-->
-                    </HBox>
-                </top>
-            </BorderPane>
-            <HBox.margin>
-                <Insets/>
-            </HBox.margin>
-        </ScrollPane>
-        <AnchorPane prefHeight="525.0" prefWidth="71.0" HBox.hgrow="ALWAYS"/>
-    </HBox>
-</StackPane>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<GridPane style="-fx-background-color: white">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="3"/>
+        <ColumnConstraints percentWidth="18"/>
+        <ColumnConstraints percentWidth="60"/>
+        <ColumnConstraints percentWidth="19"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="3"/>
+        <RowConstraints percentHeight="18"/>
+        <RowConstraints percentHeight="15"/>
+        <RowConstraints percentHeight="64"/>
+    </rowConstraints>
+</GridPane>

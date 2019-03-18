@@ -16,7 +16,7 @@ import static me.deejack.animeviewer.logic.history.History.CONFIG_DIR;
 
 public final class Favorite {
   private static final Favorite instance = new Favorite();
-  private final Set<Anime> favorites = new HashSet<>();
+  private final Set<FavoriteAnime> favorites = new HashSet<>();
   private final AnimeSerializer serializer = new AnimeSerializer<>(Anime.class);
 
   private Favorite() {
@@ -27,19 +27,19 @@ public final class Favorite {
   }
 
   public void addFavorite(Anime element) {
-    favorites.add(element);
+    favorites.add(new FavoriteAnime(element));
   }
 
   public void removeFavorite(Anime animeToRemove) {
-    for (Anime anime : favorites) {
-      if (anime.equals(animeToRemove)) {
+    for (FavoriteAnime anime : favorites) {
+      if (anime.getAnime().equals(animeToRemove)) {
         favorites.remove(anime);
         return;
       }
     }
   }
 
-  public Set<Anime> getFavorites() {
+  public Set<FavoriteAnime> getFavorites() {
     return Collections.unmodifiableSet(favorites);
   }
 
@@ -71,22 +71,29 @@ public final class Favorite {
     if (!input.exists())
       return false;
     String json = String.join("\n", Files.readAllLines(Paths.get(input.toURI())));
-    List<Anime> elements = serializer.deserialize(json);
+    List<FavoriteAnime> elements = serializer.deserializeList(json);
 
     favorites.addAll(elements);
     return true;
   }
 
   public boolean contains(Anime anime) {
-    for (Anime favorite : favorites)
-      if (favorite.getUrl().equals(anime.getUrl()))
+    for (FavoriteAnime favorite : favorites)
+      if (favorite.getAnime().getUrl().equals(anime.getUrl()))
         return true;
     return false;
   }
 
-  public Anime get(String url) {
-    for (Anime favorite : favorites)
-      if (favorite.getUrl().equals(url))
+  public FavoriteAnime get(String url) {
+    for (FavoriteAnime favorite : favorites)
+      if (favorite.getAnime().getUrl().equals(url))
+        return favorite;
+    return null;
+  }
+
+  public FavoriteAnime get(int id) {
+    for (FavoriteAnime favorite : favorites)
+      if (favorite.getId() == id)
         return favorite;
     return null;
   }

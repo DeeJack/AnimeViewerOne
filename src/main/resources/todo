@@ -1,0 +1,62 @@
+AnimeSceneController
+    - Togliere le immagini cambiando scena, forse
+    - Eliminare la animePage quando non serve più nella logica
+    - mettere una stellina in alto e destra se è tra i preferiti
+    - Sistemare la questione delle diverse istanze tra cronologia, preferiti e lista element
+    - Sistemare pagine / cambio pagina animeMultiplier
+    - Tenere il testo nella textbox quando si cerca per testo, stessa cosa per genere, sort ecc
+
+Download:
+    - Possibilità di selezione multipla con ctrl
+    - Continuare da dove ha finito se si interrompe per connessione?
+
+Streaming:
+
+Generali:
+    - Mettere tab per più anime aperti!!
+    \\\\\\\\\\\\\\\\\\\\\\\\////////////////////
+    - Il costruttore deve solo inizializzare, fare metodi a parte per il resto
+         Separare meglio le classi, sono troppo lunghe, mettere magari un po' più ereditarietà
+    - Prima di salvare / caricare controllare se il json è valido
+    - Mettere i componenti customizzabili, nel senso che se ho solo le categorie (come in animelegg) metto una sola combobox
+        e non devo creare l'enum, la lista o se non c'è la ricerca per il nome non metto la textbox ecc
+    - Aggiornamenti automatici
+    - Separare view da logica e generalizzare
+    - Internalizzazione
+    - estensioni siti
+    - Mettere animeclick / myanimelist
+    - Mandare un messaggio di aiuto ?
+    - Fare gli aiuti la prima volta che si usa una funzione
+    - Fare un componente per ogni cosa, anche solo per il pulsante indietro
+    - Mettere gli alert sempre in primo piano, soprattutto quelli per scegliere la qualità di uno streaming
+    - Salvare nella cronologia anche quando si mettono link esterni
+    - Calendario e ultime aggiunte?
+    - Se ci sono anime (di solito oav o film) con 1 episodio mette direttamente la pagina dell'episodio, ma se ce ne sono di più è come un anime normale
+    - Salvare le immagini dei preferiti? Magari in qualità ridotta
+    - Fare che i metodi ritornino una Future (?) o comunque qualcosa di async?
+    - Reindirizzamento a VVVID tipo in Code Geass
+    - Pulsante "aggiorna"
+    - Controllare se da' 404 nelle varie pagine
+    - Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
+
+Bugs:
+    - Dopo la connessione controllare errori http come 404
+    - Se chiudo lo stage mentre carica openload o streamango sono fottuto
+    - Andando da cronologia ad un episodio a volte nel titolo metteva qualcosa a null
+    - Con la freccia a sinistra non andava indietro lo streaming, a volte spostandolo andava direttamente alla fine... Trovare un player già fatto?
+    - Mettere un "title" quando si tiene il cursore su qualcosa che indichi tutto il nome / una descrizione
+    - TempHistory non funziona
+    - A volte non parte l'episodio, altre parte più volte l'episodio (forse solo con openload), a volte si ferma e non riparte più
+    - A volte non si toglie il caricamento nello streaming
+    - Sistemare download
+    - Se si chiede di riprendere più volte si aprono più alert di richiesta!
+
+Meno importanti:
+    - Aggiungere calendario e ultime aggiunte
+    - Mettere immagini preferiti salvate
+    - In cronologia, se c'è cloudflare lo deve bypassare ogni volta perché non c'è un sito selezionato!
+    - Oltre allo streaming da sito esterno, mettere anche il download! (Creare controller tipo search)
+    - A volte lo streaming si stoppa e non va più avanti, mettere la roba di caricamento mentre si carica
+    - Mettere la data nella cronologia? Quindi quando si elimina elimino non più l'episodio ma quella sessione di cronologia
+    - Quando si va in animescene, carica sia la ricerca che la pagina principale per i generi, fare solo la ricerca?
+    -

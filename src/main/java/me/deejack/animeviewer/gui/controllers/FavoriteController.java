@@ -9,6 +9,7 @@ import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.favorite.Favorite;
+import me.deejack.animeviewer.logic.favorite.FavoriteAnime;
 
 public class FavoriteController implements BaseScene {
   private StackPane root;
@@ -22,6 +23,7 @@ public class FavoriteController implements BaseScene {
 
     VBox boxFavorite = (VBox) ((ScrollPane) root.lookup("#scrollPane")).getContent();
     Favorite.getInstance().getFavorites().stream()
+            .map(FavoriteAnime::getAnime)
             .map(FavoriteItem::new)
             .forEach(boxFavorite.getChildren()::add);
   }

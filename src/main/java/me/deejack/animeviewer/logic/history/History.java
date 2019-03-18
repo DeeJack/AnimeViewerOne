@@ -82,7 +82,7 @@ public final class History {
     if (inputFile == null || !inputFile.exists())
       return false;
     String json = String.join("\n", Files.readAllLines(inputFile.toPath(), StandardCharsets.UTF_8));
-    List<HistoryElement> elements = serializer.deserialize(json);
+    List<HistoryElement> elements = serializer.deserializeList(json);
 
     viewedElements.addAll(elements);
     return true;

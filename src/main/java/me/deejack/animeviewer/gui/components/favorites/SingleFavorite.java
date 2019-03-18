@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.controllers.AnimeDetailController;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -21,6 +22,8 @@ public class SingleFavorite extends HBox {
   private final Anime anime;
   private final VBox animeInfoBox = new VBox();
   private EventHandler<ActionEvent> removeHandler;
+  private Button removeButton;
+  private Button resumeButton;
 
   public SingleFavorite(Anime anime) {
     this.anime = anime;
@@ -29,14 +32,14 @@ public class SingleFavorite extends HBox {
 
   private void initialize() {
     ImageView animeImage = createImage(anime.getAnimeInformation().getImageUrl());
-    Button buttonRemove = new Button("Rimuovi");
-    Button buttonResume = new Button("Riprendi");
-    registerEvents(animeImage, buttonRemove, buttonResume);
+    removeButton = new Button(LocalizedApp.getInstance().getString("RemoveButton"));
+    resumeButton = new Button(LocalizedApp.getInstance().getString("ResumeButton"));
+    registerEvents(animeImage, removeButton, resumeButton);
 
     setSpacing(10);
     setMaxHeight(120);
     setStyle("-fx-border-color: black; -fx-border-width: 2 0 0 0");
-    getChildren().addAll(animeImage, animeInfoBox, createButtonsBox(buttonRemove, buttonResume));
+    getChildren().addAll(animeImage, animeInfoBox, createButtonsBox(removeButton, resumeButton));
   }
 
   private VBox createButtonsBox(Button buttonRemove, Button buttonResume) {
@@ -85,5 +88,13 @@ public class SingleFavorite extends HBox {
     }
     List<Episode> episodesHistory = History.getHistory().get(anime).getEpisodesHistory();
     new AnimePlayer(episodesHistory.get(episodesHistory.size() - 1), anime).streaming();
+  }
+
+  public Button getRemoveButton() {
+    return removeButton;
+  }
+
+  public Button getResumeButton() {
+    return resumeButton;
   }
 }

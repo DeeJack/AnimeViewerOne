@@ -10,6 +10,8 @@ import me.deejack.animeviewer.gui.scenes.EventHandler;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.defaultsources.animeleggendari.AnimeLeggendariSource;
+import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamSubSource;
 import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
@@ -18,6 +20,10 @@ import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
 public class App extends Application {
   public static final List<FilteredSource> SITES = ExtensionLoader.loadExtension();
+  static {
+    SITES.add(new DreamSubSource());
+    SITES.add(new AnimeLeggendariSource());
+  }
   private static FilteredSource site;
 
   public static void main(String[] args) {

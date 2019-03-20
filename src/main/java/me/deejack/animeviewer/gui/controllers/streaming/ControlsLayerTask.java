@@ -1,7 +1,5 @@
 package me.deejack.animeviewer.gui.controllers.streaming;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Timer;
@@ -9,10 +7,8 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import javafx.scene.Cursor;
 import javafx.scene.layout.Pane;
+import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.history.History;
-
-import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
 public class ControlsLayerTask extends Thread {
   private static final int MILLISECONDS_TO_WAIT = 8 * 1000;
@@ -20,8 +16,6 @@ public class ControlsLayerTask extends Thread {
   private final Pane root;
   private LocalDateTime lastMoved = LocalDateTime.now();
   private volatile boolean isInterrupted = false;
-  public static final File tempHistory = new File(System.getProperty("user.home") + File.separator + ".animeviewer" + File.separator +
-          "tempHistory.json");
 
   public ControlsLayerTask(Pane paneToHide, Pane root) {
     this.paneToHide = paneToHide;
@@ -58,14 +52,7 @@ public class ControlsLayerTask extends Thread {
       public void run() {
         if (isInterrupted)
           cancel();
-        if (!tempHistory.exists()) {
-          try {
-            tempHistory.createNewFile();
-          } catch (IOException e) {
-            handleException(e);
-          }
-        }
-        History.getHistory().saveToFile(tempHistory);
+        FilesUtility.saveTempHistory();
       }
     }, TimeUnit.MINUTES.toMillis(30), TimeUnit.MINUTES.toMillis(30));
   }

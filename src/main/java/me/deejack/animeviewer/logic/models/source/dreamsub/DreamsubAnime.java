@@ -1,4 +1,4 @@
-package me.deejack.animeviewer.logic.models.source.asd;
+package me.deejack.animeviewer.logic.models.source.dreamsub;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +10,7 @@ import me.deejack.animeviewer.logic.anime.dto.AnimeStatus;
 import me.deejack.animeviewer.logic.anime.dto.Genre;
 import me.deejack.animeviewer.logic.models.anime.AnimeImpl;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+import me.deejack.animeviewer.logic.models.source.animeleggendari.AnimeLeggendariEpisode;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,8 +23,9 @@ public class DreamsubAnime extends AnimeImpl {
 
   @Override
   public AnimeInformation parseAnimeDetails(Document document) {
-    if (document.getElementsByClass("innerText").isEmpty()) // MOVIE / OAV !!!
-      return new AnimeInformation((short) -1, "", 0, 0, new ArrayList<>(), "", AnimeStatus.UNKNOWN);
+    if (document.getElementsByClass("innerText").isEmpty()) {// MOVIE / OAV !!! {
+      return getAnimeInformation();
+    }
     String info = document.getElementsByClass("innerText").get(0).wholeText();
     String subInfo = info.substring(info.indexOf("Genere:"));
     subInfo = subInfo.substring(0, subInfo.indexOf("\n"));
@@ -38,11 +40,13 @@ public class DreamsubAnime extends AnimeImpl {
 
   @Override
   public String episodeSelector() {
-    return "ul.seasEpisode > li";
+    return "ul.seasEpisode > li, div.videoContainer";
   }
 
   @Override
   public Episode parseEpisode(Element element) {
+    if(element.tagName().equalsIgnoreCase("div"))
+      return new DreamsubEpisode(getAnimeInformation().getName(), 1, getUrl(), null);
     String num = element.text().split(" ")[1].split(" ")[0];
     String releaseDate = element.text().split("-")[1].trim();
     String title = element.getElementsByTag("i").first().text();

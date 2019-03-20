@@ -21,8 +21,8 @@ import me.deejack.animeviewer.gui.components.streaming.SliderTime;
 import me.deejack.animeviewer.gui.components.streaming.SliderVolume;
 import me.deejack.animeviewer.gui.components.streaming.StretchVideoImage;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
+import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.history.HistoryElement;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -54,7 +54,7 @@ public class StreamingController implements BaseScene {
   }
 
   public void setupEpisode() {
-    if(anime == null)
+    if (anime == null)
       return;
     HistoryElement historyElement = History.getHistory().get(anime);
     if (historyElement != null) {
@@ -110,8 +110,8 @@ public class StreamingController implements BaseScene {
 
   private void onFinish() {
     if (anime != null) {
-      History.getHistory().saveToFile();
-      Favorite.getInstance().saveToFile();
+      FilesUtility.saveHistory();
+      FilesUtility.saveFavorite();
     }
     cursorTask.setInterrupted(true);
     mediaPlayer.dispose();

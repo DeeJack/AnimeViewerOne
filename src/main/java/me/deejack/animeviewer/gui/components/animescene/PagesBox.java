@@ -7,19 +7,18 @@ import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.async.LoadPageAsync;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
+import sun.java2d.pipe.SpanIterator;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 
 public class PagesBox extends HBox {
-  private final int currentPage;
-  private final int elementsMultiplier;
   private final String search;
   private final FilterList filters;
   private final boolean isSearch;
+  private int currentPage;
 
-  public PagesBox(int currentPage, int elementsMultiplier, String search, boolean isSearch, FilterList filters) {
+  public PagesBox(int currentPage, String search, boolean isSearch, FilterList filters) {
     this.currentPage = currentPage;
-    this.elementsMultiplier = elementsMultiplier;
     this.search = search;
     this.isSearch = isSearch;
     this.filters = filters;
@@ -27,8 +26,8 @@ public class PagesBox extends HBox {
     loadPages();
   }
 
-  private void loadPages() {
-    int totalPages = App.getSite().getPages() / elementsMultiplier + ((App.getSite().getPages() % elementsMultiplier == 0) ? 0 : 1);
+  public void loadPages() {
+    int totalPages = App.getSite().getPages();
     getChildren().clear();
 
     if (currentPage != 1)
@@ -49,7 +48,7 @@ public class PagesBox extends HBox {
       setOnMousePressed((a) -> {
         if (a.isPrimaryButtonDown()) {
           showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingSwitchPage"));
-          new Thread(new LoadPageAsync(filters, search, isSearch, page + elementsMultiplier - 1, elementsMultiplier)).start();
+          new Thread(new LoadPageAsync(filters, search, isSearch, page)).start();
         }
       });
     }

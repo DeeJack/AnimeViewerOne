@@ -1,8 +1,10 @@
 package me.deejack.animeviewer.gui.utils;
 
 import javafx.application.Platform;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import me.deejack.animeviewer.gui.components.loading.LoadingPane;
 
 public final class LoadingUtility {
@@ -16,8 +18,13 @@ public final class LoadingUtility {
       return;
     }
     hideWaitLoad();
-    Pane root = (Pane) SceneUtility.getStage().getScene().getRoot();
-    root.getChildren().add(new LoadingPane(msg, root));
+    if (SceneUtility.getStage().getScene().getRoot() instanceof Pane) {
+      Pane root = (Pane) SceneUtility.getStage().getScene().getRoot();
+      root.getChildren().add(new LoadingPane(msg, root));
+    } else {
+      TabPane root = (TabPane) SceneUtility.getStage().getScene().getRoot();
+      ((Pane) root.getTabs().get(0).getContent()).getChildren().add(new LoadingPane(msg, root));
+    }
   }
 
   public static void showWaitAndLoad() {
@@ -34,9 +41,11 @@ public final class LoadingUtility {
       Platform.runLater(LoadingUtility::hideWaitLoad);
       return;
     }
-    if(SceneUtility.getStage().getScene() == null)
+    if (SceneUtility.getStage().getScene() == null)
       return;
     Region root = (Region) SceneUtility.getStage().getScene().getRoot();
+    if (root instanceof TabPane)
+      root = (Region) ((TabPane) root).getTabs().get(0).getContent();
     if (root.lookup("#loadingLayer") == null)
       return;
     ((Pane) root).getChildren().remove(root.lookup("#loadingLayer"));

@@ -1,6 +1,7 @@
-package me.deejack.animeviewer.logic.models.source.asd;
+package me.deejack.animeviewer.logic.models.source.dreamsub;
 
 import java.util.List;
+import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.history.HistoryElement;
@@ -13,10 +14,10 @@ public class Asd {
     List<Anime> animeList = source.searchAnime("", 1);
     animeList.get(0).load();
     Favorite.getInstance().addFavorite(animeList.get(0));
-    Favorite.getInstance().saveToFile();
+    FilesUtility.saveFavorite();
     Episode episode = animeList.get(0).getEpisodes().get(0);
     episode.setSecondsWatched(10);
     History.getHistory().add(new HistoryElement(animeList.get(0), episode));
-    History.getHistory().saveToFile();
+    FilesUtility.saveHistory();
   }
 }

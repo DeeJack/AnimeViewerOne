@@ -14,9 +14,7 @@ public class FullScreenImage extends ImageView {
     setFitHeight(24);
     setFitWidth(23);
     setPickOnBounds(true);
-    setOnMouseClicked((event) -> {
-      SceneUtility.getStage().setFullScreen(!SceneUtility.getStage().isFullScreen());
-      setImage(SceneUtility.getStage().isFullScreen() ? smallScreenImage : fullScreenImage);
-    });
+    setOnMouseClicked((event) -> SceneUtility.getStage().setFullScreen(!SceneUtility.getStage().isFullScreen()));
+    SceneUtility.getStage().fullScreenProperty().addListener((event) -> setImage(SceneUtility.getStage().isFullScreen() ? smallScreenImage : fullScreenImage));
   }
 }

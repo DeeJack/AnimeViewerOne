@@ -62,4 +62,9 @@ public class MultiSelectionFilter extends ListView<MultiComboItem> implements Fi
   public String getFilterId() {
     return filterId;
   }
+
+  @Override
+  public Filter cloneFilter() {
+    return null;
+  }
 }

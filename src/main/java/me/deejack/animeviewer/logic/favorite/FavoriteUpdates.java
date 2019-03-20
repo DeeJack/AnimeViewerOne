@@ -57,9 +57,11 @@ public class FavoriteUpdates {
   }
 
   public void readFromFile() {
-    URI fileURI = new File(CONFIG_DIR + File.separator + "updates.json").toURI();
+    File fileUpdates = new File(CONFIG_DIR + File.separator + "updates.json");
+    if(!fileUpdates.exists())
+      return;
     try {
-      String json = String.join("\n", Files.readAllLines(Paths.get(fileURI)));
+      String json = String.join("\n", Files.readAllLines(Paths.get(fileUpdates.toURI())));
       updates = Objects.requireNonNull(new AnimeSerializer<FavoriteUpdates>(FavoriteUpdates.class).deserializeObj(json)).updates;
     } catch (IOException e) {
       handleException(e);

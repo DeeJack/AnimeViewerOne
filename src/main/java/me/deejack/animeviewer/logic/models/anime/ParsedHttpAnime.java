@@ -28,6 +28,7 @@ public abstract class ParsedHttpAnime extends HttpAnime {
     } catch (IOException e) {
       throw new RuntimeException("Error parsing episodes, response status: " + response.statusCode() + "(" + response.statusMessage() + ")", e);
     }
+    System.out.println(episodesElements.size());
     List<Episode> episodes = new ArrayList<>();
     episodesElements.stream().map(this::parseEpisode).forEach(episodes::add);
     return episodes;

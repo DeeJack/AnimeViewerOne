@@ -10,4 +10,6 @@ public interface Filter {
   Node getNode();
 
   String getFilterId();
+
+  Filter cloneFilter();
 }

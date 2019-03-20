@@ -4,10 +4,9 @@ import java.io.File;
 import java.util.Objects;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.LoadingUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.favorite.Favorite;
-import me.deejack.animeviewer.logic.history.History;
 
 public final class EventHandler {
   private EventHandler() {
@@ -41,8 +40,8 @@ public final class EventHandler {
         file.delete();
       tmpDir.delete();
     }
-    History.getHistory().saveToFile();
-    Favorite.getInstance().saveToFile();
+    FilesUtility.saveHistory();
+    FilesUtility.saveFavorite();
     System.exit(0);
   }
 }

@@ -9,6 +9,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 
@@ -33,7 +34,7 @@ public class HiddenSideBar extends VBox {
     registerEvents();
     hideAnimation.setToX(getWidth());
     showAnimation.setToX(0);
-    setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), CornerRadii.EMPTY, Insets.EMPTY)));
+    setBackground(new Background(new BackgroundFill(Color.web("f2f2f2"), CornerRadii.EMPTY, Insets.EMPTY)));
   }
 
   private void registerEvents() {

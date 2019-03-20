@@ -28,7 +28,7 @@ public class FilterAsync extends Task<List<Anime>> {
 
   @Override
   protected void succeeded() {
-    new AnimeSceneController(getValue(), page, 1, false, filters, "");
+    new AnimeSceneController(getValue(), page, false, filters, "");
   }
 
   @Override

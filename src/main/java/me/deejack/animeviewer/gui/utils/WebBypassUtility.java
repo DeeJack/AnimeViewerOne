@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
@@ -47,30 +48,39 @@ public final class WebBypassUtility {
       url = new URL(link);
     } catch (MalformedURLException e) {
       handleException(e);
+      return;
     }
     Pair<WebView, Stage> pair = createWebView();
     WebEngine engine = pair.getKey().getEngine();
     URL finalUrl = url;
-    engine.locationProperty().addListener(listener -> {
-      if (!engine.getLocation().contains(finalUrl.getHost())) {
+    InvalidationListener locationEvent = listener -> {
+      /*if (!engine.getLocation().contains(finalUrl.getHost())) {
         System.out.println("Redirected to " + engine.getLocation() + ", reloading " + link);
         engine.load(link);
-      }
-    });
+      }*/
+    };
+    engine.locationProperty().addListener(locationEvent);
+    System.out.println(finalUrl.getProtocol() + finalUrl.getHost());
     engine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {
-      if (newValue == Worker.State.SUCCEEDED && (engine.getLocation().contains(finalUrl.getHost()))) {
+      System.out.println(newValue + " " + engine.getLocation());
+      if (newValue == Worker.State.SUCCEEDED && (engine.getLocation().contains(finalUrl.getProtocol() + "://" + finalUrl.getHost()))) {
         Document document = engine.getDocument();
-
+        System.out.println("YEAH");
         String streamingLink;
         try {
           engine.executeScript("document.getElementById('videooverlay').click();");
-          streamingLink = hostName + document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
+          System.out.println(document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src"));
+          System.out.println();
+          //streamingLink = hostName + document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
+          streamingLink = hostName + "/stream/" + document.getElementById("lqEH1").getTextContent();
         } catch (Exception jsShit) {
+          jsShit.printStackTrace();
           return;
         }
 
         if (!streamingLink.startsWith("https:"))
           streamingLink = "https:" + streamingLink;
+        System.out.println(streamingLink + " AAAAAAAAAAA");
         Connection connection = Jsoup.connect(streamingLink);
         connection.followRedirects(true);
         connection.ignoreContentType(true);
@@ -80,9 +90,10 @@ public final class WebBypassUtility {
         } catch (Exception ignored) {
           return;
         }
-        callback.onSuccess(streamingLink);
-        pair.getValue().close();
+        engine.locationProperty().removeListener(locationEvent);
         pair.getKey().getEngine().getLoadWorker().cancel();
+        pair.getValue().close();
+        callback.onSuccess(streamingLink);
       }
     });
     engine.load(link);

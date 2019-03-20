@@ -22,4 +22,8 @@ public class FavoriteAnime {
   public int getId() {
     return id;
   }
+
+  public static void setCounter(int value) {
+    counter.set(value);
+  }
 }

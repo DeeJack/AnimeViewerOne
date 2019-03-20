@@ -13,14 +13,12 @@ public class LoadPageAsync extends Task<List<Anime>> {
   private final String search;
   private final boolean isSearch;
   private final int page;
-  private final int elementsMultiplier;
 
-  public LoadPageAsync(FilterList filters, String search, boolean isSearch, int page, int elementsMultiplier) {
+  public LoadPageAsync(FilterList filters, String search, boolean isSearch, int page) {
     this.filters = filters;
     this.search = search;
     this.isSearch = isSearch;
     this.page = page;
-    this.elementsMultiplier = elementsMultiplier;
   }
 
   @Override
@@ -30,7 +28,7 @@ public class LoadPageAsync extends Task<List<Anime>> {
 
   @Override
   protected void succeeded() {
-    new AnimeSceneController(getValue(), page, elementsMultiplier, isSearch, filters, search);
+    new AnimeSceneController(getValue(), page, isSearch, filters, search);
   }
 
   @Override

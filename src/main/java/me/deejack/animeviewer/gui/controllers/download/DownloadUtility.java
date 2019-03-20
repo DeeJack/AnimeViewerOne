@@ -12,14 +12,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.models.episode.Episode;
@@ -57,6 +57,17 @@ public final class DownloadUtility {
     return chooser.showDialog(SceneUtility.getStage());
   }
 
+  private static boolean checkEpisodeReleased(Episode episode) {
+    if (episode.getUrl() == null || episode.getUrl().isEmpty()) {
+      Alert alert = new Alert(Alert.AlertType.WARNING, "Nessuno streaming disponibile, probabilmente deve ancora uscire l'episodio",
+              ButtonType.OK);
+      alert.showAndWait();
+      hideWaitLoad();
+      return false;
+    }
+    return true;
+  }
+
   /**
    * Let the user chose from which source (and with which resolution) to download the video
    *
@@ -65,13 +76,8 @@ public final class DownloadUtility {
    */
   public static StreamingLink chooseSource(Episode episode) throws IOException {
     AtomicReference<StreamingLink> selectedLink = new AtomicReference<>(null);
-    if (episode.getUrl() == null || episode.getUrl().isEmpty()) {
-      Alert alert = new Alert(Alert.AlertType.WARNING, "Nessuno streaming disponibile, probabilmente deve ancora uscire l'episodio",
-              ButtonType.OK);
-      alert.showAndWait();
-      hideWaitLoad();
+    if (!checkEpisodeReleased(episode))
       return null;
-    }
 
     List<StreamingLink> links = episode.getStreamingLinks();
     if (links.size() == 1)
@@ -87,24 +93,23 @@ public final class DownloadUtility {
     Parent parent = SceneUtility.loadParent("/scenes/download/choseSource.fxml");
     ListView<StreamingLink> listView = (ListView<StreamingLink>) parent.lookup("#listView");
     listView.getItems().addAll(links);
-    Button btnOk = (Button) parent.lookup("#btnOk");
-    Button btnCancel = (Button) parent.lookup("#btnCancel");
-    Scene scene = new Scene(parent);
-    Stage stage = new Stage(StageStyle.UNDECORATED);
-    stage.setScene(scene);
+    Dialog dialog = new Dialog();
+    dialog.setGraphic(parent);
+    dialog.setWidth(DialogPane.USE_COMPUTED_SIZE);
+    dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
-    btnOk.setOnAction((v) -> {
+    dialog.getDialogPane().lookupButton(ButtonType.OK).setOnMousePressed((v) -> {
       if (listView.getSelectionModel().getSelectedItem() != null)
         selectedLink.set(listView.getSelectionModel().getSelectedItem());
       hideWaitLoad();
-      stage.close();
+      dialog.close();
     });
-    btnCancel.setOnAction((v) -> {
+    dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setOnMousePressed((v) -> {
       hideWaitLoad();
-      stage.close();
+      dialog.close();
     });
-    stage.setOnCloseRequest((event) -> hideWaitLoad());
-    stage.showAndWait();
+
+    dialog.showAndWait();
     return selectedLink.get();
   }
 

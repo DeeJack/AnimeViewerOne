@@ -36,4 +36,9 @@ public class TextBoxFilter extends TextField implements Filter {
   public String getFilterId() {
     return filterId;
   }
+
+  @Override
+  public Filter cloneFilter() {
+    return new TextBoxFilter(filterId, textLabel, getPromptText());
+  }
 }

@@ -2,23 +2,27 @@ package me.deejack.animeviewer.gui.components.animescene;
 
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.controllers.AnimeDetailController;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
-import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
-
 public class AnimeBox extends VBox {
+  private static final Image imageFavorite = new Image(App.class.getResourceAsStream("/assets/favorite.png"));
   private final Anime anime;
+  private final Listener<Anime> onRequestAnimeTab;
 
-  public AnimeBox(Anime anime) {
+  public AnimeBox(Anime anime, Listener<Anime> onRequestAnimeTab) {
     this.anime = anime;
+    this.onRequestAnimeTab = onRequestAnimeTab;
     setUp();
   }
 
@@ -26,15 +30,35 @@ public class AnimeBox extends VBox {
     setOnMouseReleased((e) -> {
       if (e.getButton() == MouseButton.PRIMARY)
         loadElement();
+      else if (e.getButton() == MouseButton.MIDDLE) {
+        onRequestAnimeTab.onChange(anime);
+      }
     });
     ImageView view = createView();
+    Label title = createTitle(view);
+    StackPane stackPane = new StackPane(view);
+    if (anime.isFavorite()) {
+      stackPane.setAlignment(Pos.TOP_RIGHT);
+      stackPane.getChildren().add(createImageFavorite());
+    }
+    getChildren().addAll(stackPane, title);
+    setPrefHeight(view.getFitHeight() + title.getHeight() + 20);
+    setPadding(new Insets(10, 10, 10, 10));
+  }
+
+  private ImageView createImageFavorite() {
+    ImageView favorite = new ImageView(imageFavorite);
+    favorite.setFitHeight(20);
+    favorite.setPreserveRatio(true);
+    return favorite;
+  }
+
+  private Label createTitle(ImageView view) {
     Label title = new Label(anime.getAnimeInformation().getName());
     title.setLabelFor(view);
     title.setStyle("-fx-font: 20 arial;");
     title.setMaxWidth(250);
-    getChildren().addAll(view, title);
-    setPrefHeight(view.getFitHeight() + title.getHeight() + 20);
-    setPadding(new Insets(10, 10, 10, 10));
+    return title;
   }
 
   private ImageView createView() {
@@ -48,7 +72,6 @@ public class AnimeBox extends VBox {
   }
 
   private void loadElement() {
-    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingAnimeList"));
-    new AnimeDetailController(anime).loadAsync();
+    new AnimeDetailController(anime, false).loadAsync();
   }
 }

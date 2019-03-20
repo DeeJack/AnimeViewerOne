@@ -1,26 +1,25 @@
 package me.deejack.animeviewer.gui;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import me.deejack.animeviewer.gui.connection.CustomConnection;
-import me.deejack.animeviewer.gui.controllers.streaming.ControlsLayerTask;
 import me.deejack.animeviewer.gui.scenes.EventHandler;
+import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.favorite.Favorite;
-import me.deejack.animeviewer.logic.history.History;
+import me.deejack.animeviewer.logic.extentions.ExtensionLoader;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
-import me.deejack.animeviewer.logic.models.source.asd.DreamSubSource;
+import me.deejack.animeviewer.logic.models.source.animeleggendari.AnimeLeggendariSource;
+import me.deejack.animeviewer.logic.models.source.dreamsub.DreamSubSource;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
-import org.apache.logging.log4j.LogManager;
 
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
 public class App extends Application {
-  public static final FilteredSource[] SITES = {new DreamSubSource()};
+  public static final List<FilteredSource> SITES = ExtensionLoader.loadExtension();//{new DreamSubSource(), new AnimeLeggendariSource()};
   private static FilteredSource site;
 
   public static void main(String[] args) {
@@ -55,25 +54,17 @@ public class App extends Application {
     File lastHistory;
     if (history.exists()) {
       lastHistory = history;
-      if (ControlsLayerTask.tempHistory.exists() && history.lastModified() < ControlsLayerTask.tempHistory.lastModified())
+      /*if (ControlsLayerTask.tempHistory.exists() && history.lastModified() < ControlsLayerTask.tempHistory.lastModified())
         lastHistory = ControlsLayerTask.tempHistory;
     } else if (ControlsLayerTask.tempHistory.exists()) {
-      lastHistory = ControlsLayerTask.tempHistory;
+      lastHistory = ControlsLayerTask.tempHistory;*/
     } else {
       lastHistory = null;
     }
     if (lastHistory != null) {
-      try {
-        History.getHistory().loadFromFile();
-      } catch (IOException e) {
-        handleException(e);
-      }
+      FilesUtility.loadHistory();
     }
-    try {
-      Favorite.getInstance().loadFromFile();
-    } catch (IOException e) {
-      LogManager.getLogger().error(e);
-    }
+    FilesUtility.loadFavorite();
 
     // DA CAMBIARE, METTERE BASESCENE, magari mettere un metodo che la cambia così posso fare un listener...?
     /*SceneUtility.getStage().getScene().rootProperty().addListener((listener, oldValue, newValue) -> {

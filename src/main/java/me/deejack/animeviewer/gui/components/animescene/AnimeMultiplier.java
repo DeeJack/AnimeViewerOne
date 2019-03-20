@@ -10,22 +10,26 @@ import javafx.scene.layout.HBox;
 
 public class AnimeMultiplier extends HBox {
   private final List<ChangeListener<Integer>> selectionListeners = new ArrayList<>();
+  ComboBox<Integer> comboBox;
 
-  public AnimeMultiplier(int startElement) {
-    getChildren().addAll(new Label("Anime per pagina: "), createCombo(startElement));
+  public AnimeMultiplier() {
+    getChildren().addAll(new Label("Anime per pagina: "), createCombo());
   }
 
-  private ComboBox<Integer> createCombo(int startElement) {
+  private ComboBox<Integer> createCombo() {
     List<Integer> multipliers = new ArrayList<>();
     for (int i = 1; i < 5; i++) {
       multipliers.add(i);
     }
-    ComboBox<Integer> comboBox = new ComboBox<>(new ObservableListWrapper<>(multipliers));
+    comboBox = new ComboBox<>(new ObservableListWrapper<>(multipliers));
     comboBox.setPrefWidth(150);
-    comboBox.getSelectionModel().select((Integer) startElement);
     comboBox.getSelectionModel().selectedItemProperty().addListener((event, oldValue, newValue) ->
             selectionListeners.forEach(listener -> listener.changed(event, oldValue, newValue)));
     return comboBox;
+  }
+
+  public void select(int item) {
+    comboBox.getSelectionModel().select((Integer) item);
   }
 
   public void addSelectionListener(ChangeListener<Integer> selectionListener) {

@@ -3,6 +3,7 @@ package me.deejack.animeviewer.gui.components.animedetail;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import me.deejack.animeviewer.gui.App;
+import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
@@ -30,7 +31,7 @@ public class ImageFavorite extends ImageView {
         setImage(imageFavorite);
       else
         setImage(imageNonFavorite);
-      Favorite.getInstance().saveToFile();
+      FilesUtility.saveFavorite();
     });
   }
 }

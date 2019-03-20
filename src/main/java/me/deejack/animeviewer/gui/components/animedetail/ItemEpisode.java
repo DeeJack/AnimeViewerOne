@@ -56,6 +56,8 @@ public class ItemEpisode extends HBox {
   }
 
   public Label createReleaseDate() {
+    if(episode.getReleaseDate() == null)
+      return new Label();
     return new Label("[" + episode.getReleaseDate() + "] - ");
   }
 

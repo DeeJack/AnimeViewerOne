@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
+import me.deejack.animeviewer.logic.serialization.JsonValidator;
 
 public final class History {
   public static final File CONFIG_DIR = new File(System.getProperty("user.home") + File.separator +
@@ -55,26 +56,23 @@ public final class History {
     return Collections.unmodifiableList(viewedElements);
   }
 
-  public boolean saveToFile() {
+  public void saveToFile() throws IOException {
     if (!CONFIG_DIR.exists())
       CONFIG_DIR.mkdir();
-    return saveToFile(new File(CONFIG_DIR.getPath() + File.separator + "history.json"));
+    saveToFile(new File(CONFIG_DIR.getPath() + File.separator + "history.json"));
   }
 
-  public boolean saveToFile(File output) {
+  public void saveToFile(File output) throws IOException {
     if (output == null)
-      return false;
-    try {
-      if (!output.exists())
-        output.createNewFile();
-      String json = serializer.serialize(viewedElements);
-      try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output), StandardCharsets.UTF_8))) {
-        writer.append(json);
-        writer.flush();
-      }
-      return true;
-    } catch (IOException e) {
-      return false;
+      return;
+    if (!output.exists())
+      output.createNewFile();
+    String json = serializer.serialize(viewedElements);
+    if (!JsonValidator.isValid(json))
+      throw new IOException("Json is invalid!");
+    try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output), StandardCharsets.UTF_8))) {
+      writer.append(json);
+      writer.flush();
     }
   }
 
@@ -82,6 +80,8 @@ public final class History {
     if (inputFile == null || !inputFile.exists())
       return false;
     String json = String.join("\n", Files.readAllLines(inputFile.toPath(), StandardCharsets.UTF_8));
+    if (!JsonValidator.isValid(json))
+      throw new IOException("Json is invalid!");
     List<HistoryElement> elements = serializer.deserializeList(json);
 
     viewedElements.addAll(elements);

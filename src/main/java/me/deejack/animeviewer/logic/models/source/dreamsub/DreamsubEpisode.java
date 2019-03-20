@@ -1,4 +1,4 @@
-package me.deejack.animeviewer.logic.models.source.asd;
+package me.deejack.animeviewer.logic.models.source.dreamsub;
 
 import java.io.IOException;
 import java.time.LocalDate;

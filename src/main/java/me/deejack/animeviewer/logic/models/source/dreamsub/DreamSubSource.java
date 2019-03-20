@@ -1,6 +1,6 @@
-package me.deejack.animeviewer.logic.models.source.asd;
+package me.deejack.animeviewer.logic.models.source.dreamsub;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import me.deejack.animeviewer.gui.components.filters.ComboBoxFilter;
 import me.deejack.animeviewer.gui.components.filters.Filter;
@@ -14,6 +14,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class DreamSubSource extends ParsedHttpSource {
+  Map<String, String> genres = new LinkedHashMap<>();
 
   public DreamSubSource() {
     super("https://www.dreamsub.stream", "https://www.dreamsub.stream/res/img/logoDS2.png");
@@ -52,7 +53,7 @@ public class DreamSubSource extends ParsedHttpSource {
     for (Filter filter : filters.getFilters()) {
       url.append(filter.getFilterId()).append("=").append(filter.getFilterValue()).append("&");
     }
-    System.out.println(url);
+    url.append("page=").append(page);
     return ConnectionUtility.connect(url.toString(), false);
   }
 
@@ -66,16 +67,17 @@ public class DreamSubSource extends ParsedHttpSource {
   }
 
   private Map<String, String> getGenres() {
-    Document homePage = ConnectionUtility.getPage(getBaseUrl(), false);
-    Map<String, String> genres = new HashMap<>();
-    Elements genreElements = homePage.getElementById("genere").getElementsByTag("option");
-    for (Element el : genreElements)
-      genres.put(el.text(), el.text());
+    if (genres.isEmpty()) {
+      Document homePage = ConnectionUtility.getPage(getBaseUrl(), false);
+      Elements genreElements = homePage.getElementById("genere").getElementsByTag("option");
+      for (Element el : genreElements)
+        genres.put(el.text(), el.text());
+    }
     return genres;
   }
 
   private Map<String, String> getStatus() {
-    Map<String, String> status = new HashMap<>();
+    Map<String, String> status = new LinkedHashMap<>();
     status.put("Tutto", "tutti");
     status.put("Completati", "conclusi");
     status.put("In Corso", "in-corso");
@@ -84,7 +86,7 @@ public class DreamSubSource extends ParsedHttpSource {
   }
 
   private Map<String, String> getSort() {
-    Map<String, String> sorts = new HashMap<>();
+    Map<String, String> sorts = new LinkedHashMap<>();
     sorts.put("Popolarità", "popolarità");
     sorts.put("Alfabetico", "A-Z");
     sorts.put("Voto", "rating");

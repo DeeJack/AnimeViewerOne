@@ -1,22 +1,26 @@
 package me.deejack.animeviewer.logic.favorite;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
+import me.deejack.animeviewer.logic.serialization.JsonValidator;
 
 import static me.deejack.animeviewer.logic.history.History.CONFIG_DIR;
 
 public final class Favorite {
   private static final Favorite instance = new Favorite();
-  private final Set<FavoriteAnime> favorites = new HashSet<>();
+  private final Set<FavoriteAnime> favorites = new LinkedHashSet<>();
   private final AnimeSerializer serializer = new AnimeSerializer<>(Anime.class);
 
   private Favorite() {
@@ -43,22 +47,22 @@ public final class Favorite {
     return Collections.unmodifiableSet(favorites);
   }
 
-  public boolean saveToFile() {
+  public boolean saveToFile() throws IOException {
     if (!CONFIG_DIR.exists())
       CONFIG_DIR.mkdir();
     return saveToFile(new File(CONFIG_DIR.getPath() + File.separator + "favorites.json"));
   }
 
-  public boolean saveToFile(File output) {
+  public boolean saveToFile(File output) throws IOException {
     if (output == null)
       return false;
     String json = serializer.serialize(new ArrayList<>(favorites));
-    try {
-      if (!output.exists())
-        output.createNewFile();
-      Files.write(Paths.get(output.toURI()), json.getBytes());
-    } catch (IOException exception) {
-      return false;
+    if (!JsonValidator.isValid(json))
+      throw new IOException("Json is invalid!");
+    if (!output.exists())
+      output.createNewFile();
+    try(BufferedWriter writer = Files.newBufferedWriter(Paths.get(output.toURI()), Charset.forName("UTF-8"))) {
+      writer.write(json);
     }
     return true;
   }
@@ -71,7 +75,11 @@ public final class Favorite {
     if (!input.exists())
       return false;
     String json = String.join("\n", Files.readAllLines(Paths.get(input.toURI())));
+    if (!JsonValidator.isValid(json))
+      throw new IOException("Json invalid!");
     List<FavoriteAnime> elements = serializer.deserializeList(json);
+    if(!elements.isEmpty())
+      FavoriteAnime.setCounter(elements.get(elements.size() - 1).getId() + 1);
 
     favorites.addAll(elements);
     return true;

@@ -26,12 +26,16 @@ public class SingleFavorite extends HBox {
   private Button resumeButton;
 
   public SingleFavorite(Anime anime) {
-    this.anime = anime;
-    initialize();
+    this(anime, anime.getAnimeInformation().getImageUrl());
   }
 
-  private void initialize() {
-    ImageView animeImage = createImage(anime.getAnimeInformation().getImageUrl());
+  public SingleFavorite(Anime anime, String imageUrl) {
+    this.anime = anime;
+    initialize(imageUrl);
+  }
+
+  private void initialize(String imageUrl) {
+    ImageView animeImage = createImage(imageUrl);
     removeButton = new Button(LocalizedApp.getInstance().getString("RemoveButton"));
     resumeButton = new Button(LocalizedApp.getInstance().getString("ResumeButton"));
     registerEvents(animeImage, removeButton, resumeButton);
@@ -62,7 +66,7 @@ public class SingleFavorite extends HBox {
   private void registerEvents(ImageView animeImage, Button buttonRemove, Button buttonResume) {
     animeImage.setOnMousePressed((event) -> {
       if (event.isPrimaryButtonDown())
-        new AnimeDetailController(anime).loadAsync();
+        new AnimeDetailController(anime, false).loadAsync();
     });
     buttonRemove.setOnAction((event) -> {
       if (removeHandler != null)

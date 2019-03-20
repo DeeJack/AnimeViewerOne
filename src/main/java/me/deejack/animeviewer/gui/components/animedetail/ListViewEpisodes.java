@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.gui.components.animedetail;
 
+import java.util.Objects;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -35,6 +36,7 @@ public class ListViewEpisodes extends ListView<ItemEpisode> {
 
   private void addChildren() {
     anime.getEpisodes().stream()
+            .filter(Objects::nonNull)
             .map((episode) -> new ItemEpisode(episode, anime, this))
             .forEach(getItems()::add);
   }

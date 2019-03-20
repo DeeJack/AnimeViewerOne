@@ -5,7 +5,9 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
+import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.logic.favorite.Favorite;
+import me.deejack.animeviewer.logic.favorite.FavoriteAnime;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
 public class FavoriteItem extends SingleFavorite {
@@ -21,7 +23,7 @@ public class FavoriteItem extends SingleFavorite {
   private EventHandler<ActionEvent> getOnRemove() {
     return (event) -> {
       Favorite.getInstance().removeFavorite(anime);
-      Favorite.getInstance().saveToFile();
+      FilesUtility.saveFavorite();
       ((Pane) getParent()).getChildren().remove(this);
     };
   }

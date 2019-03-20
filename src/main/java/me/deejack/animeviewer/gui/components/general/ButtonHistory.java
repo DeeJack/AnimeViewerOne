@@ -11,7 +11,7 @@ import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 public class ButtonHistory extends Button {
   public ButtonHistory() {
     super(LocalizedApp.getInstance().getString("HistoryButtonText"));
-    System.out.println("asd");
+    System.out.println("dreamsub");
     System.out.println(LocalizedApp.getInstance().getString("HistoryButtonText"));
     setOnAction((event) -> {
       showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingHistory"));

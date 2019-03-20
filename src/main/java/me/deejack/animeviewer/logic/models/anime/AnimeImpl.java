@@ -50,7 +50,7 @@ public abstract class AnimeImpl extends ParsedHttpAnime {
   }
 
   public List<Episode> getEpisodes() {
-    return Collections.unmodifiableList(episodes);
+    return episodes;
   }
 
   /**

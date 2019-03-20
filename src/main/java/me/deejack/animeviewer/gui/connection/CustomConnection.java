@@ -42,7 +42,8 @@ public class CustomConnection implements SiteConnection {
 
     /*if (App.getSite() != null && App.getSite().getSession() != null)
       cookies.putAll(App.getSite().getSession().getCookies());*/
-    System.out.println("Connecting to " + pageLink);
+    if(!pageLink.endsWith(".jpg"))
+      System.out.println("Connecting to " + pageLink);
     try {
       Connection.Response response = execute(pageLink, cookies, followRedirects);
       if (response.statusMessage().equalsIgnoreCase(SERVICE_UNAVAILABLE_MSG)) {

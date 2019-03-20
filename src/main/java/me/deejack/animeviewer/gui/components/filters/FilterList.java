@@ -13,9 +13,14 @@ public class FilterList {
   private final Filter[] filters;
   private final HiddenSideBar sideBar;
 
-  public FilterList(Button controlButton) {
+  public FilterList(Button controlButton, FilterList previousFilters) {
     sideBar = new HiddenSideBar(controlButton);
-    filters = App.getSite().getFilters();
+    if (previousFilters != null) {
+      filters = new Filter[previousFilters.getFilters().length];
+      for (int i = 0; i < previousFilters.getFilters().length; i++) {
+        filters[i] = previousFilters.getFilters()[i].cloneFilter();
+      }
+    } else filters = App.getSite().getFilters();
     initialize();
   }
 

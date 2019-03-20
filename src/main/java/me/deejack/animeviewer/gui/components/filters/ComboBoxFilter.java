@@ -16,6 +16,11 @@ public class ComboBoxFilter extends ComboBox<String> implements Filter {
     initialize();
   }
 
+  public ComboBoxFilter(String filterId, String label, Map<String, String> items, String selectedKey) {
+    this(filterId, label, items);
+    getSelectionModel().select(selectedKey);
+  }
+
   private void initialize() {
     getItems().addAll(items.keySet());
     getSelectionModel().select(0);
@@ -39,5 +44,10 @@ public class ComboBoxFilter extends ComboBox<String> implements Filter {
   @Override
   public String getFilterId() {
     return filterId;
+  }
+
+  @Override
+  public Filter cloneFilter() {
+    return new ComboBoxFilter(filterId, label, items, getSelectionModel().getSelectedItem());
   }
 }

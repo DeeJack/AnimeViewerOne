@@ -1,28 +1,33 @@
 package me.deejack.animeviewer.gui.components.animescene;
 
-import java.util.ArrayList;
-import java.util.List;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.scene.layout.FlowPane;
+import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
 public class AnimePane extends FlowPane {
-  private final List<Anime> animeList;
+  private final Listener<Anime> onRequestAnimeTab;
 
-  public AnimePane(List<Anime> animeList) {
-    this.animeList = new ArrayList<>(animeList);
+  public AnimePane(Iterable<? extends Anime> animeList, Listener<Anime> onRequestAnimeTab) {
     //setPrefWidth(600);
+    this.onRequestAnimeTab = onRequestAnimeTab;
     setMinWidth(Double.NEGATIVE_INFINITY);
     setMinHeight(Double.NEGATIVE_INFINITY);
     setMaxWidth(Double.MAX_VALUE);
     setMaxHeight(Double.MAX_VALUE);
     setColumnHalignment(HPos.CENTER);
+    addElements(animeList);
   }
 
-  public void load() {
-    animeList.stream().
+  public void addElements(Iterable<? extends Anime> animeList) {
+    for (Anime anime : animeList) {
+      AnimeBox box = new AnimeBox(anime, onRequestAnimeTab);
+      Platform.runLater(() -> getChildren().add(box));
+    }
+    /*animeList.stream().
             map(AnimeBox::new).
-            forEach(getChildren()::add);
+            forEach(getChildren()::add);*/
   }
 }

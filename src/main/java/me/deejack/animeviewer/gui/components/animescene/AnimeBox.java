@@ -4,6 +4,7 @@ import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -11,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.controllers.AnimeDetailController;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -24,6 +26,7 @@ public class AnimeBox extends VBox {
     this.anime = anime;
     this.onRequestAnimeTab = onRequestAnimeTab;
     setUp();
+    Tooltip.install(this, new Tooltip(LocalizedApp.getInstance().getString("AnimeBoxTooltip")));
   }
 
   public void setUp() {

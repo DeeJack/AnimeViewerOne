@@ -4,6 +4,7 @@ import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.util.Duration;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 
 public class HiddenSideBar extends VBox {
   private final TranslateTransition hideAnimation = new TranslateTransition(Duration.millis(250), this);
@@ -21,6 +23,7 @@ public class HiddenSideBar extends VBox {
 
   public HiddenSideBar(Button btnOpen) {
     this.btnOpen = btnOpen;
+    btnOpen.setTooltip(new Tooltip(LocalizedApp.getInstance().getString("SidebarControlButton")));
     setUp();
   }
 

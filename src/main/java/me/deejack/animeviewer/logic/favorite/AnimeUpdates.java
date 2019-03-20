@@ -8,9 +8,9 @@ import me.deejack.animeviewer.logic.models.episode.Episode;
 
 public class AnimeUpdates {
   @Expose
-  private final int favoriteId; // rimpiazzare con un id del favorite, così da non ripeterlo
+  private final int favoriteId;
   @Expose
-  private List<Episode> episodes = new ArrayList<>(); // mettere solo il link
+  private List<Episode> episodes = new ArrayList<>(); // mettere solo il link TODO
 
   public AnimeUpdates(int favoriteId) {
     this.favoriteId = favoriteId;
@@ -34,5 +34,10 @@ public class AnimeUpdates {
 
   public List<Episode> getEpisodes() {
     return episodes;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    return otherObject instanceof AnimeUpdates && ((AnimeUpdates)otherObject).favoriteId == favoriteId;
   }
 }

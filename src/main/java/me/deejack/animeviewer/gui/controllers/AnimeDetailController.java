@@ -13,6 +13,7 @@ import me.deejack.animeviewer.gui.components.general.ButtonBack;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
@@ -25,13 +26,16 @@ public class AnimeDetailController implements BaseScene {
   private Pane root;
 
   public AnimeDetailController(Anime anime, boolean isNewTab) {
-    this.anime = anime;
+    this.anime = Favorite.getInstance().contains(anime) ? Favorite.getInstance().get(anime.getUrl()).getAnime() : anime;
     this.isNewTab = isNewTab;
   }
 
   public void loadAsync() {
     showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingAnimeList"));
-    anime.loadAsync(this::load);
+    if(Favorite.getInstance().contains(anime))
+      load();
+    else
+      anime.loadAsync(this::load);
   }
 
   public void loadSync() {

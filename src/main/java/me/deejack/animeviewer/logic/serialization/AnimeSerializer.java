@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,8 @@ public final class AnimeSerializer<T> {
     gson = new GsonBuilder()
             .registerTypeAdapter(Anime.class, new GeneralTypeAdapter<Anime>())
             .registerTypeAdapter(Episode.class, new GeneralTypeAdapter<Episode>())
-            .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, typeOfT, context) ->
-                    LocalDateTime.parse(json.getAsJsonPrimitive().getAsString()))
+            .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context) ->
+                    LocalDate.parse(json.getAsJsonPrimitive().getAsString()))
             .disableHtmlEscaping()
             .setPrettyPrinting()
             .excludeFieldsWithoutExposeAnnotation()

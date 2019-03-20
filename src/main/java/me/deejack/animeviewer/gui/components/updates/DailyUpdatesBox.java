@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.gui.components.updates;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -14,11 +15,11 @@ import me.deejack.animeviewer.logic.models.episode.Episode;
 public class DailyUpdatesBox extends VBox {
   private VBox updatesBox;
 
-  public DailyUpdatesBox(LocalDateTime dateTime, List<AnimeUpdates> updates) {
+  public DailyUpdatesBox(LocalDate dateTime, List<AnimeUpdates> updates) {
     getChildren().addAll(createDayBox(dateTime), createUpdatesBox(updates));
   }
 
-  private Label createDayBox(LocalDateTime dateTime) {
+  private Label createDayBox(LocalDate dateTime) {
     return new Label(dateTime.format(DateTimeFormatter.ofPattern("eeee d MMMM uuuu")));
   }
 

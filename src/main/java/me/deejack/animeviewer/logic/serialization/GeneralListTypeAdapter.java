@@ -12,6 +12,9 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import me.deejack.animeviewer.gui.App;
+import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
+import me.deejack.animeviewer.logic.models.source.FilteredSource;
 
 public class GeneralListTypeAdapter<T> implements JsonSerializer, JsonDeserializer {
   private static final String CLASS_NAME_FIELD = "CLASSNAME";
@@ -55,7 +58,12 @@ public class GeneralListTypeAdapter<T> implements JsonSerializer, JsonDeserializ
     try {
       return Class.forName(className);
     } catch (ClassNotFoundException e) {
-      throw new JsonParseException(e.getMessage());
+      for (Class extensionClass : ExtensionLoader.loadedClasses) {
+        System.out.println(extensionClass.getName());
+        if (extensionClass.getName().equalsIgnoreCase(className))
+          return extensionClass;
+      }
+      throw new JsonParseException("Class Not Found! " + className);
     }
   }
 }

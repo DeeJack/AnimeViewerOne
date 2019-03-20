@@ -5,20 +5,17 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import me.deejack.animeviewer.gui.async.LoadSiteAsync;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
-import me.deejack.animeviewer.gui.components.streaming.ButtonPause;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.models.source.FilteredSource;
 
 import static me.deejack.animeviewer.gui.App.getSite;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.getStage;
@@ -38,8 +35,8 @@ public class HomeController implements BaseScene {
     root = SceneUtility.loadParent("/scenes/home.fxml");
     ((Region) root).heightProperty().addListener((event) -> root.getChildrenUnmodifiable().get(0).prefWidth(((Region) root).getWidth()));
     ImageView icon = (ImageView) root.lookup("#imgSite");
-    HiddenSideBar sideBar = new FilterList((Button)root.lookup("#btnSideBar"), null).getSideBar();
-    ((Pane)root).getChildren().add(sideBar);
+    HiddenSideBar sideBar = new FilterList((Button) root.lookup("#btnSideBar"), null).getSideBar();
+    ((Pane) root).getChildren().add(sideBar);
     Task<Image> task = SceneUtility.loadImage(getSite().getIconUrl());
     setRoot(this);
     getStage().show();
@@ -49,14 +46,10 @@ public class HomeController implements BaseScene {
     });
   }
 
-  private void onSelectionChange(FilteredSource oldSite, FilteredSource newSite) {
-    if (getSite() != newSite)
-      new Thread(new LoadSiteAsync(newSite)).start();
-  }
-
   @FXML
   private void initialize() {
     btnStreaming.setOnAction((event) -> new AnimePlayer(txtStreaming.getText()));
+    btnStreaming.setTooltip(new Tooltip(LocalizedApp.getInstance().getString("OpenExtVideo")));
   }
 
   @Override

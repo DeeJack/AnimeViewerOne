@@ -1,7 +1,9 @@
 package me.deejack.animeviewer.gui.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -15,6 +17,8 @@ public class SearchController {
   @FXML
   private TextField txtSearchName;
   @FXML
+  private Button btnSearchName;
+  @FXML
   private VBox root;
 
   @FXML
@@ -23,6 +27,7 @@ public class SearchController {
       if (key.getCode() == KeyCode.ENTER)
         onSearchNameClicked();
     });
+    btnSearchName.setTooltip(new Tooltip(LocalizedApp.getInstance().getString("SearchTooltip")));
   }
 
   @FXML

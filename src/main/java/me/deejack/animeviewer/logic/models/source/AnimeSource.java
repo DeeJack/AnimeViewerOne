@@ -30,4 +30,6 @@ public interface AnimeSource {
   String getIconUrl();
 
   String getBaseUrl();
+
+  int getId();
 }

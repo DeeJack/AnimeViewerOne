@@ -77,7 +77,7 @@ public class StreamingController implements BaseScene {
     MediaView mediaView = (MediaView) root.lookup("#mediaView");
     Label lblTitle = (Label) root.lookup("#lblTitle");
 
-    cursorTask = new ControlsLayerTask((Pane) root.lookup("#paneLayer"), root);
+    cursorTask = new ControlsLayerTask((Pane) root.lookup("#paneLayer"), mediaView);
     new Thread(cursorTask).start();
     lblTitle.setText(title);
     mediaView.setMediaPlayer(mediaPlayer);

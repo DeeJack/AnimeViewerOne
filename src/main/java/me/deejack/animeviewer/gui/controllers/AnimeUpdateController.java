@@ -1,6 +1,7 @@
 package me.deejack.animeviewer.gui.controllers;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
@@ -8,12 +9,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.components.updates.DailyUpdatesBox;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
+import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.favorite.AnimeUpdates;
 import me.deejack.animeviewer.logic.favorite.FavoriteUpdates;
 
 public class AnimeUpdateController implements BaseScene {
   private Pane root;
+  private DailyUpdatesBox todayBox;
 
   public AnimeUpdateController() {
     initialize();
@@ -28,35 +32,31 @@ public class AnimeUpdateController implements BaseScene {
   }
 
   private void loadOldUpdates(VBox boxFavorite) {
-    FavoriteUpdates favoriteUpdates = new FavoriteUpdates();
+    FavoriteUpdates favoriteUpdates = FavoriteUpdates.getInstance();
     favoriteUpdates.readFromFile();
     favoriteUpdates.getUpdates().forEach((localDate, animeUpdates) -> {
-      boxFavorite.getChildren().add(new DailyUpdatesBox(localDate, animeUpdates));
+      DailyUpdatesBox dailyUpdatesBox = new DailyUpdatesBox(localDate, animeUpdates);
+      if (localDate.equals(LocalDate.now()))
+        todayBox = dailyUpdatesBox;
+      boxFavorite.getChildren().add(dailyUpdatesBox);
     });
   }
 
   public void checkUpdates(VBox boxFavorite) {
-    FavoriteUpdates favoriteUpdates = new FavoriteUpdates();
+    FavoriteUpdates favoriteUpdates = FavoriteUpdates.getInstance();
     new Thread(() -> {
-      DailyUpdatesBox dailyUpdatesBox = new DailyUpdatesBox(LocalDateTime.now(), favoriteUpdates.checkUpdates());
-      Platform.runLater(() -> boxFavorite.getChildren().add(0, dailyUpdatesBox));
+      List<AnimeUpdates> updates = favoriteUpdates.checkUpdates();
+      if(updates.isEmpty())
+        return;
+      Platform.runLater(() -> {
+        if(todayBox != null)
+          boxFavorite.getChildren().remove(todayBox);
+        DailyUpdatesBox dailyUpdatesBox = new DailyUpdatesBox(LocalDate.now(), updates);
+        boxFavorite.getChildren().add(0, dailyUpdatesBox);
+      });
+      FilesUtility.saveFavorite();
+      favoriteUpdates.writeToFile();
     }).start();
-/*    Favorite.getInstance().getFavorites().stream()
-            .map(FavoriteAnime::getAnime)
-            .forEach((favorite) -> {
-              List<Episode> oldEpisodes = favorite.getEpisodes();
-              favorite.loadAsync(() -> {
-                List<Episode> newEpisodes = new ArrayList<>(favorite.getEpisodes());
-                newEpisodes.removeAll(oldEpisodes);
-                newEpisodes.forEach((episode) -> Platform.runLater(() ->
-                        dailyUpdatesBox.addUpdate(favorite, episode)));*/
-        /*newEpisodes.forEach(episode ->
-                Platform.runLater(() ->
-                        boxFavorite.getChildren().add(new SingleAnimeUpdate(favorite, episode))
-                ));
-      });*/
-              /*});
-            });*/
   }
 
   @Override

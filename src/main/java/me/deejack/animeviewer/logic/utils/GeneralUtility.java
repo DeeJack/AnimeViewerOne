@@ -1,12 +1,16 @@
 package me.deejack.animeviewer.logic.utils;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import me.deejack.animeviewer.logic.anime.dto.Genre;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public final class GeneralUtility {
+  private static final Logger logger = LogManager.getLogger();
 
   private GeneralUtility() {
   }
@@ -29,5 +33,11 @@ public final class GeneralUtility {
     } catch (NumberFormatException exception) {
       return Optional.empty();
     }
+  }
+
+  public static void logError(Throwable throwable) {
+    logger.error(throwable);
+    logger.error("Cause: " + throwable.getCause());
+    logger.error("Stack trace: " + Arrays.stream(throwable.getStackTrace()).map(StackTraceElement::toString).collect(Collectors.joining("\n\t")));
   }
 }

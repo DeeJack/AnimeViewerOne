@@ -1,4 +1,4 @@
-package me.deejack.animeviewer.logic.extentions;
+package me.deejack.animeviewer.logic.extensions;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +11,10 @@ import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
+import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
 public final class ExtensionLoader {
+  public static List<Class> loadedClasses = new ArrayList<>();
 
   private ExtensionLoader() {
   }
@@ -45,19 +47,23 @@ public final class ExtensionLoader {
         JarEntry entry = entries.nextElement();
         if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
           Class<?> loadedClass = classLoader.loadClass(entry.getName().replaceAll(".class", "").replaceAll("/", "."));
-          try {
-            animeSource = loadedClass.asSubclass(FilteredSource.class).newInstance();
-          } catch (ClassCastException ignored) {
-          } catch (IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-          }
+          loadedClasses.add(loadedClass);
+          animeSource = tryLoadAnimeSource(loadedClass);
+          if (animeSource != null)
+            return animeSource;
         }
       }
     } catch (IOException | ClassNotFoundException e) {
-      e.printStackTrace();
+      GeneralUtility.logError(e);
     }
-    if (animeSource == null)
-      return null;
-    return animeSource;
+    return null;
+  }
+
+  private static FilteredSource tryLoadAnimeSource(Class<?> classz) {
+    try {
+      return classz.asSubclass(FilteredSource.class).newInstance();
+    } catch (IllegalAccessException | InstantiationException | ClassCastException ignored) {
+    }
+    return null;
   }
 }

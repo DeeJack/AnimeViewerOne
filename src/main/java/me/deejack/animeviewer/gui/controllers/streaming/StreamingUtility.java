@@ -18,7 +18,6 @@ public final class StreamingUtility {
   }
 
   public static void keyNavigation(KeyEvent keyEvent, MediaPlayer mediaPlayer) {
-    keyEvent.consume();
     switch (keyEvent.getCode()) {
       case UP:
         if (mediaPlayer.getVolume() < 0.55)
@@ -42,6 +41,9 @@ public final class StreamingUtility {
           mediaPlayer.pause();
         else
           mediaPlayer.play();
+        break;
+      default:
+        keyEvent.consume();
         break;
     }
   }

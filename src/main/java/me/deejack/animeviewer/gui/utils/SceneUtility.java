@@ -30,12 +30,12 @@ import org.apache.logging.log4j.Logger;
 import org.jsoup.Connection;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
+import static me.deejack.animeviewer.logic.utils.GeneralUtility.logError;
 
 public final class SceneUtility {
   public static final String TMP_PATH = System.getProperty("java.io.tmpdir") +
           File.separator + "AnimeViewer" + File.separator;
   public static final List<BaseScene> previousScenes = new LinkedList<>();
-  private static final Logger logger = LogManager.getLogger();
   private static final Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.FINISH);
   /**
    * Key: the link to the image
@@ -117,10 +117,8 @@ public final class SceneUtility {
       Platform.runLater(() -> handleException(throwable));
       return;
     }
+    logError(throwable);
     hideWaitLoad();
-    logger.error(throwable);
-    logger.error("Cause: " + throwable.getCause());
-    logger.error("Stack trace: " + Arrays.stream(throwable.getStackTrace()).map(StackTraceElement::toString).collect(Collectors.joining("\n\t")));
     if (alert.isShowing())
       return;
     alert.setContentText("Errore durante l'esecuzione.\n" +

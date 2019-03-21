@@ -7,7 +7,6 @@ import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.async.LoadPageAsync;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
-import sun.java2d.pipe.SpanIterator;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 

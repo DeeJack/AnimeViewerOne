@@ -2,6 +2,7 @@ package me.deejack.animeviewer.logic.extensions;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -30,7 +31,8 @@ public final class ExtensionLoader {
       extensionsPath.mkdir();
     for (File file : Objects.requireNonNull(extensionsPath.listFiles())) {
       if (file.isFile() && file.getName().endsWith(".jar")) {
-        FilteredSource source = loadJar(file);
+        addExtToClasspath(file);
+        FilteredSource source = getFilteredSource(file);
         if (source != null)
           sources.add(source);
       }
@@ -38,7 +40,7 @@ public final class ExtensionLoader {
     return sources;
   }
 
-  private static FilteredSource loadJar(File file) {
+  private static FilteredSource getFilteredSource(File file) {
     FilteredSource animeSource = null;
     try (JarFile jarFile = new JarFile(file)) {
       ClassLoader classLoader = URLClassLoader.newInstance(new URL[]{new URL("jar:file:" + file.getPath() + "!/")});
@@ -57,6 +59,19 @@ public final class ExtensionLoader {
       GeneralUtility.logError(e);
     }
     return null;
+  }
+
+  private static void addExtToClasspath(File file) {
+    URLClassLoader urlClassLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+    Class sysClass = URLClassLoader.class;
+
+    try {
+      Method method = sysClass.getDeclaredMethod("addURL", URL.class);
+      method.setAccessible(true);
+      method.invoke(urlClassLoader, new URL("jar:file:" + file.getPath() + "!/"));
+    } catch (Throwable t) {
+      t.printStackTrace();
+    }
   }
 
   private static FilteredSource tryLoadAnimeSource(Class<?> classz) {

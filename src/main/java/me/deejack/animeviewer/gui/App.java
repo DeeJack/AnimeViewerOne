@@ -1,9 +1,11 @@
 package me.deejack.animeviewer.gui;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import me.deejack.animeviewer.gui.connection.CustomConnection;
 import me.deejack.animeviewer.gui.scenes.EventHandler;
@@ -16,14 +18,12 @@ import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 
+import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
+import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
 public class App extends Application {
-  public static final List<FilteredSource> SITES = ExtensionLoader.loadExtension();
-  static {
-    SITES.add(new DreamSubSource());
-    SITES.add(new AnimeLeggendariSource());
-  }
+  public static final List<FilteredSource> SITES = new ArrayList<>();
   private static FilteredSource site;
 
   public static void main(String[] args) {
@@ -43,12 +43,18 @@ public class App extends Application {
     ConnectionUtility.setSiteConnection(new CustomConnection());
     Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> handleException(throwable));
     SceneUtility.setStage(primaryStage);
-    primaryStage.setScene(new Scene(SceneUtility.loadParent("/scenes/select.fxml")));
-    primaryStage.setTitle(LocalizedApp.getInstance().getString("SelectWindowTitle"));
+    primaryStage.setScene(new Scene(new StackPane(), 1000, 720));
     primaryStage.show();
     primaryStage.getScene().setOnKeyPressed(EventHandler::onKeyEvent);
     primaryStage.getScene().setOnMouseClicked(EventHandler::onMouseEvent);
     primaryStage.setOnCloseRequest((event) -> EventHandler.onCloseRequest());
+    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingExt"));
+    SITES.addAll(ExtensionLoader.loadExtension());
+    SITES.add(new DreamSubSource());
+    SITES.add(new AnimeLeggendariSource());
+    hideWaitLoad();
+    primaryStage.setScene(new Scene(SceneUtility.loadParent("/scenes/select.fxml")));
+    primaryStage.setTitle(LocalizedApp.getInstance().getString("SelectWindowTitle"));
 
     // AGGIUNGERE GLI ANIME DESERIALIZZATI DAL FILE PIU AGGIORNATO
     File history = new File(System.getProperty("user.home") + File.separator + ".animeviewer" + File.separator + "history.json");

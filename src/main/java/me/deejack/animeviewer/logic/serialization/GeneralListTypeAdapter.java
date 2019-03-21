@@ -58,11 +58,6 @@ public class GeneralListTypeAdapter<T> implements JsonSerializer, JsonDeserializ
     try {
       return Class.forName(className);
     } catch (ClassNotFoundException e) {
-      for (Class extensionClass : ExtensionLoader.loadedClasses) {
-        System.out.println(extensionClass.getName());
-        if (extensionClass.getName().equalsIgnoreCase(className))
-          return extensionClass;
-      }
       throw new JsonParseException("Class Not Found! " + className);
     }
   }

@@ -15,7 +15,7 @@
 <?import me.deejack.animeviewer.gui.components.general.ListViewSites?>
 
 <?import me.deejack.animeviewer.gui.components.general.ButtonUpdates?>
-<StackPane prefHeight="472.0" prefWidth="632.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.deejack.animeviewer.gui.controllers.HomeController">
+<StackPane prefHeight="472.0" prefWidth="632.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="me.deejack.animeviewer.gui.controllers.HomeController">
     <BorderPane prefHeight="464.0" prefWidth="639.0">
         <top>
             <BorderPane BorderPane.alignment="CENTER">

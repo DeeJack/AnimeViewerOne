@@ -6,20 +6,19 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
 public class ListViewEpisodes extends ListView<ItemEpisode> {
   private final Anime anime;
   private final OptionMenu optionMenu = new OptionMenu(this);
 
-  public ListViewEpisodes(Anime anime, Region root) {
+  public ListViewEpisodes(Anime anime) {
     this.anime = anime;
-    registerEvents(root);
+    registerEvents();
     initialize();
   }
 
-  private void registerEvents(Region root) {
+  private void registerEvents() {
     setOnMouseReleased((event) -> {
       if (event.getButton() == MouseButton.SECONDARY)
         optionMenu.open(event.getScreenX(), event.getScreenY());

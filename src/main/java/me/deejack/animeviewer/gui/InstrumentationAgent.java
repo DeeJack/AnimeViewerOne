@@ -15,6 +15,10 @@ public class InstrumentationAgent {
     instrumentation = inst;
   }
 
+  public static void main(String[] args) {
+    System.out.println("aaa");
+  }
+
   public static long getObjectSize(Object object) {
     if (instrumentation == null) {
       throw new IllegalStateException("Agent not initialized.");

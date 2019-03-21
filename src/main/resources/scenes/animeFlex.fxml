@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import me.deejack.animeviewer.gui.components.general.ButtonBack?>
-<TabPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
     <Tab closable="false" text="%BrowseWindowTitle">
         <StackPane>
             <!-- Elements Multiplier, Sidebar Control, back button -->

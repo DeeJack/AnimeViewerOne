@@ -1,6 +1,7 @@
 package me.deejack.animeviewer.gui.components.animedetail;
 
 import java.time.Duration;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;

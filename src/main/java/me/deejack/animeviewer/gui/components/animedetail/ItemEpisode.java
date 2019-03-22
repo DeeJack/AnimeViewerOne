@@ -8,9 +8,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.controllers.download.DownloadController;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
+import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
@@ -57,7 +59,7 @@ public class ItemEpisode extends HBox {
   }
 
   public Label createReleaseDate() {
-    if(episode.getReleaseDate() == null)
+    if (episode.getReleaseDate() == null)
       return new Label();
     return new Label("[" + episode.getReleaseDate() + "] - ");
   }
@@ -70,7 +72,15 @@ public class ItemEpisode extends HBox {
     Label streaming = new Label(LocalizedApp.getInstance().getString("Streaming"));
     streaming.setOnMouseClicked((ex) -> {
       showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingEpisodeLinks"));
-      new AnimePlayer(episode, anime).streaming();
+      new Thread(() -> {
+        try {
+          Thread.sleep(2000);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        AnimePlayer player = new AnimePlayer(episode, anime);
+        Platform.runLater(() -> player.createStreaming());
+      }).start();
     });
     streaming.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
     return streaming;

@@ -30,7 +30,7 @@ public class AnimePlayer {
     extractVideo(link);
   }
 
-  public boolean streaming() {
+  public boolean createStreaming() {
     String link = "";
     try {
       StreamingLink choice = DownloadUtility.chooseSource(episode);

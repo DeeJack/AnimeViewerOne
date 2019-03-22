@@ -59,7 +59,7 @@ public final class DownloadUtility {
 
   private static boolean checkEpisodeReleased(Episode episode) {
     if (episode.getUrl() == null || episode.getUrl().isEmpty()) {
-      Alert alert = new Alert(Alert.AlertType.WARNING, "Nessuno streaming disponibile, probabilmente deve ancora uscire l'episodio",
+      Alert alert = new Alert(Alert.AlertType.WARNING, "Nessuno createStreaming disponibile, probabilmente deve ancora uscire l'episodio",
               ButtonType.OK);
       alert.showAndWait();
       hideWaitLoad();
@@ -83,7 +83,7 @@ public final class DownloadUtility {
     if (links.size() == 1)
       return links.get(0);
     else if (links.isEmpty()) {
-      Alert alert = new Alert(Alert.AlertType.WARNING, "Nessuno streaming disponibile, probabilmente deve ancora uscire l'episodio",
+      Alert alert = new Alert(Alert.AlertType.WARNING, "Nessuno createStreaming disponibile, probabilmente deve ancora uscire l'episodio",
               ButtonType.OK);
       alert.showAndWait();
       hideWaitLoad();

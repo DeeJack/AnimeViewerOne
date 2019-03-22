@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.gui.components.filters;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,18 +11,21 @@ import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
 
 public class FilterList {
-  private final Filter[] filters;
   private final HiddenSideBar sideBar;
+  private Filter[] filters;
 
   public FilterList(Button controlButton, FilterList previousFilters) {
     sideBar = new HiddenSideBar(controlButton);
-    if (previousFilters != null) {
-      filters = new Filter[previousFilters.getFilters().length];
-      for (int i = 0; i < previousFilters.getFilters().length; i++) {
-        filters[i] = previousFilters.getFilters()[i].cloneFilter();
-      }
-    } else filters = App.getSite().getFilters();
-    initialize();
+    new Thread(() -> {
+      if (previousFilters != null) {
+        filters = new Filter[previousFilters.getFilters().length];
+        for (int i = 0; i < previousFilters.getFilters().length; i++) {
+          filters[i] = previousFilters.getFilters()[i].cloneFilter();
+        }
+      } else filters = App.getSite().getFilters();
+      Platform.runLater(this::initialize);
+      ;
+    }).start();
   }
 
   private void initialize() {

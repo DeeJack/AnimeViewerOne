@@ -5,9 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
-import me.deejack.animeviewer.gui.controllers.streaming.StreamingUtility;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
-import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.async.events.SuccessListener;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
@@ -38,7 +36,7 @@ public class ButtonNext extends Button {
     alert.showAndWait();
     if (alert.getResult() == ButtonType.YES) {
       showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingNextEpisode"));
-      boolean selected = new AnimePlayer(nextEpisode.get(), anime).streaming();
+      boolean selected = new AnimePlayer(nextEpisode.get(), anime).createStreaming();
       if (selected) {
         nextEpisodeListener.onSuccess();
       }

@@ -24,7 +24,7 @@ public abstract class AnimeImpl extends ParsedHttpAnime {
   @Expose
   private AnimeInformation animeInformation;
   /**
-   * The page that contains the info and the streaming links of this anime, initialize this only when it is necessary,
+   * The page that contains the info and the createStreaming links of this anime, initialize this only when it is necessary,
    * otherwise it can be source of lag
    */
   /*protected Document animePage;*/

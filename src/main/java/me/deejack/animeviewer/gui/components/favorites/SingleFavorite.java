@@ -87,11 +87,11 @@ public class SingleFavorite extends HBox {
     if (!anime.hasBeenLoaded())
       anime.load();
     if (!History.getHistory().contains(anime)) {
-      new AnimePlayer(anime.getEpisodes().get(0), anime).streaming();
+      new AnimePlayer(anime.getEpisodes().get(0), anime).createStreaming();
       return;
     }
     List<Episode> episodesHistory = History.getHistory().get(anime).getEpisodesHistory();
-    new AnimePlayer(episodesHistory.get(episodesHistory.size() - 1), anime).streaming();
+    new AnimePlayer(episodesHistory.get(episodesHistory.size() - 1), anime).createStreaming();
   }
 
   public Button getRemoveButton() {

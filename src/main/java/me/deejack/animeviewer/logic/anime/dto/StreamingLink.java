@@ -1,7 +1,7 @@
 package me.deejack.animeviewer.logic.anime.dto;
 
 /**
- * A class who represents a link for the streaming
+ * A class who represents a link for the createStreaming
  */
 public class StreamingLink {
   /**

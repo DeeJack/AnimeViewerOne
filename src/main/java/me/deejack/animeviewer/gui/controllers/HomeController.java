@@ -32,6 +32,7 @@ public class HomeController implements BaseScene {
   }
 
   public void setup() {
+    System.out.println("asd");
     root = SceneUtility.loadParent("/scenes/home.fxml");
     ((Region) root).heightProperty().addListener((event) -> root.getChildrenUnmodifiable().get(0).prefWidth(((Region) root).getWidth()));
     ImageView icon = (ImageView) root.lookup("#imgSite");
@@ -44,6 +45,7 @@ public class HomeController implements BaseScene {
       icon.setImage(task.getValue());
       icon.toFront();
     });
+    System.out.println("qwe");
   }
 
   @FXML

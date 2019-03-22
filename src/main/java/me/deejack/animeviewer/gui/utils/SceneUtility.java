@@ -154,7 +154,7 @@ public final class SceneUtility {
   public static void setRoot(BaseScene newScene) {
     if (!newScene.getName().equalsIgnoreCase("Home") &&
             (previousScene != null &&
-                    !previousScene.getName().equalsIgnoreCase("streaming")))
+                    !previousScene.getName().equalsIgnoreCase("createStreaming")))
       previousScenes.add(previousScene);
     System.out.println(previousScenes);
     previousScene = newScene;

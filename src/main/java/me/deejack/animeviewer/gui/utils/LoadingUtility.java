@@ -20,20 +20,13 @@ public final class LoadingUtility {
     hideWaitLoad();
     if (SceneUtility.getStage().getScene().getRoot() instanceof Pane) {
       Pane root = (Pane) SceneUtility.getStage().getScene().getRoot();
+      System.err.println(root.getChildren().size());
       root.getChildren().add(new LoadingPane(msg, root));
+      System.err.println(root.getChildren().size());
     } else {
       TabPane root = (TabPane) SceneUtility.getStage().getScene().getRoot();
       ((Pane) root.getTabs().get(0).getContent()).getChildren().add(new LoadingPane(msg, root));
     }
-  }
-
-  public static void showWaitAndLoad(String msg, Pane root) {
-    if (!Platform.isFxApplicationThread()) {
-      Platform.runLater(() -> showWaitAndLoad(msg));
-      return;
-    }
-    hideWaitLoad();
-    root.getChildren().add(new LoadingPane(msg, root));
   }
 
   public static void showWaitAndLoad() {

@@ -1,22 +1,21 @@
 package me.deejack.animeviewer.gui.components.updates;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.logic.favorite.AnimeUpdates;
-import me.deejack.animeviewer.logic.models.anime.Anime;
-import me.deejack.animeviewer.logic.models.episode.Episode;
 
 public class DailyUpdatesBox extends VBox {
   private VBox updatesBox;
 
   public DailyUpdatesBox(LocalDate dateTime, List<AnimeUpdates> updates) {
-    getChildren().addAll(createDayBox(dateTime), createUpdatesBox(updates));
+    getChildren().addAll(createDayBox(dateTime), updates.isEmpty() ? createEmptyBox() : createUpdatesBox(updates));
   }
 
   private Label createDayBox(LocalDate dateTime) {
@@ -35,7 +34,8 @@ public class DailyUpdatesBox extends VBox {
     return box;
   }
 
-  public void addUpdate(Anime anime, Episode episode) {
-    updatesBox.getChildren().add(new SingleAnimeUpdate(anime, episode));
+  private HBox createEmptyBox() {
+    HBox emptyBox = new HBox(new Text(LocalizedApp.getInstance().getString("NoUpdates")));
+    return emptyBox;
   }
 }

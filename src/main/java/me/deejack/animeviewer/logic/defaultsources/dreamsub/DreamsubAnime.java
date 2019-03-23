@@ -17,7 +17,7 @@ import org.jsoup.nodes.Element;
 public class DreamsubAnime extends AnimeImpl {
 
   public DreamsubAnime(String name, String url, String imageUrl) {
-    super(url, new AnimeInformation((short) -1, name, -1, -1, new ArrayList<>(), imageUrl, AnimeStatus.UNKNOWN));
+    super(url, new AnimeInformation("Not released", name, -1, -1, new ArrayList<>(), imageUrl, AnimeStatus.UNKNOWN));
   }
 
   @Override
@@ -26,7 +26,7 @@ public class DreamsubAnime extends AnimeImpl {
       return getAnimeInformation();
     }
     String info = document.getElementsByClass("innerText").get(0).wholeText();
-    String subInfo = info.substring(info.indexOf("Genere:"));
+    String subInfo = info.substring(info.indexOf("Genere: ") + "Genere: ".length());
     subInfo = subInfo.substring(0, subInfo.indexOf("\n"));
     getAnimeInformation().setGenres(Arrays.stream(subInfo.split(", ")).map(Genre::new).collect(Collectors.toList()));
     String status = info.substring(info.indexOf("Episodi:") + "Episodi: ".length());
@@ -34,6 +34,8 @@ public class DreamsubAnime extends AnimeImpl {
     getAnimeInformation().setEpisodes(GeneralUtility.tryParse(status.replaceAll("\\+", "")).orElse(-2));
     getAnimeInformation().setAnimeStatus(status.contains("+") ? AnimeStatus.ONGOING : AnimeStatus.COMPLETED);
     getAnimeInformation().setPlot(document.getElementById("actContTrama").text());
+    int startYear = info.indexOf("Anno: ") + "Anno: ".length();
+    getAnimeInformation().setReleaseYear(info.substring(startYear, startYear + info.substring(info.indexOf("Anno: ")).indexOf("\n") - 1).trim());
     return getAnimeInformation();
   }
 

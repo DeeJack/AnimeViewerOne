@@ -8,11 +8,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.controllers.download.DownloadController;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
-import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
@@ -22,19 +20,17 @@ import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 public class ItemEpisode extends HBox {
   private final Episode episode;
   private final Anime anime;
-  private final ListView parent;
 
   public ItemEpisode(Episode episode, Anime anime, ListView parent) {
     this.episode = episode;
     this.anime = anime;
-    this.parent = parent;
     setWidth(530);
-    initialize();
+    initialize(parent);
   }
 
-  private void initialize() {
+  private void initialize(ListView parent) {
     HBox streaming = episode.getUrl().isEmpty() ? createNotReleased() : createStreamingDownload();
-    getChildren().addAll(createTile(), createReleaseDate(), streaming);
+    getChildren().addAll(createTile(parent), createReleaseDate(), streaming);
 
     if (History.getHistory().contains(anime) && History.getHistory().get(anime).getEpisodesHistory().contains(episode)) {
       long totalSeconds = (long) History.getHistory().get(anime).getEpisodesHistory().get(History.getHistory().get(anime).getEpisodesHistory().indexOf(episode)).getSecondsWatched();
@@ -48,10 +44,10 @@ public class ItemEpisode extends HBox {
     }
   }
 
-  private Label createTile() {
+  private Label createTile(ListView parent) {
     Label title = new Label(episode.getNumber() + " - " + episode.getTitle());
     title.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
-    parent.widthProperty().addListener((event, oldValue, newValue) -> title.setMaxWidth(newValue.doubleValue() - (250)));
+    parent.widthProperty().addListener((event, oldValue, newValue) -> title.setMaxWidth(newValue.doubleValue() - (250))); // 250 because.... It works
     HBox.setHgrow(title, Priority.ALWAYS);
     if (episode.getTitle().isEmpty())
       title.setText(LocalizedApp.getInstance().getString("Episode") + " " + episode.getNumber());
@@ -79,7 +75,7 @@ public class ItemEpisode extends HBox {
           e.printStackTrace();
         }
         AnimePlayer player = new AnimePlayer(episode, anime);
-        Platform.runLater(() -> player.createStreaming());
+        Platform.runLater(player::createStreaming);
       }).start();
     });
     streaming.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));

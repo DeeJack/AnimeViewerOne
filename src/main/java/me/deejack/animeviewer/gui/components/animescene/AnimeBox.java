@@ -3,7 +3,9 @@ package me.deejack.animeviewer.gui.components.animescene;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.controllers.AnimeDetailController;
+import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.async.events.Listener;
@@ -30,12 +33,14 @@ public class AnimeBox extends VBox {
   }
 
   public void setUp() {
+    ContextMenu contextMenu = createRightClickMenu();
     setOnMouseReleased((e) -> {
       if (e.getButton() == MouseButton.PRIMARY)
         loadElement();
-      else if (e.getButton() == MouseButton.MIDDLE) {
+      else if (e.getButton() == MouseButton.MIDDLE)
         onRequestAnimeTab.onChange(anime);
-      }
+      else if (e.getButton() == MouseButton.SECONDARY)
+        contextMenu.show(this, e.getScreenX(), e.getScreenY());
     });
     ImageView view = createView();
     Label title = createTitle(view);
@@ -47,6 +52,20 @@ public class AnimeBox extends VBox {
     getChildren().addAll(stackPane, title);
     setPrefHeight(view.getFitHeight() + title.getHeight() + 20);
     setPadding(new Insets(10, 10, 10, 10));
+  }
+
+  private ContextMenu createRightClickMenu() {
+    ContextMenu contextMenu = new ContextMenu();
+    if (anime.isFavorite()) {
+      MenuItem item = new MenuItem(LocalizedApp.getInstance().getString("FavoriteRemoveItem"));
+      registerEvents(item);
+      contextMenu.getItems().add(item);
+    } else {
+      MenuItem item = new MenuItem(LocalizedApp.getInstance().getString("FavoriteAddItem"));
+      registerEvents(item);
+      contextMenu.getItems().add(item);
+    }
+    return contextMenu;
   }
 
   private ImageView createImageFavorite() {
@@ -76,5 +95,17 @@ public class AnimeBox extends VBox {
 
   private void loadElement() {
     new AnimeDetailController(anime, false).loadAsync();
+  }
+
+  private void registerEvents(MenuItem item) {
+    item.setOnAction((event) -> {
+      if (anime.hasBeenLoaded()) {
+        anime.toggleFavorite();
+        FilesUtility.saveFavorite();
+      } else anime.loadAsync(() -> {
+        anime.toggleFavorite();
+        FilesUtility.saveFavorite();
+      });
+    });
   }
 }

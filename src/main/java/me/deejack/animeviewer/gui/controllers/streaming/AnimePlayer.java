@@ -30,20 +30,23 @@ public class AnimePlayer {
     extractVideo(link);
   }
 
-  public boolean createStreaming() {
-    String link = "";
+  public void createStreaming(WebBypassUtility.CallBack<StreamingLink> onSelection) {
     try {
-      StreamingLink choice = DownloadUtility.chooseSource(episode);
-      if (choice == null)
-        return false;
-      link = choice.getLink();
+      DownloadUtility.chooseSource(episode, (selectedLink) -> {
+        onSelection.onSuccess(selectedLink);
+        if (selectedLink == null)
+          return;
+        showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingStreaming"));
+        extractVideo(selectedLink.getLink());
+      });
     } catch (IOException e) {
       handleException(e);
     }
-    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingStreaming"));
-    extractVideo(link);
-    //showWaitAndLoad("Loading...");
-    return true;
+  }
+
+  public void createStreaming() {
+    createStreaming((link) -> {
+    });
   }
 
   private void extractVideo(String link) {

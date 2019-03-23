@@ -11,7 +11,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import me.deejack.animeviewer.gui.utils.LocalizedApp;
 
@@ -42,6 +41,14 @@ public class HiddenSideBar extends VBox {
 
   private void registerEvents() {
     btnOpen.setOnAction((event) -> showAnimation.play());
-    btnClose.setOnAction((event) -> hideAnimation.play());
+    btnClose.setOnAction((event) -> close());
+  }
+
+  public boolean isOpen() {
+    return getTranslateX() > 0;
+  }
+
+  public void close() {
+    hideAnimation.play();
   }
 }

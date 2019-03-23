@@ -8,6 +8,7 @@
     <GridPane style="-fx-background-color: white">
         <columnConstraints>
             <ColumnConstraints percentWidth="3"/>
+            <ColumnConstraints percentWidth="3"/>
             <ColumnConstraints percentWidth="18"/>
             <ColumnConstraints percentWidth="60"/>
             <ColumnConstraints percentWidth="19"/>

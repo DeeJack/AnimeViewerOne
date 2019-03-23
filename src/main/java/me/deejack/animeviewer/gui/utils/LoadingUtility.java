@@ -1,6 +1,7 @@
 package me.deejack.animeviewer.gui.utils;
 
 import javafx.application.Platform;
+import javafx.scene.Cursor;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -16,6 +17,7 @@ public final class LoadingUtility {
       Platform.runLater(() -> showWaitAndLoad(msg));
       return;
     }
+    SceneUtility.getStage().getScene().setCursor(Cursor.WAIT);
     System.out.println("SHowing1!!!1");
     hideWaitLoad();
     if (SceneUtility.getStage().getScene().getRoot() instanceof Pane) {
@@ -45,6 +47,7 @@ public final class LoadingUtility {
     }
     if (SceneUtility.getStage().getScene() == null)
       return;
+    SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
     Region root = (Region) SceneUtility.getStage().getScene().getRoot();
     if (root instanceof TabPane)
       root = (Region) ((TabPane) root).getTabs().get(0).getContent();

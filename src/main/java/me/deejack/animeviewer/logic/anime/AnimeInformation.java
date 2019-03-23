@@ -26,7 +26,7 @@ public class AnimeInformation {
    * When it ,was released TODO in LocalDate?
    */
   @Expose
-  private short releaseYear;
+  private String releaseYear;
   /**
    * The number of the episodes
    */
@@ -35,6 +35,7 @@ public class AnimeInformation {
   /**
    * The list of genres of this anime
    */
+  @Expose
   private List<Genre> genres;
   /**
    * The plot for this anime
@@ -46,7 +47,7 @@ public class AnimeInformation {
    */
   private Status animeStatus;
 
-  public AnimeInformation(short releaseYear, String name, int episodes, double rating,
+  public AnimeInformation(String releaseYear, String name, int episodes, double rating,
                           List<Genre> genres, String imageUrl,
                           Status animeStatus) {
     this.releaseYear = releaseYear;
@@ -61,11 +62,11 @@ public class AnimeInformation {
   /*public abstract AnimeImpl getAnime();*/
 
   // Getters
-  public short getReleaseYear() {
+  public String getReleaseYear() {
     return releaseYear;
   }
 
-  public void setReleaseYear(short releaseYear) {
+  public void setReleaseYear(String releaseYear) {
     this.releaseYear = releaseYear;
   }
 

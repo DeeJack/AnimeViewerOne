@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.logic.utils;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
@@ -11,6 +12,9 @@ import org.apache.logging.log4j.Logger;
 
 public final class GeneralUtility {
   private static final Logger logger = LogManager.getLogger();
+  public static final String TMP_PATH = System.getProperty("java.io.tmpdir") +
+          File.separator + "AnimeViewer" + File.separator;
+  public static final String version = "0.0";
 
   private GeneralUtility() {
   }

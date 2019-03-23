@@ -36,12 +36,12 @@ public class ButtonNext extends Button {
     alert.showAndWait();
     if (alert.getResult() == ButtonType.YES) {
       showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingNextEpisode"));
-      boolean selected = new AnimePlayer(nextEpisode.get(), anime).createStreaming();
-      if (selected) {
-        nextEpisodeListener.onSuccess();
-      }
-      else
-        hideWaitLoad();
+      new AnimePlayer(nextEpisode.get(), anime).createStreaming((selectedLink) -> {
+        if (selectedLink != null)
+          nextEpisodeListener.onSuccess();
+        else
+          hideWaitLoad();
+      });
     }
   }
 

@@ -40,6 +40,13 @@ public class App extends Application {
 
   @Override
   public void start(Stage primaryStage) {
+    /*try {
+      Connection.Response response = Jsoup.connect("https://api.github.com/repos/DeeJack/AnimeViewerOne/releases/latest").ignoreContentType(true).method(Connection.Method.GET).execute();
+      String responseJson = response.body();
+      new GsonBuilder().generateNonExecutableJson().create().fromJson();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }*/
     ConnectionUtility.setSiteConnection(new CustomConnection());
     Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> handleException(throwable));
     SceneUtility.setStage(primaryStage);
@@ -61,10 +68,10 @@ public class App extends Application {
     File lastHistory;
     if (history.exists()) {
       lastHistory = history;
-      /*if (ControlsLayerTask.tempHistory.exists() && history.lastModified() < ControlsLayerTask.tempHistory.lastModified())
-        lastHistory = ControlsLayerTask.tempHistory;
-    } else if (ControlsLayerTask.tempHistory.exists()) {
-      lastHistory = ControlsLayerTask.tempHistory;*/
+      if (FilesUtility.tempHistory.exists() && history.lastModified() < FilesUtility.tempHistory.lastModified())
+        lastHistory = FilesUtility.tempHistory;
+    } else if (FilesUtility.tempHistory.exists()) {
+      lastHistory = FilesUtility.tempHistory;
     } else {
       lastHistory = null;
     }

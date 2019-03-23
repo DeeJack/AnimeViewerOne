@@ -91,13 +91,14 @@ public final class DownloadController {
   public void singleDownload(Episode episode, String animeName) {
     showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingStartDownload"));
     try {
-      StreamingLink downloadLink = DownloadUtility.chooseSource(episode);
-      if (downloadLink == null)
-        return;
-      File destination = DownloadUtility.savePath(episode.getTitle());
-      if (destination == null)
-        return;
-      processLink(downloadLink, (resultLink) -> startDownload(resultLink, episode, animeName, destination, null));
+      DownloadUtility.chooseSource(episode, (downloadLink) -> {
+        if (downloadLink == null)
+          return;
+        File destination = DownloadUtility.savePath(episode.getTitle());
+        if (destination == null)
+          return;
+        processLink(downloadLink, (resultLink) -> startDownload(resultLink, episode, animeName, destination, null));
+      });
     } catch (IOException e) {
       handleException(e);
     }

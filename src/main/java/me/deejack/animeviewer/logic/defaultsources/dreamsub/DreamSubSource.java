@@ -71,7 +71,7 @@ public class DreamSubSource extends ParsedHttpSource {
       Document homePage = ConnectionUtility.getPage(getBaseUrl(), false);
       Elements genreElements = homePage.getElementById("genere").getElementsByTag("option");
       for (Element el : genreElements)
-        genres.put(el.text(), el.text());
+        genres.put(el.text().toLowerCase(), el.text());
     }
     return genres;
   }

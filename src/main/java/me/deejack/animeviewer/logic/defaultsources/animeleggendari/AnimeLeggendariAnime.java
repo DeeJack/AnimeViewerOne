@@ -40,18 +40,18 @@ public class AnimeLeggendariAnime extends AnimeImpl {
       getAnimeInformation().setPlot(plotMatcher.group(1));
   }
 
-  public short getYear(String info) {
-    short releaseYear = 0;
+  public String getYear(String info) {
+    String releaseYear = "Not released";
     if (info.contains("Data di Uscita")) {
       Pattern pattern = Pattern.compile("Data di Uscita:.*(\\d{4})", Pattern.CASE_INSENSITIVE);
       Matcher matcher = pattern.matcher(info);
       if (matcher.find())
-        releaseYear = Short.parseShort(matcher.group(1));
+        releaseYear = matcher.group(1);
     } else if (info.contains("Anno")) {
       Pattern pattern = Pattern.compile("Anno:.+(\\d{4})", Pattern.CASE_INSENSITIVE);
       Matcher matcher = pattern.matcher(info);
       if (matcher.find())
-        releaseYear = Short.parseShort(matcher.group(1));
+        releaseYear = matcher.group(1);
     }
     return releaseYear;
   }

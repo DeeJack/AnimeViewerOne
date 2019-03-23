@@ -1,11 +1,11 @@
 package me.deejack.animeviewer.gui.controllers;
 
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.components.animedetail.AnimeInfoBox;
 import me.deejack.animeviewer.gui.components.animedetail.ImageAnime;
 import me.deejack.animeviewer.gui.components.animedetail.ListViewEpisodes;
@@ -32,7 +32,7 @@ public class AnimeDetailController implements BaseScene {
 
   public void loadAsync() {
     showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingAnimeList"));
-    if(Favorite.getInstance().contains(anime))
+    if (Favorite.getInstance().contains(anime))
       load();
     else
       anime.loadAsync(this::load);
@@ -57,7 +57,7 @@ public class AnimeDetailController implements BaseScene {
 
   private void setupScene() {
     root = (Pane) SceneUtility.loadParent("/scenes/animeDetailResp.fxml");
-    GridPane gridPane = (GridPane)root.getChildren().get(0);
+    GridPane gridPane = (GridPane) root.getChildren().get(0);
     ImageAnime imageAnime = new ImageAnime(anime.getAnimeInformation().getImageUrl());
     HBox boxImage = new HBox(imageAnime);
     boxImage.setMinHeight(Double.MIN_VALUE);
@@ -65,21 +65,24 @@ public class AnimeDetailController implements BaseScene {
     boxImage.setAlignment(Pos.CENTER);
     if (!isNewTab) {
       ButtonBack btnBack = new ButtonBack();
-      btnBack.setOpaqueInsets(new Insets(10, 0, 0, 0));
-      gridPane.add(btnBack, 0, 0);
+      VBox vBox = new VBox(btnBack);
+      vBox.setAlignment(Pos.TOP_LEFT);
+      //btnBack.setOpaqueInsets(new Insets(0, 0, 0, 0));
+      gridPane.add(vBox, 1, 1);
     }
-    gridPane.add(boxImage, 2, 1);
-    AnimeInfoBox infoBox = new AnimeInfoBox(anime, (action) -> {
+    ListViewEpisodes listViewEpisodes = new ListViewEpisodes(anime);
+    AnimeInfoBox infoBox = new AnimeInfoBox(anime);
+    infoBox.setOnReload((action) -> {
       showWaitAndLoad(LocalizedApp.getInstance().getString("Reloading"));
-      anime.loadAsync(() -> {
-        Platform.runLater(() -> {
-          setupScene();
-          hideWaitLoad();
-        });
-      });
+      anime.loadAsync(() -> Platform.runLater(() -> {
+        listViewEpisodes.reload();
+        infoBox.reload();
+        hideWaitLoad();
+      }));
     });
-    gridPane.add(infoBox, 2, 2);
-    gridPane.add(new ListViewEpisodes(anime), 2, 3);
+    gridPane.add(boxImage, 3, 1);
+    gridPane.add(infoBox, 3, 2);
+    gridPane.add(listViewEpisodes, 3, 3);
   }
 
   private void loadScene() {

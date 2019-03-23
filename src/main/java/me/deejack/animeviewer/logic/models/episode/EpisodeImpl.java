@@ -2,14 +2,13 @@ package me.deejack.animeviewer.logic.models.episode;
 
 import com.google.gson.annotations.Expose;
 import java.time.LocalDate;
-import java.util.List;
-import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 
 public abstract class EpisodeImpl extends HttpEpisode {
   @Expose
   private final String title;
   @Expose
   private final int number;
+  @Expose
   private final LocalDate releaseDate;
   @Expose
   private double secondsWatched;

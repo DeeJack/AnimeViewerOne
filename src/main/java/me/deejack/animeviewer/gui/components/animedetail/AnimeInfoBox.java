@@ -15,10 +15,18 @@ import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
 public class AnimeInfoBox extends HBox {
+  private final Anime anime;
+  private Hyperlink reloadLink;
 
-  public AnimeInfoBox(Anime anime, EventHandler<ActionEvent> onReload) {
+  public AnimeInfoBox(Anime anime) {
+    this.anime = anime;
+    reload();
+  }
+
+  public void reload() {
+    getChildren().clear();
     getChildren().addAll(createInformationArea(anime),
-            new VBox(createImageFavorite(anime), createOpenInBrowser(anime.getUrl()), createReload(onReload)));
+            new VBox(createImageFavorite(anime), createOpenInBrowser(anime.getUrl()), createReload()));
   }
 
   private TextArea createInformationArea(Anime anime) {
@@ -57,9 +65,12 @@ public class AnimeInfoBox extends HBox {
     return openInBrowser;
   }
 
-  private Hyperlink createReload(EventHandler<ActionEvent> onReload) {
-    Hyperlink reload = new Hyperlink(LocalizedApp.getInstance().getString("Reload"));
-    reload.setOnAction(onReload);
-    return reload;
+  private Hyperlink createReload() {
+    reloadLink = new Hyperlink(LocalizedApp.getInstance().getString("Reload"));
+    return reloadLink;
+  }
+
+  public void setOnReload(EventHandler<ActionEvent> onReload) {
+    reloadLink.setOnAction(onReload);
   }
 }

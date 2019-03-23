@@ -1,10 +1,11 @@
 package me.deejack.animeviewer.gui.components.animedetail;
 
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
-import me.deejack.animeviewer.logic.favorite.Favorite;
+import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
 public class ImageFavorite extends ImageView {
@@ -16,10 +17,13 @@ public class ImageFavorite extends ImageView {
     setFitWidth(59);
     setPreserveRatio(true);
     setPickOnBounds(true);
-    if (anime.isFavorite())
+    if (anime.isFavorite()) {
+      Tooltip.install(this, new Tooltip(LocalizedApp.getInstance().getString("FavoriteNotImageTooltip")));
       setImage(imageFavorite);
-    else
+    } else {
+      Tooltip.install(this, new Tooltip(LocalizedApp.getInstance().getString("FavoriteImageTooltip")));
       setImage(imageNonFavorite);
+    }
     registerEvents(anime);
   }
 
@@ -27,10 +31,13 @@ public class ImageFavorite extends ImageView {
   private void registerEvents(Anime anime) {
     setOnMouseClicked((event) -> {
       anime.toggleFavorite();
-      if (anime.isFavorite())
+      if (anime.isFavorite()) {
+        Tooltip.install(this, new Tooltip(LocalizedApp.getInstance().getString("FavoriteNotImageTooltip")));
         setImage(imageFavorite);
-      else
+      } else {
+        Tooltip.install(this, new Tooltip(LocalizedApp.getInstance().getString("FavoriteImageTooltip")));
         setImage(imageNonFavorite);
+      }
       FilesUtility.saveFavorite();
     });
   }

@@ -2,7 +2,6 @@ package me.deejack.animeviewer.gui.controllers.streaming;
 
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -11,6 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
+import me.deejack.animeviewer.gui.components.general.ButtonBack;
 import me.deejack.animeviewer.gui.components.streaming.AlwaysOnTopImage;
 import me.deejack.animeviewer.gui.components.streaming.ButtonNext;
 import me.deejack.animeviewer.gui.components.streaming.ButtonPause;
@@ -73,7 +73,7 @@ public class StreamingController implements BaseScene {
     ButtonPause btnPause = new ButtonPause(mediaPlayer);
     ButtonNext btnNext = new ButtonNext(anime, episode);
     root = (Pane) SceneUtility.loadParent("/scenes/streaming.fxml");
-    Button btnBack = (Button) root.lookup("#btnBack");
+    ButtonBack btnBack = (ButtonBack) root.lookup("#btnBack");
     MediaView mediaView = (MediaView) root.lookup("#mediaView");
     Label lblTitle = (Label) root.lookup("#lblTitle");
 
@@ -94,7 +94,7 @@ public class StreamingController implements BaseScene {
     registerEvents(btnPause, btnNext, btnBack, mediaView);
   }
 
-  private void registerEvents(ButtonPause btnPause, ButtonNext btnNext, Button btnBack, MediaView mediaView) {
+  private void registerEvents(ButtonPause btnPause, ButtonNext btnNext, ButtonBack btnBack, MediaView mediaView) {
     root.lookup("#pauseLayer").setOnMouseClicked((event) -> btnPause.pause());
     root.layoutBoundsProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
     btnNext.setOnNextEpisode(this::onFinish);
@@ -116,7 +116,6 @@ public class StreamingController implements BaseScene {
     cursorTask.setInterrupted(true);
     mediaPlayer.dispose();
     SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
-    SceneUtility.goToPreviousScene();
   }
 
   private void onSizeChange(MediaView view) {

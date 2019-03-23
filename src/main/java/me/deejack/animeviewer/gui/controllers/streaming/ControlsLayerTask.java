@@ -38,8 +38,10 @@ public class ControlsLayerTask extends Thread {
     timer.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
-        if (isInterrupted)
+        if (isInterrupted) {
           cancel();
+          return;
+        }
         if (Duration.between(lastMoved, LocalDateTime.now()).toMillis() >= MILLISECONDS_TO_WAIT) {
           Platform.runLater(() -> {
             paneToHide.setVisible(false);

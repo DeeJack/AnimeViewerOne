@@ -24,7 +24,6 @@ public class FilterList {
         }
       } else filters = App.getSite().getFilters();
       Platform.runLater(this::initialize);
-      ;
     }).start();
   }
 
@@ -45,7 +44,10 @@ public class FilterList {
       sideBar.getChildren().add(box);
     }
     Button button = new Button(LocalizedApp.getInstance().getString("ApplyFilterButton"));
-    button.setOnAction((event) -> new Thread(new FilterAsync(this, 1)).start());
+    button.setOnAction((event) -> {
+      sideBar.close();
+      new Thread(new FilterAsync(this, 1)).start();
+    });
     sideBar.getChildren().add(button);
   }
 

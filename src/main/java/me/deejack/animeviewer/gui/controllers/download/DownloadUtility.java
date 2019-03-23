@@ -6,21 +6,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import me.deejack.animeviewer.gui.components.dialogs.ChooseSourceDialog;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.gui.utils.WebBypassUtility;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
@@ -74,23 +71,43 @@ public final class DownloadUtility {
    * @return null if the user cancel the operation (close the popup), otherwise it'll return the reference to the selected link
    * @throws IOException
    */
-  public static StreamingLink chooseSource(Episode episode) throws IOException {
-    AtomicReference<StreamingLink> selectedLink = new AtomicReference<>(null);
-    if (!checkEpisodeReleased(episode))
-      return null;
-
-    List<StreamingLink> links = episode.getStreamingLinks();
-    if (links.size() == 1)
-      return links.get(0);
-    else if (links.isEmpty()) {
-      Alert alert = new Alert(Alert.AlertType.WARNING, "Nessuno createStreaming disponibile, probabilmente deve ancora uscire l'episodio",
-              ButtonType.OK);
-      alert.showAndWait();
-      hideWaitLoad();
-      return null;
+  public static void chooseSource(Episode episode, WebBypassUtility.CallBack<StreamingLink> callBack) throws IOException {
+    if (!checkEpisodeReleased(episode)) {
+      callBack.onSuccess(null);
+      return;
     }
+    Task<List<StreamingLink>> linkFutureTask = new Task<List<StreamingLink>>() {
+      @Override
+      protected List<StreamingLink> call() throws Exception {
+        return episode.getStreamingLinks();
+      }
+    };
+    new Thread(linkFutureTask).start();
+    linkFutureTask.setOnSucceeded((event) -> {
+      List<StreamingLink> streamingLinks = linkFutureTask.getValue();
+      if (streamingLinks.size() == 1) {
+        callBack.onSuccess(streamingLinks.get(0));
+        return;
+      } else if (streamingLinks.isEmpty()) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Nessuno createStreaming disponibile, probabilmente deve ancora uscire l'episodio",
+                ButtonType.OK);
+        alert.showAndWait();
+        hideWaitLoad();
+        callBack.onSuccess(streamingLinks.get(0));
+        return;
+      }
 
-    Parent parent = SceneUtility.loadParent("/scenes/download/choseSource.fxml");
+      ChooseSourceDialog sourceDialog = new ChooseSourceDialog(streamingLinks);
+      AtomicReference<StreamingLink> link = new AtomicReference<>(null);
+      sourceDialog.setOnEvent((selectedLink) -> {
+        hideWaitLoad();
+        link.set(selectedLink);
+      });
+      sourceDialog.showAndWait();
+      callBack.onSuccess(link.get());
+    });
+  }
+    /*Parent parent = SceneUtility.loadParent("/scenes/download/choseSource.fxml");
     ListView<StreamingLink> listView = (ListView<StreamingLink>) parent.lookup("#listView");
     listView.getItems().addAll(links);
     Dialog dialog = new Dialog();
@@ -108,10 +125,10 @@ public final class DownloadUtility {
       hideWaitLoad();
       dialog.close();
     });
+    dialog.setOnCloseRequest((event) -> hideWaitLoad());
 
     dialog.showAndWait();
-    return selectedLink.get();
-  }
+    return selectedLink.get();*/
 
   public static int choseDownloadSettings() {
     AtomicInteger prefResolution = new AtomicInteger(-1);

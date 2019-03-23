@@ -34,7 +34,7 @@ public class AnimeUpdateController implements BaseScene {
   private void loadOldUpdates(VBox boxFavorite) {
     FavoriteUpdates favoriteUpdates = FavoriteUpdates.getInstance();
     favoriteUpdates.readFromFile();
-    favoriteUpdates.getUpdates().forEach((localDate, animeUpdates) -> {
+    favoriteUpdates.getUpdatesByDay().forEach((localDate, animeUpdates) -> {
       DailyUpdatesBox dailyUpdatesBox = new DailyUpdatesBox(localDate, animeUpdates);
       if (localDate.equals(LocalDate.now()))
         todayBox = dailyUpdatesBox;
@@ -46,8 +46,6 @@ public class AnimeUpdateController implements BaseScene {
     FavoriteUpdates favoriteUpdates = FavoriteUpdates.getInstance();
     new Thread(() -> {
       List<AnimeUpdates> updates = favoriteUpdates.checkUpdates();
-      if(updates.isEmpty())
-        return;
       Platform.runLater(() -> {
         if(todayBox != null)
           boxFavorite.getChildren().remove(todayBox);

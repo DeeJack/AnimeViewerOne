@@ -7,6 +7,7 @@ import javafx.scene.input.MouseEvent;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.LoadingUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
 public final class EventHandler {
   private EventHandler() {
@@ -34,7 +35,7 @@ public final class EventHandler {
   }
 
   public static void onCloseRequest() {
-    File tmpDir = new File(SceneUtility.TMP_PATH);
+    File tmpDir = new File(GeneralUtility.TMP_PATH);
     if (tmpDir.exists()) {
       for (File file : Objects.requireNonNull(tmpDir.listFiles()))
         file.delete();

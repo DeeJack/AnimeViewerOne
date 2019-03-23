@@ -21,7 +21,7 @@ import static me.deejack.animeviewer.logic.history.History.CONFIG_DIR;
 public final class FavoriteUpdates {
   private static final FavoriteUpdates instance = new FavoriteUpdates();
   @Expose
-  private Map<LocalDate, List<AnimeUpdates>> updates = new HashMap<>();
+  private Map<LocalDate, List<AnimeUpdates>> updatesByDay = new HashMap<>();
 
   private FavoriteUpdates() {
   }
@@ -31,33 +31,33 @@ public final class FavoriteUpdates {
   }
 
   public List<AnimeUpdates> checkUpdates() {
-    List<AnimeUpdates> newEpisodes = new ArrayList<>();
+    List<AnimeUpdates> animeUpdates = new ArrayList<>();
     LocalDate today = LocalDate.now();
     Favorite.getInstance().getFavorites().forEach((favorite) -> {
-      AnimeUpdates anime = new AnimeUpdates(favorite.getId());
-      List<Episode> episodes = anime.checkUpdates();
+      AnimeUpdates animeUpdate = new AnimeUpdates(favorite.getId());
+      List<Episode> episodes = animeUpdate.checkUpdates();
       if (!episodes.isEmpty())
-        newEpisodes.add(anime);
+        animeUpdates.add(animeUpdate);
     });
-    if(updates.containsKey(today)) {
-      updates.get(today).forEach((anime) -> {
-        if (newEpisodes.contains(anime)) {
-          anime.getEpisodes().addAll(newEpisodes.get(newEpisodes.indexOf(anime)).getEpisodes());
-          newEpisodes.remove(anime);
+    if (updatesByDay.containsKey(today)) {
+      updatesByDay.get(today).forEach((anime) -> {
+        if (animeUpdates.contains(anime)) {
+          anime.getEpisodes().addAll(animeUpdates.get(animeUpdates.indexOf(anime)).getEpisodes());
+          animeUpdates.remove(anime);
         }
       });
     }
-    if (!newEpisodes.isEmpty()) {
-      if (updates.containsKey(today))
-        newEpisodes.addAll(updates.get(today));
-      updates.put(today, newEpisodes);
+    if (!animeUpdates.isEmpty()) {
+      if (updatesByDay.containsKey(today))
+        animeUpdates.addAll(updatesByDay.get(today));
+      updatesByDay.put(today, animeUpdates);
     }
-    return updates.getOrDefault(today, newEpisodes);
+    return updatesByDay.getOrDefault(today, animeUpdates);
   }
 
   public void writeToFile() {
     String json = new AnimeSerializer<>(FavoriteUpdates.class).serialize(this);
-    File output = new File(CONFIG_DIR + File.separator + "updates.json");
+    File output = new File(CONFIG_DIR + File.separator + "updatesByDay.json");
     try {
       if (!output.exists())
         output.createNewFile();
@@ -68,7 +68,7 @@ public final class FavoriteUpdates {
   }
 
   public void readFromFile() {
-    File fileUpdates = new File(CONFIG_DIR + File.separator + "updates.json");
+    File fileUpdates = new File(CONFIG_DIR + File.separator + "updatesByDay.json");
     if (!fileUpdates.exists())
       return;
     try {
@@ -77,13 +77,13 @@ public final class FavoriteUpdates {
         return;
       if (!JsonValidator.isValid(json))
         throw new IOException("Json invalid!");
-      updates = Objects.requireNonNull(new AnimeSerializer<>(FavoriteUpdates.class).deserializeObj(json)).updates;
+      updatesByDay = Objects.requireNonNull(new AnimeSerializer<>(FavoriteUpdates.class).deserializeObj(json)).updatesByDay;
     } catch (IOException e) {
       handleException(e);
     }
   }
 
-  public Map<LocalDate, List<AnimeUpdates>> getUpdates() {
-    return updates;
+  public Map<LocalDate, List<AnimeUpdates>> getUpdatesByDay() {
+    return updatesByDay;
   }
 }

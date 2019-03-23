@@ -18,6 +18,12 @@ public class ListViewEpisodes extends ListView<ItemEpisode> {
     initialize();
   }
 
+  public void reload() {
+    getItems().clear();
+    addChildren();
+    setWidth(getWidth() + 1);
+  }
+
   private void registerEvents() {
     setOnMouseReleased((event) -> {
       if (event.getButton() == MouseButton.SECONDARY)

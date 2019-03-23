@@ -39,7 +39,7 @@ public class AnimeLeggendariSource extends ParsedHttpSource {
     String link = aTag.attr("href");
     String title = aTag.attr("title");
     String imgUrl = aTag.children().first().attr("src");
-    return new AnimeLeggendariAnime(link, new AnimeInformation((short) -1, title, -1, 0, new ArrayList<>(), imgUrl, AnimeStatus.UNKNOWN));
+    return new AnimeLeggendariAnime(link, new AnimeInformation("Not released", title, -1, 0, new ArrayList<>(), imgUrl, AnimeStatus.UNKNOWN));
   }
 
   @Override

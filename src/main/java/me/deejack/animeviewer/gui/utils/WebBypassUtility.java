@@ -12,6 +12,8 @@ import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -26,6 +28,7 @@ import org.w3c.dom.Document;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
+import static me.deejack.animeviewer.logic.utils.GeneralUtility.logError;
 
 public final class WebBypassUtility {
 
@@ -67,17 +70,24 @@ public final class WebBypassUtility {
         Document document = engine.getDocument();
         System.out.println("YEAH");
         String streamingLink;
-        try {
-          engine.executeScript("document.getElementById('videooverlay').click();");
-          System.out.println(document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src"));
-          System.out.println();
-          //streamingLink = hostName + document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
-          streamingLink = hostName + "/stream/" + document.getElementById("lqEH1").getTextContent();
-        } catch (Exception jsShit) {
-          jsShit.printStackTrace();
-          return;
+        if (document.getElementsByTagName("video").getLength() > 0 && document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src") != null)
+          streamingLink = document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
+        else {
+          try {
+            engine.executeScript("document.getElementById('videooverlay').click();");
+            System.out.println(document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src"));
+            System.out.println();
+            //streamingLink = hostName + document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
+            streamingLink = hostName + "/stream/" + document.getElementById("lqEH1").getTextContent();
+          } catch (Exception jsShit) {
+            hideWaitLoad();
+            pair.getKey().getEngine().getLoadWorker().cancel();
+            pair.getValue().close();
+            logError(new Exception("Error for url " + link, jsShit));
+            new Alert(Alert.AlertType.ERROR, "Error :(, try again but maybe the site isn't supported", ButtonType.OK).showAndWait();
+            return;
+          }
         }
-
         if (!streamingLink.startsWith("https:"))
           streamingLink = "https:" + streamingLink;
         System.out.println(streamingLink + " AAAAAAAAAAA");

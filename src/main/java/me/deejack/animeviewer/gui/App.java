@@ -10,11 +10,11 @@ import javafx.stage.Stage;
 import me.deejack.animeviewer.gui.connection.CustomConnection;
 import me.deejack.animeviewer.gui.scenes.EventHandler;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.defaultsources.animeleggendari.AnimeLeggendariSource;
 import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamSubSource;
 import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 

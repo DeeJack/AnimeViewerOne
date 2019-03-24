@@ -19,11 +19,11 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import me.deejack.animeviewer.gui.App;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.async.DownloadAsync;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;

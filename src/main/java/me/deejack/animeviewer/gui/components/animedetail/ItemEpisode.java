@@ -10,8 +10,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import me.deejack.animeviewer.gui.controllers.download.DownloadController;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.logic.history.History;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 

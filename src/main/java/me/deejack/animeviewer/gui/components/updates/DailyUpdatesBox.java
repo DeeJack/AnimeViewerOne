@@ -8,8 +8,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.logic.favorite.AnimeUpdates;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 public class DailyUpdatesBox extends VBox {
   private VBox updatesBox;

@@ -12,9 +12,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.controllers.AnimeDetailController;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.history.History;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 

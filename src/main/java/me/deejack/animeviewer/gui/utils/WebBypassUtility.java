@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -20,6 +19,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Pair;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.utils.UserAgents;
 import org.apache.logging.log4j.LogManager;
 import org.jsoup.Connection;
@@ -56,13 +56,6 @@ public final class WebBypassUtility {
     Pair<WebView, Stage> pair = createWebView();
     WebEngine engine = pair.getKey().getEngine();
     URL finalUrl = url;
-    InvalidationListener locationEvent = listener -> {
-      /*if (!engine.getLocation().contains(finalUrl.getHost())) {
-        System.out.println("Redirected to " + engine.getLocation() + ", reloading " + link);
-        engine.load(link);
-      }*/
-    };
-    engine.locationProperty().addListener(locationEvent);
     System.out.println(finalUrl.getProtocol() + finalUrl.getHost());
     engine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {
       System.out.println(newValue + " " + engine.getLocation());

@@ -4,7 +4,7 @@ import javafx.event.Event;
 import javafx.scene.control.ListView;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.async.LoadSiteAsync;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;

@@ -17,8 +17,8 @@ import me.deejack.animeviewer.gui.components.animescene.PagesBox;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;

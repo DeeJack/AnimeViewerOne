@@ -10,10 +10,10 @@ import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.components.updates.DailyUpdatesBox;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.favorite.AnimeUpdates;
 import me.deejack.animeviewer.logic.favorite.FavoriteUpdates;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 public class AnimeUpdateController implements BaseScene {
   private Pane root;

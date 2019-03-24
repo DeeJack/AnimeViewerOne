@@ -14,8 +14,8 @@ import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 import static me.deejack.animeviewer.gui.App.getSite;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.getStage;

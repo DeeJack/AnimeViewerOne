@@ -6,9 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.history.HistoryElement;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 public class HistoryItem extends SingleFavorite {
   private final HistoryElement historyElement;

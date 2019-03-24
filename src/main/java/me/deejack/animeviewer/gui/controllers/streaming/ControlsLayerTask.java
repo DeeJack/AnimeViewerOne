@@ -35,6 +35,8 @@ public class ControlsLayerTask extends Thread {
     };
     mediaView.setOnMouseMoved(onMove);
     mediaView.setOnKeyPressed(onMove);
+    mediaView.setOnTouchPressed(onMove);
+    paneToHide.setOnMouseMoved(onMove);
     timer.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {

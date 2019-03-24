@@ -15,9 +15,9 @@ import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.controllers.AnimeDetailController;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.async.events.Listener;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
 public class AnimeBox extends VBox {

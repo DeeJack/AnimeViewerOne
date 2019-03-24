@@ -12,7 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 public class HiddenSideBar extends VBox {
   private final TranslateTransition hideAnimation = new TranslateTransition(Duration.millis(250), this);

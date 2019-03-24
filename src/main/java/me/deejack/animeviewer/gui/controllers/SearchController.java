@@ -5,11 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.async.SearchByNameAsync;
-import me.deejack.animeviewer.gui.components.filters.FilterList;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 

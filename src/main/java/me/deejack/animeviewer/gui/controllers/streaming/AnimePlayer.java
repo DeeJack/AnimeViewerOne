@@ -5,9 +5,9 @@ import java.net.URL;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import me.deejack.animeviewer.gui.controllers.download.DownloadUtility;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 
@@ -56,10 +56,10 @@ public class AnimePlayer {
       handleException(new Exception(LocalizedApp.getInstance().getString("ExceptionInvalidUrl") + " " + link));
       return;
     }
-    if (link.contains("openload") || link.contains("streamango")) {
-      WebBypassUtility.getOpenloadLink(link, "https://openload.co", (resultLink) -> setRoot(setupPlayer(resultLink)));
-    } else {
+    if (link.contains("dreamsub")) {
       setRoot(setupPlayer(link));
+    } else {
+      WebBypassUtility.getOpenloadLink(link, "https://openload.co", (resultLink) -> setRoot(setupPlayer(resultLink)));
     }
   }
 

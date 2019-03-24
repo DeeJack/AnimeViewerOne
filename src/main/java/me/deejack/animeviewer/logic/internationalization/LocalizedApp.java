@@ -1,9 +1,9 @@
-package me.deejack.animeviewer.gui.utils;
+package me.deejack.animeviewer.logic.internationalization;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import javax.sound.midi.Soundbank;
+import me.deejack.animeviewer.gui.utils.SceneUtility;
 
 import static me.deejack.animeviewer.gui.App.getSite;
 

@@ -1,13 +1,19 @@
 package me.deejack.animeviewer.gui.components.animedetail;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import me.deejack.animeviewer.gui.controllers.download.DownloadController;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+
+import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
 public class OptionMenu extends ContextMenu {
   private final ListViewEpisodes listViewEpisodes;
@@ -21,14 +27,22 @@ public class OptionMenu extends ContextMenu {
     MenuItem thisEpisode = new MenuItem(LocalizedApp.getInstance().getString("Download"));
     MenuItem selectedEpisodes = new MenuItem(LocalizedApp.getInstance().getString("MenuItemDownloadSelected"));
     MenuItem allEpisodes = new MenuItem(LocalizedApp.getInstance().getString("MenuItemDownloadAll"));
-    registerEvents(thisEpisode, selectedEpisodes, allEpisodes);
-    getItems().addAll(thisEpisode, selectedEpisodes, allEpisodes);
+    MenuItem openOnBrowser = new MenuItem(LocalizedApp.getInstance().getString("OpenOnBrowser"));
+    registerEvents(thisEpisode, selectedEpisodes, allEpisodes, openOnBrowser);
+    getItems().addAll(thisEpisode, selectedEpisodes, allEpisodes, openOnBrowser);
   }
 
-  private void registerEvents(MenuItem thisEpisode, MenuItem selectedEpisode, MenuItem allEpisodes) {
+  private void registerEvents(MenuItem thisEpisode, MenuItem selectedEpisode, MenuItem allEpisodes, MenuItem openOnBrowser) {
     thisEpisode.setOnAction((event) -> listViewEpisodes.getSelectionModel().getSelectedItem().download());
     selectedEpisode.setOnAction((event) -> downloadEpisodes(listViewEpisodes.getSelectionModel().getSelectedItems()));
     allEpisodes.setOnAction((event) -> downloadAll());
+    openOnBrowser.setOnAction((action) -> {
+      try {
+        Desktop.getDesktop().browse(new URI(listViewEpisodes.getSelectionModel().getSelectedItem().getEpisode().getUrl()));
+      } catch (URISyntaxException | IOException e) {
+        handleException(e);
+      }
+    });
   }
 
   private void downloadAll() {

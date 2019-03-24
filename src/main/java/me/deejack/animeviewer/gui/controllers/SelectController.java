@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 public class SelectController {
   @FXML

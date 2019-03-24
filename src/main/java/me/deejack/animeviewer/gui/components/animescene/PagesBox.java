@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.async.LoadPageAsync;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
-import me.deejack.animeviewer.gui.utils.LocalizedApp;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 
@@ -14,7 +14,7 @@ public class PagesBox extends HBox {
   private final String search;
   private final FilterList filters;
   private final boolean isSearch;
-  private int currentPage;
+  private final int currentPage;
 
   public PagesBox(int currentPage, String search, boolean isSearch, FilterList filters) {
     this.currentPage = currentPage;

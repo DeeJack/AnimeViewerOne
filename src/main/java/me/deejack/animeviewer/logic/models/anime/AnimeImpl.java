@@ -2,12 +2,10 @@ package me.deejack.animeviewer.logic.models.anime;
 
 import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
-import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.async.events.SuccessListener;
-import org.jsoup.nodes.Document;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 
 /**
  * Represent an anime in the source
@@ -31,7 +29,6 @@ public abstract class AnimeImpl extends ParsedHttpAnime {
   /**
    * A list containing the seasons of this anime
    */
-  @Expose
   private List<Episode> episodes = new ArrayList<>();
   private boolean hasBeenLoaded = false;
 

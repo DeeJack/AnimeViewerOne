@@ -5,7 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.components.animedetail.AnimeInfoBox;
 import me.deejack.animeviewer.gui.components.animedetail.ImageAnime;
 import me.deejack.animeviewer.gui.components.animedetail.ListViewEpisodes;
@@ -65,10 +64,10 @@ public class AnimeDetailController implements BaseScene {
     boxImage.setAlignment(Pos.CENTER);
     if (!isNewTab) {
       ButtonBack btnBack = new ButtonBack();
-      VBox vBox = new VBox(btnBack);
-      vBox.setAlignment(Pos.TOP_LEFT);
+      HBox hBox = new HBox(btnBack);
+      hBox.setAlignment(Pos.TOP_LEFT);
       //btnBack.setOpaqueInsets(new Insets(0, 0, 0, 0));
-      gridPane.add(vBox, 1, 1);
+      gridPane.add(hBox, 1, 1);
     }
     ListViewEpisodes listViewEpisodes = new ListViewEpisodes(anime);
     AnimeInfoBox infoBox = new AnimeInfoBox(anime);
@@ -80,9 +79,9 @@ public class AnimeDetailController implements BaseScene {
         hideWaitLoad();
       }));
     });
-    gridPane.add(boxImage, 3, 1);
-    gridPane.add(infoBox, 3, 2);
-    gridPane.add(listViewEpisodes, 3, 3);
+    gridPane.add(boxImage, 2, 1);
+    gridPane.add(infoBox, 2, 2);
+    gridPane.add(listViewEpisodes, 2, 3);
   }
 
   private void loadScene() {

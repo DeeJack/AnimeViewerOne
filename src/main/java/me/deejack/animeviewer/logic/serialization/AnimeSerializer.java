@@ -19,9 +19,12 @@ public final class AnimeSerializer<T> {
             .registerTypeAdapter(Episode.class, new GeneralTypeAdapter<Episode>())
             .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context) ->
                     LocalDate.parse(json.getAsJsonPrimitive().getAsString()))
+            /*.registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (typeOfT, localDatep) ->
+                    new )*/
             .disableHtmlEscaping()
             .setPrettyPrinting()
             .excludeFieldsWithoutExposeAnnotation()
+            .serializeNulls()
             .create();
   }
 

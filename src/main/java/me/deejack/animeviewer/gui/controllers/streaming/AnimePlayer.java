@@ -1,7 +1,6 @@
 package me.deejack.animeviewer.gui.controllers.streaming;
 
 import java.io.IOException;
-import java.net.URL;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import me.deejack.animeviewer.gui.controllers.download.DownloadUtility;
@@ -10,6 +9,8 @@ import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+import me.deejack.animeviewer.logic.utils.ConnectionUtility;
+import org.jsoup.Connection;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
@@ -50,12 +51,9 @@ public class AnimePlayer {
   }
 
   private void extractVideo(String link) {
-    try {
-      new URL(link);
-    } catch (IOException invalidUrl) {
-      handleException(new Exception(LocalizedApp.getInstance().getString("ExceptionInvalidUrl") + " " + link));
+    Connection.Response response = ConnectionUtility.connect(link, false);
+    if (response == null)
       return;
-    }
     if (link.contains("dreamsub")) {
       setRoot(setupPlayer(link));
     } else {

@@ -93,7 +93,6 @@ public final class WebBypassUtility {
         } catch (Exception ignored) {
           return;
         }
-        engine.locationProperty().removeListener(locationEvent);
         pair.getKey().getEngine().getLoadWorker().cancel();
         pair.getValue().close();
         callback.onSuccess(streamingLink);

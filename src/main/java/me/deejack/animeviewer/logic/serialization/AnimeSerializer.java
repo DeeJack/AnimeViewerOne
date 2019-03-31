@@ -3,6 +3,8 @@ package me.deejack.animeviewer.logic.serialization;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,6 +21,9 @@ public final class AnimeSerializer<T> {
             .registerTypeAdapter(Episode.class, new GeneralTypeAdapter<Episode>())
             .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context) ->
                     LocalDate.parse(json.getAsJsonPrimitive().getAsString()))
+            .registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (jsonObject, jsonType, context) -> {
+              return new JsonPrimitive(jsonObject.toString());
+            })
             /*.registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (typeOfT, localDatep) ->
                     new )*/
             .disableHtmlEscaping()
@@ -48,6 +53,7 @@ public final class AnimeSerializer<T> {
   }
 
   public String serialize(T element) {
+    System.out.println(element.getClass().getName() + ": " + element);
     return gson.toJson(element, tClass);
   }
 

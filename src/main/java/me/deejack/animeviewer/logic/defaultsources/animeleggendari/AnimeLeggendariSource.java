@@ -20,7 +20,7 @@ import org.jsoup.select.Elements;
 public class AnimeLeggendariSource extends ParsedHttpSource {
 
   public AnimeLeggendariSource() {
-    super("https://animeleggendari.com/", "https://animeleggendari.com/wp-content/uploads/2018/08/bgAL.jpg");
+    super("https://animeleggendari.xyz/", "https://animeleggendari.xyz/wp-content/uploads/2018/08/bgAL.jpg");
   }
 
   @Override
@@ -70,6 +70,7 @@ public class AnimeLeggendariSource extends ParsedHttpSource {
     Map<String, String> genres = new LinkedHashMap<>();
     Document homePage = ConnectionUtility.getPage(getBaseUrl(), false);
     Elements genresEl = homePage.getElementById("cat").getElementsByTag("option");
+    genresEl.remove(0);
     genresEl.stream().map(Element::text).forEach((genre) -> genres.put(genre, genre.replaceAll(" ", "-")));
     return genres;
   }

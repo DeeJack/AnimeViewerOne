@@ -15,6 +15,7 @@ public class FilesUtility {
     try {
       History.getHistory().saveToFile();
     } catch (IOException e) {
+      e.printStackTrace();
       handleException(e);
     }
   }
@@ -25,6 +26,7 @@ public class FilesUtility {
         tempHistory.createNewFile();
       History.getHistory().saveToFile(tempHistory);
     } catch (IOException e) {
+      e.printStackTrace();
       handleException(e);
     }
   }
@@ -33,6 +35,7 @@ public class FilesUtility {
     try {
       Favorite.getInstance().saveToFile();
     } catch (IOException e) {
+      e.printStackTrace();
       handleException(e);
     }
   }
@@ -41,6 +44,7 @@ public class FilesUtility {
     try {
       History.getHistory().loadFromFile();
     } catch (IOException e) {
+      e.printStackTrace();
       handleException(e);
     }
   }
@@ -49,6 +53,7 @@ public class FilesUtility {
     try {
       Favorite.getInstance().loadFromFile();
     } catch (IOException e) {
+      e.printStackTrace();
       handleException(e);
     }
   }

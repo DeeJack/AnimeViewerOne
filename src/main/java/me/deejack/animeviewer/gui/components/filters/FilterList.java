@@ -38,6 +38,8 @@ public class FilterList {
     for (Filter filter : filters) {
       Label label = new Label(filter.getLabel());
       label.setLabelFor(filter.getNode());
+      label.setMinWidth(Label.USE_COMPUTED_SIZE);
+      label.setEllipsisString(filter.getLabel());
       HBox box = new HBox(label, filter.getNode());
       box.setSpacing(50);
 

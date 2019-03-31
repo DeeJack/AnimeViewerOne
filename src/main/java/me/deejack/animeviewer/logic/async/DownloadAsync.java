@@ -55,11 +55,13 @@ public class DownloadAsync implements Runnable {
   @Override
   public void run() {
     try {
+      System.out.println(downloadLink);
       URL url = new URL(downloadLink);
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
       connection.setRequestMethod("GET");
       connection.connect();
       totalDownloadSize = connection.getContentLength();
+      System.out.println(totalDownloadSize);
       try (FileOutputStream stream = new FileOutputStream(output)) {
         try (InputStream inputStream = connection.getInputStream()) {
           byte[] buffer = new byte[1024];

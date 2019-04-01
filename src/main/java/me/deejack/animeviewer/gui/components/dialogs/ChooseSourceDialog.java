@@ -23,11 +23,14 @@ public class ChooseSourceDialog extends Dialog {
 
   private void initialize(ObservableList<StreamingLink> links) {
     linkListView = new ListView<>(links);
-    linkListView.setMinWidth(300);
-    linkListView.setPrefWidth(linkListView.getMinWidth());
-    getDialogPane().setMaxWidth(200);
+    linkListView.setMinWidth(ListView.USE_COMPUTED_SIZE);
+    linkListView.setPrefWidth(ListView.USE_COMPUTED_SIZE);
+    //getDialogPane().setMaxWidth(DialogPane.USE_COMPUTED_SIZE);
+    getDialogPane().setMaxWidth(400);
     StackPane root = new StackPane(linkListView);
-    root.setMaxWidth(getDialogPane().getMaxWidth());
+    root.setMinWidth(StackPane.USE_COMPUTED_SIZE);
+    root.prefWidthProperty().bind(getDialogPane().widthProperty().subtract(20));
+    //root.setMaxWidth(getDialogPane().getMaxWidth());
     getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
     getDialogPane().setGraphic(root);
   }

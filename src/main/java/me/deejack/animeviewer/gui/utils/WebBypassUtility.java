@@ -45,7 +45,7 @@ public final class WebBypassUtility {
     return new Pair<>(browser, stage);
   }
 
-  public static void getOpenloadLink(String link, String hostName, CallBack<String> callback) {
+  public static void getOpenloadLink(String link, CallBack<String> callback) {
     URL url = null;
     try {
       url = new URL(link);
@@ -71,13 +71,13 @@ public final class WebBypassUtility {
             System.out.println(document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src"));
             System.out.println();
             //streamingLink = hostName + document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
-            streamingLink = hostName + "/stream/" + document.getElementById("lqEH1").getTextContent();
+            streamingLink = finalUrl.getHost() + "/stream/" + document.getElementById("lqEH1").getTextContent();
           } catch (Exception jsShit) {
             hideWaitLoad();
             pair.getKey().getEngine().getLoadWorker().cancel();
             pair.getValue().close();
             logError(new Exception("Error for url " + link, jsShit));
-            new Alert(Alert.AlertType.ERROR, "Error :(, try again but maybe the site isn't supported", ButtonType.OK).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error :(, you can try again but maybe the site isn't supported", ButtonType.OK).showAndWait();
             return;
           }
         }

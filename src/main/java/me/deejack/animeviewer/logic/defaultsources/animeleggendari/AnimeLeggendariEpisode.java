@@ -43,12 +43,12 @@ public class AnimeLeggendariEpisode extends EpisodeImpl {
                               .map(DataNode::getWholeData)
                               .map(this::decode)
                               .map(this::getStreamingUrl)
-                              .map((link) -> new StreamingLink(animeTitle.contains("SUB") ? "SUB ITA" : "ITA", link, -1, link.split("/")[2]))
+                              .map((link) -> new StreamingLink(animeTitle.contains("SUB") ? "SUB ITA" : "ITA", link, -1, link.split("/")[2], true))
                               .forEach(streamingLinks::add));
     }
     streamingFrames.stream()
             .map((frame) -> frame.attr("src"))
-            .map(link -> new StreamingLink(animeTitle.contains("SUB") ? "SUB ITA" : "ITA", link, -1, link.split("/")[2]))
+            .map(link -> new StreamingLink(animeTitle.contains("SUB") ? "SUB ITA" : "ITA", link, -1, link.split("/")[2], true))
             .forEach(streamingLinks::add);
     return streamingLinks;
   }

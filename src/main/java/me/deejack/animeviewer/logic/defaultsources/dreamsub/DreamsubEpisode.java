@@ -32,8 +32,13 @@ public class DreamsubEpisode extends EpisodeImpl {
       throw new RuntimeException(e.getMessage(), e);
     }
 
-    if (document.html().contains("Link download non disponibile"))
+    if (document.html().contains("Link download non disponibile")) {
+      Elements vvvidEl = document.select("a[href*=\"vvvvid.it\"]");
+      System.out.println(vvvidEl.size());
+      if (!vvvidEl.isEmpty())
+        streamingLinks.add(new StreamingLink("", vvvidEl.get(0).attr("href"), -1, "VVVID", false));
       return streamingLinks;
+    }
     String episodeInfo = document.html().substring(document.html().indexOf("LINK DOWNLOAD") + "LINK DOWNLOAD</b>:\n".length());
     String[] links = episodeInfo.substring(0,
             episodeInfo.indexOf("<br>")).split(" - ");
@@ -55,7 +60,8 @@ public class DreamsubEpisode extends EpisodeImpl {
               url.contains("SUB") ? "Sub Ita" : "Ita",
               url,
               resolution,
-              elementLink.text()));
+              elementLink.text(),
+              true));
     }
     return streamingLinks;
   }

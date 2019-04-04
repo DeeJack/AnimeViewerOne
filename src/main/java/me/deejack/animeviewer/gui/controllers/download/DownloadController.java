@@ -106,8 +106,7 @@ public final class DownloadController {
 
   private void processLink(StreamingLink downloadLink, WebBypassUtility.CallBack<String> callBack) {
     if (downloadLink.getSource().contains("openload") || downloadLink.getSource().contains("streamango")) {
-      WebBypassUtility.getOpenloadLink(downloadLink.getLink(), "https://openload.co",
-              callBack);
+      WebBypassUtility.getOpenloadLink(downloadLink.getLink(), callBack);
     } else {
       callBack.onSuccess(downloadLink.getLink());
     }

@@ -57,7 +57,7 @@ public class AnimePlayer {
     if (link.contains("dreamsub")) {
       setRoot(setupPlayer(link));
     } else {
-      WebBypassUtility.getOpenloadLink(link, "https://openload.co", (resultLink) -> setRoot(setupPlayer(resultLink)));
+      WebBypassUtility.getOpenloadLink(link, (resultLink) -> setRoot(setupPlayer(resultLink)));
     }
   }
 

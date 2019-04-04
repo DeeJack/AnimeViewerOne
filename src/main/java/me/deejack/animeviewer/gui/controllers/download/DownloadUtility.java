@@ -1,11 +1,13 @@
 package me.deejack.animeviewer.gui.controllers.download;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -87,53 +89,30 @@ public final class DownloadUtility {
     linkFutureTask.setOnSucceeded((event) -> {
       List<StreamingLink> streamingLinks = linkFutureTask.getValue();
       if (streamingLinks.size() == 1) {
-        callBack.onSuccess(streamingLinks.get(0));
+        if (streamingLinks.get(0).allowsEmbeddedVideo())
+          callBack.onSuccess(streamingLinks.get(0));
+        else showNotSupportedVideoError(streamingLinks.get(0));
         return;
       } else if (streamingLinks.isEmpty()) {
-        Alert alert = new Alert(Alert.AlertType.WARNING, LocalizedApp.getInstance().getString("NoStreaming"),
-                ButtonType.OK);
-        alert.showAndWait();
-        hideWaitLoad();
+        showNoStreaming();
         callBack.onSuccess(null);
         return;
       }
 
       ChooseSourceDialog sourceDialog = new ChooseSourceDialog(streamingLinks);
-      AtomicReference<StreamingLink> link = new AtomicReference<>(null);
       sourceDialog.setOnEvent((selectedLink) -> {
         hideWaitLoad();
-        link.set(selectedLink);
+        if (selectedLink.allowsEmbeddedVideo())
+          callBack.onSuccess(selectedLink);
+        else showNotSupportedVideoError(selectedLink);
       });
       sourceDialog.showAndWait();
-      callBack.onSuccess(link.get());
     });
   }
-    /*Parent parent = SceneUtility.loadParent("/scenes/download/choseSource.fxml");
-    ListView<StreamingLink> listView = (ListView<StreamingLink>) parent.lookup("#listView");
-    listView.getItems().addAll(links);
-    Dialog dialog = new Dialog();
-    dialog.setGraphic(parent);
-    dialog.setWidth(DialogPane.USE_COMPUTED_SIZE);
-    dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-
-    dialog.getDialogPane().lookupButton(ButtonType.OK).setOnMousePressed((v) -> {
-      if (listView.getSelectionModel().getSelectedItem() != null)
-        selectedLink.set(listView.getSelectionModel().getSelectedItem());
-      hideWaitLoad();
-      dialog.close();
-    });
-    dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setOnMousePressed((v) -> {
-      hideWaitLoad();
-      dialog.close();
-    });
-    dialog.setOnCloseRequest((event) -> hideWaitLoad());
-
-    dialog.showAndWait();
-    return selectedLink.get();*/
 
   public static int choseDownloadSettings() {
     AtomicInteger prefResolution = new AtomicInteger(-1);
-    Label labelRes = new Label("Risoluzione preferita: ");
+    Label labelRes = new Label(LocalizedApp.getInstance().getString("FavoriteResolutionDownload") + " ");
     TextField textFieldRes = new TextField("720");
     HBox boxSettings = new HBox(20, labelRes, textFieldRes);
     boxSettings.setAlignment(Pos.CENTER);
@@ -146,12 +125,35 @@ public final class DownloadUtility {
       }
       Optional<Integer> resolution = GeneralUtility.tryParse(textFieldRes.getText());
       if (!resolution.isPresent() || resolution.get() < 100 || resolution.get() > 8000) {
-        new Alert(Alert.AlertType.ERROR, "Inserisci un valore valido", ButtonType.OK).showAndWait();
+        new Alert(Alert.AlertType.ERROR,
+                LocalizedApp.getInstance().getString("ErrorNotInteger"),
+                ButtonType.OK)
+                .showAndWait();
         return;
       }
       prefResolution.set(GeneralUtility.tryParse(textFieldRes.getText()).get());
     });
     alert.showAndWait();
     return prefResolution.get();
+  }
+
+  private static void showNotSupportedVideoError(StreamingLink selectedLink) {
+    new Alert(Alert.AlertType.WARNING,
+            LocalizedApp.getInstance().getString("SiteNotSupported").replace("\\{Site}", selectedLink.getSource()),
+            ButtonType.OK)
+            .show();
+    hideWaitLoad();
+    try {
+      Desktop.getDesktop().browse(new URI(selectedLink.getLink()));
+    } catch (IOException | URISyntaxException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private static void showNoStreaming() {
+    Alert alert = new Alert(Alert.AlertType.WARNING, LocalizedApp.getInstance().getString("NoStreaming"),
+            ButtonType.OK);
+    alert.showAndWait();
+    hideWaitLoad();
   }
 }

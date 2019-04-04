@@ -4,6 +4,7 @@ import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Tooltip;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.logic.async.events.SuccessListener;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
@@ -24,6 +25,7 @@ public class ButtonNext extends Button {
     this.currentEpisode = currentEpisode;
     setEllipsisString(">>");
     setOnAction((event) -> askNextEpisode());
+    setTooltip(new Tooltip(LocalizedApp.getInstance().getString("NextEpisodeTooltip")));
   }
 
   private void askNextEpisode() {

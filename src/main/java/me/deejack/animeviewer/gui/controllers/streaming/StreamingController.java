@@ -116,6 +116,7 @@ public class StreamingController implements BaseScene {
     cursorTask.setInterrupted(true);
     mediaPlayer.dispose();
     SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
+    SceneUtility.getStage().setAlwaysOnTop(false);
   }
 
   private void onSizeChange(MediaView view) {

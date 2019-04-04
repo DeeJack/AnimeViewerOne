@@ -32,8 +32,6 @@ public class ListViewEpisodes extends ListView<ItemEpisode> {
   }
 
   private void initialize() {
-    setMinHeight(100);
-    setHeight(100);
     BorderPane.setAlignment(this, Pos.CENTER);
     addChildren();
     getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

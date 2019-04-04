@@ -3,10 +3,18 @@ package me.deejack.animeviewer.logic.githubupdates;
 import com.google.gson.annotations.SerializedName;
 
 public class Release {
-  private String url;
+  private final String url;
   @SerializedName("tag_name")
-  private String version;
-  private Asset[] assets;
+  private final String version;
+  private final Asset[] assets;
+  private final String changelog;
+
+  public Release(String url, String version, Asset[] assets, String changelog) {
+    this.url = url;
+    this.version = version;
+    this.assets = assets;
+    this.changelog = changelog;
+  }
 
   public String getUrl() {
     return url;
@@ -18,5 +26,9 @@ public class Release {
 
   public String getVersion() {
     return version;
+  }
+
+  public String getChangelog() {
+    return changelog;
   }
 }

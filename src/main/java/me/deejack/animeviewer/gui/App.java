@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import me.deejack.animeviewer.gui.components.appupdates.UpdateAvailableDialog;
 import me.deejack.animeviewer.gui.connection.CustomConnection;
 import me.deejack.animeviewer.gui.scenes.EventHandler;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
@@ -14,6 +15,8 @@ import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.defaultsources.animeleggendari.AnimeLeggendariSource;
 import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamSubSource;
 import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
+import me.deejack.animeviewer.logic.githubupdates.Asset;
+import me.deejack.animeviewer.logic.githubupdates.Release;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
@@ -62,6 +65,7 @@ public class App extends Application {
     hideWaitLoad();
     primaryStage.setScene(new Scene(SceneUtility.loadParent("/scenes/select.fxml")));
     primaryStage.setTitle(LocalizedApp.getInstance().getString("SelectWindowTitle"));
+    new UpdateAvailableDialog(new Release("asd.com", "v1.4.5alpha", new Asset[]{new Asset("dsa.com", "asd.com/qwe.jar")}, "Changelog bello")).show();
 
     // AGGIUNGERE GLI ANIME DESERIALIZZATI DAL FILE PIU AGGIORNATO
     File history = new File(System.getProperty("user.home") + File.separator + ".animeviewer" + File.separator + "history.json");

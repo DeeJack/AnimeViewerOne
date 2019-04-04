@@ -19,6 +19,7 @@ import me.deejack.animeviewer.gui.components.dialogs.ChooseSourceDialog;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
@@ -89,11 +90,11 @@ public final class DownloadUtility {
         callBack.onSuccess(streamingLinks.get(0));
         return;
       } else if (streamingLinks.isEmpty()) {
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Nessuno createStreaming disponibile, probabilmente deve ancora uscire l'episodio",
+        Alert alert = new Alert(Alert.AlertType.WARNING, LocalizedApp.getInstance().getString("NoStreaming"),
                 ButtonType.OK);
         alert.showAndWait();
         hideWaitLoad();
-        callBack.onSuccess(streamingLinks.get(0));
+        callBack.onSuccess(null);
         return;
       }
 

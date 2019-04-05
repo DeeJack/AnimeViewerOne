@@ -14,7 +14,8 @@ public final class GeneralUtility {
   private static final Logger logger = LogManager.getLogger();
   public static final String TMP_PATH = System.getProperty("java.io.tmpdir") +
           File.separator + "AnimeViewer" + File.separator;
-  public static final String version = "0.0";
+  public static final String CONFIG_PATH = System.getProperty("user.home") + File.separator + ".animeviewer";
+  public static final String version = "0.000001";
 
   private GeneralUtility() {
   }

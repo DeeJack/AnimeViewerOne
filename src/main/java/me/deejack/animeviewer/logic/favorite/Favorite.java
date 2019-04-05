@@ -8,10 +8,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import me.deejack.animeviewer.logic.async.DownloadAsync;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
 import me.deejack.animeviewer.logic.serialization.JsonValidator;
@@ -31,13 +31,22 @@ public final class Favorite {
   }
 
   public void addFavorite(Anime element) {
-    favorites.add(new FavoriteAnime(element));
+    FavoriteAnime favorite = new FavoriteAnime(element);
+    favorites.add(favorite);
+    DownloadAsync downloadAsync = new DownloadAsync(favorite.getImagePath(), favorite.getAnime().getAnimeInformation().getImageUrl());
+    System.out.println(favorite.getImagePath());
+    downloadAsync.addFailListener((exc) -> exc.printStackTrace());
+    new Thread(downloadAsync).start();
+    downloadAsync.addSuccessListener(() -> favorite.setImageDownloaded(true));
   }
 
   public void removeFavorite(Anime animeToRemove) {
     for (FavoriteAnime anime : favorites) {
       if (anime.getAnime().equals(animeToRemove)) {
         favorites.remove(anime);
+        if (anime.getImagePath().exists())
+          anime.getImagePath().delete();
+        anime.setImageDownloaded(false);
         return;
       }
     }
@@ -61,7 +70,7 @@ public final class Favorite {
       throw new IOException("Json is invalid!");
     if (!output.exists())
       output.createNewFile();
-    try(BufferedWriter writer = Files.newBufferedWriter(Paths.get(output.toURI()), Charset.forName("UTF-8"))) {
+    try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(output.toURI()), Charset.forName("UTF-8"))) {
       writer.write(json);
     }
     return true;
@@ -78,7 +87,7 @@ public final class Favorite {
     if (!JsonValidator.isValid(json))
       throw new IOException("Json invalid!");
     List<FavoriteAnime> elements = serializer.deserializeList(json);
-    if(!elements.isEmpty())
+    if (!elements.isEmpty())
       FavoriteAnime.setCounter(elements.get(elements.size() - 1).getId() + 1);
 
     favorites.addAll(elements);

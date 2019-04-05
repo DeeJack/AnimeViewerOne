@@ -2,6 +2,7 @@ package me.deejack.animeviewer.logic.async;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -49,12 +50,19 @@ public class DownloadAsync implements Runnable {
     this.downloadLink = downloadLink;
   }
 
+  private void createFileIfNotExists() throws IOException {
+    if (!output.exists()) {
+      output.createNewFile();
+    }
+  }
+
   /**
    * Execute the download
    */
   @Override
   public void run() {
     try {
+      createFileIfNotExists();
       System.out.println(downloadLink);
       URL url = new URL(downloadLink);
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();

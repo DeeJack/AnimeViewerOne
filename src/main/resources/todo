@@ -7,7 +7,7 @@ Streaming:
 
 Generali:
     - Salvare le immagini dei preferiti? Magari in qualità ridotta
-    - Se ci sono anime (di solito oav o film) con 1 episodio mette direttamente la pagina dell'episodio, ma se ce ne sono di più è come un anime normale
+    - Mancano alcune info nei film/oav da 1 ep
     - Reindirizzamento a VVVID tipo in Code Geass
     - Controllare se da' 404 nelle varie pagine
     - Pulsante "aggiorna" (vedere se funziona)
@@ -16,23 +16,17 @@ Generali:
 
 
     - Mettere scroll infinito invece di anime multiplier...
-    - Aggiornamenti automatici
     - Mettere animeclick / myanimelist
     - Salvare nella cronologia anche quando si mettono link esterni
-    - Calendario e ultime aggiunte?
     - Fare che i metodi ritornino una Future (?) o comunque qualcosa di async?
     - Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
 
 Bugs:
     - Se chiudo lo stage mentre carica openload o streamango sono fottuto
     - Con la freccia a sinistra non andava indietro lo streaming, a volte spostandolo andava direttamente alla fine... Trovare un player già fatto?
-    - Mettere un "title" quando si tiene il cursore su qualcosa che indichi tutto il nome / una descrizione
-    - TempHistory non funziona
-    - A volte non parte l'episodio, altre parte più volte l'episodio (forse solo con openload), a volte si ferma e non riparte più
     - A volte non si toglie il caricamento nello streaming
     - Sistemare download
-    - Se si chiede di riprendere più volte si aprono più alert di richiesta!
-    - ShowWaitLoad non va bene nel AnimeDetail
+    - Se si chiede di riprendere più volte si aprono più alert di richiesta! non avevo risolto?
 
 Meno importanti:
     - Aggiungere calendario e ultime aggiunte

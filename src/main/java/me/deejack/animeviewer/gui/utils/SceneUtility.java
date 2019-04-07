@@ -58,6 +58,7 @@ public final class SceneUtility {
    * @return A task which permit the download of the image async
    */
   public static Task<Image> loadImage(String link) {
+    System.err.println("DOWNLOADING IMAGE " + link);
     Task<Image> task = getImageAsync(link);
     new Thread(task).start();
     return task;

@@ -12,7 +12,7 @@ public class SingleAnimeUpdate extends SingleFavorite {
   private final Episode newEpisode;
 
   public SingleAnimeUpdate(Anime anime, Episode newEpisode) {
-    super(anime);
+    super(anime, anime.getAnimeInformation().getImageUrl(), null);
     this.anime = anime;
     this.newEpisode = newEpisode;
     System.out.println("Initializing");

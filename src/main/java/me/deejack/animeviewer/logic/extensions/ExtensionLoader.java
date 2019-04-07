@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
+import me.deejack.animeviewer.logic.utils.FilesManager;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
 public final class ExtensionLoader {
@@ -20,16 +21,9 @@ public final class ExtensionLoader {
   private ExtensionLoader() {
   }
 
-  public static void main(String[] args) {
-    loadExtension();
-  }
-
   public static List<FilteredSource> loadExtension() {
     List<FilteredSource> sources = new ArrayList<>();
-    File extensionsPath = new File(System.getProperty("user.home") + File.separator + ".animeviewer" + File.separator + "extensions");
-    if (!extensionsPath.exists())
-      extensionsPath.mkdir();
-    for (File file : Objects.requireNonNull(extensionsPath.listFiles())) {
+    for (File file : Objects.requireNonNull(FilesManager.EXTENSION_FOLDER.listFiles())) {
       if (file.isFile() && file.getName().endsWith(".jar")) {
         addExtToClasspath(file);
         FilteredSource source = getFilteredSource(file);

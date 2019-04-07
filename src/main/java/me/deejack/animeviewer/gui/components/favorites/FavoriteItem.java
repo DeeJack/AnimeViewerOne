@@ -8,30 +8,30 @@ import javafx.scene.layout.Pane;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.favorite.FavoriteAnime;
-import me.deejack.animeviewer.logic.models.anime.Anime;
 
 public class FavoriteItem extends SingleFavorite {
-  private final Anime anime;
+  private final FavoriteAnime favorite;
 
-  public FavoriteItem(Anime anime) {
-    super(anime);
-    this.anime = anime;
+  public FavoriteItem(FavoriteAnime favorite) {
+    super(favorite.getAnime(), favorite.getImagePath());
+    this.favorite = favorite;
+
     setOnRemove(getOnRemove());
     setAnimeInfo();
   }
 
   private EventHandler<ActionEvent> getOnRemove() {
     return (event) -> {
-      Favorite.getInstance().removeFavorite(anime);
+      Favorite.getInstance().removeFavorite(favorite.getAnime());
       FilesUtility.saveFavorite();
       ((Pane) getParent()).getChildren().remove(this);
     };
   }
 
   private void setAnimeInfo() {
-    Label labelTitle = new Label("Titolo: " + anime.getAnimeInformation().getName());
-    Label labelEpisodes = new Label("Episodi: " + anime.getAnimeInformation().getNumberOfEpisodes());
-    TextArea textAreaPlot = new TextArea(anime.getAnimeInformation().getPlot());
+    Label labelTitle = new Label("Titolo: " + favorite.getAnime().getAnimeInformation().getName());
+    Label labelEpisodes = new Label("Episodi: " + favorite.getAnime().getAnimeInformation().getNumberOfEpisodes());
+    TextArea textAreaPlot = new TextArea(favorite.getAnime().getAnimeInformation().getPlot());
     textAreaPlot.setWrapText(true);
     textAreaPlot.setEditable(false);
     getAnimeInfoBox().getChildren().addAll(labelTitle, labelEpisodes, textAreaPlot);

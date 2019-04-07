@@ -18,8 +18,6 @@ public class FavoriteAnime {
   private final List<Episode> episodes;
   @Expose
   private final String imagePath;
-  @Expose
-  private boolean imageDownloaded = false;
 
   public FavoriteAnime(Anime anime) {
     this.anime = anime;
@@ -41,13 +39,5 @@ public class FavoriteAnime {
 
   public File getImagePath() {
     return new File(imagePath);
-  }
-
-  public boolean isImageDownloaded() {
-    return imageDownloaded;
-  }
-
-  public void setImageDownloaded(boolean imageDownloaded) {
-    this.imageDownloaded = imageDownloaded;
   }
 }

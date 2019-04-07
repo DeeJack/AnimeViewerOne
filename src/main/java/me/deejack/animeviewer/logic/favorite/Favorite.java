@@ -1,20 +1,16 @@
 package me.deejack.animeviewer.logic.favorite;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import me.deejack.animeviewer.logic.async.DownloadAsync;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
 import me.deejack.animeviewer.logic.serialization.JsonValidator;
+import me.deejack.animeviewer.logic.utils.FilesManager;
 
 import static me.deejack.animeviewer.logic.history.History.CONFIG_DIR;
 
@@ -33,11 +29,7 @@ public final class Favorite {
   public void addFavorite(Anime element) {
     FavoriteAnime favorite = new FavoriteAnime(element);
     favorites.add(favorite);
-    DownloadAsync downloadAsync = new DownloadAsync(favorite.getImagePath(), favorite.getAnime().getAnimeInformation().getImageUrl());
-    System.out.println(favorite.getImagePath());
-    downloadAsync.addFailListener((exc) -> exc.printStackTrace());
-    new Thread(downloadAsync).start();
-    downloadAsync.addSuccessListener(() -> favorite.setImageDownloaded(true));
+    favorite.getAnime().saveImageToFile(favorite.getImagePath());
   }
 
   public void removeFavorite(Anime animeToRemove) {
@@ -46,7 +38,6 @@ public final class Favorite {
         favorites.remove(anime);
         if (anime.getImagePath().exists())
           anime.getImagePath().delete();
-        anime.setImageDownloaded(false);
         return;
       }
     }
@@ -68,11 +59,7 @@ public final class Favorite {
     String json = serializer.serialize(new ArrayList<>(favorites));
     if (!JsonValidator.isValid(json))
       throw new IOException("Json is invalid!");
-    if (!output.exists())
-      output.createNewFile();
-    try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(output.toURI()), Charset.forName("UTF-8"))) {
-      writer.write(json);
-    }
+    FilesManager.writeToFile(output, json);
     return true;
   }
 
@@ -83,7 +70,7 @@ public final class Favorite {
   public boolean loadFromFile(File input) throws IOException {
     if (!input.exists())
       return false;
-    String json = String.join("\n", Files.readAllLines(Paths.get(input.toURI())));
+    String json = FilesManager.readFromFile(input);
     if (!JsonValidator.isValid(json))
       throw new IOException("Json invalid!");
     List<FavoriteAnime> elements = serializer.deserializeList(json);

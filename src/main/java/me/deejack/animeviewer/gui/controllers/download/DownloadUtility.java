@@ -139,7 +139,7 @@ public final class DownloadUtility {
 
   private static void showNotSupportedVideoError(StreamingLink selectedLink) {
     new Alert(Alert.AlertType.WARNING,
-            LocalizedApp.getInstance().getString("SiteNotSupported").replace("\\{Site}", selectedLink.getSource()),
+            LocalizedApp.getInstance().getString("SiteNotSupported").replace("{Site}", selectedLink.getSource()),
             ButtonType.OK)
             .show();
     hideWaitLoad();

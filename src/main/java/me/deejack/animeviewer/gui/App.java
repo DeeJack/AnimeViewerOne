@@ -24,6 +24,7 @@ import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
+import static me.deejack.animeviewer.logic.utils.FilesManager.createDirsIfNotExists;
 
 public class App extends Application {
   public static final List<FilteredSource> SITES = new ArrayList<>();
@@ -43,6 +44,7 @@ public class App extends Application {
 
   @Override
   public void start(Stage primaryStage) {
+    createDirsIfNotExists();
     /*try {
       Connection.Response response = Jsoup.connect("https://api.github.com/repos/DeeJack/AnimeViewerOne/releases/latest").ignoreContentType(true).method(Connection.Method.GET).execute();
       String responseJson = response.body();

@@ -14,7 +14,7 @@ public class HistoryItem extends SingleFavorite {
   private final HistoryElement historyElement;
 
   public HistoryItem(HistoryElement historyElement) {
-    super(historyElement.getViewedElement());
+    super(historyElement.getViewedElement(), historyElement.getViewedElement().getAnimeInformation().getImageUrl(), null);
     this.historyElement = historyElement;
     setOnRemove(getOnRemove());
     setAnimeInfo();

@@ -54,11 +54,10 @@ public class AnimePlayer {
     Connection.Response response = ConnectionUtility.connect(link, false);
     if (response == null)
       return;
-    if (link.contains("dreamsub")) {
+    if (response.contentType().contains("video")) {
       setRoot(setupPlayer(link));
-    } else {
+    } else
       WebBypassUtility.getOpenloadLink(link, (resultLink) -> setRoot(setupPlayer(resultLink)));
-    }
   }
 
   private StreamingController setupPlayer(String link) {

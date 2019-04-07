@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.anime.dto.AnimeStatus;
@@ -23,6 +25,17 @@ public class DreamsubAnime extends AnimeImpl {
   @Override
   public AnimeInformation parseAnimeDetails(Document document) {
     if (document.getElementsByClass("innerText").isEmpty()) {// MOVIE / OAV !!! {
+      String elementInfo = document.getElementById("episodeInfo").wholeText();
+      String releaseDate = elementInfo.substring(elementInfo.indexOf("Data di Uscita: ") + "Data di Uscita: ".length(),
+              elementInfo.indexOf("Data di Uscita: ") + elementInfo.substring(elementInfo.indexOf("Data di Uscita: ")).indexOf("\n"));
+      String plot = elementInfo.substring(elementInfo.indexOf("Trama Anime: ") + "Trama Anime: ".length(),
+              elementInfo.indexOf("Trama Anime: ") + elementInfo.substring(elementInfo.indexOf("Trama Anime: ")).indexOf("\n"));
+      String genresText = elementInfo.substring(elementInfo.indexOf("Genere: ") + "Genere: ".length(),
+              elementInfo.indexOf("Genere: ") + elementInfo.substring(elementInfo.indexOf("Genere: ")).indexOf("\n"));
+      List<Genre> genres = Arrays.stream(genresText.split(", ")).map(Genre::new).collect(Collectors.toList());
+      getAnimeInformation().setGenres(genres);
+      getAnimeInformation().setReleaseYear(releaseDate);
+      getAnimeInformation().setPlot(plot);
       return getAnimeInformation();
     }
     String info = document.getElementsByClass("innerText").get(0).wholeText();
@@ -46,8 +59,9 @@ public class DreamsubAnime extends AnimeImpl {
 
   @Override
   public Episode parseEpisode(Element element) {
-    if(element.tagName().equalsIgnoreCase("div"))
-      return new DreamsubEpisode(getAnimeInformation().getName(), 1, getUrl(), null);
+    if (element.tagName().equalsIgnoreCase("div"))
+      return new DreamsubEpisode(getAnimeInformation().getName(), 1, getUrl(),
+              LocalDate.parse(getAnimeInformation().getReleaseYear(), DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ITALY)));
     String num = element.text().split(" ")[1].split(" ")[0];
     String releaseDate = element.text().split("-")[1].trim();
     String title = element.getElementsByTag("i").first().text();

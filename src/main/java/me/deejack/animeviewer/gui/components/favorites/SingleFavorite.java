@@ -1,5 +1,9 @@
 package me.deejack.animeviewer.gui.components.favorites;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -17,6 +21,7 @@ import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
 public class SingleFavorite extends HBox {
   private final Anime anime;
@@ -25,17 +30,17 @@ public class SingleFavorite extends HBox {
   private Button removeButton;
   private Button resumeButton;
 
-  public SingleFavorite(Anime anime) {
-    this(anime, anime.getAnimeInformation().getImageUrl());
+  public SingleFavorite(Anime anime, File imagePath) {
+    this(anime, anime.getAnimeInformation().getImageUrl(), imagePath);
   }
 
-  public SingleFavorite(Anime anime, String imageUrl) {
+  public SingleFavorite(Anime anime, String imageUrl, File imagePath) {
     this.anime = anime;
-    initialize(imageUrl);
+    initialize(imageUrl, imagePath);
   }
 
-  private void initialize(String imageUrl) {
-    ImageView animeImage = createImage(imageUrl);
+  private void initialize(String imageUrl, File imagePath) {
+    ImageView animeImage = createImage(imageUrl, imagePath);
     removeButton = new Button(LocalizedApp.getInstance().getString("RemoveButton"));
     resumeButton = new Button(LocalizedApp.getInstance().getString("ResumeButton"));
     registerEvents(animeImage, removeButton, resumeButton);
@@ -53,13 +58,23 @@ public class SingleFavorite extends HBox {
     return buttonsBox;
   }
 
-  private ImageView createImage(String imageUrl) {
+  protected ImageView createImage(String imageUrl, File imagePath) {
     ImageView animeImage = new ImageView();
     animeImage.setFitHeight(120.0);
     animeImage.setFitWidth(170.0);
     animeImage.setPickOnBounds(true);
-    Task<Image> loadImage = SceneUtility.loadImage(imageUrl);
-    loadImage.setOnSucceeded((value) -> animeImage.setImage(loadImage.getValue()));
+    if (imagePath == null) {
+      Task<Image> loadImage = SceneUtility.loadImage(imageUrl);
+      loadImage.setOnSucceeded((value) -> animeImage.setImage(loadImage.getValue()));
+    } else {
+      try {
+        animeImage.setImage(new Image(Files.newInputStream(Paths.get(imagePath.toURI()))));
+      } catch (IOException e) {
+        anime.saveImageToFile(imagePath);
+        GeneralUtility.logError(e);
+        return createImage(imageUrl, null);
+      }
+    }
     return animeImage;
   }
 

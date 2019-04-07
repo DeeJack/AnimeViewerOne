@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.gui.utils;
 
+import com.sun.javafx.webkit.WebConsoleListener;
 import java.io.IOException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -21,6 +22,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Pair;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.utils.UserAgents;
+import netscape.javascript.JSException;
 import org.apache.logging.log4j.LogManager;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -35,70 +37,103 @@ public final class WebBypassUtility {
   private WebBypassUtility() {
   }
 
+  private static int failCount = 0;
+
   public static Pair<WebView, Stage> createWebView() {
     WebView browser = new WebView();
     WebEngine engine = browser.getEngine();
     engine.setUserAgent(UserAgents.WIN10_FIREFOX.getValue());
     Stage stage = new Stage(StageStyle.UNDECORATED);
     stage.setScene(new Scene(new HBox(browser), 1, 1));
+    stage.setOnCloseRequest((event) -> {
+      Alert alert = new Alert(Alert.AlertType.WARNING, LocalizedApp.getInstance().getString("WebViewClosingAlert"), ButtonType.YES, ButtonType.NO);
+      alert.getDialogPane().lookupButton(ButtonType.YES).setOnMouseClicked((btnEvent) -> {
+        hideWaitLoad();
+        engine.getLoadWorker().cancel();
+      });
+      alert.getDialogPane().lookupButton(ButtonType.YES).setOnMouseClicked((btnEvent) -> event.consume());
+      alert.showAndWait();
+    });
     stage.show();
     return new Pair<>(browser, stage);
   }
 
   public static void getOpenloadLink(String link, CallBack<String> callback) {
-    URL url = null;
+    URL url;
     try {
-      url = new URL(link);
+      url = new URL(link); // FAre metodo unico per tutte le volte che lo uso
     } catch (MalformedURLException e) {
       handleException(e);
       return;
     }
     Pair<WebView, Stage> pair = createWebView();
     WebEngine engine = pair.getKey().getEngine();
+    engine.setUserAgent(UserAgents.WIN10_FIREFOX.getValue());
     URL finalUrl = url;
-    System.out.println(finalUrl.getProtocol() + finalUrl.getHost());
     engine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {
       System.out.println(newValue + " " + engine.getLocation());
       if (newValue == Worker.State.SUCCEEDED && (engine.getLocation().contains(finalUrl.getProtocol() + "://" + finalUrl.getHost()))) {
         Document document = engine.getDocument();
-        System.out.println("YEAH");
-        String streamingLink;
-        if (document.getElementsByTagName("video").getLength() > 0 && document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src") != null)
-          streamingLink = document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
-        else {
-          try {
-            engine.executeScript("document.getElementById('videooverlay').click();");
-            System.out.println(document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src"));
-            System.out.println();
-            //streamingLink = hostName + document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
-            streamingLink = finalUrl.getHost() + "/stream/" + document.getElementById("lqEH1").getTextContent();
-          } catch (Exception jsShit) {
-            hideWaitLoad();
-            pair.getKey().getEngine().getLoadWorker().cancel();
-            pair.getValue().close();
-            logError(new Exception("Error for url " + link, jsShit));
-            new Alert(Alert.AlertType.ERROR, "Error :(, you can try again but maybe the site isn't supported", ButtonType.OK).showAndWait();
-            return;
-          }
-        }
-        if (!streamingLink.startsWith("https:"))
-          streamingLink = "https:" + streamingLink;
-        System.out.println(streamingLink + " AAAAAAAAAAA");
-        Connection connection = Jsoup.connect(streamingLink);
-        connection.followRedirects(true);
-        connection.ignoreContentType(true);
-        try {
-          Connection.Response response = connection.execute();
-          streamingLink = response.url().toString();
-        } catch (Exception ignored) {
-          return;
-        }
-        pair.getKey().getEngine().getLoadWorker().cancel();
+        engine.getLoadWorker().cancel();
         pair.getValue().close();
-        callback.onSuccess(streamingLink);
+        System.out.println("YEAH");
+        pair.getKey().getEngine().getLoadWorker().cancel();
+        findStreamingLink(document, engine, callback, url, link);
       }
     });
+    WebConsoleListener.setDefaultListener((webView, message, lineNumber, sourceId) -> {
+      System.out.println(message + "[at " + lineNumber + "]");
+    });
     engine.load(link);
+    engine.locationProperty().addListener((event, oldValue, newValue) -> engine.getLoadWorker().cancel());
+  }
+
+  private static void findStreamingLink(Document document, WebEngine engine, CallBack<String> callBack, URL url, String link) {
+    String streamingLink;
+    if (document.getElementsByTagName("video").getLength() > 0 && document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src") != null)
+      streamingLink = document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
+    else {
+      try {
+        /*   engine.executeScript(" document.addEventListener('click', function (e) {\n" +
+         *//*"    e.preventDefault();\n" +*//*
+                    "    e.stopPropagation();\n" +
+                    *//*"    return false;\n" +*//*
+                    "  }, true);");*/
+        Object useless = engine.executeScript("var event = document.createEvent(\"HTMLEvents\");\n" +
+                "\n" +
+                "  event.initEvent(\"click\", true, true);\n" +
+                "document.getElementById('videooverlay').dispatchEvent(event);console.log(document.getElementsByTagName('video')[0].src);");
+
+        System.out.println(document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src"));
+        if (document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src") == null)
+          throw new JSException("Video attribute SRC is null :(, link: " + link);
+        streamingLink = url.getHost() + document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
+        //streamingLink = finalUrl.getHost() + "/stream/" + document.getElementById("lqEH1").getTextContent();
+      } catch (Exception jsShit) {
+        failCount++;
+        if (failCount == 11) {
+          hideWaitLoad();
+          logError(new Exception("Error for url " + link, jsShit));
+          new Alert(Alert.AlertType.ERROR, "Error :(, you can try again but maybe the site isn't supported", ButtonType.OK).showAndWait();
+        } else
+          engine.load(link);
+        return;
+      }
+      failCount = 0;
+    }
+    if (!streamingLink.startsWith("https:"))
+      streamingLink = "https:" + (streamingLink.startsWith("//") ? "" : "//") + streamingLink;
+    System.out.println(streamingLink + " AAAAAAAAAAA");
+    Connection connection = Jsoup.connect(streamingLink);
+    connection.followRedirects(true);
+    connection.ignoreContentType(true);
+    try {
+      Connection.Response response = connection.execute();
+      streamingLink = response.url().toString();
+    } catch (Exception ignored) {
+      return;
+    }
+    callBack.onSuccess(streamingLink);
   }
 
   public static void bypassCloudflare(String pageLink, WebBypassUtility.CallBack<List<HttpCookie>> callback) {

@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.logic.models.anime;
 
+import java.io.File;
 import java.util.List;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.async.events.SuccessListener;
@@ -21,6 +22,8 @@ public interface  Anime {
   boolean hasBeenLoaded();
 
   String getUrl();
+
+  void saveImageToFile(File output);
 
   /**
    * Toggle the favorite, if it was one, it removes it, otherwise it adds the element to the favorite list

@@ -25,6 +25,8 @@ import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.async.DownloadAsync;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+import me.deejack.animeviewer.logic.utils.ConnectionUtility;
+import org.jsoup.Connection;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
@@ -105,11 +107,11 @@ public final class DownloadController {
   }
 
   private void processLink(StreamingLink downloadLink, WebBypassUtility.CallBack<String> callBack) {
-    if (downloadLink.getSource().contains("openload") || downloadLink.getSource().contains("streamango")) {
-      WebBypassUtility.getOpenloadLink(downloadLink.getLink(), callBack);
-    } else {
+    Connection.Response response = ConnectionUtility.connect(downloadLink.getLink(), false);
+    if (response.contentType().contains("video")) {
       callBack.onSuccess(downloadLink.getLink());
-    }
+    } else
+      WebBypassUtility.getOpenloadLink(downloadLink.getLink(), callBack);
   }
 
   private DownloadAsync startDownload(String downloadLink, Episode episode, String animeName, File destination, DownloadAsync previousDownload) {

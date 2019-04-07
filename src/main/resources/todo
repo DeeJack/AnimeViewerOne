@@ -7,8 +7,6 @@ Streaming:
 
 Generali:
     - Controllare se da' 404 nelle varie pagine
-    Faccio un controllo per vedere se usare la webview o no che controlla se il sito è dreamsub, openload o streamango... E' orribile, trovare altra soluzione
-
 
     - Mettere scroll infinito invece di anime multiplier...
     - Mettere animeclick / myanimelist
@@ -17,11 +15,10 @@ Generali:
     - Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
 
 Bugs:
-    - Se chiudo lo stage mentre carica openload o streamango sono fottuto
     - Con la freccia a sinistra non andava indietro lo streaming, a volte spostandolo andava direttamente alla fine... Trovare un player già fatto?
     - A volte non si toglie il caricamento nello streaming
     - Sistemare download
-    - Se si chiede di riprendere più volte si aprono più alert di richiesta! non avevo risolto?
+    - Tempo totale dello streaming sballato, forse solo con cronologia
 
 Meno importanti:
     - Aggiungere calendario e ultime aggiunte

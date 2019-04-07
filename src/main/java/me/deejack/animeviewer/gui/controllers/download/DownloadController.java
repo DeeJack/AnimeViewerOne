@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -23,6 +24,7 @@ import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.async.DownloadAsync;
+import me.deejack.animeviewer.logic.async.events.SuccessListener;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
@@ -68,7 +70,7 @@ public final class DownloadController {
     imageRestart = new Image(App.class.getResourceAsStream("/assets/resume2.png"));
   }
 
-  public void addDownloads(Iterable<? extends Episode> episodes, String animeName) {
+  public void addDownloads(List<Episode> episodes, String animeName) {
     int prefResolution = DownloadUtility.choseDownloadSettings();
     AtomicReference<DownloadAsync> previousDownload = new AtomicReference<>();
     if (prefResolution == -1)
@@ -76,18 +78,25 @@ public final class DownloadController {
     File destination = DownloadUtility.saveDirectory();
     if (destination == null)
       return;
-    for (Episode episode : episodes) {
-      List<StreamingLink> links = episode.getStreamingLinks();
-      if (links.isEmpty())
-        return;
-      AtomicReference<StreamingLink> link = new AtomicReference<>(links.get(0));
-      links.forEach((streamingLink -> {
-        if (Math.abs(streamingLink.getResolution() - prefResolution) < Math.abs(link.get().getResolution() - prefResolution))
-          link.set(streamingLink);
-      }));
-      DownloadAsync finalPreviousDownload = previousDownload.get();
-      processLink(link.get(), (resultLink) -> previousDownload.set(startDownload(resultLink, episode, animeName, destination, finalPreviousDownload)));
-    }
+    AtomicInteger count = new AtomicInteger(0);
+
+    /*SuccessListener finishListener = () -> chooseLink(episodes.get(count.addAndGet(1)), prefResolution, animeName, destination, () -> {
+    });*/
+    chooseLink(episodes, count, prefResolution, animeName, destination);
+  }
+
+  private void chooseLink(List<Episode> episodes, AtomicInteger count, int prefResolution, String animeName, File destination) {
+    List<StreamingLink> links = episodes.get(count.get()).getStreamingLinks();
+    if (links.isEmpty())
+      return;
+    AtomicReference<StreamingLink> link = new AtomicReference<>(links.get(0));
+    links.forEach((streamingLink -> {
+      if (Math.abs(streamingLink.getResolution() - prefResolution) < Math.abs(link.get().getResolution() - prefResolution))
+        link.set(streamingLink);
+    }));
+    processLink(link.get(), (resultLink) -> startDownload(resultLink, episodes.get(count.get()), animeName, destination, () -> {
+      chooseLink(episodes, new AtomicInteger(count.addAndGet(1)), prefResolution, animeName, destination);
+    }));
   }
 
   public void singleDownload(Episode episode, String animeName) {
@@ -99,7 +108,8 @@ public final class DownloadController {
         File destination = DownloadUtility.savePath(episode.getTitle());
         if (destination == null)
           return;
-        processLink(downloadLink, (resultLink) -> startDownload(resultLink, episode, animeName, destination, null));
+        processLink(downloadLink, (resultLink) -> startDownload(resultLink, episode, animeName, destination, () -> {
+        }));
       });
     } catch (IOException e) {
       handleException(e);
@@ -114,7 +124,7 @@ public final class DownloadController {
       WebBypassUtility.getOpenloadLink(downloadLink.getLink(), callBack);
   }
 
-  private DownloadAsync startDownload(String downloadLink, Episode episode, String animeName, File destination, DownloadAsync previousDownload) {
+  private void startDownload(String downloadLink, Episode episode, String animeName, File destination, SuccessListener finishListener) {
     if (destination.isDirectory()) {
       destination = new File(destination.getPath() + File.separator + animeName + " - " + episode.getNumber() + ".mp4");
     }
@@ -124,16 +134,14 @@ public final class DownloadController {
 
     layoutDownload(episode, downloadAsync, animeName);
     downloadAsync.addFailListener(SceneUtility::handleException);
-    if (previousDownload == null)
-      new Thread(downloadAsync).start();
-    else {
-      previousDownload.addSuccessListener(() -> new Thread(downloadAsync).start());
-      previousDownload.addFailListener((exc) -> new Thread(downloadAsync).start());
-      previousDownload.addCancelListener((value) -> new Thread(downloadAsync).start());
+    downloadAsync.addFailListener((exc) -> finishListener.onSuccess());
+    downloadAsync.addSuccessListener(finishListener);
+    downloadAsync.addCancelListener((cancelValue) -> finishListener.onSuccess());
+    new Thread(downloadAsync).start();
+    if (!stage.isShowing()) {
+      stage.show();
+      hideWaitLoad();
     }
-    stage.show();
-    hideWaitLoad();
-    return downloadAsync;
   }
 
   private void layoutDownload(Episode episode, DownloadAsync downloadAsync, String animeName) {

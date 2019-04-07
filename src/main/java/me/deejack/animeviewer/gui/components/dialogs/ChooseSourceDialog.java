@@ -36,14 +36,11 @@ public class ChooseSourceDialog extends Dialog {
   }
 
   private void registerEvents() {
-    getDialogPane().lookupButton(ButtonType.OK).setOnMouseClicked((event) -> {
-      onEvent.onChange(linkListView.getSelectionModel().getSelectedItem());
-    });
-    getDialogPane().lookupButton(ButtonType.OK).setOnMouseClicked((event) -> {
-      onEvent.onChange(null);
-    });
+    getDialogPane().lookupButton(ButtonType.OK).setOnMousePressed((event) ->
+            onEvent.onChange(linkListView.getSelectionModel().getSelectedItem()));
+    getDialogPane().lookupButton(ButtonType.CANCEL).setOnMousePressed((event) -> onEvent.onChange(null));
     setOnCloseRequest((event) -> {
-      onEvent.onChange(linkListView.getSelectionModel().getSelectedItem());
+      onEvent.onChange(null);
       hideWaitLoad();
     });
   }

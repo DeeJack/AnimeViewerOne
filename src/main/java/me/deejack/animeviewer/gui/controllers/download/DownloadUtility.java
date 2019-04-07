@@ -28,6 +28,7 @@ import me.deejack.animeviewer.logic.utils.GeneralUtility;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 
 public final class DownloadUtility {
+  private static boolean showingPopupSources = false;
   private DownloadUtility() {
   }
 
@@ -75,7 +76,11 @@ public final class DownloadUtility {
    * @throws IOException
    */
   public static void chooseSource(Episode episode, WebBypassUtility.CallBack<StreamingLink> callBack) throws IOException {
+    if (showingPopupSources)
+      return;
+    showingPopupSources = true;
     if (!checkEpisodeReleased(episode)) {
+      showingPopupSources = false;
       callBack.onSuccess(null);
       return;
     }
@@ -92,19 +97,27 @@ public final class DownloadUtility {
         if (streamingLinks.get(0).allowsEmbeddedVideo())
           callBack.onSuccess(streamingLinks.get(0));
         else showNotSupportedVideoError(streamingLinks.get(0));
+        showingPopupSources = false;
         return;
       } else if (streamingLinks.isEmpty()) {
         showNoStreaming();
+        showingPopupSources = false;
         callBack.onSuccess(null);
         return;
       }
 
       ChooseSourceDialog sourceDialog = new ChooseSourceDialog(streamingLinks);
       sourceDialog.setOnEvent((selectedLink) -> {
+        if (selectedLink == null) {
+          hideWaitLoad();
+          showingPopupSources = false;
+          return;
+        }
         hideWaitLoad();
         if (selectedLink.allowsEmbeddedVideo())
           callBack.onSuccess(selectedLink);
         else showNotSupportedVideoError(selectedLink);
+        showingPopupSources = false;
       });
       sourceDialog.showAndWait();
     });

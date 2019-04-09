@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.gui.components.animedetail;
 
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,10 +13,11 @@ public class ImageFavorite extends ImageView {
   private static final Image imageFavorite = new Image(App.class.getResourceAsStream("/assets/favorite.png"));
   private static final Image imageNonFavorite = new Image(App.class.getResourceAsStream("/assets/non-favorite.png"));
 
-  public ImageFavorite(Anime anime) {
+  public ImageFavorite(Anime anime, ReadOnlyDoubleProperty heightProperty) {
     setFitHeight(53);
     setFitWidth(59);
     setPreserveRatio(true);
+    fitHeightProperty().bind(heightProperty.divide(3));
     setPickOnBounds(true);
     if (anime.isFavorite()) {
       Tooltip.install(this, new Tooltip(LocalizedApp.getInstance().getString("FavoriteNotImageTooltip")));

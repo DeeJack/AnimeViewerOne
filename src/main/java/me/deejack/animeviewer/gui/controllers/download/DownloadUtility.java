@@ -77,7 +77,7 @@ public final class DownloadUtility {
    * @throws IOException
    */
   public static void chooseSource(Episode episode, WebBypassUtility.CallBack<StreamingLink> callBack) throws IOException {
-    if (showingPopupSources)
+    if (showingPopupSources) // TODO dividere il metodo ç.ç
       return;
     showingPopupSources = true;
     if (!checkEpisodeReleased(episode)) {
@@ -93,13 +93,17 @@ public final class DownloadUtility {
 
       @Override
       public void failed() {
-        //hideWaitLoad();
         handleException(getException());
       }
     };
     new Thread(linkFutureTask).start();
     linkFutureTask.setOnSucceeded((event) -> {
       List<StreamingLink> streamingLinks = linkFutureTask.getValue();
+      if (streamingLinks == null) {
+        showingPopupSources = false;
+        callBack.onSuccess(null);
+        return;
+      }
       if (streamingLinks.size() == 1) {
         if (streamingLinks.get(0).allowsEmbeddedVideo())
           callBack.onSuccess(streamingLinks.get(0));

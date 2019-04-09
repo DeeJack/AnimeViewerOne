@@ -2,10 +2,13 @@ package me.deejack.animeviewer.gui.components.animedetail;
 
 import java.awt.Desktop;
 import java.net.URI;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -20,14 +23,22 @@ public class AnimeInfoBox extends HBox {
 
   public AnimeInfoBox(Anime anime) {
     this.anime = anime;
-    //setMinHeight(Double.NEGATIVE_INFINITY);
     reload();
+    setAlignment(Pos.CENTER);
+    setFillHeight(true);
   }
 
   public void reload() {
     getChildren().clear();
-    getChildren().addAll(createInformationArea(anime),
-            new VBox(createImageFavorite(anime), createOpenInBrowser(anime.getUrl()), createReload()));
+    VBox vBox = new VBox(createOpenInBrowser(anime.getUrl()), createReload());
+    ImageView imageFavorite = createImageFavorite(anime, vBox.heightProperty());
+    vBox.getChildren().add(0, imageFavorite);
+    heightProperty().addListener(((observable, oldValue, newValue) -> {
+      vBox.setPrefHeight(newValue.doubleValue() * 0.95);
+      vBox.setMinHeight(newValue.doubleValue() * 0.95);
+      vBox.setMaxHeight(newValue.doubleValue() * 0.95);
+    }));
+    getChildren().addAll(createInformationArea(anime), vBox);
   }
 
   private TextArea createInformationArea(Anime anime) {
@@ -50,8 +61,8 @@ public class AnimeInfoBox extends HBox {
     return message;
   }
 
-  private ImageFavorite createImageFavorite(Anime anime) {
-    return new ImageFavorite(anime);
+  private ImageFavorite createImageFavorite(Anime anime, ReadOnlyDoubleProperty heightProperty) {
+    return new ImageFavorite(anime, heightProperty);
   }
 
   private Hyperlink createOpenInBrowser(String url) {

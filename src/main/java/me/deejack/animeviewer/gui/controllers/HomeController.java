@@ -46,6 +46,7 @@ public class HomeController implements BaseScene {
       icon.toFront();
     });
     System.out.println("qwe");
+
   }
 
   @FXML

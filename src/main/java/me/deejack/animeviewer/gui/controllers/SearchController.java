@@ -7,6 +7,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.async.SearchByNameAsync;
+import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
@@ -26,6 +27,8 @@ public class SearchController {
         onSearchNameClicked();
     });
     btnSearchName.setTooltip(new Tooltip(LocalizedApp.getInstance().getString("SearchTooltip")));
+    if (SceneUtility.previousScenes.size() < 1)
+      btnSearchName.fire();
   }
 
   @FXML

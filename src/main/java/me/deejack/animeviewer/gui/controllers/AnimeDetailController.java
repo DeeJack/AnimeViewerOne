@@ -59,7 +59,7 @@ public class AnimeDetailController implements BaseScene {
 
   private void setupScene() {
     root = (Pane) SceneUtility.loadParent("/scenes/animeDetailResp.fxml");
-    GridPane gridPane = (GridPane) root.getChildren().get(0);
+    GridPane gridPane = (GridPane) root;
     ImageAnime imageAnime = new ImageAnime(anime.getAnimeInformation().getImageUrl());
     HBox boxImage = new HBox(imageAnime);
     boxImage.setMinHeight(Double.MIN_VALUE);
@@ -77,10 +77,6 @@ public class AnimeDetailController implements BaseScene {
     gridPane.add(boxImage, 2, 2);
     gridPane.add(infoBox, 2, 3);
     gridPane.add(listViewEpisodes, 2, 4);
-    root.layoutBoundsProperty().addListener((old, newV, event) -> {
-      System.out.println(root.getWidth() + " " + root.getHeight());
-      System.err.println(gridPane.getWidth() + " " + root.getHeight());
-    });
   }
 
   private void reloadInfoBox(ListViewEpisodes listViewEpisodes, AnimeInfoBox infoBox) {

@@ -6,6 +6,7 @@ import java.util.List;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import org.jsoup.Connection;
+import org.jsoup.HttpStatusException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -37,6 +38,8 @@ public abstract class ParsedHttpAnime extends HttpAnime {
   @Override
   protected AnimeInformation parseAnimeDetails(Connection.Response response) {
     try {
+      if (response.statusCode() != 200)
+        throw new HttpStatusException("HTTP ERROR: " + response.statusCode(), response.statusCode(), response.url().toString());
       return parseAnimeDetails(response.parse());
     } catch (IOException e) {
       throw new RuntimeException("Error parsing details, response status: " + response.statusCode() + "(" + response.statusMessage() + ")", e);

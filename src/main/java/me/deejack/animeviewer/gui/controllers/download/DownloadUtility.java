@@ -26,6 +26,7 @@ import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
+import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
 public final class DownloadUtility {
   private static boolean showingPopupSources = false;
@@ -88,6 +89,12 @@ public final class DownloadUtility {
       @Override
       protected List<StreamingLink> call() throws Exception {
         return episode.getStreamingLinks();
+      }
+
+      @Override
+      public void failed() {
+        //hideWaitLoad();
+        handleException(getException());
       }
     };
     new Thread(linkFutureTask).start();

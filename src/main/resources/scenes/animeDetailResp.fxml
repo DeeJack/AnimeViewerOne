@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
-<StackPane>
-    <GridPane style="-fx-background-color: white">
+<StackPane minHeight="-Infinity">
+    <GridPane style="-fx-background-color: white" alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints percentWidth="3"/>
             <ColumnConstraints percentWidth="18"/>
@@ -13,10 +13,11 @@
             <ColumnConstraints percentWidth="19"/>
         </columnConstraints>
         <rowConstraints>
+            <RowConstraints percentHeight="1"/>
             <RowConstraints percentHeight="3"/>
             <RowConstraints percentHeight="18"/>
             <RowConstraints percentHeight="15"/>
-            <RowConstraints percentHeight="64"/>
+            <RowConstraints percentHeight="63"/>
         </rowConstraints>
     </GridPane>
 </StackPane>

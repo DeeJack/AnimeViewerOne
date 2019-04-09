@@ -18,6 +18,7 @@ import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamsubAnime;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
@@ -39,6 +40,7 @@ public class AnimeSceneController implements BaseScene {
   }
 
   public AnimeSceneController(List<Anime> elements, int page, boolean isSearch, FilterList filters, String search) {
+    elements.add(new DreamsubAnime("Test", "https://www.dreamsub.stream/anime/test", "https://www.dreamsub.stream/anime/test"));
     currentPage = page;
     initialSize = elements.size();
     this.isSearch = isSearch;

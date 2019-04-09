@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.gui.controllers;
 
+import java.time.LocalDate;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
@@ -11,6 +12,7 @@ import me.deejack.animeviewer.gui.components.animedetail.ListViewEpisodes;
 import me.deejack.animeviewer.gui.components.general.ButtonBack;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamsubEpisode;
 import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -49,6 +51,7 @@ public class AnimeDetailController implements BaseScene {
       Platform.runLater(this::load);
       return;
     }
+    anime.getEpisodes().add(0, new DreamsubEpisode("Ep 100%", 1, "https://www.dreamsub.stream/anime/one-piece-c/10000", LocalDate.now()));
     setupScene();
     if (!isNewTab)
       loadScene();
@@ -66,22 +69,27 @@ public class AnimeDetailController implements BaseScene {
       ButtonBack btnBack = new ButtonBack();
       HBox hBox = new HBox(btnBack);
       hBox.setAlignment(Pos.TOP_LEFT);
-      //btnBack.setOpaqueInsets(new Insets(0, 0, 0, 0));
-      gridPane.add(hBox, 1, 1);
+      gridPane.add(hBox, 1, 2);
     }
     ListViewEpisodes listViewEpisodes = new ListViewEpisodes(anime);
     AnimeInfoBox infoBox = new AnimeInfoBox(anime);
-    infoBox.setOnReload((action) -> {
-      showWaitAndLoad(LocalizedApp.getInstance().getString("Reloading"));
-      anime.loadAsync(() -> Platform.runLater(() -> {
-        listViewEpisodes.reload();
-        infoBox.reload();
-        hideWaitLoad();
-      }));
+    infoBox.setOnReload((action) -> reloadInfoBox(listViewEpisodes, infoBox));
+    gridPane.add(boxImage, 2, 2);
+    gridPane.add(infoBox, 2, 3);
+    gridPane.add(listViewEpisodes, 2, 4);
+    root.layoutBoundsProperty().addListener((old, newV, event) -> {
+      System.out.println(root.getWidth() + " " + root.getHeight());
+      System.err.println(gridPane.getWidth() + " " + root.getHeight());
     });
-    gridPane.add(boxImage, 2, 1);
-    gridPane.add(infoBox, 2, 2);
-    gridPane.add(listViewEpisodes, 2, 3);
+  }
+
+  private void reloadInfoBox(ListViewEpisodes listViewEpisodes, AnimeInfoBox infoBox) {
+    showWaitAndLoad(LocalizedApp.getInstance().getString("Reloading"));
+    anime.loadAsync(() -> Platform.runLater(() -> {
+      listViewEpisodes.reload();
+      infoBox.reload();
+      hideWaitLoad();
+    }));
   }
 
   private void loadScene() {

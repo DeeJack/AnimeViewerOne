@@ -6,26 +6,29 @@ Download:
 Streaming:
 
 Generali:
-    - Controllare se da' 404 nelle varie pagine
-
-    - Mettere scroll infinito invece di anime multiplier...
-    - Mettere animeclick / myanimelist
-    - Salvare nella cronologia anche quando si mettono link esterni
-    - Fare che i metodi ritornino una Future (?) o comunque qualcosa di async?
+    - Controllare se da' 404 nelle varie pagi
+    - Segnare episodi scaricatine
+    - Dialog update
     - Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
+    - A volte lo streaming si stoppa e non va più avanti, mettere la roba di caricamento mentre si carica
+    - Mettere lo streaming solo in una tab invece della root
+    - Salvare nella cronologia anche quando si mettono link esterni
+    - Finire di mettere anche le eccezioni e ciò che rimane nella internacoso
 
 Bugs:
-    - Con la freccia a sinistra non andava indietro lo streaming, a volte spostandolo andava direttamente alla fine... Trovare un player già fatto?
-    - A volte non si toglie il caricamento nello streaming
-    - Sistemare download
-    - Tempo totale dello streaming sballato, forse solo con cronologia
+    - Con la freccia a sinistra non andava indietro lo streaming, a volte spostandolo andava direttamente alla fine...// non è più successo
+    - A volte non si toglie il caricamento nello streaming // non c'è mai
+    - Sistemare download // piu o meno risolto
+    - A volte togliee il cursore (forse solo quando ci mette molto a caricarsi) // forse risolto
+    - Tempo totale dello streaming sballato, forse solo con cronologia // FOrse risolto
+    - Controllare con connessione scarsa
 
 Meno importanti:
+    - Mettere scroll infinito invece di anime multiplier...
     - Aggiungere calendario e ultime aggiunte
-    - Mettere immagini preferiti salvate
     - In cronologia, se c'è cloudflare lo deve bypassare ogni volta perché non c'è un sito selezionato!
     - Oltre allo streaming da sito esterno, mettere anche il download! (Creare controller tipo search)
-    - A volte lo streaming si stoppa e non va più avanti, mettere la roba di caricamento mentre si carica
     - Mettere la data nella cronologia? Quindi quando si elimina elimino non più l'episodio ma quella sessione di cronologia
     - Quando si va in animescene, carica sia la ricerca che la pagina principale per i generi, fare solo la ricerca?
     - Ricerca globale
+    - Mettere animeclick / myanimelist

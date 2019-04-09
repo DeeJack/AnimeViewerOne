@@ -12,7 +12,7 @@ public class SliderTime extends Slider {
   public SliderTime(MediaPlayer mediaPlayer) {
     this.mediaPlayer = mediaPlayer;
     setPrefWidth(864);
-    mediaPlayer.totalDurationProperty().addListener((event, oldValue, newValue) -> setMax(newValue.toSeconds()));
+    mediaPlayer.totalDurationProperty().addListener((event, oldValue, newValue) -> setMax(newValue.toSeconds() + mediaPlayer.getStartTime().toSeconds()));
     setOnChange();
     setOnKeyPressed();
   }

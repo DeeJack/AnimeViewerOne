@@ -20,6 +20,7 @@ public class AnimeInfoBox extends HBox {
 
   public AnimeInfoBox(Anime anime) {
     this.anime = anime;
+    //setMinHeight(Double.NEGATIVE_INFINITY);
     reload();
   }
 

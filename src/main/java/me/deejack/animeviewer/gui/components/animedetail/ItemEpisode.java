@@ -25,6 +25,7 @@ public class ItemEpisode extends HBox {
     this.episode = episode;
     this.anime = anime;
     setWidth(530);
+    setMinHeight(Double.MIN_VALUE);
     initialize(parent);
   }
 
@@ -69,11 +70,11 @@ public class ItemEpisode extends HBox {
     streaming.setOnMouseClicked((ex) -> {
       showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingEpisodeLinks"));
       new Thread(() -> {
-        try {
+        /*try {
           Thread.sleep(2000);
         } catch (InterruptedException e) {
           e.printStackTrace();
-        }
+        }*/
         AnimePlayer player = new AnimePlayer(episode, anime);
         Platform.runLater(player::createStreaming);
       }).start();

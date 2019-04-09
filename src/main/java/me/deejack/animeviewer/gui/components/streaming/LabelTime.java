@@ -17,9 +17,9 @@ public class LabelTime extends Label {
       int hours = (int) newValue.toHours();
       int minutes = (int) newValue.toMinutes() % 60;
       int seconds = (int) newValue.toSeconds() % 60 % 60;
-      int endHours = (int) mediaPlayer.getTotalDuration().toHours();
-      int endMinutes = (int) mediaPlayer.getTotalDuration().toMinutes() % 60;
-      int endSeconds = (int) mediaPlayer.getTotalDuration().toSeconds() % 60 % 60;
+      int endHours = (int) mediaPlayer.getTotalDuration().toHours() + (int) mediaPlayer.getStartTime().toHours();
+      int endMinutes = (int) (mediaPlayer.getTotalDuration().toMinutes() + mediaPlayer.getStartTime().toMinutes()) % 60;
+      int endSeconds = (int) (mediaPlayer.getTotalDuration().toSeconds() + mediaPlayer.getStartTime().toSeconds()) % 60 % 60;
       setText(String.format("%01d:%02d:%02d/%02d:%02d:%02d", hours, minutes, seconds, endHours, endMinutes, endSeconds));
     });
   }

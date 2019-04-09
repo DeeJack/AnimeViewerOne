@@ -31,6 +31,7 @@ public class CustomConnection implements SiteConnection {
 
   @Override
   public Connection.Response connect(String pageLink, boolean followRedirects) throws NoConnectionException {
+    System.out.println("Connecting " + pageLink);
     URL pageUrl = verifyURL(pageLink);
     if (pageUrl == null)
       return null;
@@ -107,7 +108,7 @@ public class CustomConnection implements SiteConnection {
     try {
       return new URL(pageLink);
     } catch (IOException exception) {
-      handleException(new Exception(LocalizedApp.getInstance().getString("ExceptionInvalidUrl") + " " + pageLink));
+      handleException(new Exception(LocalizedApp.getInstance().getString("ExceptionInvalidUrl") + ": " + pageLink));
       return null;
     }
   }

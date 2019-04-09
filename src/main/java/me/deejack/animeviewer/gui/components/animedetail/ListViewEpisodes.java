@@ -16,6 +16,7 @@ public class ListViewEpisodes extends ListView<ItemEpisode> {
     this.anime = anime;
     registerEvents();
     initialize();
+    setMinHeight(Double.MIN_VALUE);
   }
 
   public void reload() {

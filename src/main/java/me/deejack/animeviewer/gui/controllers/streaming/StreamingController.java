@@ -78,7 +78,6 @@ public class StreamingController implements BaseScene {
     Label lblTitle = (Label) root.lookup("#lblTitle");
 
     cursorTask = new ControlsLayerTask((Pane) root.lookup("#paneLayer"), mediaView);
-    new Thread(cursorTask).start();
     lblTitle.setText(title);
     mediaView.setMediaPlayer(mediaPlayer);
 
@@ -106,6 +105,7 @@ public class StreamingController implements BaseScene {
     mediaPlayer.statusProperty().addListener((event, oldValue, newValue) -> StreamingUtility.onChangeStatus(newValue, btnPause));
     if (episode != null)
       mediaPlayer.currentTimeProperty().addListener((event, oldValue, newValue) -> episode.setSecondsWatched(newValue.toSeconds()));
+    mediaPlayer.setOnReady(() -> new Thread(cursorTask).start());
   }
 
   private void onFinish() {

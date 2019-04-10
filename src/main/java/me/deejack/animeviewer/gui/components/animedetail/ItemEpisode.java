@@ -1,7 +1,6 @@
 package me.deejack.animeviewer.gui.components.animedetail;
 
 import java.time.Duration;
-import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
@@ -9,28 +8,26 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import me.deejack.animeviewer.gui.controllers.download.DownloadController;
-import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
+import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 
-import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
-
 public class ItemEpisode extends HBox {
   private final Episode episode;
   private final Anime anime;
 
-  public ItemEpisode(Episode episode, Anime anime, ListView parent) {
+  public ItemEpisode(Episode episode, Anime anime, ListView parent, Listener<Episode> onRequestStreaming) {
     this.episode = episode;
     this.anime = anime;
     setWidth(530);
     setMinHeight(Double.MIN_VALUE);
-    initialize(parent);
+    initialize(parent, onRequestStreaming);
   }
 
-  private void initialize(ListView parent) {
-    HBox streaming = episode.getUrl().isEmpty() ? createNotReleased() : createStreamingDownload();
+  private void initialize(ListView parent, Listener<Episode> onRequestStreaming) {
+    HBox streaming = episode.getUrl().isEmpty() ? createNotReleased() : createStreamingDownload(onRequestStreaming);
     getChildren().addAll(createTile(parent), createReleaseDate(), streaming);
 
     if (History.getHistory().contains(anime) && History.getHistory().get(anime).getEpisodesHistory().contains(episode)) {
@@ -61,24 +58,13 @@ public class ItemEpisode extends HBox {
     return new Label("[" + episode.getReleaseDate() + "] - ");
   }
 
-  private HBox createStreamingDownload() {
-    return new HBox(createStreaming(), new Label(" - "), createDownload());
+  private HBox createStreamingDownload(Listener<Episode> onStreamingRequested) {
+    return new HBox(createStreaming(onStreamingRequested), new Label(" - "), createDownload());
   }
 
-  private Label createStreaming() {
+  private Label createStreaming(Listener<Episode> onRequestStreaming) {
     Label streaming = new Label(LocalizedApp.getInstance().getString("Streaming"));
-    streaming.setOnMouseClicked((ex) -> {
-      showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingEpisodeLinks"));
-      new Thread(() -> {
-        /*try {
-          Thread.sleep(2000);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }*/
-        AnimePlayer player = new AnimePlayer(episode, anime);
-        Platform.runLater(player::createStreaming);
-      }).start();
-    });
+    streaming.setOnMouseClicked((ex) -> onRequestStreaming.onChange(episode));
     streaming.setFont(Font.font("Times New Roman", FontWeight.BOLD, 14));
     return streaming;
   }

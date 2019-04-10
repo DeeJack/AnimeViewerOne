@@ -26,7 +26,7 @@ public class SingleAnimeUpdate extends SingleFavorite {
     getRemoveButton().setDisable(true);
     getRemoveButton().setVisible(false);
     getResumeButton().setText(LocalizedApp.getInstance().getString("WatchNewEpisode"));
-    getResumeButton().setOnAction((event) -> new AnimePlayer(newEpisode, anime));
+    getResumeButton().setOnAction((event) -> new AnimePlayer(newEpisode, anime, false, null));
   }
 
   private void setInfo() {

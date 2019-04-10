@@ -77,9 +77,12 @@ public class AnimeSceneController implements BaseScene {
     PagesBox pagesBox = new PagesBox(currentPage, search, isSearch, filters);
     found.getChildren().add(pagesBox);
     animePane = new AnimePane(elements, (anime) -> {
-      AnimeDetailController detailController = new AnimeDetailController(anime, true);
+      Tab tab = new Tab();
+      AnimeDetailController detailController = new AnimeDetailController(anime, true, tab);
       detailController.loadSync();
-      root.getTabs().add(new Tab(detailController.getTitle(), detailController.getRoot()));
+      tab.setText(detailController.getTitle());
+      tab.setContent(detailController.getRoot());
+      root.getTabs().add(tab);
     });
     found.getChildren().add(0, animePane);
   }

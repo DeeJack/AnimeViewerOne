@@ -1,5 +1,7 @@
 package me.deejack.animeviewer.gui.controllers.streaming;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -37,6 +39,7 @@ public class StreamingController implements BaseScene {
   private String title = "";
   private Pane root;
   private ControlsLayerTask cursorTask;
+  private ButtonBack btnBack;
 
   public StreamingController(MediaPlayer mediaPlayer, Episode episode, Anime anime) {
     this.mediaPlayer = mediaPlayer;
@@ -71,9 +74,9 @@ public class StreamingController implements BaseScene {
 
   private void setupNodes() {
     ButtonPause btnPause = new ButtonPause(mediaPlayer);
-    ButtonNext btnNext = new ButtonNext(anime, episode);
+    ButtonNext btnNext = new ButtonNext(anime, episode, false, null); // TODO DA CAMBIARE; DIPENDE SE SONO IN NUOVA TAB O NO
     root = (Pane) SceneUtility.loadParent("/scenes/streaming.fxml");
-    ButtonBack btnBack = (ButtonBack) root.lookup("#btnBack");
+    btnBack = (ButtonBack) root.lookup("#btnBack");
     MediaView mediaView = (MediaView) root.lookup("#mediaView");
     Label lblTitle = (Label) root.lookup("#lblTitle");
 
@@ -108,7 +111,7 @@ public class StreamingController implements BaseScene {
     mediaPlayer.setOnReady(() -> new Thread(cursorTask).start());
   }
 
-  private void onFinish() {
+  public void onFinish() {
     if (anime != null) {
       FilesUtility.saveHistory();
       FilesUtility.saveFavorite();
@@ -123,6 +126,10 @@ public class StreamingController implements BaseScene {
     if (root.getWidth() > root.getHeight())
       view.setFitHeight(root.getHeight());
     else view.setFitWidth(root.getWidth());
+  }
+
+  public void setOnBack(EventHandler<ActionEvent> onBack) {
+    btnBack.setOnAction(onBack);
   }
 
   @Override

@@ -31,7 +31,7 @@ public abstract class HttpEpisode implements Episode {
     Connection.Response response = episodePageRequest();
     if (response.statusCode() != 200)
       throw new RuntimeException("HTTP error while fetching streaming links. Error: " + response.statusCode() + " for link " + response.url());
-    return getStreamingLinks();
+    return getStreamingLinks(response);
   }
 
   protected abstract List<StreamingLink> getStreamingLinks(Connection.Response response);

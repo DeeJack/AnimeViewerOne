@@ -6,14 +6,18 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
+import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 
 public class ListViewEpisodes extends ListView<ItemEpisode> {
   private final Anime anime;
   private final OptionMenu optionMenu = new OptionMenu(this);
+  private final Listener<Episode> onStreamingRequested;
 
-  public ListViewEpisodes(Anime anime) {
+  public ListViewEpisodes(Anime anime, Listener<Episode> onStreamingRequested) {
     this.anime = anime;
+    this.onStreamingRequested = onStreamingRequested;
     registerEvents();
     initialize();
     setMinHeight(Double.MIN_VALUE);
@@ -41,7 +45,7 @@ public class ListViewEpisodes extends ListView<ItemEpisode> {
   private void addChildren() {
     anime.getEpisodes().stream()
             .filter(Objects::nonNull)
-            .map((episode) -> new ItemEpisode(episode, anime, this))
+            .map((episode) -> new ItemEpisode(episode, anime, this, onStreamingRequested))
             .forEach(getItems()::add);
   }
 }

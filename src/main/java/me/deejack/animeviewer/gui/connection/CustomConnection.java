@@ -54,13 +54,13 @@ public class CustomConnection implements SiteConnection {
       }
       if (response.statusCode() == 503) {
         WebBypassUtility.bypassCloudflare(pageLink, (result) -> {
-          cookies.putAll(cookiesToMap(result));
-          saveToSession(pageLink, cookies);
+          /*cookies.putAll(cookiesToMap(result));
+          saveToSession(pageLink, cookies);*/
           lock.countDown();
         });
       } else {
-        cookies.putAll(cookiesToMap(cookieManager.getCookieStore().getCookies()));
-        saveToSession(pageUrl.getHost(), cookies);
+        /*cookies.putAll(cookiesToMap(cookieManager.getCookieStore().getCookies()));
+        saveToSession(pageUrl.getHost(), cookies);*/
         return response;
       }
       boolean success = lock.await(25, TimeUnit.SECONDS);

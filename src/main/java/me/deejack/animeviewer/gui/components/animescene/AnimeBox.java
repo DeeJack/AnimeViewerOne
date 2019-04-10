@@ -94,7 +94,7 @@ public class AnimeBox extends VBox {
   }
 
   private void loadElement() {
-    new AnimeDetailController(anime, false).loadAsync();
+    new AnimeDetailController(anime, false, null).loadAsync();
   }
 
   private void registerEvents(MenuItem item) {

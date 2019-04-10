@@ -1,6 +1,8 @@
 package me.deejack.animeviewer.gui.controllers.streaming;
 
 import java.io.IOException;
+import javafx.scene.Node;
+import javafx.scene.control.Tab;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import me.deejack.animeviewer.gui.controllers.download.DownloadUtility;
@@ -19,14 +21,18 @@ import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 public class AnimePlayer {
   private final Episode episode;
   private final Anime anime;
+  private final boolean isNewTab;
+  private final Tab currentTab;
 
-  public AnimePlayer(Episode episode, Anime anime) {
+  public AnimePlayer(Episode episode, Anime anime, boolean isNewTab, Tab currentTab) {
     this.episode = episode;
     this.anime = anime;
+    this.isNewTab = isNewTab;
+    this.currentTab = currentTab;
   }
 
   public AnimePlayer(String link) {
-    this(null, null);
+    this(null, null, false, null);
     showWaitAndLoad(LocalizedApp.getInstance().getString("Loading"));
     extractVideo(link);
   }
@@ -55,7 +61,15 @@ public class AnimePlayer {
     if (response == null)
       return;
     if (response.contentType().contains("video")) {
-      setRoot(setupPlayer(link));
+      StreamingController streaming = setupPlayer(link);
+      if (isNewTab) {
+        Node prevContent = currentTab.getContent();
+        streaming.setOnBack((event) -> {
+          streaming.onFinish();
+          currentTab.setContent(prevContent);
+        });
+      } else
+        setRoot(setupPlayer(link));
     } else
       WebBypassUtility.getOpenloadLink(link, (resultLink) -> setRoot(setupPlayer(resultLink)));
   }

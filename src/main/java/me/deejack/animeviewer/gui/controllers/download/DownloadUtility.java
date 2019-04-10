@@ -105,10 +105,10 @@ public final class DownloadUtility {
         return;
       }
       if (streamingLinks.size() == 1) {
+        showingPopupSources = false;
         if (streamingLinks.get(0).allowsEmbeddedVideo())
           callBack.onSuccess(streamingLinks.get(0));
         else showNotSupportedVideoError(streamingLinks.get(0));
-        showingPopupSources = false;
         return;
       } else if (streamingLinks.isEmpty()) {
         showNoStreaming();

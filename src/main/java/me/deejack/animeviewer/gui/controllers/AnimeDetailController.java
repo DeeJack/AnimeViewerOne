@@ -3,6 +3,7 @@ package me.deejack.animeviewer.gui.controllers;
 import java.time.LocalDate;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -10,6 +11,7 @@ import me.deejack.animeviewer.gui.components.animedetail.AnimeInfoBox;
 import me.deejack.animeviewer.gui.components.animedetail.ImageAnime;
 import me.deejack.animeviewer.gui.components.animedetail.ListViewEpisodes;
 import me.deejack.animeviewer.gui.components.general.ButtonBack;
+import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamsubEpisode;
@@ -24,11 +26,13 @@ import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 public class AnimeDetailController implements BaseScene {
   private final Anime anime;
   private final boolean isNewTab;
+  private final Tab currentTab;
   private Pane root;
 
-  public AnimeDetailController(Anime anime, boolean isNewTab) {
+  public AnimeDetailController(Anime anime, boolean isNewTab, Tab currentTab) {
     this.anime = Favorite.getInstance().contains(anime) ? Favorite.getInstance().get(anime.getUrl()).getAnime() : anime;
     this.isNewTab = isNewTab;
+    this.currentTab = currentTab;
   }
 
   public void loadAsync() {
@@ -71,7 +75,13 @@ public class AnimeDetailController implements BaseScene {
       hBox.setAlignment(Pos.TOP_LEFT);
       gridPane.add(hBox, 1, 2);
     }
-    ListViewEpisodes listViewEpisodes = new ListViewEpisodes(anime);
+    ListViewEpisodes listViewEpisodes = new ListViewEpisodes(anime, (episode) -> {
+      showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingEpisodeLinks"));
+      new Thread(() -> {
+        AnimePlayer player = new AnimePlayer(episode, anime, isNewTab, currentTab);
+        Platform.runLater(player::createStreaming);
+      }).start();
+    });
     AnimeInfoBox infoBox = new AnimeInfoBox(anime);
     infoBox.setOnReload((action) -> reloadInfoBox(listViewEpisodes, infoBox));
     gridPane.add(boxImage, 2, 2);

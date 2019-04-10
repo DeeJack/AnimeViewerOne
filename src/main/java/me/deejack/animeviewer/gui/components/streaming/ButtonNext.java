@@ -4,6 +4,7 @@ import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Tab;
 import javafx.scene.control.Tooltip;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.logic.async.events.SuccessListener;
@@ -17,12 +18,16 @@ import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 public class ButtonNext extends Button {
   private final Anime anime;
   private final Episode currentEpisode;
+  private final boolean isNewTab;
+  private final Tab currentTab;
   private SuccessListener nextEpisodeListener;
 
-  public ButtonNext(Anime anime, Episode currentEpisode) {
+  public ButtonNext(Anime anime, Episode currentEpisode, boolean isNewTab, Tab currentTab) {
     super(">>");
     this.anime = anime;
     this.currentEpisode = currentEpisode;
+    this.isNewTab = isNewTab;
+    this.currentTab = currentTab;
     setEllipsisString(">>");
     setOnAction((event) -> askNextEpisode());
     setTooltip(new Tooltip(LocalizedApp.getInstance().getString("NextEpisodeTooltip")));
@@ -38,7 +43,7 @@ public class ButtonNext extends Button {
     alert.showAndWait();
     if (alert.getResult() == ButtonType.YES) {
       showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingNextEpisode"));
-      new AnimePlayer(nextEpisode.get(), anime).createStreaming((selectedLink) -> {
+      new AnimePlayer(nextEpisode.get(), anime, isNewTab, currentTab).createStreaming((selectedLink) -> {
         if (selectedLink != null)
           nextEpisodeListener.onSuccess();
         else

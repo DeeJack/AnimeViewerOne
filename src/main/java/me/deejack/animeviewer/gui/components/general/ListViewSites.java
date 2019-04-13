@@ -17,7 +17,6 @@ public class ListViewSites extends ListView<FilteredSource> {
     if (App.getSite() != null)
       getSelectionModel().select(App.getSite());
     registerListeners();
-    getSelectionModel().select(0);
   }
 
   public void registerListeners() {

@@ -96,7 +96,9 @@ public final class SceneUtility {
   public static Parent loadParent(String path) {
     Parent parent = null;
     try {
-      parent = FXMLLoader.load(App.class.getResource(path), ResourceBundle.getBundle("languages/messages", Locale.getDefault()));
+      parent = FXMLLoader.load(App.class.getResource(path),
+              ResourceBundle.getBundle("languages/messages", Locale.getDefault()));
+      parent.getStylesheets().add("/assets/style.css");
     } catch (IOException ex) {
       handleException(ex);
     }

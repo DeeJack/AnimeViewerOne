@@ -24,6 +24,7 @@ public class FilesUtility {
     try {
       if (!tempHistory.exists())
         tempHistory.createNewFile();
+      System.out.println("Saving temp history");
       History.getHistory().saveToFile(tempHistory);
     } catch (IOException e) {
       e.printStackTrace();

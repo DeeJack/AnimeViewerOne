@@ -23,6 +23,8 @@ import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
+import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
+
 public class SingleFavorite extends HBox {
   private final Anime anime;
   private final VBox animeInfoBox = new VBox();
@@ -99,6 +101,7 @@ public class SingleFavorite extends HBox {
   }
 
   private void resume() {
+    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingEpisodeLinks"));
     if (!anime.hasBeenLoaded())
       anime.load();
     if (!History.getHistory().contains(anime)) {

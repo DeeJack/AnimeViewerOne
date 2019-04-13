@@ -7,7 +7,9 @@ import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.anime.dto.Genre;
 import me.deejack.animeviewer.logic.models.anime.AnimeImpl;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
+import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -15,6 +17,11 @@ public class AnimeLeggendariAnime extends AnimeImpl {
 
   public AnimeLeggendariAnime(String url, AnimeInformation animeInformation) {
     super(url, animeInformation);
+  }
+
+  @Override
+  protected Connection.Response animePageRequest() {
+    return ConnectionUtility.connect(getUrl(), true);
   }
 
   @Override

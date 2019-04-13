@@ -1,3 +1,9 @@
-.slider .track {
-    -fx-background-color: null; /* Hide the track */
+.button {
+    -fx-background-color: white;
+    -fx-border-width: 1;;
+    -fx-border-color: black;
+}
+
+.button:pressed {
+    -fx-background-color: rgba(76, 70, 70, 0.6);
 }

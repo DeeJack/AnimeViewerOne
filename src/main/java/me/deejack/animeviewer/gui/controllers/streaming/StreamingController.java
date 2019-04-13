@@ -5,6 +5,9 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -36,15 +39,19 @@ public class StreamingController implements BaseScene {
   private final MediaPlayer mediaPlayer;
   private final Episode episode;
   private final Anime anime;
+  private final boolean isNewTab;
+  private final Tab currentTab;
   private String title = "";
   private Pane root;
   private ControlsLayerTask cursorTask;
   private ButtonBack btnBack;
 
-  public StreamingController(MediaPlayer mediaPlayer, Episode episode, Anime anime) {
+  public StreamingController(MediaPlayer mediaPlayer, Episode episode, Anime anime, boolean isNewTab, Tab currentTab) {
     this.mediaPlayer = mediaPlayer;
     this.episode = episode;
     this.anime = anime;
+    this.isNewTab = isNewTab;
+    this.currentTab = currentTab;
   }
 
   public void setUpPlayer() {
@@ -74,7 +81,7 @@ public class StreamingController implements BaseScene {
 
   private void setupNodes() {
     ButtonPause btnPause = new ButtonPause(mediaPlayer);
-    ButtonNext btnNext = new ButtonNext(anime, episode, false, null); // TODO DA CAMBIARE; DIPENDE SE SONO IN NUOVA TAB O NO
+    ButtonNext btnNext = new ButtonNext(anime, episode, isNewTab, currentTab); // TODO DA CAMBIARE; DIPENDE SE SONO IN NUOVA TAB O NO
     root = (Pane) SceneUtility.loadParent("/scenes/streaming.fxml");
     btnBack = (ButtonBack) root.lookup("#btnBack");
     MediaView mediaView = (MediaView) root.lookup("#mediaView");
@@ -85,7 +92,7 @@ public class StreamingController implements BaseScene {
     mediaView.setMediaPlayer(mediaPlayer);
 
     StackPane stackPane = new StackPane(new ProgressBarBuffer(mediaPlayer), new SliderTime(mediaPlayer));
-    stackPane.getStylesheets().add("/assets/style.css");
+    stackPane.getStylesheets().add("/assets/streamingStyle.css");
     HBox.setHgrow(stackPane, Priority.ALWAYS);
 
     Node[] nodes = {
@@ -98,7 +105,9 @@ public class StreamingController implements BaseScene {
 
   private void registerEvents(ButtonPause btnPause, ButtonNext btnNext, ButtonBack btnBack, MediaView mediaView) {
     root.lookup("#pauseLayer").setOnMouseClicked((event) -> btnPause.pause());
-    root.layoutBoundsProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
+    //root.layoutBoundsProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
+    root.heightProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
+    root.widthProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
     btnNext.setOnNextEpisode(this::onFinish);
     btnBack.setOnAction((event) -> {
       onFinish();
@@ -109,6 +118,13 @@ public class StreamingController implements BaseScene {
     if (episode != null)
       mediaPlayer.currentTimeProperty().addListener((event, oldValue, newValue) -> episode.setSecondsWatched(newValue.toSeconds()));
     mediaPlayer.setOnReady(() -> new Thread(cursorTask).start());
+    root.lookup("#paneLayer").setOnMouseClicked(this::checkDoubleClick);
+  }
+
+  private void checkDoubleClick(MouseEvent mouseEvent) {
+    if (mouseEvent.getButton() == MouseButton.PRIMARY &&
+            mouseEvent.getClickCount() == 2)
+      SceneUtility.getStage().setFullScreen(!SceneUtility.getStage().isFullScreen());
   }
 
   public void onFinish() {
@@ -123,9 +139,19 @@ public class StreamingController implements BaseScene {
   }
 
   private void onSizeChange(MediaView view) {
-    if (root.getWidth() > root.getHeight())
+    if (mediaPlayer.getMedia().getWidth() > root.getWidth()) {
+      view.setFitWidth(root.getWidth());
+    }
+    if (mediaPlayer.getMedia().getHeight() > root.getHeight()) {
       view.setFitHeight(root.getHeight());
-    else view.setFitWidth(root.getWidth());
+      return;
+    }
+    view.setFitWidth(root.getWidth() - 1);
+    view.setFitHeight(root.getHeight() - 1);
+    /*if (root.getWidth() > root.getHeight())
+    else view.setFitWidth(root.getWidth() - 1);*/
+    System.out.println(root.getWidth() > root.getHeight());
+    System.err.println(root.getHeight() + " " + root.getWidth() + SceneUtility.getStage().getScene().getHeight() + " <-> " + view.getFitHeight());
   }
 
   public void setOnBack(EventHandler<ActionEvent> onBack) {

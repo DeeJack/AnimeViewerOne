@@ -93,6 +93,7 @@ public final class DownloadUtility {
 
       @Override
       public void failed() {
+        showingPopupSources = false;
         handleException(getException());
       }
     };

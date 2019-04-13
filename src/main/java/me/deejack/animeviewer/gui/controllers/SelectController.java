@@ -9,10 +9,6 @@ import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 public class SelectController {
   @FXML
-  private Button btnHistory;
-  @FXML
-  private Button btnFavorite;
-  @FXML
   private Button btnOpenStreaming;
   @FXML
   private TextField txtLink;

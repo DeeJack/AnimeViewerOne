@@ -61,21 +61,26 @@ public class AnimePlayer {
     if (response == null)
       return;
     if (response.contentType().contains("video")) {
-      StreamingController streaming = setupPlayer(link);
-      if (isNewTab) {
-        Node prevContent = currentTab.getContent();
-        streaming.setOnBack((event) -> {
-          streaming.onFinish();
-          currentTab.setContent(prevContent);
-        });
-      } else
-        setRoot(setupPlayer(link));
+      setUpStreamingScene(link);
     } else
-      WebBypassUtility.getOpenloadLink(link, (resultLink) -> setRoot(setupPlayer(resultLink)));
+      WebBypassUtility.getOpenloadLink(link, this::setUpStreamingScene);
+  }
+
+  private void setUpStreamingScene(String link) {
+    StreamingController streaming = setupPlayer(link);
+    if (isNewTab) {
+      Node prevContent = currentTab.getContent();
+      streaming.setOnBack((event) -> {
+        streaming.onFinish();
+        currentTab.setContent(prevContent);
+      });
+      currentTab.setContent(streaming.getRoot());
+    } else
+      setRoot(streaming);
   }
 
   private StreamingController setupPlayer(String link) {
-    StreamingController streaming = new StreamingController(new MediaPlayer(new Media(link)), episode, anime);
+    StreamingController streaming = new StreamingController(new MediaPlayer(new Media(link)), episode, anime, isNewTab, currentTab);
     streaming.setUpPlayer();
     return streaming;
   }

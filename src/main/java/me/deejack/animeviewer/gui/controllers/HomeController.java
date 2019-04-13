@@ -9,7 +9,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
@@ -18,7 +17,6 @@ import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 import static me.deejack.animeviewer.gui.App.getSite;
-import static me.deejack.animeviewer.gui.utils.SceneUtility.getStage;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 
 public class HomeController implements BaseScene {
@@ -26,27 +24,23 @@ public class HomeController implements BaseScene {
   private TextField txtStreaming;
   @FXML
   private Button btnStreaming;
-  private Parent root;
+  private Pane root;
 
   public HomeController() {
   }
 
   public void setup() {
-    System.out.println("asd");
-    root = SceneUtility.loadParent("/scenes/home.fxml");
-    ((Region) root).heightProperty().addListener((event) -> root.getChildrenUnmodifiable().get(0).prefWidth(((Region) root).getWidth()));
+    root = (Pane) SceneUtility.loadParent("/scenes/home.fxml");
     ImageView icon = (ImageView) root.lookup("#imgSite");
-    HiddenSideBar sideBar = new FilterList((Button) root.lookup("#btnSideBar"), null).getSideBar();
-    ((Pane) root).getChildren().add(sideBar);
+    Button btnSideBar = (Button) root.lookup("#btnSideBar");
+    HiddenSideBar sideBar = new FilterList(btnSideBar, null).getSideBar();
+    root.getChildren().add(sideBar);
     Task<Image> task = SceneUtility.loadImage(getSite().getIconUrl());
     setRoot(this);
-    getStage().show();
     task.setOnSucceeded((value) -> {
       icon.setImage(task.getValue());
       icon.toFront();
     });
-    System.out.println("qwe");
-
   }
 
   @FXML

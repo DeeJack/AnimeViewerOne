@@ -2,7 +2,9 @@ package me.deejack.animeviewer.gui.utils;
 
 import javafx.application.Platform;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import me.deejack.animeviewer.gui.components.loading.LoadingPane;
@@ -20,14 +22,16 @@ public final class LoadingUtility {
     SceneUtility.getStage().getScene().setCursor(Cursor.WAIT);
     System.out.println("SHowing1!!!1");
     hideWaitLoad();
-    if (SceneUtility.getStage().getScene().getRoot() instanceof Pane) {
-      Pane root = (Pane) SceneUtility.getStage().getScene().getRoot();
-      System.err.println(root.getChildren().size());
+    Parent rootParent = SceneUtility.getStage().getScene().getRoot();
+    if (rootParent instanceof GridPane) {
+      GridPane root = (GridPane) rootParent;
+      root.add(new LoadingPane(msg, root), 2, 4);
+    } else if (rootParent instanceof Pane) {
+      Pane root = (Pane) rootParent;
       root.getChildren().add(new LoadingPane(msg, root));
-      System.err.println(root.getChildren().size());
     } else {
-      TabPane root = (TabPane) SceneUtility.getStage().getScene().getRoot();
-      ((Pane) root.getTabs().get(0).getContent()).getChildren().add(new LoadingPane(msg, root));
+      TabPane root = (TabPane) rootParent;
+      ((Pane) root.getTabs().get(0).getContent()).getChildren().add(new LoadingPane(msg, root)); // Sbagliato
     }
   }
 

@@ -6,7 +6,7 @@ Download:
 Streaming:
 
 Generali:
-    - Controllare se da' 404 nelle varie pagi
+    - Controllare se da' 404 nelle varie pagine
     - Segnare episodi scaricatine
     - Dialog update
     - Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
@@ -14,6 +14,7 @@ Generali:
     - Mettere lo streaming solo in una tab invece della root
     - Salvare nella cronologia anche quando si mettono link esterni
     - Finire di mettere anche le eccezioni e ciò che rimane nella internacoso
+    - anime correlati
 
 Bugs:
     - Con la freccia a sinistra non andava indietro lo streaming, a volte spostandolo andava direttamente alla fine...// non è più successo

@@ -19,6 +19,7 @@ public class ControlsLayerTask extends Thread {
   private final MediaView mediaView;
   private LocalDateTime lastMoved = LocalDateTime.now();
   private volatile boolean isInterrupted = false;
+  private double secondsWatched = 0;
 
   public ControlsLayerTask(Pane paneToHide, MediaView mediaView) {
     this.paneToHide = paneToHide;
@@ -33,7 +34,7 @@ public class ControlsLayerTask extends Thread {
       SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
       lastMoved = LocalDateTime.now();
     };
-    mediaView.setOnMouseMoved(onMove);
+    mediaView.setOnMouseMoved(onMove); // vedere se mettere l'evento in scene, stage o chissà che visto che più tab/cursore fuori
     mediaView.setOnKeyPressed(onMove);
     mediaView.setOnTouchPressed(onMove);
     paneToHide.setOnMouseMoved(onMove);
@@ -59,6 +60,9 @@ public class ControlsLayerTask extends Thread {
       public void run() {
         if (isInterrupted)
           cancel();
+        if (secondsWatched == mediaView.getMediaPlayer().getCurrentTime().toSeconds()) // The video is paused
+          return;
+        secondsWatched = mediaView.getMediaPlayer().getCurrentTime().toSeconds();
         FilesUtility.saveTempHistory();
       }
     }, TimeUnit.MINUTES.toMillis(30), TimeUnit.MINUTES.toMillis(30));

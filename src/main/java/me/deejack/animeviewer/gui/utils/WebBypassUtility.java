@@ -68,6 +68,7 @@ public final class WebBypassUtility {
     }
     Pair<WebView, Stage> pair = createWebView();
     WebEngine engine = pair.getKey().getEngine();
+    engine.getLoadWorker().exceptionProperty().addListener((event, oldValue, newValue) -> handleException(newValue));
     engine.setUserAgent(UserAgents.WIN10_FIREFOX.getValue());
     URL finalUrl = url;
     engine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {
@@ -94,11 +95,6 @@ public final class WebBypassUtility {
       streamingLink = document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
     else {
       try {
-        /*   engine.executeScript(" document.addEventListener('click', function (e) {\n" +
-         *//*"    e.preventDefault();\n" +*//*
-                    "    e.stopPropagation();\n" +
-                    *//*"    return false;\n" +*//*
-                    "  }, true);");*/
         Object useless = engine.executeScript("var event = document.createEvent(\"HTMLEvents\");\n" +
                 "\n" +
                 "  event.initEvent(\"click\", true, true);\n" +

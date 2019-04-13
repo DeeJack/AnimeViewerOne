@@ -2,11 +2,12 @@ package me.deejack.animeviewer.gui.components.favorites;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Pane;
-import me.deejack.animeviewer.gui.utils.FilesUtility;
-import me.deejack.animeviewer.logic.history.History;
+import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.logic.history.HistoryElement;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
@@ -22,10 +23,40 @@ public class HistoryItem extends SingleFavorite {
 
   private EventHandler<ActionEvent> getOnRemove() { // TODO: rimuovere un episodio o tutti, non l'anime intero.
     return (event) -> {
-      History.getHistory().remove(historyElement.getViewedElement());
+      /*History.getHistory().remove(historyElement.getViewedElement());
       FilesUtility.saveHistory();
-      ((Pane) getParent()).getChildren().remove(this);
+      ((Pane) getParent()).getChildren().remove(this);*/
+      requestRemoveAllEpisodes();
     };
+  }
+
+  private boolean requestRemoveAllEpisodes() {
+    Dialog dialog = new Dialog();
+    boolean result = false;
+    Label label = new Label("Asd");
+    CheckBox checkBox = new CheckBox("Delete?");
+    VBox box = new VBox(label, checkBox);
+    dialog.getDialogPane().setContent(box);
+    dialog.getDialogPane().getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+    addListeners(dialog);
+    dialog.showAndWait();
+    return result;
+  }
+
+  private void addListeners(Dialog dialog) {
+    addYesButtonListener(dialog);
+    addNoButtonListener(dialog);
+  }
+
+  private void addYesButtonListener(Dialog dialog) {
+    dialog.getDialogPane().lookupButton(ButtonType.YES).setOnMousePressed((event) -> {
+
+    });
+  }
+
+  private void addNoButtonListener(Dialog dialog) {
+    dialog.getDialogPane().lookupButton(ButtonType.NO).setOnMousePressed((event) -> {
+    });
   }
 
   private void setAnimeInfo() {

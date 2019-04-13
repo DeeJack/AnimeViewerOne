@@ -47,6 +47,7 @@ public class CustomConnection implements SiteConnection {
       System.out.println("Connecting to " + pageLink);
     try {
       Connection.Response response = execute(pageLink, cookies, followRedirects);
+      System.out.println("Connected to " + response.url().toExternalForm() + " with code " + response.statusCode() + "(" + response.statusMessage() + ")");
       if (response.statusMessage().equalsIgnoreCase(SERVICE_UNAVAILABLE_MSG)) {
         Platform.runLater(() -> new Alert(Alert.AlertType.WARNING, "Il sito ha riportato un errore, " +
                 "potresti non riuscire a connetterti o potrebbe essere lenta la connessione, non è (probabilmente) un errore dell'applicazione",

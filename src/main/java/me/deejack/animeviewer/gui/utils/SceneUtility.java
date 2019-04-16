@@ -162,6 +162,7 @@ public final class SceneUtility {
     getStage().setTitle(newScene.getTitle());
     getStage().getScene().setCursor(Cursor.DEFAULT);
     System.out.println(getStage().getScene().getCursor());
+    System.gc();
   }
 
   public static void goToSelect() {

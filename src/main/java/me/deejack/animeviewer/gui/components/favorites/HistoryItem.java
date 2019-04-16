@@ -7,7 +7,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import me.deejack.animeviewer.gui.utils.FilesUtility;
+import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.history.HistoryElement;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
@@ -30,27 +33,31 @@ public class HistoryItem extends SingleFavorite {
     };
   }
 
-  private boolean requestRemoveAllEpisodes() {
+  private void requestRemoveAllEpisodes() {
     Dialog dialog = new Dialog();
-    boolean result = false;
     Label label = new Label("Asd");
     CheckBox checkBox = new CheckBox("Delete?");
     VBox box = new VBox(label, checkBox);
     dialog.getDialogPane().setContent(box);
     dialog.getDialogPane().getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
-    addListeners(dialog);
+    addListeners(dialog, checkBox);
     dialog.showAndWait();
-    return result;
   }
 
-  private void addListeners(Dialog dialog) {
-    addYesButtonListener(dialog);
+  private void addListeners(Dialog dialog, CheckBox checkBox) {
+    addYesButtonListener(dialog, checkBox);
     addNoButtonListener(dialog);
   }
 
-  private void addYesButtonListener(Dialog dialog) {
+  private void addYesButtonListener(Dialog dialog, CheckBox checkBox) {
     dialog.getDialogPane().lookupButton(ButtonType.YES).setOnMousePressed((event) -> {
-
+      if (checkBox.isSelected() || historyElement.getEpisodesHistory().size() - 1 == 0) {
+        History.getHistory().remove(historyElement.getViewedElement());
+        ((Pane) getParent()).getChildren().remove(this);
+      } else {
+        historyElement.removeEpisodeFromHistory(historyElement.getEpisodesHistory().size() - 1);
+      }
+      FilesUtility.saveHistory();
     });
   }
 

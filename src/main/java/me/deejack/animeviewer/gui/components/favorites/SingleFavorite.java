@@ -82,8 +82,10 @@ public class SingleFavorite extends HBox {
 
   private void registerEvents(ImageView animeImage, Button buttonRemove, Button buttonResume) {
     animeImage.setOnMousePressed((event) -> {
-      if (event.isPrimaryButtonDown())
+      if (event.isPrimaryButtonDown()) {
+        showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingAnimeDetail"));
         new AnimeDetailController(anime, false, null).loadAsync();
+      }
     });
     buttonRemove.setOnAction((event) -> {
       if (removeHandler != null)
@@ -104,12 +106,12 @@ public class SingleFavorite extends HBox {
     showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingEpisodeLinks"));
     if (!anime.hasBeenLoaded())
       anime.load();
-    if (!History.getHistory().contains(anime)) {
-      new AnimePlayer(anime.getEpisodes().get(0), anime, false, null).createStreaming();
+    if (History.getHistory().contains(anime)) {
+      List<Episode> episodesHistory = History.getHistory().get(anime).getEpisodesHistory();
+      new AnimePlayer(episodesHistory.get(episodesHistory.size() - 1), anime, false, null).createStreaming();
       return;
     }
-    List<Episode> episodesHistory = History.getHistory().get(anime).getEpisodesHistory();
-    new AnimePlayer(episodesHistory.get(episodesHistory.size() - 1), anime, false, null).createStreaming();
+    new AnimePlayer(anime.getEpisodes().get(0), anime, false, null).createStreaming();
   }
 
   public Button getRemoveButton() {

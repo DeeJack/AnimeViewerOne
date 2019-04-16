@@ -24,11 +24,8 @@ public class HistoryItem extends SingleFavorite {
     setAnimeInfo();
   }
 
-  private EventHandler<ActionEvent> getOnRemove() { // TODO: rimuovere un episodio o tutti, non l'anime intero.
+  public EventHandler<ActionEvent> getOnRemove() { // TODO: rimuovere un episodio o tutti, non l'anime intero.
     return (event) -> {
-      /*History.getHistory().remove(historyElement.getViewedElement());
-      FilesUtility.saveHistory();
-      ((Pane) getParent()).getChildren().remove(this);*/
       requestRemoveAllEpisodes();
     };
   }

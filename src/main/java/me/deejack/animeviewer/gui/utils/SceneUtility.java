@@ -147,6 +147,7 @@ public final class SceneUtility {
     getStage().getScene().setRoot(previousScene.getRoot());
     previousScenes.remove(previousScene);
     SceneUtility.previousScene = previousScene;
+    previousScene.onBackFromOtherScene();
     hideWaitLoad();
     System.out.println(getStage().getScene().getCursor());
   }

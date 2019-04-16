@@ -7,6 +7,8 @@ import javafx.scene.control.Tooltip;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
+import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
+
 public class SelectController {
   @FXML
   private Button btnOpenStreaming;
@@ -15,7 +17,10 @@ public class SelectController {
 
   @FXML
   public void initialize() {
-    btnOpenStreaming.setOnAction((event) -> new AnimePlayer(txtLink.getText()));
+    btnOpenStreaming.setOnAction((event) -> {
+      showWaitAndLoad();
+      new AnimePlayer(txtLink.getText());
+    });
     btnOpenStreaming.setTooltip(new Tooltip(LocalizedApp.getInstance().getString("OpenExtVideo")));
   }
 }

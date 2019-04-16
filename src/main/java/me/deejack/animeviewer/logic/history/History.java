@@ -88,6 +88,10 @@ public final class History {
     return true;
   }
 
+  public void sort() {
+    //viewedElements.sort((element, otherElement) -> );
+  }
+
   public boolean loadFromFile() throws IOException {
     return loadFromFile(new File(CONFIG_DIR.getPath() + File.separator + "history.json"));
   }

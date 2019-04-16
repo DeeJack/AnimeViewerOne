@@ -95,10 +95,11 @@ public final class WebBypassUtility {
       streamingLink = document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
     else {
       try {
-        Object useless = engine.executeScript("var event = document.createEvent(\"HTMLEvents\");\n" +
+        engine.executeScript("document.getElementById('videooverlay').click();");
+       /* Object useless = engine.executeScript("var event = document.createEvent(\"HTMLEvents\");\n" +
                 "\n" +
                 "  event.initEvent(\"click\", true, true);\n" +
-                "document.getElementById('videooverlay').dispatchEvent(event);console.log(document.getElementsByTagName('video')[0].src);");
+                "document.getElementById('videooverlay').dispatchEvent(event);console.log(document.getElementsByTagName('video')[0].src);");*/
 
         System.out.println(document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src"));
         if (document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src") == null)
@@ -107,7 +108,7 @@ public final class WebBypassUtility {
         //streamingLink = finalUrl.getHost() + "/stream/" + document.getElementById("lqEH1").getTextContent();
       } catch (Exception jsShit) {
         failCount++;
-        if (failCount == 11) {
+        if (failCount == 3) {
           hideWaitLoad();
           logError(new Exception("Error for url " + link, jsShit));
           new Alert(Alert.AlertType.ERROR, "Error :(, you can try again but maybe the site isn't supported", ButtonType.OK).showAndWait();

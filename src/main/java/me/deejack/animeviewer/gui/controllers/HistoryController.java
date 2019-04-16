@@ -1,5 +1,7 @@
 package me.deejack.animeviewer.gui.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
@@ -10,19 +12,30 @@ import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 public class HistoryController implements BaseScene {
-  private Parent root;
+  private final Parent root;
+  private final VBox boxFavorite;
 
   public HistoryController() {
-    initialize();
+    root = SceneUtility.loadParent("/scenes/favorite/favorite.fxml");
+    boxFavorite = (VBox) ((ScrollPane) root.lookup("#scrollPane")).getContent();
+    reload();
   }
 
-  private void initialize() {
-    root = SceneUtility.loadParent("/scenes/favorite/favorite.fxml");
-
-    VBox boxFavorite = (VBox) ((ScrollPane) root.lookup("#scrollPane")).getContent();
-    History.getHistory().getViewedElements().stream()
+  private void reload() {
+    boxFavorite.getChildren().clear();
+    List<HistoryItem> items = History.getHistory().getViewedElements().stream()
             .map(HistoryItem::new)
-            .forEach(boxFavorite.getChildren()::add);
+            .collect(Collectors.toList());
+    items.forEach((item) -> item.setOnRemove((event) -> {
+      item.getOnRemove().handle(event);
+      reload();
+    }));
+    items.forEach(boxFavorite.getChildren()::add);
+  }
+
+  @Override
+  public void onBackFromOtherScene() {
+    reload();
   }
 
   @Override

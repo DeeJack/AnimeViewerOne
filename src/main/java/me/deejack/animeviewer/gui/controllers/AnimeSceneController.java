@@ -99,21 +99,6 @@ public class AnimeSceneController implements BaseScene {
     notFound.setVisible(true);
   }
 
-  @Override
-  public Parent getRoot() {
-    return root;
-  }
-
-  @Override
-  public String getTitle() {
-    return LocalizedApp.getInstance().getString("BrowseWindowTitle");
-  }
-
-  @Override
-  public String getName() {
-    return "AnimeScene";
-  }
-
   public FlowPane getElementsPane() {
     return elementsPane;
   }
@@ -140,5 +125,25 @@ public class AnimeSceneController implements BaseScene {
 
   public void addElements(List<Anime> animeList) {
     animePane.addElements(animeList);
+  }
+
+  @Override
+  public void onBackFromOtherScene() {
+
+  }
+
+  @Override
+  public Parent getRoot() {
+    return root;
+  }
+
+  @Override
+  public String getTitle() {
+    return LocalizedApp.getInstance().getString("BrowseWindowTitle");
+  }
+
+  @Override
+  public String getName() {
+    return "AnimeScene";
   }
 }

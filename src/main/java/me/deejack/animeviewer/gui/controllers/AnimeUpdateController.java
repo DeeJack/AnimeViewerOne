@@ -58,6 +58,10 @@ public class AnimeUpdateController implements BaseScene {
   }
 
   @Override
+  public void onBackFromOtherScene() {
+  }
+
+  @Override
   public Parent getRoot() {
     return root;
   }

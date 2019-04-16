@@ -8,4 +8,6 @@ public interface BaseScene {
   String getTitle();
 
   String getName();
+
+  void onBackFromOtherScene();
 }

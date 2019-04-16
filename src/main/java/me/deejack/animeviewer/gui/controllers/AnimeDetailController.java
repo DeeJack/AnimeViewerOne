@@ -107,6 +107,10 @@ public class AnimeDetailController implements BaseScene {
   }
 
   @Override
+  public void onBackFromOtherScene() {
+  }
+
+  @Override
   public Pane getRoot() {
     return root;
   }

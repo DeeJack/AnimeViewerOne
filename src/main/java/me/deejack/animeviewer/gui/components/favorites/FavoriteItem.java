@@ -20,7 +20,7 @@ public class FavoriteItem extends SingleFavorite {
     setAnimeInfo();
   }
 
-  private EventHandler<ActionEvent> getOnRemove() {
+  public EventHandler<ActionEvent> getOnRemove() {
     return (event) -> {
       Favorite.getInstance().removeFavorite(favorite.getAnime());
       FilesUtility.saveFavorite();

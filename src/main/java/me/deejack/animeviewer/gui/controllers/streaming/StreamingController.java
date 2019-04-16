@@ -81,7 +81,7 @@ public class StreamingController implements BaseScene {
 
   private void setupNodes() {
     ButtonPause btnPause = new ButtonPause(mediaPlayer);
-    ButtonNext btnNext = new ButtonNext(anime, episode, isNewTab, currentTab); // TODO DA CAMBIARE; DIPENDE SE SONO IN NUOVA TAB O NO
+    ButtonNext btnNext = new ButtonNext(anime, episode, isNewTab, currentTab);
     root = (Pane) SceneUtility.loadParent("/scenes/streaming.fxml");
     btnBack = (ButtonBack) root.lookup("#btnBack");
     MediaView mediaView = (MediaView) root.lookup("#mediaView");
@@ -156,6 +156,10 @@ public class StreamingController implements BaseScene {
 
   public void setOnBack(EventHandler<ActionEvent> onBack) {
     btnBack.setOnAction(onBack);
+  }
+
+  @Override
+  public void onBackFromOtherScene() {
   }
 
   @Override

@@ -50,6 +50,10 @@ public class HomeController implements BaseScene {
   }
 
   @Override
+  public void onBackFromOtherScene() {
+  }
+
+  @Override
   public Parent getRoot() {
     return root;
   }

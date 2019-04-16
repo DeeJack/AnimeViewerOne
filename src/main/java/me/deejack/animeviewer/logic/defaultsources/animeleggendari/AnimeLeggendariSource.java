@@ -20,7 +20,7 @@ import org.jsoup.select.Elements;
 public class AnimeLeggendariSource extends ParsedHttpSource {
 
   public AnimeLeggendariSource() {
-    super("https://animeleggendari.xyz/", "https://animeleggendari.xyz/wp-content/uploads/2018/08/bgAL.jpg");
+    super("https://animepertutti.com/", "https://animepertutti.com/wp-content/uploads/2018/08/bgAL.jpg");
   }
 
   @Override

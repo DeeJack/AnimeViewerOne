@@ -18,9 +18,9 @@ import me.deejack.animeviewer.gui.controllers.AnimeDetailController;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.history.History;
+import me.deejack.animeviewer.logic.history.HistoryEpisode;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
-import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
@@ -107,8 +107,8 @@ public class SingleFavorite extends HBox {
     if (!anime.hasBeenLoaded())
       anime.load();
     if (History.getHistory().contains(anime)) {
-      List<Episode> episodesHistory = History.getHistory().get(anime).getEpisodesHistory();
-      new AnimePlayer(episodesHistory.get(episodesHistory.size() - 1), anime, false, null).createStreaming();
+      List<HistoryEpisode> episodesHistory = History.getHistory().get(anime).getEpisodesHistory();
+      new AnimePlayer(episodesHistory.get(episodesHistory.size() - 1).getEpisode(), anime, false, null).createStreaming();
       return;
     }
     new AnimePlayer(anime.getEpisodes().get(0), anime, false, null).createStreaming();

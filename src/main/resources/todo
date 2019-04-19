@@ -1,13 +1,19 @@
-AnimeSceneController
-
-Download:
-    - Continuare da dove ha finito se si interrompe per connessione?
-
-Streaming:
-
 Generali:
-    - Controllare se da' 404 nelle varie pagine
-    - Segnare episodi scaricatine
+    - Magari fare una classe tipo bypasser, viene caricata tipo le estensioni e ti dice come bypassare un certo sito, metto di default openload e streamango che usano il bypasser di default visto che sono uguali
+      nel costruttore decidi l'url/gli url e quando devo bypassare uso quella estensione
+    - Segnare episodi scaricati
+    - Controllare se le previous scenes pesano molto
+    - Dividere info anime in Label e lasciare la textarea solo per la trama, Magari invece di come è adesso fare immagine a sinistra e a destra le info
+    - Se mancano 1 o 2 minuti andare al prossimo episodio, mettere la scelta nelle impostazioni (che ancora non esitono)
+    - Nuovo componente bottone sidebar (mettere filtri  e componente btn streaming esterno
+    - Nella sidebar builder pattern invece che getter come è ora
+    - In AnimeUpdate aggiungere un box ogni volta che trova un anime, non quando ha finito tutti
+      Usare il todayBox invece che controllare se non è null e crearne un altro
+    - Fare async il load nella nuova tab (animescene)
+    - Anche se non chiede il caricamento in nuova tab, caricare nella tab corrente ma non mettere come root
+    - In AnimeDetail mettere Stackpane
+    - Rifare download e vedere Favorite
+    - Sostituire metodi che potrebbero ritornare null con optional
     - Dialog update
     - Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
     - A volte lo streaming si stoppa e non va più avanti, mettere la roba di caricamento mentre si carica
@@ -15,16 +21,12 @@ Generali:
     - Salvare nella cronologia anche quando si mettono link esterni
     - Finire di mettere anche le eccezioni e ciò che rimane nella internacoso
     - anime correlati
+    - Eliminare variabili globali e listener inutili, scritte su file troppo veloci ecc per risparmiare ram
+    - Mettere caricamento nello streaming
 
-Bugs:
-    - Con la freccia a sinistra non andava indietro lo streaming, a volte spostandolo andava direttamente alla fine...// non è più successo
-    - A volte non si toglie il caricamento nello streaming // non c'è mai
-    - Sistemare download // piu o meno risolto
-    - A volte togliee il cursore (forse solo quando ci mette molto a caricarsi) // forse risolto
-    - Tempo totale dello streaming sballato, forse solo con cronologia // FOrse risolto
-    - Controllare con connessione scarsa
 
 Meno importanti:
+    - Ricerca dopo mezzo secondo che non scrivi
     - Mettere scroll infinito invece di anime multiplier...
     - Aggiungere calendario e ultime aggiunte
     - In cronologia, se c'è cloudflare lo deve bypassare ogni volta perché non c'è un sito selezionato!
@@ -33,3 +35,13 @@ Meno importanti:
     - Quando si va in animescene, carica sia la ricerca che la pagina principale per i generi, fare solo la ricerca?
     - Ricerca globale
     - Mettere animeclick / myanimelist
+
+Bugs:
+    - Siti non supportati nella textbox per i video esterni (es vvvvid)
+    - Controllare con connessione scarsa
+    - Nello streaming in nuova tab, ci mette molto a fare il resize
+    - Il cursore sparisce se ho uno streaming aperto in un'altra tab
+        Soluzione: Listener per il cursore nella Scena, ricordarsi però di rimuoverlo!
+    - Cambiando pagina, facendo una ricerca per nome o per genere elimina tutte le tab
+        Problema: creo una nuova animeScene e la imposto come root
+        Soluzione: Cambiare solo la prima tab, non la root. Però così si incasina la cronologia.... Ma potrebbe andare bene

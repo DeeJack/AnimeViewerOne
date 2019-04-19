@@ -28,8 +28,8 @@ public class AnimeBox extends VBox {
   public AnimeBox(Anime anime, Listener<Anime> onRequestAnimeTab) {
     this.anime = anime;
     this.onRequestAnimeTab = onRequestAnimeTab;
-    setUp();
     Tooltip.install(this, new Tooltip(LocalizedApp.getInstance().getString("AnimeBoxTooltip")));
+    setUp();
   }
 
   public void setUp() {
@@ -65,6 +65,9 @@ public class AnimeBox extends VBox {
       registerEvents(item);
       contextMenu.getItems().add(item);
     }
+    MenuItem item = new MenuItem(LocalizedApp.getInstance().getString("OpenInNewTab"));
+    item.setOnAction((event) -> onRequestAnimeTab.onChange(anime));
+    contextMenu.getItems().add(item);
     return contextMenu;
   }
 

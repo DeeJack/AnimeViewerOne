@@ -19,9 +19,10 @@ public class AnimeUpdates {
   public List<Episode> checkUpdates() {
     if(Favorite.getInstance().get(favoriteId) == null)
       throw new IllegalArgumentException("WTF? The favourite id doesn't match with any favorite?!");
-    Anime anime = Favorite.getInstance().get(favoriteId).getAnime();
+    FavoriteAnime anime = Favorite.getInstance().get(favoriteId);
     List<Episode> oldEpisodes = anime.getEpisodes();
-    anime.load();
+    System.out.println(oldEpisodes);
+    anime.getAnime().load();
     List<Episode> newEpisodes = new ArrayList<>(anime.getEpisodes());
     newEpisodes.removeAll(oldEpisodes);
     episodes = newEpisodes;

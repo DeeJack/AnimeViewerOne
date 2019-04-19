@@ -22,7 +22,7 @@ public class LoadSiteAsync extends Task {
 
   @Override
   protected void succeeded() {
-    new HomeController().setup();
+    new HomeController().initialize();
   }
 
   @Override

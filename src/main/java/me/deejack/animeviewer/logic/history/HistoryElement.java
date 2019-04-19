@@ -5,25 +5,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import me.deejack.animeviewer.logic.models.anime.Anime;
-import me.deejack.animeviewer.logic.models.episode.Episode;
 
 public class HistoryElement {
   @Expose
-  private final List<Episode> episodesHistory;
+  private final List<HistoryEpisode> episodesHistory;
   @Expose
   private Anime viewedElement;
 
-  public HistoryElement(Anime viewedElement, List<Episode> episodesHistory) {
+  public HistoryElement(Anime viewedElement, List<HistoryEpisode> episodesHistory) {
     this.viewedElement = viewedElement;
     this.episodesHistory = episodesHistory;
   }
 
-  public HistoryElement(Anime viewedElement, Episode episode) {
+  public HistoryElement(Anime viewedElement, HistoryEpisode episode) {
     this(viewedElement, new ArrayList<>());
     episodesHistory.add(episode);
   }
 
-  public void addEpisode(Episode episode) {
+  public void addEpisode(HistoryEpisode episode) {
     episodesHistory.remove(episode);
     episodesHistory.add(episode);
   }
@@ -36,7 +35,7 @@ public class HistoryElement {
     this.viewedElement = viewedElement;
   }
 
-  public List<Episode> getEpisodesHistory() {
+  public List<HistoryEpisode> getEpisodesHistory() {
     return Collections.unmodifiableList(episodesHistory);
   }
 

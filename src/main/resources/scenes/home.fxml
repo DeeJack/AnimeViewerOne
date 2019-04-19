@@ -15,14 +15,20 @@
 <?import me.deejack.animeviewer.gui.components.general.ButtonUpdates?>
 <?import me.deejack.animeviewer.gui.components.general.ListViewSites?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="697.0" prefWidth="789.0" style="-fx-background-color: white;"
-           xmlns="http://javafx.com/javafx/8.0.172-ea"
-           fx:controller="me.deejack.animeviewer.gui.controllers.HomeController">
+           xmlns="http://javafx.com/javafx/8.0.172-ea">
     <BorderPane prefHeight="464.0" prefWidth="639.0">
         <top>
             <BorderPane BorderPane.alignment="CENTER">
                 <right>
                     <VBox BorderPane.alignment="CENTER">
-                        <Button fx:id="btnSideBar" mnemonicParsing="false" text="&lt;" />
+                        <Button fx:id="btnSideBar" mnemonicParsing="false" text="&lt;">
+                            <VBox.margin>
+                                <Insets right="10.0"/>
+                            </VBox.margin>
+                        </Button>
+                        <BorderPane.margin>
+                            <Insets top="20.0"/>
+                        </BorderPane.margin>
                     </VBox>
                 </right>
             </BorderPane>
@@ -66,13 +72,11 @@
         </center>
         <bottom>
             <HBox prefHeight="28.0" prefWidth="789.0" spacing="20.0" BorderPane.alignment="CENTER">
-                <children>
-                    <Button mnemonicParsing="false" text="?"/>
-                    <Button mnemonicParsing="false" text="Contacts"/>
-                </children>
                 <BorderPane.margin>
                     <Insets left="5.0"/>
                 </BorderPane.margin>
+                <Button mnemonicParsing="false" text="?"/>
+                <Button mnemonicParsing="false" text="Contacts"/>
             </HBox>
         </bottom>
     </BorderPane>

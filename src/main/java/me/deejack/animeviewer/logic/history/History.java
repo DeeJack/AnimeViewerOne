@@ -10,7 +10,9 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
 import me.deejack.animeviewer.logic.serialization.JsonValidator;
 
@@ -46,6 +48,15 @@ public final class History {
         return historyElement;
     }
     return null;
+  }
+
+  public HistoryEpisode getLastEpisodeOf(Anime anime) {
+    HistoryElement element = get(anime);
+    return element == null ? null : element.getEpisodesHistory().get(element.getEpisodesHistory().size() - 1);
+  }
+
+  public Optional<HistoryEpisode> getHistoryEpisode(HistoryElement historyElement, Episode episode) {
+    return historyElement.getEpisodesHistory().stream().filter((historyEpisode -> historyEpisode.getEpisode().equals(episode))).findFirst();
   }
 
   public void add(HistoryElement element) {

@@ -10,6 +10,7 @@ import javafx.scene.text.FontWeight;
 import me.deejack.animeviewer.gui.controllers.download.DownloadController;
 import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.history.History;
+import me.deejack.animeviewer.logic.history.HistoryEpisode;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
@@ -31,7 +32,8 @@ public class ItemEpisode extends HBox {
     getChildren().addAll(createTile(parent), createReleaseDate(), streaming);
 
     if (History.getHistory().contains(anime) && History.getHistory().get(anime).getEpisodesHistory().contains(episode)) {
-      long totalSeconds = (long) History.getHistory().get(anime).getEpisodesHistory().get(History.getHistory().get(anime).getEpisodesHistory().indexOf(episode)).getSecondsWatched();
+      HistoryEpisode episode = History.getHistory().getLastEpisodeOf(anime);
+      long totalSeconds = (long) episode.getEpisode().getSecondsWatched();
       int seconds = (int) Duration.ofSeconds(totalSeconds).getSeconds() % 60 % 60;
       int minutes = (int) Duration.ofSeconds(totalSeconds).toMinutes() % 60;
       int hours = (int) Duration.ofSeconds(totalSeconds).toHours();

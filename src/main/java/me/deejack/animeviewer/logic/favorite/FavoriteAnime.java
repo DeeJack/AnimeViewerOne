@@ -40,4 +40,8 @@ public class FavoriteAnime {
   public File getImagePath() {
     return new File(imagePath);
   }
+
+  public List<Episode> getEpisodes() {
+    return episodes;
+  }
 }

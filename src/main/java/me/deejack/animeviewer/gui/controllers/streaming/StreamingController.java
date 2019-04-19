@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.gui.controllers.streaming;
 
+import java.time.LocalDateTime;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -30,6 +31,7 @@ import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.history.HistoryElement;
+import me.deejack.animeviewer.logic.history.HistoryEpisode;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 
@@ -69,12 +71,11 @@ public class StreamingController implements BaseScene {
     HistoryElement historyElement = History.getHistory().get(anime);
     if (historyElement != null) {
       if (historyElement.getEpisodesHistory().contains(episode))
-        episode.setSecondsWatched(
-                historyElement.getEpisodesHistory().get(
-                        historyElement.getEpisodesHistory().indexOf(episode)).getSecondsWatched());
-      else historyElement.addEpisode(episode);
+        History.getHistory().getHistoryEpisode(historyElement, episode)
+                .ifPresent((historyEpisode -> episode.setSecondsWatched(historyEpisode.getEpisode().getSecondsWatched())));
+      else historyElement.addEpisode(new HistoryEpisode(episode, LocalDateTime.now()));
     } else
-      History.getHistory().add(new HistoryElement(anime, episode));
+      History.getHistory().add(new HistoryElement(anime, new HistoryEpisode(episode, LocalDateTime.now())));
     if (episode.getSecondsWatched() > 0)
       mediaPlayer.setStartTime(Duration.seconds(episode.getSecondsWatched()));
   }
@@ -146,8 +147,8 @@ public class StreamingController implements BaseScene {
       view.setFitHeight(root.getHeight());
       return;
     }
-    view.setFitWidth(root.getWidth() - 1);
-    view.setFitHeight(root.getHeight() - 1);
+    view.setFitWidth(root.getWidth());
+    view.setFitHeight(root.getHeight());
     /*if (root.getWidth() > root.getHeight())
     else view.setFitWidth(root.getWidth() - 1);*/
     System.out.println(root.getWidth() > root.getHeight());

@@ -18,6 +18,12 @@ public class DailyUpdatesBox extends VBox {
     getChildren().addAll(createDayBox(dateTime), updates.isEmpty() ? createEmptyBox() : createUpdatesBox(updates));
   }
 
+  /**
+   * Create a label with a date time pattern like: Thursday 18 April 2019
+   *
+   * @param dateTime The date of the update
+   * @return a label with the formatted date
+   */
   private Label createDayBox(LocalDate dateTime) {
     return new Label(dateTime.format(DateTimeFormatter.ofPattern("eeee d MMMM uuuu")));
   }

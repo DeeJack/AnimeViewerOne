@@ -8,7 +8,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -18,50 +17,41 @@ import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamsubAnime;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
-import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 
 public class AnimeSceneController implements BaseScene {
-  private final int initialSize;
   private final boolean isSearch;
   private final FilterList filters;
   private final String search;
-  private int currentPage;
+  private final int currentPage;
   private TabPane root;
-  private FlowPane elementsPane;
-  private AnimePane animePane;
-
-  public AnimeSceneController(List<Anime> elements, boolean isSearch, FilterList filters, String search) {
-    this(elements, 1, isSearch, filters, search);
-  }
 
   public AnimeSceneController(List<Anime> elements, int page, boolean isSearch, FilterList filters, String search) {
     elements.add(new DreamsubAnime("Test", "https://www.dreamsub.stream/anime/test", "https://www.dreamsub.stream/anime/test"));
     currentPage = page;
-    initialSize = elements.size();
     this.isSearch = isSearch;
     this.filters = filters;
     this.search = search;
 
-    hideWaitLoad();
     initialize(elements);
-    setRoot(this);
   }
 
   private void initialize(List<Anime> elements) {
-    loadScene();
+    setUpScene();
     if (elements.isEmpty()) {
       showNotFound();
       return;
     }
     showFound(elements);
+    setRoot(this);
   }
 
-  private void loadScene() {
+  private void setUpScene() {
     root = (TabPane) SceneUtility.loadParent("/scenes/animeFlex.fxml");
     Pane browsePane = ((Pane) root.getTabs().get(0).getContent());
     BorderPane content = (BorderPane) browsePane.getChildren().get(0);
@@ -76,19 +66,23 @@ public class AnimeSceneController implements BaseScene {
     VBox found = (VBox) ((ScrollPane) content.lookup("#scrollPane")).getContent();
     PagesBox pagesBox = new PagesBox(currentPage, search, isSearch, filters);
     found.getChildren().add(pagesBox);
-    animePane = new AnimePane(elements, (anime) -> {
+    AnimePane animePane = new AnimePane(elements, onRequestAnimeTab());
+    found.getChildren().add(0, animePane);
+  }
+
+  private Listener<Anime> onRequestAnimeTab() {
+    return (anime) -> {
       Tab tab = new Tab();
       AnimeDetailController detailController = new AnimeDetailController(anime, true, tab);
       detailController.loadSync();
       tab.setText(detailController.getTitle());
       tab.setContent(detailController.getRoot());
       root.getTabs().add(tab);
-    });
-    found.getChildren().add(0, animePane);
+    };
   }
 
   /**
-   * Show the "not found" page
+   * Show the "not found" page if there aren't anime to show
    */
   private void showNotFound() {
     Pane browsePane = ((Pane) root.getTabs().get(0).getContent());
@@ -99,37 +93,8 @@ public class AnimeSceneController implements BaseScene {
     notFound.setVisible(true);
   }
 
-  public FlowPane getElementsPane() {
-    return elementsPane;
-  }
-
-  public int getInitialSize() {
-    return initialSize;
-  }
-
-  public int addAndGetCurrentPage() {
-    return ++currentPage;
-  }
-
-  public boolean isSearch() {
-    return isSearch;
-  }
-
-  public FilterList getFilters() {
-    return filters;
-  }
-
-  public String getSearch() {
-    return search;
-  }
-
-  public void addElements(List<Anime> animeList) {
-    animePane.addElements(animeList);
-  }
-
   @Override
   public void onBackFromOtherScene() {
-
   }
 
   @Override

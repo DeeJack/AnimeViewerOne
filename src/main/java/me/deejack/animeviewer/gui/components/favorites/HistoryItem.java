@@ -24,16 +24,14 @@ public class HistoryItem extends SingleFavorite {
     setAnimeInfo();
   }
 
-  public EventHandler<ActionEvent> getOnRemove() { // TODO: rimuovere un episodio o tutti, non l'anime intero.
-    return (event) -> {
-      requestRemoveAllEpisodes();
-    };
+  public EventHandler<ActionEvent> getOnRemove() {
+    return (event) -> requestRemoveAllEpisodes();
   }
 
   private void requestRemoveAllEpisodes() {
     Dialog dialog = new Dialog();
-    Label label = new Label("Asd");
-    CheckBox checkBox = new CheckBox("Delete?");
+    Label label = new Label(LocalizedApp.getInstance().getString("DeleteOneHistory"));
+    CheckBox checkBox = new CheckBox(LocalizedApp.getInstance().getString("DeleteAllHistory"));
     VBox box = new VBox(label, checkBox);
     dialog.getDialogPane().setContent(box);
     dialog.getDialogPane().getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
@@ -67,7 +65,7 @@ public class HistoryItem extends SingleFavorite {
     String title = LocalizedApp.getInstance().getString("Title") + ": " + historyElement.getViewedElement().getAnimeInformation().getName();
     Label labelTitle = new Label(title);
     String episodes = String.format(LocalizedApp.getInstance().getString("LastEpisodeSeen") + ": %d su %d",
-            historyElement.getEpisodesHistory().get(historyElement.getEpisodesHistory().size() - 1).getNumber(),
+            historyElement.getEpisodesHistory().get(historyElement.getEpisodesHistory().size() - 1).getEpisode().getNumber(),
             historyElement.getViewedElement().getAnimeInformation().getNumberOfEpisodes());
     Label labelEpisodes = new Label(episodes);
     TextArea textAreaPlot = new TextArea(historyElement.getViewedElement().getAnimeInformation().getPlot());

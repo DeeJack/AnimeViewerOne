@@ -8,6 +8,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -18,11 +19,11 @@ public class HiddenSideBar extends VBox {
   private final TranslateTransition hideAnimation = new TranslateTransition(Duration.millis(250), this);
   private final TranslateTransition showAnimation = new TranslateTransition(Duration.millis(250), this);
   private final Button btnClose = new Button(">");
-  private final Button btnOpen;
+  private final HBox btnOpen;
 
-  public HiddenSideBar(Button btnOpen) {
+  public HiddenSideBar(HBox btnOpen) {
     this.btnOpen = btnOpen;
-    btnOpen.setTooltip(new Tooltip(LocalizedApp.getInstance().getString("SidebarControlButton")));
+    Tooltip.install(btnOpen, new Tooltip(LocalizedApp.getInstance().getString("SidebarControlButton")));
     setUp();
   }
 
@@ -40,7 +41,7 @@ public class HiddenSideBar extends VBox {
   }
 
   private void registerEvents() {
-    btnOpen.setOnAction((event) -> showAnimation.play());
+    btnOpen.setOnMousePressed((event) -> showAnimation.play());
     btnClose.setOnAction((event) -> close());
   }
 

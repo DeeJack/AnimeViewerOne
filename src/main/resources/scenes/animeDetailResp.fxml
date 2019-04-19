@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--<StackPane>-->
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<GridPane style="-fx-background-color: white" alignment="CENTER">
+<?import javafx.scene.layout.StackPane?>
+<StackPane>
+    <GridPane style="-fx-background-color: white" alignment="CENTER" StackPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints percentWidth="3"/>
             <ColumnConstraints percentWidth="10"/>
@@ -19,4 +20,4 @@
             <RowConstraints percentHeight="63"/>
         </rowConstraints>
     </GridPane>
-        <!--</StackPane>-->
+</StackPane>

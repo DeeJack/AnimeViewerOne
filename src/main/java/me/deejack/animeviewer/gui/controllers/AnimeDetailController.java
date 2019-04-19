@@ -27,12 +27,13 @@ public class AnimeDetailController implements BaseScene {
   private final Anime anime;
   private final boolean isNewTab;
   private final Tab currentTab;
-  private Pane root;
+  private final Pane root;
 
   public AnimeDetailController(Anime anime, boolean isNewTab, Tab currentTab) {
     this.anime = Favorite.getInstance().contains(anime) ? Favorite.getInstance().get(anime.getUrl()).getAnime() : anime;
     this.isNewTab = isNewTab;
     this.currentTab = currentTab;
+    root = (Pane) SceneUtility.loadParent("/scenes/animeDetailResp.fxml");
   }
 
   public void loadAsync() {
@@ -62,8 +63,9 @@ public class AnimeDetailController implements BaseScene {
   }
 
   private void setupScene() {
-    root = (Pane) SceneUtility.loadParent("/scenes/animeDetailResp.fxml");
-    GridPane gridPane = (GridPane) root;
+    GridPane gridPane = (GridPane) root.getChildren().get(0);
+    gridPane.setMinHeight(GridPane.USE_PREF_SIZE);
+    gridPane.prefHeightProperty().bind(root.heightProperty());
     ImageAnime imageAnime = new ImageAnime(anime.getAnimeInformation().getImageUrl());
     HBox boxImage = new HBox(imageAnime);
     boxImage.setMinHeight(Double.MIN_VALUE);

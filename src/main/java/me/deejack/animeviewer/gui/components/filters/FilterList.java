@@ -14,7 +14,7 @@ public class FilterList {
   private final HiddenSideBar sideBar;
   private Filter[] filters;
 
-  public FilterList(Button controlButton, FilterList previousFilters) {
+  public FilterList(HBox controlButton, FilterList previousFilters) {
     sideBar = new HiddenSideBar(controlButton);
     new Thread(() -> {
       if (previousFilters != null) {

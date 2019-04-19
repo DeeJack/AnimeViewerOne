@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
@@ -38,11 +39,9 @@ public class HomeController implements BaseScene {
 
   public void initialize() {
     ImageView icon = (ImageView) root.lookup("#imgSite");
-    HiddenSideBar sideBar = new FilterList((Button) root.lookup("#btnSideBar"), null).getSideBar();
+    HiddenSideBar sideBar = new FilterList((HBox) root.lookup("#btnSideBar"), null).getSideBar();
     root.getChildren().add(sideBar);
     createSiteIcon(icon);
-    //btnStreaming.setOnAction((event) -> new AnimePlayer(txtStreaming.getText()));
-    //btnStreaming.setTooltip(new Tooltip(LocalizedApp.getInstance().getString("OpenExtVideo")));
     setRoot(this);
   }
 

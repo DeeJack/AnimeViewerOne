@@ -2,10 +2,9 @@ Generali:
     - Magari fare una classe tipo bypasser, viene caricata tipo le estensioni e ti dice come bypassare un certo sito, metto di default openload e streamango che usano il bypasser di default visto che sono uguali
       nel costruttore decidi l'url/gli url e quando devo bypassare uso quella estensione
     - Segnare episodi scaricati
-    - Controllare se le previous scenes pesano molto
     - Dividere info anime in Label e lasciare la textarea solo per la trama, Magari invece di come è adesso fare immagine a sinistra e a destra le info
-    - Se mancano 1 o 2 minuti andare al prossimo episodio, mettere la scelta nelle impostazioni (che ancora non esitono)
-    - Nuovo componente bottone sidebar (mettere filtri  e componente btn streaming esterno
+    - Se mancano 1 o 2 minuti andare al prossimo episodio, mettere la scelta nelle impostazioni (che ancora non esitono), fare una proporzione
+    - e componente btn streaming esterno
     - Nella sidebar builder pattern invece che getter come è ora
     - In AnimeUpdate aggiungere un box ogni volta che trova un anime, non quando ha finito tutti
       Usare il todayBox invece che controllare se non è null e crearne un altro
@@ -15,14 +14,15 @@ Generali:
     - Rifare download e vedere Favorite
     - Sostituire metodi che potrebbero ritornare null con optional
     - Dialog update
-    - Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
-    - A volte lo streaming si stoppa e non va più avanti, mettere la roba di caricamento mentre si carica
+      Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
+    - mettere la roba di caricamento mentre si carica
     - Mettere lo streaming solo in una tab invece della root
     - Salvare nella cronologia anche quando si mettono link esterni
     - Finire di mettere anche le eccezioni e ciò che rimane nella internacoso
     - anime correlati
     - Eliminare variabili globali e listener inutili, scritte su file troppo veloci ecc per risparmiare ram
     - Mettere caricamento nello streaming
+    - Aggiungere l'onBack nell'animedetail che fa aggiornare gli anime visti
 
 
 Meno importanti:

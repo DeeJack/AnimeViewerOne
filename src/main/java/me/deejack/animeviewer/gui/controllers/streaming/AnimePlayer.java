@@ -57,7 +57,7 @@ public class AnimePlayer {
   }
 
   private void extractVideo(String link) {
-    Connection.Response response = ConnectionUtility.connect(link, false);
+    Connection.Response response = ConnectionUtility.connect(link, true);
     if (response == null)
       return;
     if (response.contentType().contains("video")) {

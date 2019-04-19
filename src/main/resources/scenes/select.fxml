@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import me.deejack.animeviewer.gui.components.general.ListViewSites?>
-<?import me.deejack.animeviewer.gui.components.general.ButtonHistory?>
+<?import javafx.scene.layout.VBox?>
 <?import me.deejack.animeviewer.gui.components.general.ButtonFavorite?>
+<?import me.deejack.animeviewer.gui.components.general.ButtonHistory?>
 <?import me.deejack.animeviewer.gui.components.general.ButtonUpdates?>
+<?import me.deejack.animeviewer.gui.components.general.ListViewSites?>
+<?import me.deejack.animeviewer.gui.components.streaming.BoxExternalStreaming?>
 <StackPane xmlns:fx="http://javafx.com/fxml/" style="-fx-background-color: white;"
            xmlns="http://javafx.com/javafx/"
            fx:controller="me.deejack.animeviewer.gui.controllers.SelectController">
     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
           prefHeight="720.0" prefWidth="1000.0">
-        <AnchorPane prefHeight="288.0" prefWidth="572.0">
+        <VBox prefWidth="450.0" spacing="30">
             <ListViewSites layoutX="113.0" layoutY="40.0" prefHeight="321.0" prefWidth="347.0"/>
-            <ButtonHistory fx:id="btnHistory" layoutX="87.0" layoutY="388.0" mnemonicParsing="false" />
-            <ButtonUpdates layoutX="230.0" layoutY="388.0" mnemonicParsing="false" />
-            <ButtonFavorite fx:id="btnFavorite" layoutX="434.0" layoutY="388.0" mnemonicParsing="false" />
-            <TextField fx:id="txtLink" layoutX="87.0" layoutY="462.0" prefHeight="25.0" prefWidth="317.0"
-                       promptText="%OpenExternalVidPromptText"/>
-            <Button fx:id="btnOpenStreaming" layoutX="434.0" layoutY="462.0" mnemonicParsing="false"
-                    prefHeight="25.0" maxWidth="Infinity" text="%OpenExternalVidButtonText"/>
-        </AnchorPane>
+            <HBox spacing="115">
+                <ButtonHistory fx:id="btnHistory" layoutX="87.0" layoutY="388.0" mnemonicParsing="false"/>
+                <ButtonUpdates layoutX="230.0" layoutY="388.0" mnemonicParsing="false"/>
+                <ButtonFavorite fx:id="btnFavorite" layoutX="434.0" layoutY="388.0" mnemonicParsing="false"/>
+            </HBox>
+            <BoxExternalStreaming/>
+            <HBox.margin>
+                <Insets top="65"/>
+            </HBox.margin>
+        </VBox>
     </HBox>
 </StackPane>

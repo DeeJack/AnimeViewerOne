@@ -3,11 +3,6 @@ package me.deejack.animeviewer.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
-import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
-
-import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 
 public class SelectController {
   @FXML
@@ -17,10 +12,10 @@ public class SelectController {
 
   @FXML
   public void initialize() {
-    btnOpenStreaming.setOnAction((event) -> {
+   /* btnOpenStreaming.setOnAction((event) -> {
       showWaitAndLoad();
       new AnimePlayer(txtLink.getText());
     });
-    btnOpenStreaming.setTooltip(new Tooltip(LocalizedApp.getInstance().getString("OpenExtVideo")));
+    btnOpenStreaming.setTooltip(new Tooltip(LocalizedApp.getInstance().getString("OpenExtVideo")));*/
   }
 }

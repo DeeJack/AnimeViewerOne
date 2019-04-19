@@ -2,7 +2,6 @@ package me.deejack.animeviewer.gui.controllers;
 
 import java.util.List;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -55,7 +54,7 @@ public class AnimeSceneController implements BaseScene {
     root = (TabPane) SceneUtility.loadParent("/scenes/animeFlex.fxml");
     Pane browsePane = ((Pane) root.getTabs().get(0).getContent());
     BorderPane content = (BorderPane) browsePane.getChildren().get(0);
-    HiddenSideBar sideBar = new FilterList((Button) content.getTop().lookup("#controlSideBar"), filters).getSideBar();
+    HiddenSideBar sideBar = new FilterList((HBox) content.getTop().lookup("#controlSideBar"), filters).getSideBar();
     browsePane.getChildren().add(sideBar);
     ((TextInputControl) root.lookup("#txtSearch")).setText(search);
   }

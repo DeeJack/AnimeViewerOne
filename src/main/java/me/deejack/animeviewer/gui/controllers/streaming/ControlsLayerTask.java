@@ -34,10 +34,9 @@ public class ControlsLayerTask extends Thread {
       SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
       lastMoved = LocalDateTime.now();
     };
-    mediaView.setOnMouseMoved(onMove); // vedere se mettere l'evento in scene, stage o chissà che visto che più tab/cursore fuori
-    mediaView.setOnKeyPressed(onMove);
-    mediaView.setOnTouchPressed(onMove);
-    paneToHide.setOnMouseMoved(onMove);
+    SceneUtility.getStage().getScene().setOnKeyPressed(onMove);
+    SceneUtility.getStage().getScene().setOnTouchPressed(onMove);
+    SceneUtility.getStage().getScene().setOnMouseMoved(onMove);
     timer.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {

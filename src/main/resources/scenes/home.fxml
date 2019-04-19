@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -12,8 +11,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import me.deejack.animeviewer.gui.components.general.ButtonFavorite?>
 <?import me.deejack.animeviewer.gui.components.general.ButtonHistory?>
+<?import me.deejack.animeviewer.gui.components.general.ButtonSideBar?>
 <?import me.deejack.animeviewer.gui.components.general.ButtonUpdates?>
 <?import me.deejack.animeviewer.gui.components.general.ListViewSites?>
+<?import me.deejack.animeviewer.gui.components.streaming.BoxExternalStreaming?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="697.0" prefWidth="789.0" style="-fx-background-color: white;"
            xmlns="http://javafx.com/javafx/8.0.172-ea">
     <BorderPane prefHeight="464.0" prefWidth="639.0">
@@ -21,11 +22,11 @@
             <BorderPane BorderPane.alignment="CENTER">
                 <right>
                     <VBox BorderPane.alignment="CENTER">
-                        <Button fx:id="btnSideBar" mnemonicParsing="false" text="&lt;">
+                        <ButtonSideBar fx:id="btnSideBar">
                             <VBox.margin>
                                 <Insets right="10.0"/>
                             </VBox.margin>
-                        </Button>
+                        </ButtonSideBar>
                         <BorderPane.margin>
                             <Insets top="20.0"/>
                         </BorderPane.margin>
@@ -34,18 +35,20 @@
             </BorderPane>
         </top>
         <center>
-            <VBox alignment="CENTER" maxHeight="570.0" maxWidth="343.0" prefHeight="343.0" prefWidth="570.0" spacing="30" BorderPane.alignment="CENTER">
-                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="384.0">
-                     <ImageView id="imgSite" fitHeight="100.0" pickOnBounds="true" preserveRatio="true">
-                         <Image url="/assets/load.gif" />
-                         <viewport>
-                             <Rectangle2D />
-                         </viewport>
-                     </ImageView>
-                 </HBox>
-                <fx:include source="/scenes/search.fxml" />
-                <ListViewSites prefHeight="136.0" prefWidth="335.0" />
-                <BorderPane>
+            <VBox alignment="CENTER" maxHeight="570.0" maxWidth="500.0" prefHeight="343.0" prefWidth="570.0"
+                  spacing="30" BorderPane.alignment="CENTER">
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="384.0">
+                    <ImageView id="imgSite" fitHeight="100.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="/assets/load.gif"/>
+                        <viewport>
+                            <Rectangle2D/>
+                        </viewport>
+                    </ImageView>
+                </HBox>
+                <fx:include source="/scenes/search.fxml"/>
+                <ListViewSites prefHeight="136.0" prefWidth="335.0"/>
+                <BoxExternalStreaming/>
+                <!--<BorderPane>
                     <left>
                         <TextField fx:id="txtStreaming" prefHeight="31.0" prefWidth="384.0" promptText="%OpenExternalVidPromptText">
                             <BorderPane.margin>
@@ -56,16 +59,16 @@
                     <right>
                         <Button fx:id="btnStreaming" alignment="CENTER_RIGHT" mnemonicParsing="false" text="%OpenExternalVidButtonText" />
                     </right>
-                </BorderPane>
+                </BorderPane>-->
                 <BorderPane>
                     <left>
-                        <ButtonFavorite mnemonicParsing="false" />
+                        <ButtonFavorite mnemonicParsing="false"/>
                     </left>
                     <center>
-                        <ButtonUpdates layoutX="230.0" layoutY="388.0" mnemonicParsing="false" />
+                        <ButtonUpdates layoutX="230.0" layoutY="388.0" mnemonicParsing="false"/>
                     </center>
                     <right>
-                        <ButtonHistory alignment="BOTTOM_RIGHT" mnemonicParsing="false" />
+                        <ButtonHistory alignment="BOTTOM_RIGHT" mnemonicParsing="false"/>
                     </right>
                 </BorderPane>
             </VBox>

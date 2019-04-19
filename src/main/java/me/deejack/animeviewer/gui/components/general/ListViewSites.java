@@ -20,15 +20,17 @@ public class ListViewSites extends ListView<FilteredSource> {
   }
 
   public void registerListeners() {
-    getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-      if (selected)
-        return;
-      selected = true;
-      showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingSite"));
-      LoadSiteAsync siteAsync = new LoadSiteAsync(newValue);
-      new Thread(siteAsync).start();
-      siteAsync.setOnFailed((e) -> selected = false);
-    });
+    getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> onItemClicked(newValue));
     setOnKeyPressed(Event::consume);
+  }
+
+  private void onItemClicked(FilteredSource itemSelected) {
+    if (selected)
+      return;
+    selected = true;
+    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingSite"));
+    LoadSiteAsync siteAsync = new LoadSiteAsync(itemSelected);
+    new Thread(siteAsync).start();
+    siteAsync.setOnFailed((e) -> selected = false);
   }
 }

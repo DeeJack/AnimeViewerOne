@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
@@ -12,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import me.deejack.animeviewer.gui.components.general.ButtonBack?>
+<?import me.deejack.animeviewer.gui.components.general.ButtonSideBar?>
 <TabPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
     <Tab closable="false" text="%BrowseWindowTitle">
         <StackPane>
@@ -22,7 +22,7 @@
                         <HBox fx:id="animeMultiplierBox">
                             <ButtonBack prefHeight="18.0" prefWidth="30.0"/>
                             <HBox alignment="CENTER_RIGHT" prefWidth="400.0" spacing="10.0" HBox.hgrow="ALWAYS">
-                                <Button fx:id="controlSideBar" mnemonicParsing="false" text="&lt;"/>
+                                <ButtonSideBar fx:id="controlSideBar"/>
                                 <HBox.margin>
                                     <Insets right="20.0"/>
                                 </HBox.margin>

@@ -18,6 +18,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import me.deejack.animeviewer.gui.App;
@@ -164,6 +165,9 @@ public final class SceneUtility {
     getStage().getScene().setCursor(Cursor.DEFAULT);
     System.out.println(getStage().getScene().getCursor());
     System.gc();
+  }
+
+  public static void setRoot(Tab tab) {
   }
 
   public static void goToSelect() {

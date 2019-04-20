@@ -5,7 +5,6 @@ import java.util.Objects;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import me.deejack.animeviewer.gui.utils.LoadingUtility;
-import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
 public final class EventHandler {
@@ -15,7 +14,7 @@ public final class EventHandler {
   public static void onKeyEvent(KeyEvent keyEvent) {
     switch (keyEvent.getCode()) {
       case F11:
-        SceneUtility.getStage().setFullScreen(!SceneUtility.getStage().isFullScreen());
+        //SceneUtility.getStage().setFullScreen(!SceneUtility.getStage().isFullScreen());
         break;
       case DOWN:
       case RIGHT:

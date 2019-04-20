@@ -4,7 +4,6 @@ import java.util.List;
 import javafx.concurrent.Task;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
-import me.deejack.animeviewer.gui.controllers.AnimeSceneController;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
@@ -28,7 +27,7 @@ public class LoadPageAsync extends Task<List<Anime>> {
 
   @Override
   protected void succeeded() {
-    new AnimeSceneController(getValue(), page, isSearch, filters, search);
+    //new AnimeSceneController(getValue(), page, isSearch, filters, search);
   }
 
   @Override

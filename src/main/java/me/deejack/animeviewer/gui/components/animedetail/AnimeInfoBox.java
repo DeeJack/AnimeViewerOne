@@ -20,6 +20,7 @@ import me.deejack.animeviewer.logic.utils.GeneralUtility;
 public class AnimeInfoBox extends HBox {
   private final Anime anime;
   private Hyperlink reloadLink;
+  private final LocalizedApp app = LocalizedApp.getInstance();
 
   public AnimeInfoBox(Anime anime) {
     this.anime = anime;
@@ -33,11 +34,8 @@ public class AnimeInfoBox extends HBox {
     VBox vBox = new VBox(createOpenInBrowser(anime.getUrl()), createReload());
     ImageView imageFavorite = createImageFavorite(anime, vBox.heightProperty());
     vBox.getChildren().add(0, imageFavorite);
-    heightProperty().addListener(((observable, oldValue, newValue) -> {
-      vBox.setPrefHeight(newValue.doubleValue() * 0.95);
-      vBox.setMinHeight(newValue.doubleValue() * 0.95);
-      vBox.setMaxHeight(newValue.doubleValue() * 0.95);
-    }));
+    vBox.setMinHeight(VBox.USE_PREF_SIZE);
+    vBox.prefHeightProperty().bind(heightProperty().multiply(0.95));
     getChildren().addAll(createInformationArea(anime), vBox);
   }
 
@@ -50,7 +48,6 @@ public class AnimeInfoBox extends HBox {
   }
 
   private String getInfoText(Anime anime) {
-    LocalizedApp app = LocalizedApp.getInstance();
     String message = String.format("%s: %s\n%s: %d\n%s: %s\n%s: %s\nUrl: %s\n%s: %s",
             app.getString("Title"), anime.getAnimeInformation().getName(),
             app.getString("EpisodesNumber"), anime.getEpisodes().size(),

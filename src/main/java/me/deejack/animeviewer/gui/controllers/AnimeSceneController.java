@@ -21,14 +21,15 @@ import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamsubAnime;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
+import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 
 public class AnimeSceneController implements BaseScene {
   private final boolean isSearch;
   private final FilterList filters;
   private final String search;
-  private final int currentPage;
-  private TabPane root;
+  private final TabPane root;
+  private int currentPage;
 
   public AnimeSceneController(List<Anime> elements, int page, boolean isSearch, FilterList filters, String search) {
     elements.add(new DreamsubAnime("Test", "https://www.dreamsub.stream/anime/test", "https://www.dreamsub.stream/anime/test"));
@@ -36,8 +37,10 @@ public class AnimeSceneController implements BaseScene {
     this.isSearch = isSearch;
     this.filters = filters;
     this.search = search;
+    root = (TabPane) SceneUtility.loadParent("/scenes/animeFlex.fxml");
 
     initialize(elements);
+    setRoot(this);
   }
 
   private void initialize(List<Anime> elements) {
@@ -47,11 +50,10 @@ public class AnimeSceneController implements BaseScene {
       return;
     }
     showFound(elements);
-    setRoot(this);
+    hideWaitLoad();
   }
 
   private void setUpScene() {
-    root = (TabPane) SceneUtility.loadParent("/scenes/animeFlex.fxml");
     Pane browsePane = ((Pane) root.getTabs().get(0).getContent());
     BorderPane content = (BorderPane) browsePane.getChildren().get(0);
     HiddenSideBar sideBar = new FilterList((HBox) content.getTop().lookup("#controlSideBar"), filters).getSideBar();
@@ -63,7 +65,7 @@ public class AnimeSceneController implements BaseScene {
     Pane browsePane = ((Pane) root.getTabs().get(0).getContent());
     BorderPane content = (BorderPane) browsePane.getChildren().get(0);
     VBox found = (VBox) ((ScrollPane) content.lookup("#scrollPane")).getContent();
-    PagesBox pagesBox = new PagesBox(currentPage, search, isSearch, filters);
+    PagesBox pagesBox = new PagesBox(currentPage, search, isSearch, filters, onPageChanged(found));
     found.getChildren().add(pagesBox);
     AnimePane animePane = new AnimePane(elements, onRequestAnimeTab());
     found.getChildren().add(0, animePane);
@@ -77,6 +79,14 @@ public class AnimeSceneController implements BaseScene {
       tab.setText(detailController.getTitle());
       tab.setContent(detailController.getRoot());
       root.getTabs().add(tab);
+    };
+  }
+
+  private Listener<List<Anime>> onPageChanged(VBox foundBox) {
+    return (animeList) -> {
+      currentPage++;
+      foundBox.getChildren().clear();
+      initialize(animeList);
     };
   }
 

@@ -49,6 +49,7 @@ public final class StreamingUtility {
   }
 
   public static void onChangeStatus(MediaPlayer.Status status, ButtonPause buttonPause) {
+    System.err.println(status);
     switch (status) {
       case PLAYING:
         buttonPause.setText("| |");

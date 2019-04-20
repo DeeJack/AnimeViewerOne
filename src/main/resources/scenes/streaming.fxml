@@ -12,7 +12,7 @@
 <StackPane maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/">
     <MediaView fx:id="mediaView" preserveRatio="true">
         <viewport>
-            <Rectangle2D />
+            <Rectangle2D/>
         </viewport>
     </MediaView>
     <BorderPane fx:id="paneLayer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">

@@ -34,10 +34,10 @@ import static me.deejack.animeviewer.logic.utils.GeneralUtility.logError;
 
 public final class WebBypassUtility {
 
+  private static int failCount = 0;
+
   private WebBypassUtility() {
   }
-
-  private static int failCount = 0;
 
   public static Pair<WebView, Stage> createWebView() {
     WebView browser = new WebView();
@@ -51,7 +51,7 @@ public final class WebBypassUtility {
         hideWaitLoad();
         engine.getLoadWorker().cancel();
       });
-      alert.getDialogPane().lookupButton(ButtonType.YES).setOnMouseClicked((btnEvent) -> event.consume());
+      alert.getDialogPane().lookupButton(ButtonType.NO).setOnMouseClicked((btnEvent) -> event.consume());
       alert.showAndWait();
     });
     stage.show();
@@ -73,7 +73,14 @@ public final class WebBypassUtility {
     URL finalUrl = url;
     engine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {
       System.out.println(newValue + " " + engine.getLocation());
-      if (newValue == Worker.State.SUCCEEDED && (engine.getLocation().contains(finalUrl.getProtocol() + "://" + finalUrl.getHost()))) {
+      String simpleLinkRequested = finalUrl.getProtocol() + "://" + finalUrl.getHost();
+      if (newValue == Worker.State.CANCELLED && (engine.getLocation().contains(simpleLinkRequested))) {
+        engine.getLoadWorker().cancel();
+        pair.getValue().close();
+        throw new RuntimeException("The connection to this site caused a problem, maybe this site isn't supported or it has some problem right now." +
+                "INFO: exception in the getOpenloadLink method, site: " + engine.getLocation());
+      }
+      if (newValue == Worker.State.SUCCEEDED && (engine.getLocation().contains(simpleLinkRequested))) {
         Document document = engine.getDocument();
         engine.getLoadWorker().cancel();
         pair.getValue().close();
@@ -86,6 +93,7 @@ public final class WebBypassUtility {
       System.out.println(message + "[at " + lineNumber + "]");
     });
     engine.load(link);
+    engine.getLoadWorker().exceptionProperty().addListener(((observable, oldValue, newValue) -> newValue.printStackTrace()));
     engine.locationProperty().addListener((event, oldValue, newValue) -> engine.getLoadWorker().cancel());
   }
 

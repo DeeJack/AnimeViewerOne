@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
+import javafx.scene.input.InputEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
@@ -28,16 +29,26 @@ public class ControlsLayerTask extends Thread {
 
   @Override
   public void run() {
-    Timer timer = new Timer();
-    EventHandler onMove = (event) -> {
+    EventHandler<InputEvent> onMove = onAction();
+    SceneUtility.getStage().getScene().getRoot().setOnKeyPressed(onMove);
+    SceneUtility.getStage().getScene().getRoot().setOnTouchPressed(onMove);
+    SceneUtility.getStage().getScene().getRoot().setOnMouseMoved(onMove);
+    Timer hideCursorTimer = new Timer();
+    Timer saveHistoryTimer = new Timer();
+    hideCursorTimer.scheduleAtFixedRate(hideCursorTimer(), MILLISECONDS_TO_WAIT, MILLISECONDS_TO_WAIT);
+    saveHistoryTimer.scheduleAtFixedRate(saveHistoryTimer(), TimeUnit.SECONDS.toMillis(30), TimeUnit.SECONDS.toMillis(30));
+  }
+
+  private EventHandler<InputEvent> onAction() {
+    return (event) -> {
       paneToHide.setVisible(true);
       SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
       lastMoved = LocalDateTime.now();
     };
-    SceneUtility.getStage().getScene().setOnKeyPressed(onMove);
-    SceneUtility.getStage().getScene().setOnTouchPressed(onMove);
-    SceneUtility.getStage().getScene().setOnMouseMoved(onMove);
-    timer.scheduleAtFixedRate(new TimerTask() {
+  }
+
+  private TimerTask hideCursorTimer() {
+    return new TimerTask() {
       @Override
       public void run() {
         if (isInterrupted) {
@@ -52,9 +63,11 @@ public class ControlsLayerTask extends Thread {
           SceneUtility.getStage().getScene().setCursor(Cursor.NONE);
         }
       }
-    }, MILLISECONDS_TO_WAIT, MILLISECONDS_TO_WAIT);
+    };
+  }
 
-    new Timer().scheduleAtFixedRate(new TimerTask() {
+  private TimerTask saveHistoryTimer() {
+    return new TimerTask() {
       @Override
       public void run() {
         if (isInterrupted)
@@ -64,10 +77,15 @@ public class ControlsLayerTask extends Thread {
         secondsWatched = mediaView.getMediaPlayer().getCurrentTime().toSeconds();
         FilesUtility.saveTempHistory();
       }
-    }, TimeUnit.MINUTES.toMillis(30), TimeUnit.MINUTES.toMillis(30));
+    };
   }
 
   public void setInterrupted(boolean interrupted) {
     isInterrupted = interrupted;
+    if (interrupted) {
+      SceneUtility.getStage().getScene().getRoot().setOnKeyPressed(null);
+      SceneUtility.getStage().getScene().getRoot().setOnTouchPressed(null);
+      SceneUtility.getStage().getScene().getRoot().setOnMouseMoved(null);
+    }
   }
 }

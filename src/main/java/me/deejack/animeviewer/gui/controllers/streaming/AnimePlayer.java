@@ -3,6 +3,7 @@ package me.deejack.animeviewer.gui.controllers.streaming;
 import java.io.IOException;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import me.deejack.animeviewer.gui.controllers.download.DownloadUtility;
@@ -75,6 +76,9 @@ public class AnimePlayer {
         currentTab.setContent(prevContent);
       });
       currentTab.setContent(streaming.getRoot());
+      ((Pane) currentTab.getContent()).heightProperty().addListener((obs, oldValue, newValue) -> System.out.println("ASDIOJKQAWIQJWOe"));
+      streaming.getRoot().prefHeightProperty().bind(((Pane) currentTab.getContent()).heightProperty());
+      streaming.getRoot().prefWidthProperty().bind(((Pane) currentTab.getContent()).widthProperty());
     } else
       setRoot(streaming);
   }

@@ -149,8 +149,6 @@ public class StreamingController implements BaseScene {
     }
     view.setFitWidth(root.getWidth());
     view.setFitHeight(root.getHeight());
-    /*if (root.getWidth() > root.getHeight())
-    else view.setFitWidth(root.getWidth() - 1);*/
     System.out.println(root.getWidth() > root.getHeight());
     System.err.println(root.getHeight() + " " + root.getWidth() + SceneUtility.getStage().getScene().getHeight() + " <-> " + view.getFitHeight());
   }

@@ -34,7 +34,10 @@ Meno importanti:
 Bugs:
     - Siti non supportati nella textbox per i video esterni (es vvvvid)
     - Controllare con connessione scarsa
-    - Nello streaming in nuova tab, ci mette molto a fare il resize
+    - Nello streaming in nuova tab, non fa il resize
     - Il cursore sparisce se ho uno streaming aperto in un'altra tab
         Soluzione: Listener per il cursore nella Scena, ricordarsi però di rimuoverlo!
-    - In animescene fa currentPage++, quindi anche andando a pagina 98 ti dirà di essere a pagina 2
+    - In animescene fa currentPage++, quindi anche andando a pagina 98 ti dirà di essere a pagina 2 (oppure tornando indietro aumenta di uno)
+    - Lo streaming non smette chiudendo la tab
+    - Non funzionano più i keybinding nello streaming
+    - A volte lo streaming non parte... Mettere un timeout di 20 secondi in cui se non parte da errore... Successo con https://www.dreamsub.stream/anime/kono-oto-tomare/1 ep 1 ris 1080

@@ -10,6 +10,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.App;
@@ -34,14 +35,7 @@ public class AnimeBox extends VBox {
 
   public void setUp() {
     ContextMenu contextMenu = createRightClickMenu();
-    setOnMouseReleased((e) -> {
-      if (e.getButton() == MouseButton.PRIMARY)
-        loadElement();
-      else if (e.getButton() == MouseButton.MIDDLE)
-        onRequestAnimeTab.onChange(anime);
-      else if (e.getButton() == MouseButton.SECONDARY)
-        contextMenu.show(this, e.getScreenX(), e.getScreenY());
-    });
+    setOnMouseReleased((e) -> onClick(e, contextMenu));
     ImageView view = createView();
     Label title = createTitle(view);
     StackPane stackPane = new StackPane(view);
@@ -52,6 +46,17 @@ public class AnimeBox extends VBox {
     getChildren().addAll(stackPane, title);
     setPrefHeight(view.getFitHeight() + title.getHeight() + 20);
     setPadding(new Insets(10, 10, 10, 10));
+  }
+
+  public void onClick(MouseEvent e, ContextMenu contextMenu) {
+    if (e.isSynthesized())
+      return;
+    if (e.getButton() == MouseButton.PRIMARY)
+      loadElement();
+    else if (e.getButton() == MouseButton.MIDDLE)
+      onRequestAnimeTab.onChange(anime);
+    else if (e.getButton() == MouseButton.SECONDARY)
+      contextMenu.show(this, e.getScreenX(), e.getScreenY());
   }
 
   private ContextMenu createRightClickMenu() {

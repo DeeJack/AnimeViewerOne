@@ -76,7 +76,7 @@ public final class DownloadUtility {
    * @return null if the user cancel the operation (close the popup), otherwise it'll return the reference to the selected link
    * @throws IOException
    */
-  public static void chooseSource(Episode episode, WebBypassUtility.CallBack<StreamingLink> callBack) throws IOException {
+  public static void chooseSource(Episode episode, WebBypassUtility.Callback<StreamingLink> callBack) throws IOException {
     if (showingPopupSources) // TODO dividere il metodo ç.ç
       return;
     showingPopupSources = true;

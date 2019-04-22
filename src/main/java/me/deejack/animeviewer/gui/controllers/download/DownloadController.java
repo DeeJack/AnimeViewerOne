@@ -116,7 +116,7 @@ public final class DownloadController {
     }
   }
 
-  private void processLink(StreamingLink downloadLink, WebBypassUtility.CallBack<String> callBack) {
+  private void processLink(StreamingLink downloadLink, WebBypassUtility.Callback<String> callBack) {
     Connection.Response response = ConnectionUtility.connect(downloadLink.getLink(), false);
     if (response.contentType().contains("video")) {
       callBack.onSuccess(downloadLink.getLink());

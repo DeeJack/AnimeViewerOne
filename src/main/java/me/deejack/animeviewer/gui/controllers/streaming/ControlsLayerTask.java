@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
@@ -41,6 +42,8 @@ public class ControlsLayerTask extends Thread {
 
   private EventHandler<InputEvent> onAction() {
     return (event) -> {
+      if (event instanceof KeyEvent)
+        StreamingUtility.keyNavigation((KeyEvent) event, mediaView.getMediaPlayer());
       paneToHide.setVisible(true);
       SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
       lastMoved = LocalDateTime.now();

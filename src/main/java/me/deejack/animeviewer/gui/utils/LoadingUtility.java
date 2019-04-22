@@ -31,7 +31,7 @@ public final class LoadingUtility {
       root.getChildren().add(new LoadingPane(msg, root));
     } else {
       TabPane root = (TabPane) rootParent;
-      ((Pane) root.getTabs().get(0).getContent()).getChildren().add(new LoadingPane(msg, root)); // Sbagliato
+      ((Pane) root.getSelectionModel().getSelectedItem().getContent()).getChildren().add(new LoadingPane(msg, root)); // Sbagliato
     }
   }
 

@@ -3,7 +3,7 @@ package me.deejack.animeviewer.gui.controllers.streaming;
 import java.io.IOException;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import me.deejack.animeviewer.gui.controllers.download.DownloadUtility;
@@ -38,7 +38,7 @@ public class AnimePlayer {
     extractVideo(link);
   }
 
-  public void createStreaming(WebBypassUtility.CallBack<StreamingLink> onSelection) {
+  public void createStreaming(WebBypassUtility.Callback<StreamingLink> onSelection) {
     try {
       DownloadUtility.chooseSource(episode, (selectedLink) -> {
         onSelection.onSuccess(selectedLink);
@@ -75,10 +75,12 @@ public class AnimePlayer {
         streaming.onFinish();
         currentTab.setContent(prevContent);
       });
+      currentTab.setOnCloseRequest((event) -> streaming.onFinish());
       currentTab.setContent(streaming.getRoot());
-      ((Pane) currentTab.getContent()).heightProperty().addListener((obs, oldValue, newValue) -> System.out.println("ASDIOJKQAWIQJWOe"));
-      streaming.getRoot().prefHeightProperty().bind(((Pane) currentTab.getContent()).heightProperty());
-      streaming.getRoot().prefWidthProperty().bind(((Pane) currentTab.getContent()).widthProperty());
+      streaming.getRoot().setMinWidth(StackPane.USE_PREF_SIZE);
+      streaming.getRoot().setMinHeight(StackPane.USE_PREF_SIZE);
+      streaming.getRoot().prefHeightProperty().bind(currentTab.getTabPane().heightProperty());
+      streaming.getRoot().prefWidthProperty().bind(currentTab.getTabPane().widthProperty());
     } else
       setRoot(streaming);
   }

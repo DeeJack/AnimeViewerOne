@@ -1,5 +1,6 @@
 Generali:
-    - Magari fare una classe tipo bypasser, viene caricata tipo le estensioni e ti dice come bypassare un certo sito, metto di default openload e streamango che usano il bypasser di default visto che sono uguali
+    - Generalizzare ExtensionLoader per adattarlo anche a bypasser
+      Magari fare una classe tipo bypasser, viene caricata tipo le estensioni e ti dice come bypassare un certo sito, metto di default openload e streamango che usano il bypasser di default visto che sono uguali
       nel costruttore decidi l'url/gli url e quando devo bypassare uso quella estensione
     - Segnare episodi scaricati
     - Se mancano 1 o 2 minuti andare al prossimo episodio, mettere la scelta nelle impostazioni (che ancora non esitono), fare una proporzione
@@ -32,12 +33,7 @@ Meno importanti:
     - Mettere animeclick / myanimelist
 
 Bugs:
-    - Siti non supportati nella textbox per i video esterni (es vvvvid)
-    - Controllare con connessione scarsa
-    - Nello streaming in nuova tab, non fa il resize
-    - Il cursore sparisce se ho uno streaming aperto in un'altra tab
+    - Il cursore sparisce se ho uno streaming aperto in un'altra tab; Risolto ma modificare il listener del tabpane da' altri problemi tipo il keybinding
         Soluzione: Listener per il cursore nella Scena, ricordarsi però di rimuoverlo!
     - In animescene fa currentPage++, quindi anche andando a pagina 98 ti dirà di essere a pagina 2 (oppure tornando indietro aumenta di uno)
-    - Lo streaming non smette chiudendo la tab
-    - Non funzionano più i keybinding nello streaming
     - A volte lo streaming non parte... Mettere un timeout di 20 secondi in cui se non parte da errore... Successo con https://www.dreamsub.stream/anime/kono-oto-tomare/1 ep 1 ris 1080

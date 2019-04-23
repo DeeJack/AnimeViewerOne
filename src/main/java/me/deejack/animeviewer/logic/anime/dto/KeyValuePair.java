@@ -1,16 +1,16 @@
 package me.deejack.animeviewer.logic.anime.dto;
 
-public class KeyValuePair {
+public class KeyValuePair<T, E> {
   /**
    * A key for describing the sort mode
    */
-  private final String key;
+  private final T key;
   /**
    * The value to give to the source as argument
    */
-  private final String value;
+  private final E value;
 
-  public KeyValuePair(String key, String value) {
+  public KeyValuePair(T key, E value) {
     this.key = key;
     this.value = value;
   }
@@ -20,7 +20,7 @@ public class KeyValuePair {
    *
    * @return the value of the sort mode
    */
-  public String getValue() {
+  public E getValue() {
     return value;
   }
 
@@ -29,7 +29,7 @@ public class KeyValuePair {
    *
    * @return the key of the current sort mode
    */
-  public String getKey() {
+  public T getKey() {
     return key;
   }
 
@@ -53,6 +53,6 @@ public class KeyValuePair {
    */
   @Override
   public String toString() {
-    return getKey();
+    return getKey().toString();
   }
 }

@@ -1,7 +1,6 @@
 package me.deejack.animeviewer.gui.connection;
 
 import java.io.IOException;
-import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.URL;
 import java.util.HashMap;
@@ -23,7 +22,6 @@ import org.jsoup.Jsoup;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
-import static me.deejack.animeviewer.gui.utils.WebBypassUtility.registerCookieManager;
 
 public class CustomConnection implements SiteConnection {
   private static final String SERVICE_UNAVAILABLE_MSG = "Service Temporarily Unavailable";
@@ -39,7 +37,7 @@ public class CustomConnection implements SiteConnection {
     AtomicReference<List<HttpCookie>> httpCookies = new AtomicReference<>();
     Map<String, String> cookies = new HashMap<>();
     lock = new CountDownLatch(1);
-    CookieManager cookieManager = registerCookieManager();
+    // CookieManager cookieManager = registerCookieManager();
 
     /*if (App.getSite() != null && App.getSite().getSession() != null)
       cookies.putAll(App.getSite().getSession().getCookies());*/

@@ -121,7 +121,7 @@ public final class DownloadController {
     if (response.contentType().contains("video")) {
       callBack.onSuccess(downloadLink.getLink());
     } else
-      WebBypassUtility.getOpenloadLink(downloadLink.getLink(), callBack);
+      WebBypassUtility.bypassSite(downloadLink.getLink(), callBack);
   }
 
   private void startDownload(String downloadLink, Episode episode, String animeName, File destination, SuccessListener finishListener) {

@@ -1,6 +1,7 @@
 package me.deejack.animeviewer.gui.controllers.streaming;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -68,12 +69,12 @@ public class StreamingController implements BaseScene {
   public void setupEpisode() {
     if (anime == null)
       return;
-    HistoryElement historyElement = History.getHistory().get(anime);
-    if (historyElement != null) {
-      if (historyElement.getEpisodesHistory().contains(episode))
-        History.getHistory().getHistoryEpisode(historyElement, episode)
+    Optional<HistoryElement> historyElement = History.getHistory().get(anime);
+    if (historyElement.isPresent()) {
+      if (historyElement.get().getEpisodesHistory().contains(episode))
+        History.getHistory().getHistoryEpisode(historyElement.get(), episode)
                 .ifPresent((historyEpisode -> episode.setSecondsWatched(historyEpisode.getEpisode().getSecondsWatched())));
-      else historyElement.addEpisode(new HistoryEpisode(episode, LocalDateTime.now()));
+      else historyElement.get().addEpisode(new HistoryEpisode(episode, LocalDateTime.now()));
     } else
       History.getHistory().add(new HistoryElement(anime, new HistoryEpisode(episode, LocalDateTime.now())));
     if (episode.getSecondsWatched() > 0)

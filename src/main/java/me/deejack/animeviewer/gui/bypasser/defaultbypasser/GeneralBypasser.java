@@ -10,7 +10,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import me.deejack.animeviewer.gui.bypasser.StreamingSiteBypasser;
+import me.deejack.animeviewer.gui.bypasser.SiteBypasser;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
 import me.deejack.animeviewer.logic.utils.UserAgents;
 import netscape.javascript.JSException;
@@ -23,7 +23,10 @@ import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 import static me.deejack.animeviewer.gui.utils.WebBypassUtility.createWebView;
 import static me.deejack.animeviewer.logic.utils.GeneralUtility.logError;
 
-public class GeneralBypasser implements StreamingSiteBypasser {
+/**
+ *
+ */
+public class GeneralBypasser implements SiteBypasser {
   private static int failCount = 0;
 
   private static void findStreamingLink(Document document, WebEngine engine, WebBypassUtility.Callback<String> callBack, URL url, String link) {
@@ -91,7 +94,7 @@ public class GeneralBypasser implements StreamingSiteBypasser {
         engine.getLoadWorker().cancel();
         pair.getValue().close();
         throw new RuntimeException("The connection to this site caused a problem, maybe this site isn't supported or it has some problem right now." +
-                "INFO: exception in the getOpenloadLink method, site: " + engine.getLocation());
+                "INFO: exception in the getDirect method, site: " + engine.getLocation());
       }
       if (newValue == Worker.State.SUCCEEDED && (engine.getLocation().contains(simpleLinkRequested))) {
         Document document = engine.getDocument();

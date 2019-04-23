@@ -16,6 +16,7 @@ import me.deejack.animeviewer.gui.components.filters.FilterList;
 import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.anime.dto.KeyValuePair;
 import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamsubAnime;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
@@ -29,6 +30,7 @@ public class AnimeSceneController implements BaseScene {
   private final FilterList filters;
   private final String search;
   private final TabPane root;
+  private AnimePane animePane;
   private int currentPage;
 
   public AnimeSceneController(List<Anime> elements, int page, boolean isSearch, FilterList filters, String search) {
@@ -67,7 +69,7 @@ public class AnimeSceneController implements BaseScene {
     VBox found = (VBox) ((ScrollPane) content.lookup("#scrollPane")).getContent();
     PagesBox pagesBox = new PagesBox(currentPage, search, isSearch, filters, onPageChanged(found));
     found.getChildren().add(pagesBox);
-    AnimePane animePane = new AnimePane(elements, onRequestAnimeTab());
+    animePane = new AnimePane(elements, onRequestAnimeTab());
     found.getChildren().add(0, animePane);
   }
 
@@ -82,11 +84,11 @@ public class AnimeSceneController implements BaseScene {
     };
   }
 
-  private Listener<List<Anime>> onPageChanged(VBox foundBox) {
-    return (animeList) -> {
-      currentPage++;
+  private Listener<KeyValuePair<Integer, List<Anime>>> onPageChanged(VBox foundBox) {
+    return (keyValuePair) -> {
+      currentPage = keyValuePair.getKey();
       foundBox.getChildren().clear();
-      initialize(animeList);
+      initialize(keyValuePair.getValue());
     };
   }
 
@@ -104,6 +106,7 @@ public class AnimeSceneController implements BaseScene {
 
   @Override
   public void onBackFromOtherScene() {
+    animePane.reload();
   }
 
   @Override

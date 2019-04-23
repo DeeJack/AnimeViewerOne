@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -41,18 +42,18 @@ public final class History {
     viewedElements.remove(get(anime));
   }
 
-  public HistoryElement get(Anime anime) {
+  public Optional<HistoryElement> get(Anime anime) {
     for (HistoryElement historyElement : viewedElements) {
       if (historyElement.getViewedElement().equals(anime) ||
               historyElement.getViewedElement().getUrl().equals(anime.getUrl()))
-        return historyElement;
+        return Optional.of(historyElement);
     }
-    return null;
+    return Optional.empty();
   }
 
-  public HistoryEpisode getLastEpisodeOf(Anime anime) {
-    HistoryElement element = get(anime);
-    return element == null ? null : element.getEpisodesHistory().get(element.getEpisodesHistory().size() - 1);
+  public Optional<HistoryEpisode> getLastEpisodeOf(Anime anime) {
+    Optional<HistoryElement> element = get(anime);
+    return element.map(historyElement -> historyElement.getEpisodesHistory().get(historyElement.getEpisodesHistory().size() - 1));
   }
 
   public Optional<HistoryEpisode> getHistoryEpisode(HistoryElement historyElement, Episode episode) {
@@ -94,13 +95,14 @@ public final class History {
     if (!JsonValidator.isValid(json))
       throw new IOException("Json is invalid!");
     List<HistoryElement> elements = serializer.deserializeList(json);
+    sort();
 
     viewedElements.addAll(elements);
     return true;
   }
 
   public void sort() {
-    //viewedElements.sort((element, otherElement) -> );
+    viewedElements.sort(Comparator.comparing(element -> element.getEpisodesHistory().get(element.getEpisodesHistory().size() - 1).getViewedDate()));
   }
 
   public boolean loadFromFile() throws IOException {

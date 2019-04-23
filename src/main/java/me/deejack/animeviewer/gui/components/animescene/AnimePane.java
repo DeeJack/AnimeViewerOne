@@ -1,11 +1,14 @@
 package me.deejack.animeviewer.gui.components.animescene;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.geometry.HPos;
 import javafx.scene.layout.FlowPane;
 import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
 public class AnimePane extends FlowPane {
+  private final List<AnimeBox> animeBoxSet = new ArrayList<>();
 
   public AnimePane(Iterable<? extends Anime> animeList, Listener<Anime> onRequestAnimeTab) {
     //setPrefWidth(600);
@@ -21,9 +24,14 @@ public class AnimePane extends FlowPane {
     for (Anime anime : animeList) {
       AnimeBox box = new AnimeBox(anime, onRequestAnimeTab);
       getChildren().add(box);
+      animeBoxSet.add(box);
     }
     /*animeList.stream().
             map(AnimeBox::new).
             forEach(getChildren()::add);*/
+  }
+
+  public void reload() {
+    animeBoxSet.forEach(AnimeBox::reload);
   }
 }

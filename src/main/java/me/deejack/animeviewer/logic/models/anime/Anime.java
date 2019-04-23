@@ -10,7 +10,7 @@ import me.deejack.animeviewer.logic.models.episode.Episode;
 /**
  * Di un anime puoi prendere i dettagli, gli episodi oppure gli anime correlati ma per ora lasciamo perdere
  */
-public interface  Anime {
+public interface Anime {
   AnimeInformation getAnimeInformation();
 
   List<Episode> getEpisodes();

@@ -54,6 +54,8 @@ public abstract class AnimeImpl extends ParsedHttpAnime {
   }
 
   public List<Episode> getEpisodes() {
+    if (episodes == null)
+      episodes = new ArrayList<>();
     return episodes;
   }
 

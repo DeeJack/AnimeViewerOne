@@ -10,6 +10,7 @@ import java.nio.file.StandardOpenOption;
 
 public final class FilesManager {
   public static final File EXTENSION_FOLDER = new File(GeneralUtility.CONFIG_PATH + File.separator + "extensions");
+  public static final File BYPASSER_FOLDER = new File(GeneralUtility.CONFIG_PATH + File.separator + "bypassers");
   private static final File CONFIG_FOLDER = new File(GeneralUtility.CONFIG_PATH);
   private static final File FAVORITE_IMAGE_FOLDER = new File(GeneralUtility.CONFIG_PATH + File.separator + "favoritesImages");
 
@@ -23,6 +24,8 @@ public final class FilesManager {
       FAVORITE_IMAGE_FOLDER.mkdir();
     if (!EXTENSION_FOLDER.exists())
       EXTENSION_FOLDER.mkdir();
+    if (!BYPASSER_FOLDER.exists())
+      BYPASSER_FOLDER.mkdir();
   }
 
   public static void writeToFile(File output, String text) {

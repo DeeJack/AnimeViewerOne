@@ -2,7 +2,7 @@ package me.deejack.animeviewer.gui.bypasser;
 
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
 
-public interface StreamingSiteBypasser {
+public interface SiteBypasser {
 
   /**
    * Return the direct link to the video passing the link to the page of the streaming link

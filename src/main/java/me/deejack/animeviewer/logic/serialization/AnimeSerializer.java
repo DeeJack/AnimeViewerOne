@@ -6,7 +6,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -19,11 +19,12 @@ public final class AnimeSerializer<T> {
     gson = new GsonBuilder()
             .registerTypeAdapter(Anime.class, new GeneralTypeAdapter<Anime>())
             .registerTypeAdapter(Episode.class, new GeneralTypeAdapter<Episode>())
-            .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context) ->
-                    LocalDate.parse(json.getAsJsonPrimitive().getAsString()))
-            .registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (jsonObject, jsonType, context) -> {
-              return new JsonPrimitive(jsonObject.toString());
-            })
+            //.registerTypeAdapter(Episode[].class, new GeneralListTypeAdapter<Episode[]>())
+            //.registerTypeAdapter(FavoriteAnime.class, new GeneralTypeAdapter<FavoriteAnime>())
+            .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, typeOfT, context) ->
+                    LocalDateTime.parse(json.getAsJsonPrimitive().getAsString()))
+            .registerTypeAdapter(LocalDateTime.class, (
+                    JsonSerializer<LocalDateTime>) (jsonObject, jsonType, context) -> new JsonPrimitive(jsonObject.toString()))
             /*.registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (typeOfT, localDatep) ->
                     new )*/
             .disableHtmlEscaping()

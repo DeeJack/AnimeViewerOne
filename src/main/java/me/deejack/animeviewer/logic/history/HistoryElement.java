@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 
 public class HistoryElement {
   @Expose
@@ -41,6 +42,10 @@ public class HistoryElement {
 
   public void removeEpisodeFromHistory(int index) {
     episodesHistory.remove(index);
+  }
+
+  public boolean contains(Episode episode) {
+    return episodesHistory.contains(new HistoryEpisode(episode, null));
   }
 
   @Override

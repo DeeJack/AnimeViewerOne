@@ -31,8 +31,8 @@ public class ItemEpisode extends HBox {
     HBox streaming = episode.getUrl().isEmpty() ? createNotReleased() : createStreamingDownload(onRequestStreaming);
     getChildren().addAll(createTile(parent), createReleaseDate(), streaming);
 
-    if (History.getHistory().contains(anime) && History.getHistory().get(anime).getEpisodesHistory().contains(episode)) {
-      HistoryEpisode episode = History.getHistory().getLastEpisodeOf(anime);
+    if (History.getHistory().contains(anime) && History.getHistory().get(anime).get().contains(episode)) {
+      HistoryEpisode episode = History.getHistory().getLastEpisodeOf(anime).get();
       long totalSeconds = (long) episode.getEpisode().getSecondsWatched();
       int seconds = (int) Duration.ofSeconds(totalSeconds).getSeconds() % 60 % 60;
       int minutes = (int) Duration.ofSeconds(totalSeconds).toMinutes() % 60;

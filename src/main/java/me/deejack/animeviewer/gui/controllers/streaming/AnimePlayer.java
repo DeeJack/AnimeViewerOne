@@ -64,7 +64,7 @@ public class AnimePlayer {
     if (response.contentType().contains("video")) {
       setUpStreamingScene(link);
     } else
-      WebBypassUtility.getOpenloadLink(link, this::setUpStreamingScene);
+      WebBypassUtility.bypassSite(link, this::setUpStreamingScene);
   }
 
   private void setUpStreamingScene(String link) {

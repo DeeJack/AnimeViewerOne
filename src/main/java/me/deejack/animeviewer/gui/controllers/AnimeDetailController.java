@@ -1,6 +1,5 @@
 package me.deejack.animeviewer.gui.controllers;
 
-import java.time.LocalDate;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Tab;
@@ -14,10 +13,11 @@ import me.deejack.animeviewer.gui.components.general.ButtonBack;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamsubEpisode;
+import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
@@ -28,6 +28,7 @@ public class AnimeDetailController implements BaseScene {
   private final boolean isNewTab;
   private final Tab currentTab;
   private final Pane root;
+  private ListViewEpisodes listViewEpisodes;
 
   public AnimeDetailController(Anime anime, boolean isNewTab, Tab currentTab) {
     this.anime = Favorite.getInstance().contains(anime) ? Favorite.getInstance().get(anime.getUrl()).getAnime() : anime;
@@ -56,10 +57,10 @@ public class AnimeDetailController implements BaseScene {
       Platform.runLater(this::load);
       return;
     }
-    anime.getEpisodes().add(0, new DreamsubEpisode("Ep 100%", 1, "https://www.dreamsub.stream/anime/one-piece-c/10000", LocalDate.now()));
     setupScene();
     if (!isNewTab)
       loadScene();
+    //anime.getEpisodes().add(0, new DreamsubEpisode("Ep 100%", 1, "https://www.dreamsub.stream/anime/one-piece-c/10000", LocalDate.now()));
   }
 
   private void setupScene() {
@@ -77,18 +78,22 @@ public class AnimeDetailController implements BaseScene {
       hBox.setAlignment(Pos.TOP_LEFT);
       gridPane.add(hBox, 1, 2);
     }
-    ListViewEpisodes listViewEpisodes = new ListViewEpisodes(anime, (episode) -> {
-      showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingEpisodeLinks"));
-      new Thread(() -> {
-        AnimePlayer player = new AnimePlayer(episode, anime, isNewTab, currentTab);
-        Platform.runLater(player::createStreaming);
-      }).start();
-    });
+    listViewEpisodes = new ListViewEpisodes(anime, onStreamingRequested());
     AnimeInfoBox infoBox = new AnimeInfoBox(anime);
     infoBox.setOnReload((action) -> reloadInfoBox(listViewEpisodes, infoBox));
     gridPane.add(boxImage, 2, 2);
     gridPane.add(infoBox, 2, 3);
     gridPane.add(listViewEpisodes, 2, 4);
+  }
+
+  private Listener<Episode> onStreamingRequested() {
+    return (episode) -> {
+      showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingEpisodeLinks"));
+      new Thread(() -> {
+        AnimePlayer player = new AnimePlayer(episode, anime, isNewTab, currentTab);
+        Platform.runLater(player::createStreaming);
+      }).start();
+    };
   }
 
   private void reloadInfoBox(ListViewEpisodes listViewEpisodes, AnimeInfoBox infoBox) {
@@ -110,6 +115,7 @@ public class AnimeDetailController implements BaseScene {
 
   @Override
   public void onBackFromOtherScene() {
+    listViewEpisodes.reload();
   }
 
   @Override

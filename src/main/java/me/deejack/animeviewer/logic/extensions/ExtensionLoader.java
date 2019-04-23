@@ -11,22 +11,31 @@ import java.util.List;
 import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import me.deejack.animeviewer.gui.bypasser.SiteBypasser;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
 import me.deejack.animeviewer.logic.utils.FilesManager;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
-public final class ExtensionLoader {
-  public static List<Class> loadedClasses = new ArrayList<>();
+public final class ExtensionLoader<T> {
+  //public static List<Class> loadedClasses = new ArrayList<>();
 
   private ExtensionLoader() {
   }
 
   public static List<FilteredSource> loadExtension() {
-    List<FilteredSource> sources = new ArrayList<>();
-    for (File file : Objects.requireNonNull(FilesManager.EXTENSION_FOLDER.listFiles())) {
+    return loadExtension(FilesManager.EXTENSION_FOLDER, FilteredSource.class);
+  }
+
+  public static List<SiteBypasser> loadBypassers() {
+    return loadExtension(FilesManager.BYPASSER_FOLDER, SiteBypasser.class);
+  }
+
+  private static <T> List<T> loadExtension(File folder, Class<T> superClass) {
+    List<T> sources = new ArrayList<>();
+    for (File file : Objects.requireNonNull(folder.listFiles())) {
       if (file.isFile() && file.getName().endsWith(".jar")) {
         addExtToClasspath(file);
-        FilteredSource source = getFilteredSource(file);
+        T source = getFilteredSource(file, superClass);
         if (source != null)
           sources.add(source);
       }
@@ -34,8 +43,8 @@ public final class ExtensionLoader {
     return sources;
   }
 
-  private static FilteredSource getFilteredSource(File file) {
-    FilteredSource animeSource = null;
+  private static <T> T getFilteredSource(File file, Class<T> superClass) {
+    T animeSource = null;
     try (JarFile jarFile = new JarFile(file)) {
       ClassLoader classLoader = URLClassLoader.newInstance(new URL[]{new URL("jar:file:" + file.getPath() + "!/")});
       Enumeration<JarEntry> entries = jarFile.entries();
@@ -43,8 +52,8 @@ public final class ExtensionLoader {
         JarEntry entry = entries.nextElement();
         if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
           Class<?> loadedClass = classLoader.loadClass(entry.getName().replaceAll(".class", "").replaceAll("/", "."));
-          loadedClasses.add(loadedClass);
-          animeSource = tryLoadAnimeSource(loadedClass);
+          //loadedClasses.add(loadedClass);
+          animeSource = tryLoadAnimeSource(loadedClass, superClass);
           if (animeSource != null)
             return animeSource;
         }
@@ -68,9 +77,9 @@ public final class ExtensionLoader {
     }
   }
 
-  private static FilteredSource tryLoadAnimeSource(Class<?> classz) {
+  private static <T> T tryLoadAnimeSource(Class<?> subClass, Class<T> superClass) {
     try {
-      return classz.asSubclass(FilteredSource.class).newInstance();
+      return subClass.asSubclass(superClass).newInstance();
     } catch (IllegalAccessException | InstantiationException | ClassCastException ignored) {
     }
     return null;

@@ -18,6 +18,7 @@ public class FavoriteController implements BaseScene {
   public FavoriteController() {
     root = SceneUtility.loadParent("/scenes/favorite/favorite.fxml");
     boxFavorite = (VBox) ((ScrollPane) root.lookup("#scrollPane")).getContent();
+    reload();
   }
 
   private void reload() {

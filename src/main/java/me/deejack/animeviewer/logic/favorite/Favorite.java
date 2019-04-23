@@ -17,7 +17,7 @@ import static me.deejack.animeviewer.logic.history.History.CONFIG_DIR;
 public final class Favorite {
   private static final Favorite instance = new Favorite();
   private final Set<FavoriteAnime> favorites = new LinkedHashSet<>();
-  private final AnimeSerializer serializer = new AnimeSerializer<>(Anime.class);
+  private final AnimeSerializer<FavoriteAnime> serializer = new AnimeSerializer<>(FavoriteAnime.class);
 
   private Favorite() {
   }
@@ -63,6 +63,10 @@ public final class Favorite {
     return true;
   }
 
+  private void loadEpisodes() {
+    favorites.forEach((favoriteAnime) -> favoriteAnime.getAnime().getEpisodes().addAll(favoriteAnime.getEpisodes()));
+  }
+
   public boolean loadFromFile() throws IOException {
     return loadFromFile(new File(CONFIG_DIR + File.separator + "favorites.json"));
   }
@@ -78,6 +82,7 @@ public final class Favorite {
       FavoriteAnime.setCounter(elements.get(elements.size() - 1).getId() + 1);
 
     favorites.addAll(elements);
+    loadEpisodes();
     return true;
   }
 

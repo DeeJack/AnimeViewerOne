@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.async.LoadPageAsync;
 import me.deejack.animeviewer.gui.components.filters.FilterList;
+import me.deejack.animeviewer.logic.anime.dto.KeyValuePair;
 import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -21,9 +22,9 @@ public class PagesBox extends HBox {
   private final FilterList filters;
   private final boolean isSearch;
   private final int currentPage;
-  private final Listener<List<Anime>> onPageChanged;
+  private final Listener<KeyValuePair<Integer, List<Anime>>> onPageChanged;
 
-  public PagesBox(int currentPage, String search, boolean isSearch, FilterList filters, Listener<List<Anime>> onPageChanged) {
+  public PagesBox(int currentPage, String search, boolean isSearch, FilterList filters, Listener<KeyValuePair<Integer, List<Anime>>> onPageChanged) {
     this.currentPage = currentPage;
     this.search = search;
     this.isSearch = isSearch;
@@ -58,9 +59,9 @@ public class PagesBox extends HBox {
           Task<List<Anime>> pageChangeTask = new LoadPageAsync(filters, search, isSearch, page);
           new Thread(pageChangeTask).start();
           try {
-            onPageChanged.onChange(pageChangeTask.get());
+            onPageChanged.onChange(new KeyValuePair<>(page, pageChangeTask.get()));
           } catch (InterruptedException | ExecutionException e) {
-            onPageChanged.onChange(new ArrayList<>());
+            onPageChanged.onChange(new KeyValuePair<>(page, new ArrayList<>()));
           }
         }
       });

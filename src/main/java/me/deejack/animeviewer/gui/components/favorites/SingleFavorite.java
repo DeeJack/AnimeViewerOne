@@ -107,7 +107,7 @@ public class SingleFavorite extends HBox {
     if (!anime.hasBeenLoaded())
       anime.load();
     if (History.getHistory().contains(anime)) {
-      List<HistoryEpisode> episodesHistory = History.getHistory().get(anime).getEpisodesHistory();
+      List<HistoryEpisode> episodesHistory = History.getHistory().get(anime).get().getEpisodesHistory();
       new AnimePlayer(episodesHistory.get(episodesHistory.size() - 1).getEpisode(), anime, false, null).createStreaming();
       return;
     }

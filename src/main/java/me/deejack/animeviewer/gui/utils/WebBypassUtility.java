@@ -5,8 +5,9 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.HttpCookie;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
@@ -19,22 +20,47 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Pair;
-import me.deejack.animeviewer.gui.bypasser.StreamingSiteBypasser;
+import me.deejack.animeviewer.gui.bypasser.SiteBypasser;
+import me.deejack.animeviewer.gui.bypasser.defaultbypasser.GeneralBypasser;
+import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.utils.UserAgents;
 import org.apache.logging.log4j.LogManager;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
+import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
 public final class WebBypassUtility {
-  private static final List<StreamingSiteBypasser> bypassers = new ArrayList<>();
-
-  private static void loadBypassers() {
-
-  }
+  private static final List<SiteBypasser> bypassers = ExtensionLoader.loadBypassers();
 
   private WebBypassUtility() {
+  }
+
+  public static void bypassSite(String link, Callback<String> callback) {
+    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingStreaming"));
+    boolean bypassed = false;
+    URL url = getURL(link);
+    if (url == null) {
+      handleException(new RuntimeException("This link isn't a valid URL: " + link));
+      return;
+    }
+    for (SiteBypasser bypasser : bypassers) {
+      if (Arrays.asList(bypasser.getCompatibleLinks()).contains(url.getHost())) {
+        bypassed = true;
+        bypasser.getDirectLink(link, callback);
+      }
+    }
+    if (!bypassed)
+      new GeneralBypasser().getDirectLink(link, callback);
+  }
+
+  private static URL getURL(String link) {
+    try {
+      return new URL(link);
+    } catch (MalformedURLException exception) {
+      return null;
+    }
   }
 
   public static void bypassCloudflare(String pageLink, Callback<List<HttpCookie>> callback) {
@@ -51,7 +77,7 @@ public final class WebBypassUtility {
     }
     CookieManager cookieManager = registerCookieManager();
 
-    LoadingUtility.showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingCloudflare"));
+    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingCloudflare"));
     Pair<WebView, Stage> pair = createWebView();
     WebEngine engine = pair.getKey().getEngine();
     engine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {
@@ -88,10 +114,6 @@ public final class WebBypassUtility {
     });
     stage.show();
     return new Pair<>(browser, stage);
-  }
-
-  private void bypassSite(String link, Callback<String> callback) {
-
   }
 
   public static CookieManager registerCookieManager() {

@@ -21,29 +21,29 @@ import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
-public class AnimeBox extends VBox {
+public class AnimeBox extends StackPane {
   private static final Image imageFavorite = new Image(App.class.getResourceAsStream("/assets/favorite.png"));
   private final Anime anime;
   private final Listener<Anime> onRequestAnimeTab;
+  private ImageView favoriteImageView;
 
   public AnimeBox(Anime anime, Listener<Anime> onRequestAnimeTab) {
     this.anime = anime;
     this.onRequestAnimeTab = onRequestAnimeTab;
     Tooltip.install(this, new Tooltip(LocalizedApp.getInstance().getString("AnimeBoxTooltip")));
-    setUp();
+    reload();
   }
 
-  public void setUp() {
+  public void reload() {
+    getChildren().clear();
     ContextMenu contextMenu = createRightClickMenu();
     setOnMouseReleased((e) -> onClick(e, contextMenu));
     ImageView view = createView();
     Label title = createTitle(view);
-    StackPane stackPane = new StackPane(view);
-    if (anime.isFavorite()) {
-      stackPane.setAlignment(Pos.TOP_RIGHT);
-      stackPane.getChildren().add(createImageFavorite());
-    }
-    getChildren().addAll(stackPane, title);
+    StackPane imagePane = new StackPane(view);
+    imagePane.setAlignment(Pos.TOP_RIGHT);
+    imagePane.getChildren().add(createImageFavorite());
+    getChildren().addAll(new VBox(imagePane, title));
     setPrefHeight(view.getFitHeight() + title.getHeight() + 20);
     setPadding(new Insets(10, 10, 10, 10));
   }
@@ -61,26 +61,24 @@ public class AnimeBox extends VBox {
 
   private ContextMenu createRightClickMenu() {
     ContextMenu contextMenu = new ContextMenu();
-    if (anime.isFavorite()) {
-      MenuItem item = new MenuItem(LocalizedApp.getInstance().getString("FavoriteRemoveItem"));
-      registerEvents(item);
-      contextMenu.getItems().add(item);
-    } else {
-      MenuItem item = new MenuItem(LocalizedApp.getInstance().getString("FavoriteAddItem"));
-      registerEvents(item);
-      contextMenu.getItems().add(item);
-    }
-    MenuItem item = new MenuItem(LocalizedApp.getInstance().getString("OpenInNewTab"));
-    item.setOnAction((event) -> onRequestAnimeTab.onChange(anime));
+    MenuItem item = anime.isFavorite() ?
+            new MenuItem(LocalizedApp.getInstance().getString("FavoriteRemoveItem")) :
+            new MenuItem(LocalizedApp.getInstance().getString("FavoriteAddItem"));
+    registerEvents(item);
     contextMenu.getItems().add(item);
+    MenuItem newTabItem = new MenuItem(LocalizedApp.getInstance().getString("OpenInNewTab"));
+    newTabItem.setOnAction((event) -> onRequestAnimeTab.onChange(anime));
+    contextMenu.getItems().add(newTabItem);
     return contextMenu;
   }
 
   private ImageView createImageFavorite() {
-    ImageView favorite = new ImageView(imageFavorite);
-    favorite.setFitHeight(20);
-    favorite.setPreserveRatio(true);
-    return favorite;
+    favoriteImageView = new ImageView();
+    favoriteImageView.setFitHeight(20);
+    favoriteImageView.setPreserveRatio(true);
+    if (anime.isFavorite())
+      favoriteImageView.setImage(imageFavorite);
+    return favoriteImageView;
   }
 
   private Label createTitle(ImageView view) {
@@ -108,12 +106,19 @@ public class AnimeBox extends VBox {
   private void registerEvents(MenuItem item) {
     item.setOnAction((event) -> {
       if (anime.hasBeenLoaded()) {
-        anime.toggleFavorite();
-        FilesUtility.saveFavorite();
-      } else anime.loadAsync(() -> {
-        anime.toggleFavorite();
-        FilesUtility.saveFavorite();
-      });
+        onToggleFavorite(item);
+      } else anime.loadAsync(() -> onToggleFavorite(item));
     });
+  }
+
+  private void onToggleFavorite(MenuItem item) {
+    anime.toggleFavorite();
+    FilesUtility.saveFavorite();
+    favoriteImageView.setImage(anime.isFavorite() ?
+            imageFavorite :
+            null);
+    item.setText(anime.isFavorite() ?
+            LocalizedApp.getInstance().getString("FavoriteRemoveItem") :
+            LocalizedApp.getInstance().getString("FavoriteAddItem"));
   }
 }

@@ -20,6 +20,7 @@ Generali:
     - anime correlati
     - Mettere caricamento nello streaming
     - Aggiungere l'onBack nell'animedetail che fa aggiornare gli anime visti
+    - Cronologia in ordine di data
 
 Meno importanti:
     - Ricerca dopo mezzo secondo che non scrivi
@@ -37,3 +38,4 @@ Bugs:
         Soluzione: Listener per il cursore nella Scena, ricordarsi però di rimuoverlo!
     - In animescene fa currentPage++, quindi anche andando a pagina 98 ti dirà di essere a pagina 2 (oppure tornando indietro aumenta di uno)
     - A volte lo streaming non parte... Mettere un timeout di 20 secondi in cui se non parte da errore... Successo con https://www.dreamsub.stream/anime/kono-oto-tomare/1 ep 1 ris 1080
+    - Non si vede più la scritta che ti dice a che punto sei arrivato con un episodio

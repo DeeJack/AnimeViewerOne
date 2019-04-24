@@ -23,6 +23,7 @@ public class HistoryController implements BaseScene {
 
   private void reload() {
     boxFavorite.getChildren().clear();
+    History.getHistory().sort();
     List<HistoryItem> items = History.getHistory().getViewedElements().stream()
             .map(HistoryItem::new)
             .collect(Collectors.toList());

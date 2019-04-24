@@ -30,6 +30,7 @@ import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
 public final class DownloadUtility {
   private static boolean showingPopupSources = false;
+
   private DownloadUtility() {
   }
 
@@ -41,7 +42,7 @@ public final class DownloadUtility {
    */
   public static File savePath(String text) {
     FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Select the path");
+    fileChooser.setTitle(LocalizedApp.getInstance().getString("DownloadSelectPath"));
     fileChooser.setInitialFileName(text + ".mp4");
     fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
     return fileChooser.showSaveDialog(SceneUtility.getStage());
@@ -54,16 +55,14 @@ public final class DownloadUtility {
    */
   public static File saveDirectory() {
     DirectoryChooser chooser = new DirectoryChooser();
-    chooser.setTitle("Select folder");
+    chooser.setTitle(LocalizedApp.getInstance().getString("DownloadSelectFolder"));
     chooser.setInitialDirectory(new File(System.getProperty("user.home")));
     return chooser.showDialog(SceneUtility.getStage());
   }
 
   private static boolean checkEpisodeReleased(Episode episode) {
     if (episode.getUrl() == null || episode.getUrl().isEmpty()) {
-      Alert alert = new Alert(Alert.AlertType.WARNING, "Nessuno createStreaming disponibile, probabilmente deve ancora uscire l'episodio",
-              ButtonType.OK);
-      alert.showAndWait();
+      showNoStreaming();
       hideWaitLoad();
       return false;
     }
@@ -176,7 +175,7 @@ public final class DownloadUtility {
   }
 
   private static void showNoStreaming() {
-    Alert alert = new Alert(Alert.AlertType.WARNING, LocalizedApp.getInstance().getString("NoStreaming"),
+    Alert alert = new Alert(Alert.AlertType.WARNING, LocalizedApp.getInstance().getString("DownloadNoLink"),
             ButtonType.OK);
     alert.showAndWait();
     hideWaitLoad();

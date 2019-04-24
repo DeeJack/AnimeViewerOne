@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.favorite.FavoriteAnime;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 public class FavoriteItem extends SingleFavorite {
   private final FavoriteAnime favorite;
@@ -29,8 +30,8 @@ public class FavoriteItem extends SingleFavorite {
   }
 
   private void setAnimeInfo() {
-    Label labelTitle = new Label("Titolo: " + favorite.getAnime().getAnimeInformation().getName());
-    Label labelEpisodes = new Label("Episodi: " + favorite.getAnime().getAnimeInformation().getNumberOfEpisodes());
+    Label labelTitle = new Label(LocalizedApp.getInstance().getString("Title") + ": " + favorite.getAnime().getAnimeInformation().getName());
+    Label labelEpisodes = new Label(LocalizedApp.getInstance().getString("EpisodesNumber") + ": " + favorite.getAnime().getAnimeInformation().getNumberOfEpisodes());
     TextArea textAreaPlot = new TextArea(favorite.getAnime().getAnimeInformation().getPlot());
     textAreaPlot.setWrapText(true);
     textAreaPlot.setEditable(false);

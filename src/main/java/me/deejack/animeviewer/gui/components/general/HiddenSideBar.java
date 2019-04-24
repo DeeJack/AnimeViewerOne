@@ -24,10 +24,10 @@ public class HiddenSideBar extends VBox {
   public HiddenSideBar(HBox btnOpen) {
     this.btnOpen = btnOpen;
     Tooltip.install(btnOpen, new Tooltip(LocalizedApp.getInstance().getString("SidebarControlButton")));
-    setUp();
+    setup();
   }
 
-  private void setUp() {
+  private void setup() {
     StackPane.setAlignment(this, Pos.TOP_RIGHT);
     getChildren().add(btnClose);
     setWidth(350);

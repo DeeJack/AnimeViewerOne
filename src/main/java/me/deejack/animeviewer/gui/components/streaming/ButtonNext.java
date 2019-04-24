@@ -12,6 +12,7 @@ import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 
+import static me.deejack.animeviewer.gui.controllers.streaming.StreamingUtility.findNextEpisode;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 
@@ -34,7 +35,7 @@ public class ButtonNext extends Button {
   }
 
   private void askNextEpisode() {
-    Optional<Episode> nextEpisode = findNextEpisode();
+    Optional<Episode> nextEpisode = findNextEpisode(anime, currentEpisode);
     if (!nextEpisode.isPresent()) {
       new Alert(Alert.AlertType.NONE, LocalizedApp.getInstance().getString("AlertNoNextEpisode"), ButtonType.OK).show();
       return;
@@ -50,17 +51,6 @@ public class ButtonNext extends Button {
           hideWaitLoad();
       });
     }
-  }
-
-  private Optional<Episode> findNextEpisode() {
-    if (anime == null)
-      return Optional.empty();
-    if (!anime.hasBeenLoaded())
-      anime.load();
-    int index = anime.getEpisodes().indexOf(currentEpisode);
-    if (index == anime.getEpisodes().size())
-      return Optional.empty();
-    return Optional.of(anime.getEpisodes().get(index + 1));
   }
 
   public void setOnNextEpisode(SuccessListener nextEpisodeListener) {

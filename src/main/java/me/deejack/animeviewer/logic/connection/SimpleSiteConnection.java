@@ -20,6 +20,5 @@ public class SimpleSiteConnection implements SiteConnection {
       throw new NoConnectionException(url, e);
     }
     return response;
-    //});
   }
 }

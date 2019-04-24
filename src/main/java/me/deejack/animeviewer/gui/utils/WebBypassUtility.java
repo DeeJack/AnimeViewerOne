@@ -42,7 +42,7 @@ public final class WebBypassUtility {
     boolean bypassed = false;
     URL url = getURL(link);
     if (url == null) {
-      handleException(new RuntimeException("This link isn't a valid URL: " + link));
+      handleException(new RuntimeException(LocalizedApp.getInstance().getString("ExceptionInvalidUrl") + "\nURL: " + link));
       return;
     }
     for (SiteBypasser bypasser : bypassers) {

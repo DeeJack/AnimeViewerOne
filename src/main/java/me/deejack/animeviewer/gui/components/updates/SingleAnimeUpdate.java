@@ -15,11 +15,8 @@ public class SingleAnimeUpdate extends SingleFavorite {
     super(anime, anime.getAnimeInformation().getImageUrl(), null);
     this.anime = anime;
     this.newEpisode = newEpisode;
-    System.out.println("Initializing");
     initialize();
-    System.out.println("Setting info");
     setInfo();
-    System.out.println("Finish");
   }
 
   private void initialize() {

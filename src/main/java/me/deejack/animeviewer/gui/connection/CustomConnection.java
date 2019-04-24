@@ -47,8 +47,7 @@ public class CustomConnection implements SiteConnection {
       Connection.Response response = execute(pageLink, cookies, followRedirects);
       System.out.println("Connected to " + response.url().toExternalForm() + " with code " + response.statusCode() + "(" + response.statusMessage() + ")");
       if (response.statusMessage().equalsIgnoreCase(SERVICE_UNAVAILABLE_MSG)) {
-        Platform.runLater(() -> new Alert(Alert.AlertType.WARNING, "Il sito ha riportato un errore, " +
-                "potresti non riuscire a connetterti o potrebbe essere lenta la connessione, non è (probabilmente) un errore dell'applicazione",
+        Platform.runLater(() -> new Alert(Alert.AlertType.WARNING, LocalizedApp.getInstance().getString("AlertHttp503"),
                 ButtonType.OK).show());
       }
       if (response.statusCode() == 503) {
@@ -64,7 +63,7 @@ public class CustomConnection implements SiteConnection {
       }
       boolean success = lock.await(25, TimeUnit.SECONDS);
       if (!success) {
-        Platform.runLater(() -> new Alert(Alert.AlertType.WARNING, "E' stato impossibile connettersi entro 25 secondi, annullamento dell'operazione", ButtonType.OK).show());
+        Platform.runLater(() -> new Alert(Alert.AlertType.WARNING, LocalizedApp.getInstance().getString("AlertTimeout"), ButtonType.OK).show());
         hideWaitLoad();
         return null;
       }

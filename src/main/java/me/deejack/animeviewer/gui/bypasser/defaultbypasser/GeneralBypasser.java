@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import me.deejack.animeviewer.gui.bypasser.SiteBypasser;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.utils.UserAgents;
 import netscape.javascript.JSException;
 import org.jsoup.Connection;
@@ -36,12 +37,7 @@ public class GeneralBypasser implements SiteBypasser {
     else {
       try {
         engine.executeScript("document.getElementById('videooverlay').click();");
-       /* Object useless = engine.executeScript("var event = document.createEvent(\"HTMLEvents\");\n" +
-                "\n" +
-                "  event.initEvent(\"click\", true, true);\n" +
-                "document.getElementById('videooverlay').dispatchEvent(event);console.log(document.getElementsByTagName('video')[0].src);");*/
 
-        System.out.println(document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src"));
         if (document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src") == null)
           throw new JSException("Video attribute SRC is null :(, link: " + link);
         streamingLink = url.getHost() + document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
@@ -51,7 +47,7 @@ public class GeneralBypasser implements SiteBypasser {
         if (failCount == 3) {
           hideWaitLoad();
           logError(new Exception("Error for url " + link, jsShit));
-          new Alert(Alert.AlertType.ERROR, "Error :(, you can try again but maybe the site isn't supported", ButtonType.OK).showAndWait();
+          new Alert(Alert.AlertType.ERROR, LocalizedApp.getInstance().getString("ExceptionSiteNotSupported"), ButtonType.OK).showAndWait();
         } else
           engine.load(link);
         return;
@@ -60,7 +56,6 @@ public class GeneralBypasser implements SiteBypasser {
     }
     if (!streamingLink.startsWith("https:"))
       streamingLink = "https:" + (streamingLink.startsWith("//") ? "" : "//") + streamingLink;
-    System.out.println(streamingLink + " AAAAAAAAAAA");
     Connection connection = Jsoup.connect(streamingLink);
     connection.followRedirects(true);
     connection.ignoreContentType(true);
@@ -90,12 +85,12 @@ public class GeneralBypasser implements SiteBypasser {
     engine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {
       System.out.println(newValue + " " + engine.getLocation());
       String simpleLinkRequested = finalUrl.getProtocol() + "://" + finalUrl.getHost();
-      if (newValue == Worker.State.CANCELLED && (engine.getLocation().contains(simpleLinkRequested))) {
+      /*if (newValue == Worker.State.CANCELLED && (engine.getLocation().contains(simpleLinkRequested))) {
         engine.getLoadWorker().cancel();
         pair.getValue().close();
         throw new RuntimeException("The connection to this site caused a problem, maybe this site isn't supported or it has some problem right now." +
                 "INFO: exception in the getDirect method, site: " + engine.getLocation());
-      }
+      }*/
       if (newValue == Worker.State.SUCCEEDED && (engine.getLocation().contains(simpleLinkRequested))) {
         Document document = engine.getDocument();
         engine.getLoadWorker().cancel();

@@ -7,6 +7,7 @@ public class LabelTime extends Label {
   private final MediaPlayer mediaPlayer;
 
   public LabelTime(MediaPlayer mediaPlayer) {
+    super("0:00:00/00:00:00");
     this.mediaPlayer = mediaPlayer;
     setMinWidth(102);
     setOnChange();

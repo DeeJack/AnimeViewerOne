@@ -26,11 +26,6 @@ public class LoadPageAsync extends Task<List<Anime>> {
   }
 
   @Override
-  protected void succeeded() {
-    //new AnimeSceneController(getValue(), page, isSearch, filters, search);
-  }
-
-  @Override
   protected void failed() {
     SceneUtility.handleException(getException());
     super.failed();

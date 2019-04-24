@@ -10,8 +10,7 @@
 <?import me.deejack.animeviewer.gui.components.general.ListViewSites?>
 <?import me.deejack.animeviewer.gui.components.streaming.BoxExternalStreaming?>
 <StackPane xmlns:fx="http://javafx.com/fxml/" style="-fx-background-color: white;"
-           xmlns="http://javafx.com/javafx/"
-           fx:controller="me.deejack.animeviewer.gui.controllers.SelectController">
+           xmlns="http://javafx.com/javafx/">
     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
           prefHeight="720.0" prefWidth="1000.0">
         <VBox prefWidth="450.0" spacing="30">

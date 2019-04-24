@@ -62,13 +62,13 @@
                 </BorderPane>-->
                 <BorderPane>
                     <left>
-                        <ButtonFavorite mnemonicParsing="false"/>
+                        <ButtonHistory mnemonicParsing="false"/>
                     </left>
                     <center>
                         <ButtonUpdates layoutX="230.0" layoutY="388.0" mnemonicParsing="false"/>
                     </center>
                     <right>
-                        <ButtonHistory alignment="BOTTOM_RIGHT" mnemonicParsing="false"/>
+                        <ButtonFavorite alignment="BOTTOM_RIGHT" mnemonicParsing="false"/>
                     </right>
                 </BorderPane>
             </VBox>

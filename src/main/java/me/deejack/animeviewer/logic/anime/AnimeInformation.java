@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import java.util.List;
 import me.deejack.animeviewer.logic.anime.dto.Genre;
 import me.deejack.animeviewer.logic.anime.dto.Status;
-import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
 /**
  * A class that contains the main information about a anime, that sometimes (like in dreamsub) can be obtained without
@@ -23,7 +22,7 @@ public class AnimeInformation {
   @Expose
   private final String imageUrl;
   /**
-   * When it ,was released TODO in LocalDate?
+   * When it was released
    */
   @Expose
   private String releaseYear;
@@ -108,12 +107,5 @@ public class AnimeInformation {
 
   public void setPlot(String plot) {
     this.plot = plot;
-  }
-
-  @Override
-  public String toString() {
-    return String.format("Titolo: %s\nEpisodi: %d\nGeneri: %s\nStato: %s\nTrama: %s",
-            name/*, new DecimalFormat("#.##").format(rating)*/, episodes,
-            GeneralUtility.genreListToString(genres, ", "), animeStatus, getPlot());
   }
 }

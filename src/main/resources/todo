@@ -1,26 +1,18 @@
 Generali:
-    - Generalizzare ExtensionLoader per adattarlo anche a bypasser
-      Magari fare una classe tipo bypasser, viene caricata tipo le estensioni e ti dice come bypassare un certo sito, metto di default openload e streamango che usano il bypasser di default visto che sono uguali
-      nel costruttore decidi l'url/gli url e quando devo bypassare uso quella estensione
-    - Segnare episodi scaricati
-    - Se mancano 1 o 2 minuti andare al prossimo episodio, mettere la scelta nelle impostazioni (che ancora non esitono), fare una proporzione
+    - Dialog update
+      Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
     - Nella sidebar builder pattern invece che getter come è ora
     - In AnimeUpdate aggiungere un box ogni volta che trova un anime, non quando ha finito tutti
       Usare il todayBox invece che controllare se non è null e crearne un altro
     - Fare async il load nella nuova tab (animescene)
     - Anche se non chiede il caricamento in nuova tab, caricare nella tab corrente ma non mettere come root
     - Rifare download e vedere Favorite
-    - Sostituire metodi che potrebbero ritornare null con optional
-    - Dialog update
-      Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
-    - mettere la roba di caricamento mentre si carica
-    - Mettere lo streaming solo in una tab invece della root
-    - Salvare nella cronologia anche quando si mettono link esterni
-    - Finire di mettere anche le eccezioni e ciò che rimane nella internacoso
-    - anime correlati
-    - Mettere caricamento nello streaming
-    - Aggiungere l'onBack nell'animedetail che fa aggiornare gli anime visti
-    - Cronologia in ordine di data
+    - Dare la possibilità di scegliere se e quando mettere il prossimo episodio, per ora è 1 minuto
+
+Bugs:
+    - Il cursore sparisce se ho uno streaming aperto in un'altra tab; Risolto ma modificare il listener del tabpane da' altri problemi tipo il keybinding
+        Soluzione: Listener per il cursore nella Scena, ricordarsi però di rimuoverlo!
+    - A volte lo streaming non parte... Mettere un timeout di 20 secondi in cui se non parte da errore... Successo con https://www.dreamsub.stream/anime/kono-oto-tomare/1 ep 1 ris 1080
 
 Meno importanti:
     - Ricerca dopo mezzo secondo che non scrivi
@@ -32,10 +24,5 @@ Meno importanti:
     - Quando si va in animescene, carica sia la ricerca che la pagina principale per i generi, fare solo la ricerca?
     - Ricerca globale
     - Mettere animeclick / myanimelist
-
-Bugs:
-    - Il cursore sparisce se ho uno streaming aperto in un'altra tab; Risolto ma modificare il listener del tabpane da' altri problemi tipo il keybinding
-        Soluzione: Listener per il cursore nella Scena, ricordarsi però di rimuoverlo!
-    - In animescene fa currentPage++, quindi anche andando a pagina 98 ti dirà di essere a pagina 2 (oppure tornando indietro aumenta di uno)
-    - A volte lo streaming non parte... Mettere un timeout di 20 secondi in cui se non parte da errore... Successo con https://www.dreamsub.stream/anime/kono-oto-tomare/1 ep 1 ris 1080
-    - Non si vede più la scritta che ti dice a che punto sei arrivato con un episodio
+    - anime correlati
+    - Segnare episodi scaricati

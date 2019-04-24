@@ -18,11 +18,11 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import org.jsoup.Connection;
 
@@ -59,7 +59,6 @@ public final class SceneUtility {
    * @return A task which permit the download of the image async
    */
   public static Task<Image> loadImage(String link) {
-    System.err.println("DOWNLOADING IMAGE " + link);
     Task<Image> task = getImageAsync(link);
     new Thread(task).start();
     return task;
@@ -78,6 +77,9 @@ public final class SceneUtility {
         if (imagesCache.containsKey(link))
           return new Image(Files.newInputStream(Paths.get(imagesCache.get(link))));
         else {
+          if (link.equals(""))
+            return null;
+          System.err.println("DOWNLOADING IMAGE " + link);
           Connection.Response response = ConnectionUtility.connect(link, false);
           Path tempPath = Files.createTempFile(Paths.get(TMP_PATH), null, link.substring(link.lastIndexOf("")));
           Files.write(tempPath, response.bodyAsBytes());
@@ -120,7 +122,7 @@ public final class SceneUtility {
     hideWaitLoad();
     if (alert.isShowing())
       return;
-    alert.setContentText("Errore durante l'esecuzione.\n" +
+    alert.setContentText(LocalizedApp.getInstance().getString("ExceptionAlert") + "\n" +
             throwable.getMessage());
     alert.getDialogPane().setPrefHeight(300);
     alert.show();
@@ -165,9 +167,6 @@ public final class SceneUtility {
     getStage().getScene().setCursor(Cursor.DEFAULT);
     System.out.println(getStage().getScene().getCursor());
     System.gc();
-  }
-
-  public static void setRoot(Tab tab) {
   }
 
   public static void goToSelect() {

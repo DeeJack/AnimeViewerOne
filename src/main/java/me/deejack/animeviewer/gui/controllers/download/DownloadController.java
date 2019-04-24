@@ -58,7 +58,7 @@ public final class DownloadController {
     ((ScrollPane) downloadRoot).setContent(new FlowPane());
     stage.setScene(new Scene(downloadRoot));
     stage.setOnCloseRequest((event) -> {
-      Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Chiudere la finestra? Fare questo fermerà i download",
+      Alert alert = new Alert(Alert.AlertType.CONFIRMATION, LocalizedApp.getInstance().getString("DownloadClose"),
               ButtonType.OK, ButtonType.CANCEL);
       alert.showAndWait();
       if (alert.getResult() == ButtonType.OK) {

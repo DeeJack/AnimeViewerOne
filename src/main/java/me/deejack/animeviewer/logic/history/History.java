@@ -9,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -39,7 +38,7 @@ public final class History {
   public void remove(Anime anime) {
     if (!contains(anime))
       return;
-    viewedElements.remove(get(anime));
+    viewedElements.remove(get(anime).get());
   }
 
   public Optional<HistoryElement> get(Anime anime) {
@@ -102,7 +101,8 @@ public final class History {
   }
 
   public void sort() {
-    viewedElements.sort(Comparator.comparing(element -> element.getEpisodesHistory().get(element.getEpisodesHistory().size() - 1).getViewedDate()));
+    viewedElements.sort((firstElement, secondElement) -> secondElement.getEpisodesHistory().get(secondElement.getEpisodesHistory().size() - 1).getViewedDate()
+            .compareTo(firstElement.getEpisodesHistory().get(firstElement.getEpisodesHistory().size() - 1).getViewedDate()));
   }
 
   public boolean loadFromFile() throws IOException {

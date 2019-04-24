@@ -22,7 +22,6 @@ public class SearchByNameAsync extends Task<List<Anime>> {
 
   @Override
   public void succeeded() {
-    System.out.println(getValue().size());
     new AnimeSceneController(getValue(), 1, true, null, searchText);
   }
 

@@ -33,9 +33,11 @@ import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.history.HistoryElement;
 import me.deejack.animeviewer.logic.history.HistoryEpisode;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 
+import static me.deejack.animeviewer.gui.controllers.streaming.StreamingUtility.findNextEpisode;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 
 public class StreamingController implements BaseScene {
@@ -59,7 +61,9 @@ public class StreamingController implements BaseScene {
 
   public void setUpPlayer() {
     if (anime != null)
-      title = anime.getAnimeInformation().getName() + " - " + "Episodio " + episode.getNumber() + " - " + episode.getTitle();
+      title = String.format("%s - %s %d - %s",
+              anime.getAnimeInformation().getName(), LocalizedApp.getInstance().getString("Episode"),
+              episode.getNumber(), episode.getTitle());
     setupNodes();
     setupEpisode();
     hideWaitLoad();
@@ -130,6 +134,8 @@ public class StreamingController implements BaseScene {
   }
 
   public void onFinish() {
+    if (mediaPlayer.getCurrentTime().subtract(mediaPlayer.getTotalDuration()).lessThan(Duration.minutes(1)))
+      addNextEpisodeToHistory();
     if (anime != null) {
       FilesUtility.saveHistory();
       FilesUtility.saveFavorite();
@@ -138,6 +144,13 @@ public class StreamingController implements BaseScene {
     mediaPlayer.dispose();
     SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
     SceneUtility.getStage().setAlwaysOnTop(false);
+  }
+
+  private void addNextEpisodeToHistory() {
+    Optional<Episode> nextEpisode = findNextEpisode(anime, episode);
+    nextEpisode.ifPresent((episode) ->
+            History.getHistory().get(anime).ifPresent((anime) ->
+                    anime.addEpisode(new HistoryEpisode(episode, LocalDateTime.now()))));
   }
 
   private void onSizeChange(MediaView view) {
@@ -150,8 +163,6 @@ public class StreamingController implements BaseScene {
     }
     view.setFitWidth(root.getWidth());
     view.setFitHeight(root.getHeight());
-    System.out.println(root.getWidth() > root.getHeight());
-    System.err.println(root.getHeight() + " " + root.getWidth() + SceneUtility.getStage().getScene().getHeight() + " <-> " + view.getFitHeight());
   }
 
   public void setOnBack(EventHandler<ActionEvent> onBack) {

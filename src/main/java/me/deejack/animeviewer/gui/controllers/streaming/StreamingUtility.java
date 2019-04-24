@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.gui.controllers.streaming;
 
+import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyEvent;
@@ -8,6 +9,8 @@ import javafx.util.Duration;
 import me.deejack.animeviewer.gui.components.streaming.ButtonPause;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
+import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.models.episode.Episode;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
@@ -72,5 +75,16 @@ public final class StreamingUtility {
                 ButtonType.OK);
         alert.showAndWait();
     }
+  }
+
+  public static Optional<Episode> findNextEpisode(Anime anime, Episode currentEpisode) {
+    if (anime == null)
+      return Optional.empty();
+    if (!anime.hasBeenLoaded())
+      anime.load();
+    int index = anime.getEpisodes().indexOf(currentEpisode);
+    if (index == anime.getEpisodes().size())
+      return Optional.empty();
+    return Optional.of(anime.getEpisodes().get(index + 1));
   }
 }

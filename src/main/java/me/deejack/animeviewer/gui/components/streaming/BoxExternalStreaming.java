@@ -3,19 +3,26 @@ package me.deejack.animeviewer.gui.components.streaming;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import me.deejack.animeviewer.gui.controllers.streaming.AnimePlayer;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 
-public class BoxExternalStreaming extends HBox {
+public class BoxExternalStreaming extends GridPane {
   public BoxExternalStreaming() {
-    setSpacing(20);
     TextField textField = new TextField();
-    textField.setPrefWidth(350);
+    Button button = new ButtonExternalStreaming(textField);
+    ColumnConstraints first = new ColumnConstraints();
+    first.setPercentWidth(30);
+    ColumnConstraints second = new ColumnConstraints();
+    first.setPercentWidth(70);
+    getColumnConstraints().addAll(new ColumnConstraints(10), first, new ColumnConstraints(5),
+            second, new ColumnConstraints(10));
     textField.setPromptText(LocalizedApp.getInstance().getString("OpenExternalVidPromptText"));
-    getChildren().addAll(textField, new ButtonExternalStreaming(textField));
+    add(textField, 1, 0);
+    add(button, 3, 0);
   }
 
   class ButtonExternalStreaming extends Button {
@@ -26,7 +33,6 @@ public class BoxExternalStreaming extends HBox {
         new AnimePlayer(textField.getText());
       });
       setTooltip(new Tooltip(LocalizedApp.getInstance().getString("OpenExtVideo")));
-      setWidth(Button.USE_COMPUTED_SIZE);
     }
   }
 }

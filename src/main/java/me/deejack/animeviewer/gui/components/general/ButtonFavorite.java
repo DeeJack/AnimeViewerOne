@@ -13,6 +13,7 @@ public class ButtonFavorite extends Button {
   public ButtonFavorite() {
     super(LocalizedApp.getInstance().getString("FavoriteButtonText"));
     setTooltip(new Tooltip(LocalizedApp.getInstance().getString("OpenFavorite")));
+    setWidth(Button.USE_COMPUTED_SIZE);
     setOnAction((event) -> {
       showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingFavorites"));
       setRoot(new FavoriteController());

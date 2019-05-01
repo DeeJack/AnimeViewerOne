@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -15,11 +16,17 @@
           prefHeight="720.0" prefWidth="1000.0">
         <VBox prefWidth="450.0" spacing="30">
             <ListViewSites layoutX="113.0" layoutY="40.0" prefHeight="321.0" prefWidth="347.0"/>
-            <HBox spacing="115">
-                <ButtonHistory fx:id="btnHistory" layoutX="87.0" layoutY="388.0" mnemonicParsing="false"/>
-                <ButtonUpdates layoutX="230.0" layoutY="388.0" mnemonicParsing="false"/>
-                <ButtonFavorite fx:id="btnFavorite" layoutX="434.0" layoutY="388.0" mnemonicParsing="false"/>
-            </HBox>
+            <BorderPane>
+                <left>
+                    <ButtonHistory mnemonicParsing="false"/>
+                </left>
+                <center>
+                    <ButtonUpdates layoutX="230.0" layoutY="388.0" mnemonicParsing="false"/>
+                </center>
+                <right>
+                    <ButtonFavorite alignment="BOTTOM_RIGHT" mnemonicParsing="false"/>
+                </right>
+            </BorderPane>
             <BoxExternalStreaming/>
             <HBox.margin>
                 <Insets top="65"/>

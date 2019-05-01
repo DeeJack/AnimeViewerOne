@@ -13,6 +13,7 @@ public class ButtonHistory extends Button {
   public ButtonHistory() {
     super(LocalizedApp.getInstance().getString("HistoryButtonText"));
     setTooltip(new Tooltip(LocalizedApp.getInstance().getString("OpenHistory")));
+    setWidth(Button.USE_COMPUTED_SIZE);
     setOnAction((event) -> {
       showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingHistory"));
       setRoot(new HistoryController());

@@ -19,6 +19,7 @@ import me.deejack.animeviewer.logic.serialization.JsonValidator;
 public final class History {
   public static final File CONFIG_DIR = new File(System.getProperty("user.home") + File.separator +
           ".animeviewer");
+  public static final File HISTORY_FILE = new File(CONFIG_DIR.getPath() + File.separator + "history.json");
   private static final History instance = new History();
   private static final AnimeSerializer<HistoryElement> serializer = new AnimeSerializer<>(HistoryElement.class);
   private final List<HistoryElement> viewedElements = new ArrayList<>();
@@ -70,7 +71,7 @@ public final class History {
   public void saveToFile() throws IOException {
     if (!CONFIG_DIR.exists())
       CONFIG_DIR.mkdir();
-    saveToFile(new File(CONFIG_DIR.getPath() + File.separator + "history.json"));
+    saveToFile(HISTORY_FILE);
   }
 
   public void saveToFile(File output) throws IOException {
@@ -106,6 +107,6 @@ public final class History {
   }
 
   public boolean loadFromFile() throws IOException {
-    return loadFromFile(new File(CONFIG_DIR.getPath() + File.separator + "history.json"));
+    return loadFromFile(HISTORY_FILE);
   }
 }

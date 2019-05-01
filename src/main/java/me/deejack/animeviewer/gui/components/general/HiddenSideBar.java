@@ -7,19 +7,22 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
-public class HiddenSideBar extends VBox {
+public class HiddenSideBar extends BorderPane {
   private final TranslateTransition hideAnimation = new TranslateTransition(Duration.millis(250), this);
   private final TranslateTransition showAnimation = new TranslateTransition(Duration.millis(250), this);
   private final Button btnClose = new Button(">");
   private final HBox btnOpen;
+  private VBox sideBar;
 
   public HiddenSideBar(HBox btnOpen) {
     this.btnOpen = btnOpen;
@@ -29,24 +32,36 @@ public class HiddenSideBar extends VBox {
 
   private void setup() {
     StackPane.setAlignment(this, Pos.TOP_RIGHT);
-    getChildren().add(btnClose);
-    setWidth(350);
-    setTranslateX(getWidth());
-    setMinWidth(getWidth());
-    setMaxWidth(getWidth());
+    sideBar = new VBox(btnClose);
+    sideBar.setPrefWidth(350);
+    prefWidthProperty().bind(SceneUtility.getStage().getScene().widthProperty());
+    hideAnimation.toXProperty().bind(prefWidthProperty());
+    prefWidthProperty().addListener((obs, oldValue, newValue) -> {
+      if (getTranslateX() > 0 && getTranslateX() < newValue.doubleValue())
+        setTranslateX(newValue.doubleValue());
+    });
+    setTranslateX(getPrefWidth());
+    sideBar.setMinWidth(VBox.USE_PREF_SIZE);
+    sideBar.setMaxWidth(VBox.USE_PREF_SIZE);
     registerEvents();
-    hideAnimation.setToX(getWidth());
+
     showAnimation.setToX(0);
-    setBackground(new Background(new BackgroundFill(Color.web("f2f2f2"), CornerRadii.EMPTY, Insets.EMPTY)));
+    sideBar.setBackground(new Background(new BackgroundFill(Color.web("f2f2f2"), CornerRadii.EMPTY, Insets.EMPTY)));
+    setRight(sideBar);
+    setBackground(new Background(new BackgroundFill(Color.rgb(0, 0, 0, 0.7), CornerRadii.EMPTY, Insets.EMPTY)));
   }
 
   private void registerEvents() {
     btnOpen.setOnMousePressed((event) -> showAnimation.play());
     btnClose.setOnAction((event) -> close());
+    setOnMouseClicked((event) -> {
+      if (!sideBar.getBoundsInParent().intersects(event.getSceneX(), event.getSceneY(), 0, 0))
+        close();
+    });
   }
 
-  public boolean isOpen() {
-    return getTranslateX() > 0;
+  public VBox getSideBar() {
+    return sideBar;
   }
 
   public void close() {

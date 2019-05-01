@@ -29,9 +29,9 @@ public class FilterList {
 
   private void initialize() {
     addChildren();
-    sideBar.setSpacing(30);
-    sideBar.setPadding(new Insets(20));
-    sideBar.setPrefWidth(200);
+    sideBar.getSideBar().setSpacing(30);
+    sideBar.getSideBar().setPadding(new Insets(20));
+    sideBar.getSideBar().setPrefWidth(350);
   }
 
   public void addChildren() {
@@ -45,14 +45,14 @@ public class FilterList {
       HBox box = new HBox(label, filter.getNode());
       box.setSpacing(50);
 
-      sideBar.getChildren().add(box);
+      sideBar.getSideBar().getChildren().add(box);
     }
     Button button = new Button(LocalizedApp.getInstance().getString("ApplyFilterButton"));
     button.setOnAction((event) -> {
       sideBar.close();
       new Thread(new FilterAsync(this, 1)).start();
     });
-    sideBar.getChildren().add(button);
+    sideBar.getSideBar().getChildren().add(button);
   }
 
   public Filter[] getFilters() {

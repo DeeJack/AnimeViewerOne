@@ -35,8 +35,8 @@ public final class FavoriteUpdates {
     LocalDate today = LocalDate.now();
     Favorite.getInstance().getFavorites().forEach((favorite) -> {
       AnimeUpdates animeUpdate = new AnimeUpdates(favorite.getId());
-      List<Episode> episodes = animeUpdate.checkUpdates();
-      if (!episodes.isEmpty())
+      List<Episode> newEpisodes = animeUpdate.checkUpdates();
+      if (!newEpisodes.isEmpty())
         animeUpdates.add(animeUpdate);
     });
     if (updatesByDay.containsKey(today)) {

@@ -1,6 +1,5 @@
 package me.deejack.animeviewer.logic.defaultsources.dreamsub;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,6 @@ import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.models.episode.EpisodeImpl;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,14 +21,8 @@ public class DreamsubEpisode extends EpisodeImpl {
   }
 
   @Override
-  protected List<StreamingLink> getStreamingLinks(Connection.Response response) {
+  protected List<StreamingLink> getStreamingLinks(Document document) {
     List<StreamingLink> streamingLinks = new ArrayList<>();
-    Document document = null;
-    try {
-      document = response.parse();
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
 
     if (document.html().contains("Link download non disponibile")) {
       Elements vvvidEl = document.select("a[href*=\"vvvvid.it\"]");

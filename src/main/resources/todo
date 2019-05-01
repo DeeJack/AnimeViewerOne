@@ -6,7 +6,7 @@ Generali:
       Usare il todayBox invece che controllare se non è null e crearne un altro
     - Fare async il load nella nuova tab (animescene)
     - Anche se non chiede il caricamento in nuova tab, caricare nella tab corrente ma non mettere come root
-    - Rifare download e vedere Favorite
+    - Rifare download e vedere Favorite, StreamingController è troppo lunga
     - Dare la possibilità di scegliere se e quando mettere il prossimo episodio, per ora è 1 minuto
 
 Bugs:

@@ -1,22 +1,23 @@
 package me.deejack.animeviewer.gui.controllers.download;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.web.WebView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.components.dialogs.ChooseSourceDialog;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
@@ -69,6 +70,21 @@ public final class DownloadUtility {
     return true;
   }
 
+  private static Task<List<StreamingLink>> getStreamingLinksAsync(Episode episode) {
+    return new Task<List<StreamingLink>>() {
+      @Override
+      protected List<StreamingLink> call() throws Exception {
+        return episode.getStreamingLinks();
+      }
+
+      @Override
+      public void failed() {
+        showingPopupSources = false;
+        handleException(getException());
+      }
+    };
+  }
+
   /**
    * Let the user chose from which source (and with which resolution) to download the video
    *
@@ -84,18 +100,7 @@ public final class DownloadUtility {
       callBack.onSuccess(null);
       return;
     }
-    Task<List<StreamingLink>> linkFutureTask = new Task<List<StreamingLink>>() {
-      @Override
-      protected List<StreamingLink> call() throws Exception {
-        return episode.getStreamingLinks();
-      }
-
-      @Override
-      public void failed() {
-        showingPopupSources = false;
-        handleException(getException());
-      }
-    };
+    Task<List<StreamingLink>> linkFutureTask = getStreamingLinksAsync(episode);
     new Thread(linkFutureTask).start();
     linkFutureTask.setOnSucceeded((event) -> {
       List<StreamingLink> streamingLinks = linkFutureTask.getValue();
@@ -119,16 +124,15 @@ public final class DownloadUtility {
 
       ChooseSourceDialog sourceDialog = new ChooseSourceDialog(streamingLinks);
       sourceDialog.setOnEvent((selectedLink) -> {
+        showingPopupSources = false;
         if (selectedLink == null) {
           hideWaitLoad();
-          showingPopupSources = false;
           return;
         }
         hideWaitLoad();
         if (selectedLink.allowsEmbeddedVideo())
           callBack.onSuccess(selectedLink);
         else showNotSupportedVideoError(selectedLink);
-        showingPopupSources = false;
       });
       sourceDialog.showAndWait();
     });
@@ -162,16 +166,19 @@ public final class DownloadUtility {
   }
 
   private static void showNotSupportedVideoError(StreamingLink selectedLink) {
-    new Alert(Alert.AlertType.WARNING,
+    /*new HostServices(App.getInstance()).showDocument(selectedLink);*/
+    Stage notSupportedStage = new Stage();
+    WebView notSupportedView = new WebView();
+    notSupportedView.getEngine().load(selectedLink.getLink());
+    notSupportedStage.setScene(new Scene(notSupportedView, 600, 400));
+    notSupportedStage.showAndWait();
+    App.getInstance().getHostServices().showDocument(selectedLink.getLink());
+
+    /*new Alert(Alert.AlertType.WARNING,
             LocalizedApp.getInstance().getString("SiteNotSupported").replace("{Site}", selectedLink.getSource()),
             ButtonType.OK)
             .show();
-    hideWaitLoad();
-    try {
-      Desktop.getDesktop().browse(new URI(selectedLink.getLink()));
-    } catch (IOException | URISyntaxException e) {
-      e.printStackTrace();
-    }
+    hideWaitLoad();*/
   }
 
   private static void showNoStreaming() {
@@ -179,5 +186,12 @@ public final class DownloadUtility {
             ButtonType.OK);
     alert.showAndWait();
     hideWaitLoad();
+  }
+
+  /**
+   * Converts byte to MegaByte
+   */
+  public static double toMB(long value) {
+    return (double) value / 1024 / 1024;
   }
 }

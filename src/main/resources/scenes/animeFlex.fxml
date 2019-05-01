@@ -14,9 +14,9 @@
 <?import me.deejack.animeviewer.gui.components.general.ButtonSideBar?>
 <TabPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
     <Tab closable="false" text="%BrowseWindowTitle">
-        <StackPane>
+        <StackPane style="-fx-background-color: white">
             <!-- Elements Multiplier, Sidebar Control, back button -->
-            <BorderPane>
+            <BorderPane style="-fx-background-color: white">
                 <top>
                     <VBox>
                         <HBox fx:id="animeMultiplierBox">

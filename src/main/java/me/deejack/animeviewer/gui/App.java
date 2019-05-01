@@ -13,6 +13,7 @@ import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.defaultsources.animeleggendari.AnimeLeggendariSource;
 import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamSubSource;
+import me.deejack.animeviewer.logic.defaultsources.otakustream.OtakuStreamSource;
 import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
@@ -25,6 +26,7 @@ import static me.deejack.animeviewer.logic.utils.FilesManager.createDirsIfNotExi
 
 public class App extends Application {
   public static final List<FilteredSource> SITES = new ArrayList<>();
+  private static App instance;
   private static FilteredSource site;
 
   public static void main(String[] args) {
@@ -39,9 +41,14 @@ public class App extends Application {
     App.site = site;
   }
 
+  public static App getInstance() {
+    return instance;
+  }
+
   @Override
   public void start(Stage primaryStage) {
     createDirsIfNotExists();
+    instance = this;
     /*try {
       Connection.Response response = Jsoup.connect("https://api.github.com/repos/DeeJack/AnimeViewerOne/releases/latest").ignoreContentType(true).method(Connection.Method.GET).execute();
       String responseJson = response.body();
@@ -61,6 +68,7 @@ public class App extends Application {
     SITES.addAll(ExtensionLoader.loadExtension());
     SITES.add(new DreamSubSource());
     SITES.add(new AnimeLeggendariSource());
+    SITES.add(new OtakuStreamSource());
     hideWaitLoad();
     primaryStage.setScene(new Scene(SceneUtility.loadParent("/scenes/select.fxml")));
     primaryStage.setTitle(LocalizedApp.getInstance().getString("SelectWindowTitle"));

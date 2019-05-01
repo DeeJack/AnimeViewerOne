@@ -134,7 +134,7 @@ public class StreamingController implements BaseScene {
   }
 
   public void onFinish() {
-    if (mediaPlayer.getCurrentTime().subtract(mediaPlayer.getTotalDuration()).lessThan(Duration.minutes(1)))
+    if (mediaPlayer.getTotalDuration().subtract(mediaPlayer.getCurrentTime()).lessThan(Duration.minutes(1)))
       addNextEpisodeToHistory();
     if (anime != null) {
       FilesUtility.saveHistory();

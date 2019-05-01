@@ -33,10 +33,16 @@ public abstract class ParsedHttpSource extends HttpSource {
     for (Element animeElement : animeElements) {
       animeList.add(animeFromElement(animeElement));
     }
-    Elements pages = document.select(pagesSelector());
-    if(!pages.isEmpty())
-      GeneralUtility.tryParse(pages.get(pages.size() - 1).text()).ifPresent(this::setPages);
+    String page = getPagesByDoc(document);
+    if (!page.isEmpty())
+      GeneralUtility.tryParse(page).ifPresent(this::setPages);
     return animeList;
+  }
+
+  protected String getPagesByDoc(Document document) {
+    Elements pages = document.select(pagesSelector());
+    Element lastPage = pages.get(pages.size() - 1);
+    return lastPage == null ? "" : lastPage.text();
   }
 
   protected abstract String animeSelector();

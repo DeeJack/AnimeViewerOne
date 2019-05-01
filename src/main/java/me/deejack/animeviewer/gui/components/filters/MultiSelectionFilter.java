@@ -45,7 +45,13 @@ public class MultiSelectionFilter extends ListView<MultiComboItem> implements Fi
 
   @Override
   public String getFilterValue() {
-    return null;
+    StringBuilder values = new StringBuilder();
+    getItems().stream()
+            .filter(item -> item.getBooleanProperty().get())
+            .map(MultiComboItem::getText)
+            //.forEach(item -> values.append(items.values().stream().filter(item::equals).findFirst().orElse("")).append(","));
+            .forEach(item -> values.append(items.get(item)).append(","));
+    return values.length() > 0 ? values.substring(0, values.length() - 1) : values.toString();
   }
 
   @Override
@@ -65,6 +71,10 @@ public class MultiSelectionFilter extends ListView<MultiComboItem> implements Fi
 
   @Override
   public Filter cloneFilter() {
-    return null;
+    MultiSelectionFilter clone = new MultiSelectionFilter(filterId, label, items);
+    clone.getItems().forEach(cloneItem -> cloneItem.setBoolean(
+            getItems().stream().filter(item -> item.getText().equals(cloneItem.getText())).findFirst().get()
+                    .getBooleanProperty().get()));
+    return clone;
   }
 }

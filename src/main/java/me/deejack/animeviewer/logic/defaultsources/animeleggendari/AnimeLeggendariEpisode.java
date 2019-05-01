@@ -24,15 +24,9 @@ public class AnimeLeggendariEpisode extends EpisodeImpl {
   }
 
   @Override
-  protected List<StreamingLink> getStreamingLinks(Connection.Response response) {
+  protected List<StreamingLink> getStreamingLinks(Document document) {
     List<StreamingLink> streamingLinks = new ArrayList<>();
-    Document document;
-    try {
-      document = response.parse();
-    } catch (Exception exc) {
-      exc.printStackTrace();
-      return null;
-    }
+
     Elements streamingFrames = document.getElementsByTag("iframe");
     if (streamingFrames.isEmpty()) {
       Elements scripts = document.select("div.entry-content > p > script");

@@ -36,6 +36,8 @@ public class FilterList {
 
   public void addChildren() {
     for (Filter filter : filters) {
+      if (filter == null)
+        continue;
       Label label = new Label(filter.getLabel());
       label.setLabelFor(filter.getNode());
       label.setMinWidth(Label.USE_COMPUTED_SIZE);

@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 public final class FilesManager {
+  public static final File VERSIONS_FOLDER = new File(GeneralUtility.CONFIG_PATH + File.separator + "versions");
   public static final File EXTENSION_FOLDER = new File(GeneralUtility.CONFIG_PATH + File.separator + "extensions");
   public static final File BYPASSER_FOLDER = new File(GeneralUtility.CONFIG_PATH + File.separator + "bypassers");
   private static final File CONFIG_FOLDER = new File(GeneralUtility.CONFIG_PATH);
@@ -26,6 +27,8 @@ public final class FilesManager {
       EXTENSION_FOLDER.mkdir();
     if (!BYPASSER_FOLDER.exists())
       BYPASSER_FOLDER.mkdir();
+    if (!VERSIONS_FOLDER.exists())
+      VERSIONS_FOLDER.mkdir();
   }
 
   public static void writeToFile(File output, String text) {

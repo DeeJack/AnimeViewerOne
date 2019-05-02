@@ -2,6 +2,7 @@ package me.deejack.animeviewer.gui.components.animescene;
 
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -34,10 +35,19 @@ public class AnimeBox extends StackPane {
     reload();
   }
 
+  private Point2D touchPoint;
   public void reload() {
     getChildren().clear();
     ContextMenu contextMenu = createRightClickMenu();
-    setOnMouseReleased((e) -> onClick(e, contextMenu));
+    setOnMousePressed((e) -> onClick(e, contextMenu));
+    setOnTouchPressed((e) ->
+            touchPoint = new Point2D(e.getTouchPoint().getScreenX(), e.getTouchPoint().getScreenY()));
+    setOnTouchReleased((e) -> {
+      System.out.println(touchPoint.getX() + " " + touchPoint.getY());
+      System.err.println(e.getTouchPoint().getScreenX() + " " + e.getTouchPoint().getScreenY());
+      if (touchPoint.getX() == e.getTouchPoint().getScreenX() && touchPoint.getY() == e.getTouchPoint().getScreenY())
+        loadElement();
+    });
     ImageView view = createView();
     Label title = createTitle(view);
     StackPane imagePane = new StackPane(view);

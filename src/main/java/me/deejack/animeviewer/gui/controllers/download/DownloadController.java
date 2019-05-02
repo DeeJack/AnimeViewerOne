@@ -95,7 +95,7 @@ public final class DownloadController {
     if (destination.isDirectory())
       destination = new File(destination.getPath() + File.separator + animeName + " - " + episode.getNumber() + ".mp4");
 
-    DownloadsWindow.getInstance().addDownload(new SingleDownload(destination, downloadLink));
+    DownloadsWindow.getInstance().addDownload(new SingleDownload(destination, downloadLink, episode.getTitle()));
     System.out.println("DOWNLOADING " + downloadLink);
     if (!DownloadsWindow.getInstance().getStage().isShowing()) {
       DownloadsWindow.getInstance().getStage().show();

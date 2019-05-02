@@ -17,6 +17,7 @@ public class UpdateAvailableDialog extends Dialog {
     setTitle(LocalizedApp.getInstance().getString("NewUpdateTitle"));
     setContentText(createContentText());
     getDialogPane().getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+    registerEvents();
   }
 
   private String createContentText() {
@@ -25,5 +26,12 @@ public class UpdateAvailableDialog extends Dialog {
             .replace("{Changelog}", release.getChangelog())
             .replace("{Link}", release.getAssets()[0].getDownloadLink());
     return msg;
+  }
+
+  private void registerEvents() {
+    getDialogPane().lookupButton(ButtonType.YES).setOnMousePressed((event) -> {
+      close();
+      new AppUpdateDialog(release).showAndWait();
+    });
   }
 }

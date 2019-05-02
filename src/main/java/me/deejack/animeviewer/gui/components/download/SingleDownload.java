@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.gui.components.download;
 
+import com.github.plushaze.traynotification.animations.Animations;
 import com.github.plushaze.traynotification.notification.Notifications;
 import com.github.plushaze.traynotification.notification.TrayNotification;
 import java.io.File;
@@ -13,21 +14,26 @@ import me.deejack.animeviewer.logic.async.DownloadAsync;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 import static me.deejack.animeviewer.gui.controllers.download.DownloadUtility.toMB;
+import static me.deejack.animeviewer.logic.utils.GeneralUtility.logError;
 
 public class SingleDownload {
   private final DownloadAsync downloadAsync;
   private final BorderPane root;
+  private final String title;
 
-  public SingleDownload(File output, String downloadLink) {
+  public SingleDownload(File output, String downloadLink, String title) {
     downloadAsync = new DownloadAsync(output, downloadLink);
     root = (BorderPane) SceneUtility.loadParent("/scenes/download/singleDownload.fxml");
+    this.title = title;
     layout();
   }
 
   private void layout() {
-    Label labelSize = (Label) root.lookup("#lblSize");
-    Label labelPerc = (Label) root.lookup("#labelPerc");
-    ProgressIndicator progressBar = (ProgressIndicator) root.lookup("#progressBar");
+    Label labelSize = (Label) root.getBottom().lookup("#lblSize");
+    Label labelPerc = (Label) root.getBottom().lookup("#lblPerc");
+    Label labelTitle = (Label) root.getTop().lookup("#lblTitle");
+    labelTitle.setText(title);
+    ProgressIndicator progressBar = (ProgressIndicator) root.getCenter().lookup("#progressBar");
     registerListeners(labelSize, labelPerc, progressBar);
   }
 
@@ -40,8 +46,16 @@ public class SingleDownload {
         progressBar.setProgress(percentage);
       });
     });
-    downloadAsync.addFailListener((exc) -> new TrayNotification("Download error", LocalizedApp.getInstance().getString("ErrorDownload"),
-            Notifications.ERROR).showAndDismiss(Duration.seconds(2)));
+    downloadAsync.addFailListener((exc) -> {
+      Platform.runLater(() -> {
+        TrayNotification notification = new TrayNotification("Download error",
+                LocalizedApp.getInstance().getString("ErrorDownload"),
+                Notifications.ERROR);
+        notification.setAnimation(Animations.FADE);
+        notification.showAndDismiss(Duration.seconds(2));
+      });
+      logError(exc);
+    });
   }
 
   public void start() {

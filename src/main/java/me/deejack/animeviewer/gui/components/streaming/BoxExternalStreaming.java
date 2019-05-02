@@ -14,15 +14,19 @@ public class BoxExternalStreaming extends GridPane {
   public BoxExternalStreaming() {
     TextField textField = new TextField();
     Button button = new ButtonExternalStreaming(textField);
+    createConstraints();
+    textField.setPromptText(LocalizedApp.getInstance().getString("OpenExternalVidPromptText"));
+    add(textField, 1, 0);
+    add(button, 3, 0);
+  }
+
+  private void createConstraints() {
     ColumnConstraints first = new ColumnConstraints();
     first.setPercentWidth(30);
     ColumnConstraints second = new ColumnConstraints();
     first.setPercentWidth(70);
     getColumnConstraints().addAll(new ColumnConstraints(10), first, new ColumnConstraints(5),
             second, new ColumnConstraints(10));
-    textField.setPromptText(LocalizedApp.getInstance().getString("OpenExternalVidPromptText"));
-    add(textField, 1, 0);
-    add(button, 3, 0);
   }
 
   class ButtonExternalStreaming extends Button {

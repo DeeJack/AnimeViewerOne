@@ -1,6 +1,4 @@
 Generali:
-    - Dialog update
-      Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
     - Nella sidebar builder pattern invece che getter come è ora
     - In AnimeUpdate aggiungere un box ogni volta che trova un anime, non quando ha finito tutti
       Usare il todayBox invece che controllare se non è null e crearne un altro
@@ -8,13 +6,15 @@ Generali:
     - Anche se non chiede il caricamento in nuova tab, caricare nella tab corrente ma non mettere come root
     - Rifare download e vedere Favorite, StreamingController è troppo lunga
     - Dare la possibilità di scegliere se e quando mettere il prossimo episodio, per ora è 1 minuto
+    Tenere lo streaming come solo una classe che gestice lo streaming passando un media al costruttore, e tutto ciò relativo all'episodio/anime lasciato alle altre classi?
+    Mettere le classi nei controller per fare i temi
+    mostrava 44 pagine mentre in realtà era solo 1
 
 Bugs:
-    - Il cursore sparisce se ho uno streaming aperto in un'altra tab; Risolto ma modificare il listener del tabpane da' altri problemi tipo il keybinding
-        Soluzione: Listener per il cursore nella Scena, ricordarsi però di rimuoverlo!
     - A volte lo streaming non parte... Mettere un timeout di 20 secondi in cui se non parte da errore... Successo con https://www.dreamsub.stream/anime/kono-oto-tomare/1 ep 1 ris 1080
 
 Meno importanti:
+      Per update : https://docs.oracle.com/javase/tutorial/deployment/jar/update.html
     - Ricerca dopo mezzo secondo che non scrivi
     - Mettere scroll infinito invece di anime multiplier...
     - Aggiungere calendario e ultime aggiunte

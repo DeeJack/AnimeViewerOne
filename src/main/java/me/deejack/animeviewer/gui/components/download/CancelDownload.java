@@ -1,4 +1,7 @@
 package me.deejack.animeviewer.gui.components.download;
 
-public class CancelDownload {
+import javafx.scene.control.Button;
+
+public class CancelDownload extends Button {
+
 }

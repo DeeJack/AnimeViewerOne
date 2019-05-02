@@ -7,7 +7,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import me.deejack.animeviewer.gui.components.appupdates.UpdateAvailableDialog;
 import me.deejack.animeviewer.gui.connection.CustomConnection;
 import me.deejack.animeviewer.gui.scenes.EventHandler;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
@@ -16,8 +15,7 @@ import me.deejack.animeviewer.logic.defaultsources.animeleggendari.AnimeLeggenda
 import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamSubSource;
 import me.deejack.animeviewer.logic.defaultsources.otakustream.OtakuStreamSource;
 import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
-import me.deejack.animeviewer.logic.githubupdates.Asset;
-import me.deejack.animeviewer.logic.githubupdates.Release;
+import me.deejack.animeviewer.logic.githubupdates.Github;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
@@ -64,10 +62,7 @@ public class App extends Application {
 
     loadHistory();
     FilesUtility.loadFavorite();
-    new UpdateAvailableDialog(
-            new Release("asd.com", "v1.4.5alpha",
-                    new Asset[]{
-                            new Asset("dsa.com", "https://cdn1.dreamsub.stream/fl/one-piece/001/SUB_ITA/1080p")}, "Changelog bello")).show();
+    new Github().checkUpdatesAsync();
   }
 
   private void createScene(Stage primaryStage) {

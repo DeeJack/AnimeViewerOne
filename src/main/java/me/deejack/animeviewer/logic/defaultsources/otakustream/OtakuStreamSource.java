@@ -1,8 +1,7 @@
 package me.deejack.animeviewer.logic.defaultsources.otakustream;
 
-import java.util.ArrayList;
 import me.deejack.animeviewer.gui.components.filters.Filter;
-import me.deejack.animeviewer.gui.components.filters.FilterList;
+import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.anime.dto.AnimeStatus;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -11,6 +10,8 @@ import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
+import java.util.ArrayList;
 
 public class OtakuStreamSource extends ParsedHttpSource {
 
@@ -64,7 +65,7 @@ public class OtakuStreamSource extends ParsedHttpSource {
   }
 
   @Override
-  public Connection.Response filterRequest(int page, FilterList filters) {
+  public Connection.Response filterRequest(int page, HiddenSidebarBuilder filters) {
     StringBuilder url = new StringBuilder(getBaseUrl() + "/anime/page/" + page + "/?");
     for (Filter filter : filters.getFilters()) {
       if (filter.getFilterValue() != null && !filter.getFilterValue().equals(""))

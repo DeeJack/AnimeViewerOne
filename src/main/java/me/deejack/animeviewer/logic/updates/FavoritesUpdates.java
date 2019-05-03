@@ -1,32 +1,34 @@
-package me.deejack.animeviewer.logic.favorite;
+package me.deejack.animeviewer.logic.updates;
 
 import com.google.gson.annotations.Expose;
+import me.deejack.animeviewer.logic.favorite.Favorite;
+import me.deejack.animeviewer.logic.models.episode.Episode;
+import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
+import me.deejack.animeviewer.logic.serialization.JsonValidator;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import me.deejack.animeviewer.logic.models.episode.Episode;
-import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
-import me.deejack.animeviewer.logic.serialization.JsonValidator;
+import java.util.*;
 
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 import static me.deejack.animeviewer.logic.history.History.CONFIG_DIR;
 
-public final class FavoriteUpdates {
-  private static final FavoriteUpdates instance = new FavoriteUpdates();
+/**
+ * Checks the updates for every anime in the favorite list
+ * The updates can be saved to file and then loaded from the file
+ */
+public final class FavoritesUpdates {
+  private static final FavoritesUpdates instance = new FavoritesUpdates();
   @Expose
   private Map<LocalDate, List<AnimeUpdates>> updatesByDay = new HashMap<>();
 
-  private FavoriteUpdates() {
+  private FavoritesUpdates() {
   }
 
-  public static FavoriteUpdates getInstance() {
+  public static FavoritesUpdates getInstance() {
     return instance;
   }
 
@@ -56,7 +58,7 @@ public final class FavoriteUpdates {
   }
 
   public void writeToFile() {
-    String json = new AnimeSerializer<>(FavoriteUpdates.class).serialize(this);
+    String json = new AnimeSerializer<>(FavoritesUpdates.class).serialize(this);
     File output = new File(CONFIG_DIR + File.separator + "updatesByDay.json");
     try {
       if (!output.exists())
@@ -77,7 +79,7 @@ public final class FavoriteUpdates {
         return;
       if (!JsonValidator.isValid(json))
         throw new IOException("Json invalid!");
-      updatesByDay = Objects.requireNonNull(new AnimeSerializer<>(FavoriteUpdates.class).deserializeObj(json)).updatesByDay;
+      updatesByDay = Objects.requireNonNull(new AnimeSerializer<>(FavoritesUpdates.class).deserializeObj(json)).updatesByDay;
     } catch (IOException e) {
       handleException(e);
     }

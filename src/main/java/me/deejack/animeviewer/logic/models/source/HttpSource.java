@@ -1,9 +1,10 @@
 package me.deejack.animeviewer.logic.models.source;
 
-import java.util.List;
-import me.deejack.animeviewer.gui.components.filters.FilterList;
+import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import org.jsoup.Connection;
+
+import java.util.List;
 
 /**
  * Contains the methods for connecting to a source
@@ -49,7 +50,7 @@ public abstract class HttpSource implements FilteredSource {
   }
 
   @Override
-  public List<Anime> filter(FilterList filters, int page) {
+  public List<Anime> filter(HiddenSidebarBuilder filters, int page) {
     return parseAnimeList(filterRequest(page, filters));
   }
 
@@ -57,7 +58,7 @@ public abstract class HttpSource implements FilteredSource {
 
   public abstract Connection.Response searchAnimeRequest(int page, String search);
 
-  public abstract Connection.Response filterRequest(int page, FilterList filters);
+  public abstract Connection.Response filterRequest(int page, HiddenSidebarBuilder filters);
 
   public abstract List<Anime> parseAnimeList(Connection.Response response);
 

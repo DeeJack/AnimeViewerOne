@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import me.deejack.animeviewer.gui.components.filters.FilterList;
+import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
@@ -39,7 +39,9 @@ public class HomeController implements BaseScene {
 
   public void initialize() {
     ImageView icon = (ImageView) root.lookup("#imgSite");
-    HiddenSideBar sideBar = new FilterList((HBox) root.lookup("#btnSideBar"), null).getSideBar();
+    HiddenSideBar sideBar = new HiddenSidebarBuilder()
+            .setControlButton((HBox) root.lookup("#btnSideBar"))
+            .setPreviousFilter(null).build();
     root.getChildren().add(sideBar);
     createSiteIcon(icon);
     setRoot(this);

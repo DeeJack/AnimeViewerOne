@@ -1,7 +1,5 @@
 package me.deejack.animeviewer.gui.controllers;
 
-import java.time.LocalDate;
-import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
@@ -11,9 +9,12 @@ import me.deejack.animeviewer.gui.components.updates.DailyUpdatesBox;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.favorite.AnimeUpdates;
-import me.deejack.animeviewer.logic.favorite.FavoriteUpdates;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
+import me.deejack.animeviewer.logic.updates.AnimeUpdates;
+import me.deejack.animeviewer.logic.updates.FavoritesUpdates;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public class AnimeUpdateController implements BaseScene {
   private final Pane root;
@@ -31,7 +32,7 @@ public class AnimeUpdateController implements BaseScene {
   }
 
   private void loadOldUpdates(VBox boxFavorite) {
-    FavoriteUpdates favoriteUpdates = FavoriteUpdates.getInstance();
+    FavoritesUpdates favoriteUpdates = FavoritesUpdates.getInstance();
     favoriteUpdates.readFromFile();
     favoriteUpdates.getUpdatesByDay().forEach((localDate, animeUpdates) -> {
       DailyUpdatesBox dailyUpdatesBox = new DailyUpdatesBox(localDate, animeUpdates);
@@ -47,7 +48,7 @@ public class AnimeUpdateController implements BaseScene {
    * @param boxFavorite The box in which the new episodes will be added
    */
   public void loadNewUpdates(VBox boxFavorite) {
-    FavoriteUpdates favoriteUpdates = FavoriteUpdates.getInstance();
+    FavoritesUpdates favoriteUpdates = FavoritesUpdates.getInstance();
     new Thread(() -> {
       List<AnimeUpdates> updates = favoriteUpdates.checkUpdates();
       Platform.runLater(() -> {
@@ -77,6 +78,6 @@ public class AnimeUpdateController implements BaseScene {
 
   @Override
   public String getName() {
-    return "FavoriteUpdates";
+    return "FavoritesUpdates";
   }
 }

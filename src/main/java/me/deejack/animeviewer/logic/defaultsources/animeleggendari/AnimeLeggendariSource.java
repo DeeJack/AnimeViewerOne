@@ -1,11 +1,8 @@
 package me.deejack.animeviewer.logic.defaultsources.animeleggendari;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import me.deejack.animeviewer.gui.components.filters.ComboBoxFilter;
 import me.deejack.animeviewer.gui.components.filters.Filter;
-import me.deejack.animeviewer.gui.components.filters.FilterList;
+import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.anime.dto.AnimeStatus;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
@@ -16,6 +13,10 @@ import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class AnimeLeggendariSource extends ParsedHttpSource {
 
@@ -53,7 +54,7 @@ public class AnimeLeggendariSource extends ParsedHttpSource {
   }
 
   @Override
-  public Connection.Response filterRequest(int page, FilterList filters) {
+  public Connection.Response filterRequest(int page, HiddenSidebarBuilder filters) {
     Filter genres = filters.getFilters()[0];
     String url = getBaseUrl() + "/category/" + genres.getFilterValue() + "/page/" + page + "/";
     return ConnectionUtility.connect(url, true);

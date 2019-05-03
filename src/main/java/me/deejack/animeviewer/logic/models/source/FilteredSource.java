@@ -1,9 +1,10 @@
 package me.deejack.animeviewer.logic.models.source;
 
-import java.util.List;
 import me.deejack.animeviewer.gui.components.filters.Filter;
-import me.deejack.animeviewer.gui.components.filters.FilterList;
+import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.logic.models.anime.Anime;
+
+import java.util.List;
 
 /**
  * Contains the methods to filter a source
@@ -33,7 +34,7 @@ public interface FilteredSource extends AnimeSource {
    * @param page    The page that needs to be loaded
    * @return the list of the resulting anime
    */
-  List<Anime> filter(FilterList filters, int page);
+  List<Anime> filter(HiddenSidebarBuilder filters, int page);
 
   /**
    * Get the number of pages

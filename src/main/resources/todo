@@ -1,5 +1,4 @@
 Generali:
-    - Nella sidebar builder pattern invece che getter come è ora
     - In AnimeUpdate aggiungere un box ogni volta che trova un anime, non quando ha finito tutti
       Usare il todayBox invece che controllare se non è null e crearne un altro
     - Fare async il load nella nuova tab (animescene)

@@ -1,10 +1,8 @@
 package me.deejack.animeviewer.logic.defaultsources.dreamsub;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import me.deejack.animeviewer.gui.components.filters.ComboBoxFilter;
 import me.deejack.animeviewer.gui.components.filters.Filter;
-import me.deejack.animeviewer.gui.components.filters.FilterList;
+import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.source.ParsedHttpSource;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
@@ -12,6 +10,9 @@ import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class DreamSubSource extends ParsedHttpSource {
   Map<String, String> genres = new LinkedHashMap<>();
@@ -48,7 +49,7 @@ public class DreamSubSource extends ParsedHttpSource {
   }
 
   @Override
-  public Connection.Response filterRequest(int page, FilterList filters) {
+  public Connection.Response filterRequest(int page, HiddenSidebarBuilder filters) {
     StringBuilder url = new StringBuilder(getBaseUrl() + "/filter?");
     for (Filter filter : filters.getFilters()) {
       url.append(filter.getFilterId()).append("=").append(filter.getFilterValue()).append("&");

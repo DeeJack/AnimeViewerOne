@@ -1,30 +1,31 @@
 package me.deejack.animeviewer.gui.components.animescene;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.async.LoadPageAsync;
-import me.deejack.animeviewer.gui.components.filters.FilterList;
+import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.logic.anime.dto.KeyValuePair;
 import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 
 public class PagesBox extends HBox {
   private final String search;
-  private final FilterList filters;
+  private final HiddenSidebarBuilder filters;
   private final boolean isSearch;
   private final int currentPage;
   private final Listener<KeyValuePair<Integer, List<Anime>>> onPageChanged;
 
-  public PagesBox(int currentPage, String search, boolean isSearch, FilterList filters, Listener<KeyValuePair<Integer, List<Anime>>> onPageChanged) {
+  public PagesBox(int currentPage, String search, boolean isSearch, HiddenSidebarBuilder filters, Listener<KeyValuePair<Integer, List<Anime>>> onPageChanged) {
     this.currentPage = currentPage;
     this.search = search;
     this.isSearch = isSearch;

@@ -7,11 +7,14 @@ import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 
-public class SingleAnimeUpdate extends SingleFavorite {
+/**
+ * GUI component that show an update from an anime
+ */
+public class SingleAnimeUpdateBox extends SingleFavorite {
   private final Anime anime;
   private final Episode newEpisode;
 
-  public SingleAnimeUpdate(Anime anime, Episode newEpisode) {
+  public SingleAnimeUpdateBox(Anime anime, Episode newEpisode) {
     super(anime, anime.getAnimeInformation().getImageUrl(), null);
     this.anime = anime;
     this.newEpisode = newEpisode;

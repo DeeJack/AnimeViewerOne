@@ -1,16 +1,13 @@
 package me.deejack.animeviewer.logic.favorite;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
 import me.deejack.animeviewer.logic.serialization.JsonValidator;
 import me.deejack.animeviewer.logic.utils.FilesManager;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 import static me.deejack.animeviewer.logic.history.History.CONFIG_DIR;
 
@@ -93,17 +90,17 @@ public final class Favorite {
     return false;
   }
 
-  public FavoriteAnime get(String url) {
+  public Optional<FavoriteAnime> get(String url) {
     for (FavoriteAnime favorite : favorites)
       if (favorite.getAnime().getUrl().equals(url))
-        return favorite;
-    return null;
+        return Optional.of(favorite);
+    return Optional.empty();
   }
 
-  public FavoriteAnime get(int id) {
+  public Optional<FavoriteAnime> get(int id) {
     for (FavoriteAnime favorite : favorites)
       if (favorite.getId() == id)
-        return favorite;
-    return null;
+        return Optional.of(favorite);
+    return Optional.empty();
   }
 }

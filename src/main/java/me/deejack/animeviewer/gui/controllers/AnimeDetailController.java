@@ -15,6 +15,7 @@ import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.favorite.Favorite;
+import me.deejack.animeviewer.logic.favorite.FavoriteAnime;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
@@ -31,7 +32,8 @@ public class AnimeDetailController implements BaseScene {
   private ListViewEpisodes listViewEpisodes;
 
   public AnimeDetailController(Anime anime, boolean isNewTab, Tab currentTab) {
-    this.anime = Favorite.getInstance().contains(anime) ? Favorite.getInstance().get(anime.getUrl()).getAnime() : anime;
+    this.anime = Favorite.getInstance().get(anime.getUrl())
+            .map(FavoriteAnime::getAnime).orElse(anime);
     this.isNewTab = isNewTab;
     this.currentTab = currentTab;
     root = (Pane) SceneUtility.loadParent("/scenes/animeDetailResp.fxml");

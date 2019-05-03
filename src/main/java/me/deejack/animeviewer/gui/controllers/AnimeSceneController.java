@@ -1,6 +1,5 @@
 package me.deejack.animeviewer.gui.controllers;
 
-import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -12,7 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import me.deejack.animeviewer.gui.components.animescene.AnimePane;
 import me.deejack.animeviewer.gui.components.animescene.PagesBox;
-import me.deejack.animeviewer.gui.components.filters.FilterList;
+import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
@@ -22,18 +21,20 @@ import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamsubAnime;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
+import java.util.List;
+
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.setRoot;
 
 public class AnimeSceneController implements BaseScene {
   private final boolean isSearch;
-  private final FilterList filters;
+  private final HiddenSidebarBuilder filters;
   private final String search;
   private final TabPane root;
   private AnimePane animePane;
   private int currentPage;
 
-  public AnimeSceneController(List<Anime> elements, int page, boolean isSearch, FilterList filters, String search) {
+  public AnimeSceneController(List<Anime> elements, int page, boolean isSearch, HiddenSidebarBuilder filters, String search) {
     elements.add(new DreamsubAnime("Test", "https://www.dreamsub.stream/anime/test", "https://www.dreamsub.stream/anime/test"));
     currentPage = page;
     this.isSearch = isSearch;
@@ -58,7 +59,9 @@ public class AnimeSceneController implements BaseScene {
   private void setUpScene() {
     Pane browsePane = ((Pane) root.getTabs().get(0).getContent());
     BorderPane content = (BorderPane) browsePane.getChildren().get(0);
-    HiddenSideBar sideBar = new FilterList((HBox) content.getTop().lookup("#controlSideBar"), filters).getSideBar();
+    HiddenSideBar sideBar = new HiddenSidebarBuilder()
+            .setControlButton((HBox) content.getTop().lookup("#controlSideBar"))
+            .setPreviousFilter(filters).build();
     browsePane.getChildren().add(sideBar);
     ((TextInputControl) root.lookup("#txtSearch")).setText(search);
   }

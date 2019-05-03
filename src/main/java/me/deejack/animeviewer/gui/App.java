@@ -1,8 +1,5 @@
 package me.deejack.animeviewer.gui;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -20,6 +17,10 @@ import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
@@ -51,7 +52,7 @@ public class App extends Application {
   public void start(Stage primaryStage) {
     instance = this;
     SceneUtility.setStage(primaryStage);
-    primaryStage.setScene(new Scene(new StackPane(), 600, 400));
+    primaryStage.setScene(new Scene(new StackPane(), 1000, 720));
     primaryStage.show();
 
     createDirsIfNotExists();

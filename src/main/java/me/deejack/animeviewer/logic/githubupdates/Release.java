@@ -7,6 +7,7 @@ public class Release {
   @SerializedName("tag_name")
   private final String version;
   private final Asset[] assets;
+  @SerializedName("body")
   private final String changelog;
 
   public Release(String url, String version, Asset[] assets, String changelog) {

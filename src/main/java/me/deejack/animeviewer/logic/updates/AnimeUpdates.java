@@ -24,11 +24,12 @@ public class AnimeUpdates {
   }
 
   public List<Episode> checkUpdates() {
-    FavoriteAnime anime = Favorite.getInstance().get(favoriteId)
+    FavoriteAnime favoriteAnime = Favorite.getInstance().get(favoriteId)
             .orElseThrow(() -> new IllegalArgumentException("WTF? The favourite id doesn't match with any favorite?!"));
-    List<Episode> oldEpisodes = anime.getEpisodes();
-    anime.getAnime().load();
-    List<Episode> newEpisodes = new ArrayList<>(anime.getEpisodes());
+    List<Episode> oldEpisodes = favoriteAnime.getEpisodes();
+    favoriteAnime.getAnime().load();
+    List<Episode> newEpisodes = new ArrayList<>(favoriteAnime.getAnime().getEpisodes());
+    System.err.println(newEpisodes.size());
     newEpisodes.removeAll(oldEpisodes);
     episodes = newEpisodes;
     return newEpisodes;

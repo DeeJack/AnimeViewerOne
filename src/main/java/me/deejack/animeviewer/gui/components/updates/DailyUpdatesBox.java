@@ -1,7 +1,7 @@
 package me.deejack.animeviewer.gui.components.updates;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -10,16 +10,16 @@ import me.deejack.animeviewer.logic.updates.AnimeUpdates;
 
 import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 
 /**
  * A box containing the updates of a day
  */
 public class DailyUpdatesBox extends VBox {
-  private VBox updatesBox;
+  private final VBox updatesBox = new VBox();
 
-  public DailyUpdatesBox(ChronoLocalDate dateTime, Collection<? extends AnimeUpdates> updates) {
-    getChildren().addAll(createDayBox(dateTime), updates.isEmpty() ? createEmptyBox() : createUpdatesBox(updates));
+  public DailyUpdatesBox(ChronoLocalDate dateTime) {
+    getChildren().addAll(createDayBox(dateTime), updatesBox);
+    setMargin(updatesBox, new Insets(0, 0, 0, 30));
   }
 
   /**
@@ -32,21 +32,9 @@ public class DailyUpdatesBox extends VBox {
     return new Label(dateTime.format(DateTimeFormatter.ofPattern("eeee d MMMM uuuu")));
   }
 
-  /**
-   * Create a box containing a list of updates
-   *
-   * @param updates The updates of that day
-   * @return a HBox containing the updates
-   */
-  private HBox createUpdatesBox(Iterable<? extends AnimeUpdates> updates) {
-    AnchorPane pane = new AnchorPane();
-    pane.setPrefWidth(30);
-    updatesBox = new VBox();
-    HBox box = new HBox(pane, updatesBox);
-    updates.forEach((update) ->
-            update.getEpisodes().forEach(episode ->
-                    updatesBox.getChildren().add(new SingleAnimeUpdateBox(update.getAnime(), episode))));
-    return box;
+  public void addAnimeUpdates(AnimeUpdates animeUpdates) {
+    animeUpdates.getEpisodes().forEach(episode ->
+            updatesBox.getChildren().add(new SingleAnimeUpdateBox(animeUpdates.getAnime(), episode)));
   }
 
   /**

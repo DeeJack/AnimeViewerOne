@@ -1,6 +1,7 @@
 package me.deejack.animeviewer.logic.updates;
 
 import com.google.gson.annotations.Expose;
+import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
@@ -24,6 +25,7 @@ public final class FavoritesUpdates {
   private static final FavoritesUpdates instance = new FavoritesUpdates();
   @Expose
   private Map<LocalDate, List<AnimeUpdates>> updatesByDay = new HashMap<>();
+  private final LocalDate today = LocalDate.now();
 
   private FavoritesUpdates() {
   }
@@ -32,15 +34,36 @@ public final class FavoritesUpdates {
     return instance;
   }
 
-  public List<AnimeUpdates> checkUpdates() {
+  public void checkUpdates(Listener<? super AnimeUpdates> onUpdateFound) {
     List<AnimeUpdates> animeUpdates = new ArrayList<>();
     LocalDate today = LocalDate.now();
     Favorite.getInstance().getFavorites().forEach((favorite) -> {
       AnimeUpdates animeUpdate = new AnimeUpdates(favorite.getId());
       List<Episode> newEpisodes = animeUpdate.checkUpdates();
-      if (!newEpisodes.isEmpty())
+      System.out.println(newEpisodes.size() + " <- " + favorite.getEpisodes().size());
+      if (!newEpisodes.isEmpty()) {
+        onUpdateFound.onChange(animeUpdate);
         animeUpdates.add(animeUpdate);
+      }
     });
+    //addNewEpisodesToAnime(animeUpdates);
+    addTodayUpdates(animeUpdates);
+  }
+
+  /**
+   * Add the new updates to the today key on the map
+   *
+   * @param animeUpdates The new updates
+   */
+  private void addTodayUpdates(List<AnimeUpdates> animeUpdates) {
+    if (!animeUpdates.isEmpty()) {
+      if (updatesByDay.containsKey(today))
+        animeUpdates.addAll(updatesByDay.get(today));
+      updatesByDay.put(today, animeUpdates);
+    }
+  }
+
+  private void addNewEpisodesToAnime(List<? extends AnimeUpdates> animeUpdates) {
     if (updatesByDay.containsKey(today)) {
       updatesByDay.get(today).forEach((anime) -> {
         if (animeUpdates.contains(anime)) {
@@ -49,12 +72,6 @@ public final class FavoritesUpdates {
         }
       });
     }
-    if (!animeUpdates.isEmpty()) {
-      if (updatesByDay.containsKey(today))
-        animeUpdates.addAll(updatesByDay.get(today));
-      updatesByDay.put(today, animeUpdates);
-    }
-    return updatesByDay.getOrDefault(today, animeUpdates);
   }
 
   public void writeToFile() {

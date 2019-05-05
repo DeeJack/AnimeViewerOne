@@ -32,7 +32,7 @@ public class AnimeUpdateController implements BaseScene {
   }
 
   private void loadOldUpdates(VBox boxFavorite) {
-    /*FavoritesUpdates favoriteUpdates = FavoritesUpdates.getInstance();
+    FavoritesUpdates favoriteUpdates = FavoritesUpdates.getInstance();
     favoriteUpdates.readFromFile();
     favoriteUpdates.getUpdatesByDay().forEach((localDate, listAnimeUpdates) -> {
       DailyUpdatesBox dailyUpdatesBox = new DailyUpdatesBox(localDate);
@@ -40,7 +40,7 @@ public class AnimeUpdateController implements BaseScene {
         todayBox = dailyUpdatesBox;
       listAnimeUpdates.forEach((dailyUpdatesBox::addAnimeUpdates));
       boxFavorite.getChildren().add(dailyUpdatesBox);
-    });*/
+    });
   }
 
   /**
@@ -50,10 +50,9 @@ public class AnimeUpdateController implements BaseScene {
    */
   public void loadNewUpdates(VBox boxFavorite) {
     FavoritesUpdates favoriteUpdates = FavoritesUpdates.getInstance();
-    if (todayBox != null)
-      boxFavorite.getChildren().remove(todayBox);
-    DailyUpdatesBox dailyUpdatesBox = new DailyUpdatesBox(LocalDate.now());
-    boxFavorite.getChildren().add(0, dailyUpdatesBox);
+    DailyUpdatesBox dailyUpdatesBox = todayBox != null ? todayBox : new DailyUpdatesBox(LocalDate.now());
+    if (todayBox == null)
+      boxFavorite.getChildren().add(0, dailyUpdatesBox);
     new Thread(() ->
             favoriteUpdates.checkUpdates(onNewUpdate(boxFavorite, favoriteUpdates, dailyUpdatesBox)))
             .start();
@@ -64,7 +63,6 @@ public class AnimeUpdateController implements BaseScene {
       System.out.println("NEW UPDATE!!! " + animeUpdates.getAnime().getAnimeInformation().getName());
       Platform.runLater(() -> dailyUpdatesBox.addAnimeUpdates(animeUpdates));
       FilesUtility.saveFavorite();
-      favoriteUpdates.writeToFile();
     });
   }
 

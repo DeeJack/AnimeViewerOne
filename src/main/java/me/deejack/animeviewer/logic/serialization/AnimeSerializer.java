@@ -1,16 +1,14 @@
 package me.deejack.animeviewer.logic.serialization;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.models.episode.Episode;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import me.deejack.animeviewer.logic.models.anime.Anime;
-import me.deejack.animeviewer.logic.models.episode.Episode;
 
 public final class AnimeSerializer<T> {
   private static final Gson gson;
@@ -19,14 +17,14 @@ public final class AnimeSerializer<T> {
     gson = new GsonBuilder()
             .registerTypeAdapter(Anime.class, new GeneralTypeAdapter<Anime>())
             .registerTypeAdapter(Episode.class, new GeneralTypeAdapter<Episode>())
-            //.registerTypeAdapter(Episode[].class, new GeneralListTypeAdapter<Episode[]>())
-            //.registerTypeAdapter(FavoriteAnime.class, new GeneralTypeAdapter<FavoriteAnime>())
             .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, typeOfT, context) ->
                     LocalDateTime.parse(json.getAsJsonPrimitive().getAsString()))
+            .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context) ->
+                    LocalDate.parse(json.getAsJsonPrimitive().getAsString()))
+            .registerTypeAdapter(LocalDate.class, (
+                    JsonSerializer<LocalDate>) (jsonObject, jsonType, context) -> new JsonPrimitive(jsonObject.toString()))
             .registerTypeAdapter(LocalDateTime.class, (
                     JsonSerializer<LocalDateTime>) (jsonObject, jsonType, context) -> new JsonPrimitive(jsonObject.toString()))
-            /*.registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (typeOfT, localDatep) ->
-                    new )*/
             .disableHtmlEscaping()
             .setPrettyPrinting()
             .excludeFieldsWithoutExposeAnnotation()

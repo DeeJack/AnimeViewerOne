@@ -1,5 +1,10 @@
 package me.deejack.animeviewer.logic.async;
 
+import me.deejack.animeviewer.logic.async.events.FailListener;
+import me.deejack.animeviewer.logic.async.events.Listener;
+import me.deejack.animeviewer.logic.async.events.SuccessListener;
+import me.deejack.animeviewer.logic.async.properties.Property;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,10 +14,6 @@ import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-import me.deejack.animeviewer.logic.async.events.FailListener;
-import me.deejack.animeviewer.logic.async.events.Listener;
-import me.deejack.animeviewer.logic.async.events.SuccessListener;
-import me.deejack.animeviewer.logic.async.properties.Property;
 
 /**
  * A class to download a file to a location in another thread
@@ -63,23 +64,17 @@ public class DownloadAsync implements Runnable {
   public void run() {
     try {
       createFileIfNotExists();
-      System.out.println(downloadLink);
-      URL url = new URL(downloadLink);
-      HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-      connection.setRequestMethod("GET");
-      connection.connect();
-      totalDownloadSize = connection.getContentLength();
+      HttpURLConnection connection = createConnection();
       System.out.println(totalDownloadSize);
-      try (FileOutputStream stream = new FileOutputStream(output)) {
-        try (InputStream inputStream = connection.getInputStream()) {
-          byte[] buffer = new byte[1024];
-          int length;
-          while ((length = inputStream.read(buffer)) != -1) {
-            if (cancelled.get()) // If someone has requested the cancellations, interrupt the download
-              return;
-            stream.write(buffer, 0, length); // Write the buffer to the file
-            size.setValue(stream.getChannel().size()); // Update the value of the size
-          }
+      try (FileOutputStream stream = new FileOutputStream(output);
+           InputStream inputStream = connection.getInputStream()) {
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) != -1) {
+          if (cancelled.get()) // If someone has requested the cancellations, interrupt the download
+            return;
+          stream.write(buffer, 0, length); // Write the buffer to the file
+          size.setValue(stream.getChannel().size()); // Update the value of the size
         }
       }
       // When the download has finished, call the success listeners
@@ -91,6 +86,15 @@ public class DownloadAsync implements Runnable {
       for (FailListener failListener : failListeners)
         failListener.onFail(e);
     }
+  }
+
+  private HttpURLConnection createConnection() throws IOException {
+    URL url = new URL(downloadLink);
+    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    connection.setRequestMethod("GET");
+    connection.connect();
+    totalDownloadSize = connection.getContentLength();
+    return connection;
   }
 
   /*

@@ -3,6 +3,7 @@ package me.deejack.animeviewer.logic.updates;
 import com.google.gson.annotations.Expose;
 import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.favorite.Favorite;
+import me.deejack.animeviewer.logic.favorite.FavoriteAnime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
 import me.deejack.animeviewer.logic.serialization.JsonValidator;
@@ -42,12 +43,13 @@ public final class FavoritesUpdates {
       List<Episode> newEpisodes = animeUpdate.checkUpdates();
       System.out.println(newEpisodes.size() + " <- " + favorite.getEpisodes().size());
       if (!newEpisodes.isEmpty()) {
+        addNewEpisodesToAnime(animeUpdate, favorite);
         onUpdateFound.onChange(animeUpdate);
         animeUpdates.add(animeUpdate);
       }
     });
-    //addNewEpisodesToAnime(animeUpdates);
     addTodayUpdates(animeUpdates);
+    writeToFile();
   }
 
   /**
@@ -61,21 +63,16 @@ public final class FavoritesUpdates {
         animeUpdates.addAll(updatesByDay.get(today));
       updatesByDay.put(today, animeUpdates);
     }
+    System.err.println(updatesByDay);
   }
 
-  private void addNewEpisodesToAnime(List<? extends AnimeUpdates> animeUpdates) {
-    if (updatesByDay.containsKey(today)) {
-      updatesByDay.get(today).forEach((anime) -> {
-        if (animeUpdates.contains(anime)) {
-          anime.getEpisodes().addAll(animeUpdates.get(animeUpdates.indexOf(anime)).getEpisodes());
-          animeUpdates.remove(anime);
-        }
-      });
-    }
+  private void addNewEpisodesToAnime(AnimeUpdates animeUpdates, FavoriteAnime favoriteAnime) {
+    favoriteAnime.getEpisodes().addAll(animeUpdates.getEpisodes());
   }
 
   public void writeToFile() {
     String json = new AnimeSerializer<>(FavoritesUpdates.class).serialize(this);
+    System.out.println(json);
     File output = new File(CONFIG_DIR + File.separator + "updatesByDay.json");
     try {
       if (!output.exists())
@@ -96,7 +93,8 @@ public final class FavoritesUpdates {
         return;
       if (!JsonValidator.isValid(json))
         throw new IOException("Json invalid!");
-      updatesByDay = Objects.requireNonNull(new AnimeSerializer<>(FavoritesUpdates.class).deserializeObj(json)).updatesByDay;
+      updatesByDay = Objects.requireNonNull(new AnimeSerializer<>(FavoritesUpdates.class)
+              .deserializeObj(json)).updatesByDay;
     } catch (IOException e) {
       handleException(e);
     }

@@ -25,6 +25,7 @@ import java.util.List;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 import static me.deejack.animeviewer.logic.utils.FilesManager.createDirsIfNotExists;
+import static me.deejack.animeviewer.logic.utils.GeneralUtility.logError;
 
 public class App extends Application {
   public static final List<FilteredSource> SITES = new ArrayList<>();
@@ -50,20 +51,24 @@ public class App extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    instance = this;
-    SceneUtility.setStage(primaryStage);
-    primaryStage.setScene(new Scene(new StackPane(), 1000, 720));
-    primaryStage.show();
+    try {
+      instance = this;
+      SceneUtility.setStage(primaryStage);
+      primaryStage.setScene(new Scene(new StackPane(), 1000, 720));
+      primaryStage.show();
 
-    createDirsIfNotExists();
+      createDirsIfNotExists();
+      showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingExt"));
+      loadExtensions();
+      createScene(primaryStage);
+
+      loadHistory();
+      FilesUtility.loadFavorite();
+      new Github().checkUpdatesAsync();
+    } catch (Exception exc) {
+      logError(exc);
+    }
     Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> handleException(throwable));
-    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingExt"));
-    loadExtensions();
-    createScene(primaryStage);
-
-    loadHistory();
-    FilesUtility.loadFavorite();
-    new Github().checkUpdatesAsync();
   }
 
   private void createScene(Stage primaryStage) {

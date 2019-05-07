@@ -72,7 +72,7 @@ public class AnimeSceneController implements BaseScene {
     VBox found = (VBox) ((ScrollPane) content.lookup("#scrollPane")).getContent();
     PagesBox pagesBox = new PagesBox(currentPage, search, isSearch, filters, onPageChanged(found));
     found.getChildren().add(pagesBox);
-    animePane = new AnimePane(elements, onRequestAnimeTab());
+    animePane = new AnimePane(elements, onRequestAnimeTab(), root.getTabs().get(0));
     found.getChildren().add(0, animePane);
   }
 
@@ -80,7 +80,7 @@ public class AnimeSceneController implements BaseScene {
     return (anime) -> {
       Tab tab = new Tab();
       AnimeDetailController detailController = new AnimeDetailController(anime, true, tab);
-      detailController.loadSync();
+      detailController.loadAsync();
       tab.setText(detailController.getTitle());
       tab.setContent(detailController.getRoot());
       root.getTabs().add(tab);

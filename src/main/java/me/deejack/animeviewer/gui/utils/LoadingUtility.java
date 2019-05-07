@@ -3,6 +3,7 @@ package me.deejack.animeviewer.gui.utils;
 import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -29,10 +30,17 @@ public final class LoadingUtility {
     } else if (rootParent instanceof Pane) {
       Pane root = (Pane) rootParent;
       root.getChildren().add(new LoadingPane(msg, root));
-    } else {
-      TabPane root = (TabPane) rootParent;
-      ((Pane) root.getSelectionModel().getSelectedItem().getContent()).getChildren().add(new LoadingPane(msg, root)); // Sbagliato
     }
+  }
+
+  public static void showWaitAndLoad(String msg, Tab currentTab) {
+    if (currentTab == null) {
+      showWaitAndLoad(msg);
+      return;
+    }
+    Pane root = (Pane) currentTab.getContent();
+    if (root != null)
+      root.getChildren().add(new LoadingPane(msg, root));
   }
 
   public static void showWaitAndLoad() {

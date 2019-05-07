@@ -40,7 +40,7 @@ public class AnimeDetailController implements BaseScene {
   }
 
   public void loadAsync() {
-    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingAnimeList"));
+    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingAnimeList"), currentTab);
     if (Favorite.getInstance().contains(anime))
       load();
     else
@@ -48,7 +48,7 @@ public class AnimeDetailController implements BaseScene {
   }
 
   public void loadSync() {
-    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingAnimeList"));
+    showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingAnimeList"), currentTab);
     anime.load();
     load();
     hideWaitLoad();
@@ -62,6 +62,7 @@ public class AnimeDetailController implements BaseScene {
     setupScene();
     if (!isNewTab)
       loadScene();
+    hideWaitLoad();
     //anime.getEpisodes().add(0, new DreamsubEpisode("Ep 100%", 1, "https://www.dreamsub.stream/anime/one-piece-c/10000", LocalDate.now()));
   }
 
@@ -90,7 +91,7 @@ public class AnimeDetailController implements BaseScene {
 
   private Listener<Episode> onStreamingRequested() {
     return (episode) -> {
-      showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingEpisodeLinks"));
+      showWaitAndLoad(LocalizedApp.getInstance().getString("LoadingEpisodeLinks"), currentTab);
       new Thread(() -> {
         AnimePlayer player = new AnimePlayer(episode, anime, isNewTab, currentTab);
         Platform.runLater(player::createStreaming);
@@ -99,7 +100,7 @@ public class AnimeDetailController implements BaseScene {
   }
 
   private void reloadInfoBox(ListViewEpisodes listViewEpisodes, AnimeInfoBox infoBox) {
-    showWaitAndLoad(LocalizedApp.getInstance().getString("Reloading"));
+    showWaitAndLoad(LocalizedApp.getInstance().getString("Reloading"), currentTab);
     anime.loadAsync(() -> Platform.runLater(() -> {
       listViewEpisodes.reload();
       infoBox.reload();

@@ -5,16 +5,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import me.deejack.animeviewer.gui.components.general.ButtonFavorite?>
-<?import me.deejack.animeviewer.gui.components.general.ButtonHistory?>
-<?import me.deejack.animeviewer.gui.components.general.ButtonSideBar?>
-<?import me.deejack.animeviewer.gui.components.general.ButtonUpdates?>
-<?import me.deejack.animeviewer.gui.components.general.ListViewSites?>
-<?import me.deejack.animeviewer.gui.components.streaming.BoxExternalStreaming?>
+<?import javafx.scene.layout.*?>
+<?import me.deejack.animeviewer.gui.components.general.*?>
+<?import me.deejack.animeviewer.gui.components.streaming.bottombar.BoxExternalStreaming?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="697.0" prefWidth="789.0" style="-fx-background-color: white;"
            xmlns="http://javafx.com/javafx/8.0.172-ea">
     <BorderPane prefHeight="464.0" prefWidth="639.0">

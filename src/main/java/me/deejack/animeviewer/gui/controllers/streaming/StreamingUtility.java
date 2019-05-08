@@ -1,16 +1,17 @@
 package me.deejack.animeviewer.gui.controllers.streaming;
 
-import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import me.deejack.animeviewer.gui.components.streaming.ButtonPause;
+import me.deejack.animeviewer.gui.components.streaming.bottombar.ButtonPause;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+
+import java.util.Optional;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;

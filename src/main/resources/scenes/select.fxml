@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import me.deejack.animeviewer.gui.components.general.ButtonFavorite?>
 <?import me.deejack.animeviewer.gui.components.general.ButtonHistory?>
 <?import me.deejack.animeviewer.gui.components.general.ButtonUpdates?>
 <?import me.deejack.animeviewer.gui.components.general.ListViewSites?>
-<?import me.deejack.animeviewer.gui.components.streaming.BoxExternalStreaming?>
+<?import me.deejack.animeviewer.gui.components.streaming.bottombar.BoxExternalStreaming?>
 <StackPane xmlns:fx="http://javafx.com/fxml/" style="-fx-background-color: white;"
            xmlns="http://javafx.com/javafx/">
     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"

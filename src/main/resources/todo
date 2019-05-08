@@ -1,5 +1,4 @@
 Generali:
-    - Anche se non chiede il caricamento in nuova tab, caricare nella tab corrente ma non mettere come root
     - Rifare download e vedere Favorite, StreamingController è troppo lunga
     - Dare la possibilità di scegliere se e quando mettere il prossimo episodio, per ora è 1 minuto
     Tenere lo streaming come solo una classe che gestice lo streaming passando un media al costruttore, e tutto ciò relativo all'episodio/anime lasciato alle altre classi?

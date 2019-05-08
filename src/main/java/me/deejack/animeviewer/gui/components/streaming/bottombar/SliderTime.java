@@ -1,4 +1,4 @@
-package me.deejack.animeviewer.gui.components.streaming;
+package me.deejack.animeviewer.gui.components.streaming.bottombar;
 
 import javafx.scene.control.Slider;
 import javafx.scene.media.MediaPlayer;

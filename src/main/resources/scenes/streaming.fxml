@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.layout.*?>
 <?import me.deejack.animeviewer.gui.components.general.ButtonBack?>
 <StackPane maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/">
-    <MediaView fx:id="mediaView" preserveRatio="true">
+    <!--<MediaView fx:id="mediaView" preserveRatio="true">
         <viewport>
             <Rectangle2D/>
         </viewport>
-    </MediaView>
+    </MediaView>-->
     <BorderPane fx:id="paneLayer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
         <bottom>
             <HBox fx:id="bottomBar" alignment="CENTER" prefHeight="35.0" prefWidth="1280.0" spacing="15.0" style="-fx-background-color: rgba(169, 169, 169, 0.7);" BorderPane.alignment="CENTER">

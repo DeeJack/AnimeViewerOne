@@ -72,6 +72,6 @@ public class AnimeBox extends StackPane {
   }
 
   private void loadElement() {
-    new AnimeDetailController(anime, true, firstTab).loadAsync();
+    new AnimeDetailController(anime, false, firstTab).loadAsync();
   }
 }

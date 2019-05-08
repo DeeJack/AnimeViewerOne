@@ -1,32 +1,18 @@
 package me.deejack.animeviewer.gui.controllers.streaming;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 import me.deejack.animeviewer.gui.components.general.ButtonBack;
-import me.deejack.animeviewer.gui.components.streaming.AlwaysOnTopImage;
-import me.deejack.animeviewer.gui.components.streaming.ButtonNext;
-import me.deejack.animeviewer.gui.components.streaming.ButtonPause;
-import me.deejack.animeviewer.gui.components.streaming.FullScreenImage;
-import me.deejack.animeviewer.gui.components.streaming.LabelTime;
-import me.deejack.animeviewer.gui.components.streaming.ProgressBarBuffer;
-import me.deejack.animeviewer.gui.components.streaming.SliderTime;
-import me.deejack.animeviewer.gui.components.streaming.SliderVolume;
-import me.deejack.animeviewer.gui.components.streaming.StretchVideoImage;
+import me.deejack.animeviewer.gui.components.streaming.BottomBar;
+import me.deejack.animeviewer.gui.components.streaming.MediaViewStreaming;
+import me.deejack.animeviewer.gui.components.streaming.bottombar.ButtonNext;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
@@ -37,6 +23,9 @@ import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import static me.deejack.animeviewer.gui.controllers.streaming.StreamingUtility.findNextEpisode;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 
@@ -44,27 +33,24 @@ public class StreamingController implements BaseScene {
   private final MediaPlayer mediaPlayer;
   private final Episode episode;
   private final Anime anime;
-  private final boolean isNewTab;
-  private final Tab currentTab;
+  private final Pane root;
   private String title = "";
-  private Pane root;
   private ControlsLayerTask cursorTask;
-  private ButtonBack btnBack;
+  private ButtonBack buttonBack;
 
-  public StreamingController(MediaPlayer mediaPlayer, Episode episode, Anime anime, boolean isNewTab, Tab currentTab) {
+  public StreamingController(MediaPlayer mediaPlayer, Episode episode, Anime anime) {
     this.mediaPlayer = mediaPlayer;
     this.episode = episode;
     this.anime = anime;
-    this.isNewTab = isNewTab;
-    this.currentTab = currentTab;
+    root = (Pane) SceneUtility.loadParent("/scenes/streaming.fxml");
   }
 
-  public void setUpPlayer() {
+  public void setUpPlayer(boolean isNewTab, Tab currentTab) {
     if (anime != null)
       title = String.format("%s - %s %d - %s",
               anime.getAnimeInformation().getName(), LocalizedApp.getInstance().getString("Episode"),
               episode.getNumber(), episode.getTitle());
-    setupNodes();
+    setupNodes(isNewTab, currentTab);
     setupEpisode();
     hideWaitLoad();
     mediaPlayer.play();
@@ -85,46 +71,32 @@ public class StreamingController implements BaseScene {
       mediaPlayer.setStartTime(Duration.seconds(episode.getSecondsWatched()));
   }
 
-  private void setupNodes() {
-    ButtonPause btnPause = new ButtonPause(mediaPlayer);
-    ButtonNext btnNext = new ButtonNext(anime, episode, isNewTab, currentTab);
-    root = (Pane) SceneUtility.loadParent("/scenes/streaming.fxml");
-    btnBack = (ButtonBack) root.lookup("#btnBack");
-    MediaView mediaView = (MediaView) root.lookup("#mediaView");
-    Label lblTitle = (Label) root.lookup("#lblTitle");
-
-    cursorTask = new ControlsLayerTask((Pane) root.lookup("#paneLayer"), mediaView);
-    lblTitle.setText(title);
+  private void setupNodes(boolean isNewTab, Tab currentTab) {
+    ButtonNext buttonNext = new ButtonNext(anime, episode, isNewTab, currentTab);
+    BottomBar bottomBar = new BottomBar(root, mediaPlayer, buttonNext, title);
+    MediaViewStreaming mediaView = new MediaViewStreaming(mediaPlayer, root);
     mediaView.setMediaPlayer(mediaPlayer);
+    cursorTask = new ControlsLayerTask((Pane) root.lookup("#paneLayer"), mediaView);
+    root.getChildren().add(0, mediaView);
+    cursorTask = bottomBar.getCursorTask();
+    buttonBack = bottomBar.getButtonBack();
 
-    StackPane stackPane = new StackPane(new ProgressBarBuffer(mediaPlayer), new SliderTime(mediaPlayer));
-    stackPane.getStylesheets().add("/assets/streamingStyle.css");
-    HBox.setHgrow(stackPane, Priority.ALWAYS);
-
-    Node[] nodes = {
-            btnPause, btnNext, stackPane, new LabelTime(mediaPlayer), new SliderVolume(mediaPlayer),
-            new FullScreenImage(), new StretchVideoImage(mediaView, root), new AlwaysOnTopImage()
-    };
-    ((Pane) root.lookup("#bottomBar")).getChildren().addAll(nodes);
-    registerEvents(btnPause, btnNext, btnBack, mediaView);
+    registerEvents(buttonNext, bottomBar.getButtonBack());
   }
 
-  private void registerEvents(ButtonPause btnPause, ButtonNext btnNext, ButtonBack btnBack, MediaView mediaView) {
-    root.lookup("#pauseLayer").setOnMouseClicked((event) -> btnPause.pause());
-    //root.layoutBoundsProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
-    root.heightProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
-    root.widthProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
-    btnNext.setOnNextEpisode(this::onFinish);
-    btnBack.setOnAction((event) -> {
+  private void registerEvents(ButtonNext buttonNext, ButtonBack buttonBack) {
+    buttonNext.setOnNextEpisode(this::onFinish);
+    buttonBack.setOnAction((event) -> {
       onFinish();
       SceneUtility.goToPreviousScene();
     });
-    root.setOnKeyPressed((event) -> StreamingUtility.keyNavigation(event, mediaPlayer));
-    mediaPlayer.statusProperty().addListener((event, oldValue, newValue) -> StreamingUtility.onChangeStatus(newValue, btnPause));
     if (episode != null)
       mediaPlayer.currentTimeProperty().addListener((event, oldValue, newValue) -> episode.setSecondsWatched(newValue.toSeconds()));
-    mediaPlayer.setOnReady(() -> new Thread(cursorTask).start());
     root.lookup("#paneLayer").setOnMouseClicked(this::checkDoubleClick);
+  }
+
+  public void setOnBack(EventHandler<ActionEvent> onBack) {
+    buttonBack.setOnAction(onBack);
   }
 
   private void checkDoubleClick(MouseEvent mouseEvent) {
@@ -151,22 +123,6 @@ public class StreamingController implements BaseScene {
     nextEpisode.ifPresent((episode) ->
             History.getHistory().get(anime).ifPresent((anime) ->
                     anime.addEpisode(new HistoryEpisode(episode, LocalDateTime.now()))));
-  }
-
-  private void onSizeChange(MediaView view) {
-    if (mediaPlayer.getMedia().getWidth() > root.getWidth()) {
-      view.setFitWidth(root.getWidth());
-    }
-    if (mediaPlayer.getMedia().getHeight() > root.getHeight()) {
-      view.setFitHeight(root.getHeight());
-      return;
-    }
-    view.setFitWidth(root.getWidth());
-    view.setFitHeight(root.getHeight());
-  }
-
-  public void setOnBack(EventHandler<ActionEvent> onBack) {
-    btnBack.setOnAction(onBack);
   }
 
   @Override

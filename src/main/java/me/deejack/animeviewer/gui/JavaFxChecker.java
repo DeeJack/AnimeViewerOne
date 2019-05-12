@@ -1,24 +1,21 @@
 package me.deejack.animeviewer.gui;
 
-import java.awt.Desktop;
+import javafx.application.Application;
+import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import javafx.application.Application;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
-import javax.swing.WindowConstants;
-import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 public final class JavaFxChecker {
   private static final String JAVA_LINK = "https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html";
 
-  private JavaFxChecker() {
-  }
-
   public static void main(String[] args) {
     try {
+      //if (args.length > 0 && args[0].equals("-u"))
+      //LocalAppUpdate.update(args[1], args[2]);
       Class.forName("javafx.application.Application");
       Application.launch(App.class, args);
     } catch (ClassNotFoundException e) {

@@ -9,10 +9,10 @@ import me.deejack.animeviewer.gui.components.updates.DailyUpdatesBox;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.animeupdates.AnimeUpdates;
+import me.deejack.animeviewer.logic.animeupdates.FavoritesUpdates;
 import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
-import me.deejack.animeviewer.logic.updates.AnimeUpdates;
-import me.deejack.animeviewer.logic.updates.FavoritesUpdates;
 
 import java.time.LocalDate;
 
@@ -44,7 +44,7 @@ public class AnimeUpdateController implements BaseScene {
   }
 
   /**
-   * Check for new updates, then add to the box the new episodes
+   * Check for new animeupdates, then add to the box the new episodes
    *
    * @param boxFavorite The box in which the new episodes will be added
    */

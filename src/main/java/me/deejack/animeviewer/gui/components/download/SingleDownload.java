@@ -3,7 +3,6 @@ package me.deejack.animeviewer.gui.components.download;
 import com.github.plushaze.traynotification.animations.Animations;
 import com.github.plushaze.traynotification.notification.Notifications;
 import com.github.plushaze.traynotification.notification.TrayNotification;
-import java.io.File;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -11,7 +10,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.async.DownloadAsync;
+import me.deejack.animeviewer.logic.async.events.SuccessListener;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
+
+import java.io.File;
 
 import static me.deejack.animeviewer.gui.controllers.download.DownloadUtility.toMB;
 import static me.deejack.animeviewer.logic.utils.GeneralUtility.logError;
@@ -68,5 +70,9 @@ public class SingleDownload {
 
   public BorderPane getRoot() {
     return root;
+  }
+
+  public void setOnSucceed(SuccessListener succeed) {
+    downloadAsync.addSuccessListener(succeed);
   }
 }

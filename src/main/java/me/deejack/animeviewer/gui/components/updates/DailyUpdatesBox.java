@@ -5,14 +5,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import me.deejack.animeviewer.logic.animeupdates.AnimeUpdates;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
-import me.deejack.animeviewer.logic.updates.AnimeUpdates;
 
 import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * A box containing the updates of a day
+ * A box containing the animeupdates of a day
  */
 public class DailyUpdatesBox extends VBox {
   private final VBox updatesBox = new VBox();
@@ -38,7 +38,7 @@ public class DailyUpdatesBox extends VBox {
   }
 
   /**
-   * Create a HBox without updates
+   * Create a HBox without animeupdates
    */
   private HBox createEmptyBox() {
     return new HBox(new Text(LocalizedApp.getInstance().getString("NoUpdates")));

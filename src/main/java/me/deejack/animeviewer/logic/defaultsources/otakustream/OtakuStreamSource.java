@@ -32,8 +32,12 @@ public class OtakuStreamSource extends ParsedHttpSource {
   @Override
   protected String getPagesByDoc(Document document) {
     Element lastElement = document.getElementsByClass("last").first();
-    if (lastElement == null)
-      return "";
+    if (lastElement == null) {
+      Element currentPage = document.getElementsByClass("current").first();
+      if (currentPage == null)
+        return "1";
+      return currentPage.text();
+    }
     String href = lastElement.attr("href");
     String page = href.split("/")[href.split("/").length - 2];
     System.err.println(href);

@@ -1,4 +1,4 @@
-package me.deejack.animeviewer.logic.updates;
+package me.deejack.animeviewer.logic.animeupdates;
 
 import com.google.gson.annotations.Expose;
 import me.deejack.animeviewer.logic.favorite.Favorite;

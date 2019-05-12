@@ -1,22 +1,23 @@
 package me.deejack.animeviewer.logic.githubupdates;
 
 import com.google.gson.Gson;
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
 import javafx.application.Platform;
 import me.deejack.animeviewer.gui.components.appupdates.UpdateAvailableDialog;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
-public class Github {
+public class GithubConnection {
   /*private static final String REPOSITORY_NAME = "AnimeViewerOne";
   private static final String USER_NAME = "DeeJack";*/
-  private static final String REPOSITORY_NAME = "guice";
-  private static final String USER_NAME = "google";
+  private static final String REPOSITORY_NAME = "HMCL";
+  private static final String USER_NAME = "huanghongxun";
   private static final String API_URL = "https://api.github.com/repos/" + USER_NAME + "/" + REPOSITORY_NAME + "/releases/latest";
 
   public void checkUpdatesAsync() {

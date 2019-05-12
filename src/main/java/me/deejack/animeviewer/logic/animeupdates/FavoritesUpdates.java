@@ -1,4 +1,4 @@
-package me.deejack.animeviewer.logic.updates;
+package me.deejack.animeviewer.logic.animeupdates;
 
 import com.google.gson.annotations.Expose;
 import me.deejack.animeviewer.logic.async.events.Listener;
@@ -19,8 +19,8 @@ import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 import static me.deejack.animeviewer.logic.history.History.CONFIG_DIR;
 
 /**
- * Checks the updates for every anime in the favorite list
- * The updates can be saved to file and then loaded from the file
+ * Checks the animeupdates for every anime in the favorite list
+ * The animeupdates can be saved to file and then loaded from the file
  */
 public final class FavoritesUpdates {
   private static final FavoritesUpdates instance = new FavoritesUpdates();
@@ -53,9 +53,9 @@ public final class FavoritesUpdates {
   }
 
   /**
-   * Add the new updates to the today key on the map
+   * Add the new animeupdates to the today key on the map
    *
-   * @param animeUpdates The new updates
+   * @param animeUpdates The new animeupdates
    */
   private void addTodayUpdates(List<AnimeUpdates> animeUpdates) {
     if (!animeUpdates.isEmpty()) {

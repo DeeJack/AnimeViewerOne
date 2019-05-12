@@ -1,5 +1,10 @@
 package me.deejack.animeviewer.logic.extensions;
 
+import me.deejack.animeviewer.gui.bypasser.SiteBypasser;
+import me.deejack.animeviewer.logic.models.source.FilteredSource;
+import me.deejack.animeviewer.logic.utils.FilesManager;
+import me.deejack.animeviewer.logic.utils.GeneralUtility;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -11,10 +16,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import me.deejack.animeviewer.gui.bypasser.SiteBypasser;
-import me.deejack.animeviewer.logic.models.source.FilteredSource;
-import me.deejack.animeviewer.logic.utils.FilesManager;
-import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
 public final class ExtensionLoader<T> {
   //public static List<Class> loadedClasses = new ArrayList<>();
@@ -31,19 +32,19 @@ public final class ExtensionLoader<T> {
   }
 
   private static <T> List<T> loadExtension(File folder, Class<T> superClass) {
-    List<T> sources = new ArrayList<>();
+    List<T> subclasses = new ArrayList<>();
     for (File file : Objects.requireNonNull(folder.listFiles())) {
       if (file.isFile() && file.getName().endsWith(".jar")) {
         addExtToClasspath(file);
-        T source = getFilteredSource(file, superClass);
-        if (source != null)
-          sources.add(source);
+        T subclass = getSubclass(file, superClass);
+        if (subclass != null)
+          subclasses.add(subclass);
       }
     }
-    return sources;
+    return subclasses;
   }
 
-  private static <T> T getFilteredSource(File file, Class<T> superClass) {
+  private static <T> T getSubclass(File file, Class<T> superClass) {
     T animeSource = null;
     try (JarFile jarFile = new JarFile(file)) {
       ClassLoader classLoader = URLClassLoader.newInstance(new URL[]{new URL("jar:file:" + file.getPath() + "!/")});

@@ -12,7 +12,7 @@ import me.deejack.animeviewer.logic.defaultsources.animeleggendari.AnimeLeggenda
 import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamSubSource;
 import me.deejack.animeviewer.logic.defaultsources.otakustream.OtakuStreamSource;
 import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
-import me.deejack.animeviewer.logic.githubupdates.Github;
+import me.deejack.animeviewer.logic.githubupdates.GithubConnection;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
@@ -64,7 +64,7 @@ public class App extends Application {
 
       loadHistory();
       FilesUtility.loadFavorite();
-      new Github().checkUpdatesAsync();
+      new GithubConnection().checkUpdatesAsync();
     } catch (Exception exc) {
       logError(exc);
     }

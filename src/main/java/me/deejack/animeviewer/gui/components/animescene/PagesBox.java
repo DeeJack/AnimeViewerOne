@@ -46,7 +46,7 @@ public class PagesBox extends HBox {
     getChildren().add(new PageButton(currentPage, false));
     if (currentPage + 1 < totalPages)
       getChildren().add(new PageButton(currentPage + 1, true));
-    if (currentPage != totalPages)
+    if (currentPage != totalPages && totalPages > currentPage)
       getChildren().add(new PageButton(totalPages, true));
   }
 

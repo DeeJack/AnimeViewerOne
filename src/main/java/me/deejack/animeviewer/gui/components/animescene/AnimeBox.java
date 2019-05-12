@@ -47,7 +47,7 @@ public class AnimeBox extends StackPane {
     setOnTouchPressed((e) ->
             touchPoint = new Point2D(e.getTouchPoint().getScreenX(), e.getTouchPoint().getScreenY()));
     setOnTouchReleased((e) -> {
-      if (touchPoint.getX() == e.getTouchPoint().getScreenX() && touchPoint.getY() == e.getTouchPoint().getScreenY())
+      if (touchPoint.getX() == e.getTouchPoint().getScreenX() && touchPoint.getY() == e.getTouchPoint().getScreenY()) // If it didn't move
         loadElement();
     });
   }

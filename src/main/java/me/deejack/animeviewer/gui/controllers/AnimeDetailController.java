@@ -57,9 +57,9 @@ public class AnimeDetailController implements BaseScene {
       return;
     }
     setupScene();
+    hideWaitLoad();
     if (!isNewTab)
       setRoot(this);
-    hideWaitLoad();
   }
 
   private void setupScene() {

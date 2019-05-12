@@ -1,6 +1,5 @@
 package me.deejack.animeviewer.gui.controllers.streaming;
 
-import java.io.IOException;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.StackPane;
@@ -14,6 +13,8 @@ import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import org.jsoup.Connection;
+
+import java.io.IOException;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
@@ -86,8 +87,8 @@ public class AnimePlayer {
   }
 
   private StreamingController setupPlayer(String link) {
-    StreamingController streaming = new StreamingController(new MediaPlayer(new Media(link)), episode, anime, isNewTab, currentTab);
-    streaming.setUpPlayer();
+    StreamingController streaming = new StreamingController(new MediaPlayer(new Media(link)), episode, anime);
+    streaming.setUpPlayer(isNewTab, currentTab);
     return streaming;
   }
 }

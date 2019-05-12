@@ -15,12 +15,15 @@ import me.deejack.animeviewer.gui.controllers.streaming.StreamingUtility;
 public class BottomBar extends HBox {
   private final Pane root;
   private final MediaPlayer mediaPlayer;
-  private ControlsLayerTask cursorTask;
+  private final ControlsLayerTask cursorTask;
   private ButtonBack buttonBack;
+  private final MediaViewStreaming mediaView;
 
-  public BottomBar(Pane root, MediaPlayer mediaPlayer, ButtonNext buttonNext, String title) {
+  public BottomBar(Pane root, MediaPlayer mediaPlayer, ButtonNext buttonNext, String title, MediaViewStreaming mediaView) {
     this.root = root;
     this.mediaPlayer = mediaPlayer;
+    this.mediaView = mediaView;
+    cursorTask = new ControlsLayerTask((Pane) root.lookup("#paneLayer"), mediaView);
     setup(buttonNext, title);
   }
 

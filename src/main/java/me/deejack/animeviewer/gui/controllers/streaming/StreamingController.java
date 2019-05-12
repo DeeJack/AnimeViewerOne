@@ -73,10 +73,9 @@ public class StreamingController implements BaseScene {
 
   private void setupNodes(boolean isNewTab, Tab currentTab) {
     ButtonNext buttonNext = new ButtonNext(anime, episode, isNewTab, currentTab);
-    BottomBar bottomBar = new BottomBar(root, mediaPlayer, buttonNext, title);
     MediaViewStreaming mediaView = new MediaViewStreaming(mediaPlayer, root);
     mediaView.setMediaPlayer(mediaPlayer);
-    cursorTask = new ControlsLayerTask((Pane) root.lookup("#paneLayer"), mediaView);
+    BottomBar bottomBar = new BottomBar(root, mediaPlayer, buttonNext, title, mediaView);
     root.getChildren().add(0, mediaView);
     cursorTask = bottomBar.getCursorTask();
     buttonBack = bottomBar.getButtonBack();

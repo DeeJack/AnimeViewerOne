@@ -17,8 +17,12 @@ Meno importanti:
     - In cronologia, se c'è cloudflare lo deve bypassare ogni volta perché non c'è un sito selezionato!
     - Oltre allo streaming da sito esterno, mettere anche il download! (Creare controller tipo search)
     - Mettere la data nella cronologia? Quindi quando si elimina elimino non più l'episodio ma quella sessione di cronologia
+
     - Quando si va in animescene, carica sia la ricerca che la pagina principale per i generi, fare solo la ricerca?
     - Ricerca globale
     - Mettere animeclick / myanimelist
     - anime correlati
     - Segnare episodi scaricati
+
+Update: scarico la nuova versione, la apro passandogli come parametro il fatto che sia un update,
+    il path per la vecchia versione e la nuova versione. La nuova versione elimina il vecchio file e rinomina il nuovo

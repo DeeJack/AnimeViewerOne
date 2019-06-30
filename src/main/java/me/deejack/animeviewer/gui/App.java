@@ -11,8 +11,8 @@ import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.defaultsources.animeleggendari.AnimeLeggendariSource;
 import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamSubSource;
 import me.deejack.animeviewer.logic.defaultsources.otakustream.OtakuStreamSource;
+import me.deejack.animeviewer.logic.defaultsources.otakustream.movies.OtakuMovies;
 import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
-import me.deejack.animeviewer.logic.githubupdates.GithubConnection;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.source.FilteredSource;
@@ -52,9 +52,21 @@ public class App extends Application {
   @Override
   public void start(Stage primaryStage) {
     try {
+     /* WebView view = new WebView();
+      view.getEngine().load("https://otakustream.tv/anime/black-clover-2017/");
+      view.getEngine().getLoadWorker().stateProperty().addListener(((observable, oldValue, newValue) -> {
+        view.getEngine().executeScript("fetch('https://otakustream.tv/api/tools.php', {" +
+                "method: 'POST', " +
+                "    headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: 'action=load_episodes&offset=0&parentId=17062'}).then(" +
+                "function(response) { response.text().then(function(data) {" +
+                "        document.getElementsByTagName('html')[0].innerHTML = data;" +
+                "      });});");
+        System.out.println(view.getEngine().getDocument().getElementsByTagName("html").item(0).getTextContent());
+      }));*/
       instance = this;
       SceneUtility.setStage(primaryStage);
-      primaryStage.setScene(new Scene(new StackPane(), 1000, 720));
+      StackPane pane = new StackPane(/*view*/);
+      primaryStage.setScene(new Scene(pane, 1000, 720));
       primaryStage.show();
 
       createDirsIfNotExists();
@@ -64,7 +76,7 @@ public class App extends Application {
 
       loadHistory();
       FilesUtility.loadFavorite();
-      new GithubConnection().checkUpdatesAsync();
+      //new GithubConnection().checkUpdatesAsync();
     } catch (Exception exc) {
       logError(exc);
     }
@@ -83,6 +95,7 @@ public class App extends Application {
     SITES.addAll(ExtensionLoader.loadExtension());
     SITES.add(new DreamSubSource());
     SITES.add(new OtakuStreamSource());
+    SITES.add(new OtakuMovies());
     SITES.add(new AnimeLeggendariSource());
   }
 

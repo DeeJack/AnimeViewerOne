@@ -1,11 +1,12 @@
 package me.deejack.animeviewer.logic.models.anime;
 
-import java.io.File;
-import java.util.List;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.async.events.SuccessListener;
 import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * Di un anime puoi prendere i dettagli, gli episodi oppure gli anime correlati ma per ora lasciamo perdere
@@ -47,4 +48,6 @@ public interface Anime {
   default boolean isFavorite() {
     return Favorite.getInstance().contains(this);
   }
+
+  void afterEpisodeLoaded(List<Episode> episodes);
 }

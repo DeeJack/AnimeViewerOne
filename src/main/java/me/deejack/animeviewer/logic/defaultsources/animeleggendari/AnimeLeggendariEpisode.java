@@ -1,10 +1,5 @@
 package me.deejack.animeviewer.logic.defaultsources.animeleggendari;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.models.episode.EpisodeImpl;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
@@ -14,6 +9,13 @@ import org.jsoup.nodes.DataNode;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class AnimeLeggendariEpisode extends EpisodeImpl {
   private final String animeTitle;
@@ -42,6 +44,7 @@ public class AnimeLeggendariEpisode extends EpisodeImpl {
     }
     streamingFrames.stream()
             .map((frame) -> frame.attr("src"))
+            .filter(Objects::nonNull)
             .map(link -> new StreamingLink(animeTitle.contains("SUB") ? "SUB ITA" : "ITA", link, -1, link.split("/")[2], true))
             .forEach(streamingLinks::add);
     return streamingLinks;

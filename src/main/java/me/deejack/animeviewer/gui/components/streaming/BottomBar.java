@@ -18,6 +18,7 @@ public class BottomBar extends HBox {
   private final ControlsLayerTask cursorTask;
   private ButtonBack buttonBack;
   private final MediaViewStreaming mediaView;
+  private FullScreenImage fullScreen;
 
   public BottomBar(Pane root, MediaPlayer mediaPlayer, ButtonNext buttonNext, String title, MediaViewStreaming mediaView) {
     this.root = root;
@@ -37,10 +38,11 @@ public class BottomBar extends HBox {
     StackPane stackPane = new StackPane(new ProgressBarBuffer(mediaPlayer), new SliderTime(mediaPlayer));
     stackPane.getStylesheets().add("/assets/streamingStyle.css");
     HBox.setHgrow(stackPane, Priority.ALWAYS);
+    fullScreen = new FullScreenImage();
 
     Node[] nodes = {
             btnPause, buttonNext, stackPane, new LabelTime(mediaPlayer), new SliderVolume(mediaPlayer),
-            new FullScreenImage(), new StretchVideoImage(mediaView, root), new AlwaysOnTopImage()
+            fullScreen, new StretchVideoImage(mediaView, root), new AlwaysOnTopImage()
     };
     ((Pane) root.lookup("#bottomBar")).getChildren().addAll(nodes);
     registerEvents(btnPause, buttonNext, buttonBack);
@@ -68,5 +70,9 @@ public class BottomBar extends HBox {
 
   public ControlsLayerTask getCursorTask() {
     return cursorTask;
+  }
+
+  public void clickFullScreen() {
+    fullScreen.getOnMouseClicked().handle(null);
   }
 }

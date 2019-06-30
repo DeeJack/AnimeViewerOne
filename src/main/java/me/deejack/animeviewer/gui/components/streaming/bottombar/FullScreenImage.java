@@ -16,8 +16,16 @@ public class FullScreenImage extends ImageView {
     setFitHeight(24);
     setFitWidth(23);
     setPickOnBounds(true);
-    setOnMouseClicked((event) -> SceneUtility.getStage().setFullScreen(!SceneUtility.getStage().isFullScreen()));
+    setOnMouseClicked((event) -> onClick());
     SceneUtility.getStage().fullScreenProperty().addListener((event) -> setImage(SceneUtility.getStage().isFullScreen() ? smallScreenImage : fullScreenImage));
     Tooltip.install(this, new Tooltip(LocalizedApp.getInstance().getString("FullScreenTooltip")));
+  }
+
+  private void onClick() {
+    SceneUtility.getStage().setFullScreen(!SceneUtility.getStage().isFullScreen());
+    if (!SceneUtility.getStage().isFullScreen() && SceneUtility.getStage().isAlwaysOnTop()) {
+      SceneUtility.getStage().setAlwaysOnTop(false); // I don't know why but it doesn't work otherwise
+      SceneUtility.getStage().setAlwaysOnTop(true); // I don't know why but it doesn't work otherwise
+    }
   }
 }

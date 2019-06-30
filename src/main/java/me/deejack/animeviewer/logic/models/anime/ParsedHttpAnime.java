@@ -1,8 +1,5 @@
 package me.deejack.animeviewer.logic.models.anime;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import org.jsoup.Connection;
@@ -10,6 +7,10 @@ import org.jsoup.HttpStatusException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Definisco i vari metodi ma non so ancora come selezionare un episodio o il dettaglio, e non so come fare a
@@ -32,6 +33,7 @@ public abstract class ParsedHttpAnime extends HttpAnime {
     System.out.println(episodesElements.size());
     List<Episode> episodes = new ArrayList<>();
     episodesElements.stream().map(this::parseEpisode).forEach(episodes::add);
+    afterEpisodeLoaded(episodes);
     return episodes;
   }
 

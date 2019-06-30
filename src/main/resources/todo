@@ -1,9 +1,10 @@
 Generali:
-    - Rifare download e vedere Favorite, StreamingController è troppo lunga
-    - Dare la possibilità di scegliere se e quando mettere il prossimo episodio, per ora è 1 minuto
-    Tenere lo streaming come solo una classe che gestice lo streaming passando un media al costruttore, e tutto ciò relativo all'episodio/anime lasciato alle altre classi?
     Mettere le classi nei controller per fare i temi
-    mostrava 44 pagine mentre in realtà era solo 1
+    -Il next episode è buggato, almeno su animelegg
+    - tempi di visione buggati, da' lo stesso per tutti nel dettaglio...
+    - Gli episodi non andavano finchè non ho fatto il reload in un favorite
+    - Sono andato indietro dallo streaming, nella anime scene c'era ancora il caricamento...
+    - Mettere "cancel" durante il caricamento
 
 Bugs:
     - A volte lo streaming non parte... Mettere un timeout di 20 secondi in cui se non parte da errore... Successo con https://www.dreamsub.stream/anime/kono-oto-tomare/1 ep 1 ris 1080

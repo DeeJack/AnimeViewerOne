@@ -1,14 +1,17 @@
 package me.deejack.animeviewer.logic.models.source;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static me.deejack.animeviewer.logic.utils.GeneralUtility.logError;
 
 /**
  * Contains the methods that let the parse of the document took from the connectionhttp methods
@@ -25,7 +28,7 @@ public abstract class ParsedHttpSource extends HttpSource {
     try {
       document = response.parse();
     } catch (IOException e) {
-      e.printStackTrace();
+      logError(e);
       return new ArrayList<>();
     }
     Elements animeElements = document.select(animeSelector());
@@ -34,15 +37,13 @@ public abstract class ParsedHttpSource extends HttpSource {
       animeList.add(animeFromElement(animeElement));
     }
     String page = getPagesByDoc(document);
-    if (!page.isEmpty())
-      GeneralUtility.tryParse(page).ifPresent(this::setPages);
+    GeneralUtility.tryParse(page).ifPresent(this::setPages);
     return animeList;
   }
 
   protected String getPagesByDoc(Document document) {
     Elements pages = document.select(pagesSelector());
-    Element lastPage = pages.get(pages.size() - 1);
-    return lastPage == null ? "" : lastPage.text();
+    return pages.isEmpty() ? "1" : pages.get(pages.size() - 1).text();
   }
 
   protected abstract String animeSelector();

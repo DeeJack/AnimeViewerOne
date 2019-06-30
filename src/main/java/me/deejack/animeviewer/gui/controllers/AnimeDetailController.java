@@ -2,6 +2,7 @@ package me.deejack.animeviewer.gui.controllers;
 
 import javafx.application.Platform;
 import javafx.scene.control.Tab;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import me.deejack.animeviewer.gui.components.animedetail.AnimeInfoBox;
@@ -34,6 +35,8 @@ public class AnimeDetailController implements BaseScene {
             .map(FavoriteAnime::getAnime).orElse(anime);
     this.isNewTab = isNewTab;
     this.currentTab = currentTab;
+    if (isNewTab)
+      currentTab.setTooltip(new Tooltip(anime.getAnimeInformation().getName()));
     root = (Pane) SceneUtility.loadParent("/scenes/animeDetailResp.fxml");
   }
 

@@ -1,14 +1,5 @@
 package me.deejack.animeviewer.gui.utils;
 
-import java.io.IOException;
-import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.CookiePolicy;
-import java.net.HttpCookie;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
@@ -26,6 +17,11 @@ import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.utils.UserAgents;
 import org.apache.logging.log4j.LogManager;
+
+import java.io.IOException;
+import java.net.*;
+import java.util.Arrays;
+import java.util.List;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
@@ -81,7 +77,7 @@ public final class WebBypassUtility {
     Pair<WebView, Stage> pair = createWebView();
     WebEngine engine = pair.getKey().getEngine();
     engine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {
-      if (newValue == Worker.State.SUCCEEDED && engine.getLocation().contains(pageUrl.getHost())) { // TODO però così funziona solo per dreamsub
+      if (newValue == Worker.State.SUCCEEDED && engine.getLocation().contains(pageUrl.getHost())) {
         org.w3c.dom.Document document = engine.getDocument();
         for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
           if (cookie.getName().equalsIgnoreCase("cf_clearance")) {

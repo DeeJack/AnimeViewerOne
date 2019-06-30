@@ -1,12 +1,5 @@
 package me.deejack.animeviewer.logic.defaultsources.dreamsub;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.anime.dto.AnimeStatus;
 import me.deejack.animeviewer.logic.anime.dto.Genre;
@@ -15,6 +8,14 @@ import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class DreamsubAnime extends AnimeImpl {
 
@@ -70,5 +71,10 @@ public class DreamsubAnime extends AnimeImpl {
     String url = alreadyReleased ? "https://www.dreamsub.stream" + element.getElementsByTag("a").get(0).attr("href") : "";
     return new DreamsubEpisode(title, Integer.parseInt(num), url,
             LocalDate.parse(releaseDate, DateTimeFormatter.ofPattern("d/M/y")));
+  }
+
+  @Override
+  public void afterEpisodeLoaded(List<Episode> episodes) {
+
   }
 }

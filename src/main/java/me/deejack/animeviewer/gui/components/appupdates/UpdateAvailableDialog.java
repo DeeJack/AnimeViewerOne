@@ -31,7 +31,11 @@ public class UpdateAvailableDialog extends Dialog {
   private void registerEvents() {
     getDialogPane().lookupButton(ButtonType.YES).setOnMousePressed((event) -> {
       close();
-      new AppUpdateDialog(release).showAndWait();
+      Dialog dialog = new Dialog();
+      dialog.setContentText("Beh peccato, la funzione non è stata ancora implementata. Vai su github e scarica la nuova versione :)");
+      dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.YES, ButtonType.APPLY, ButtonType.CLOSE);
+      dialog.showAndWait();
+      //new AppUpdateDialog(release).showAndWait();
     });
   }
 }

@@ -6,11 +6,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import me.deejack.animeviewer.gui.components.streaming.bottombar.ButtonPause;
+import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
+import me.deejack.animeviewer.logic.history.History;
+import me.deejack.animeviewer.logic.history.HistoryElement;
+import me.deejack.animeviewer.logic.history.HistoryEpisode;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
@@ -84,8 +89,22 @@ public final class StreamingUtility {
     if (!anime.hasBeenLoaded())
       anime.load();
     int index = anime.getEpisodes().indexOf(currentEpisode);
-    if (index == anime.getEpisodes().size())
+    if (index == anime.getEpisodes().size() || anime.getEpisodes().get(index + 1) == null)
       return Optional.empty();
     return Optional.of(anime.getEpisodes().get(index + 1));
+  }
+
+  public static void addEpisodeToHistory(Anime anime, Episode episode) {
+    if (anime == null)
+      return;
+    Optional<HistoryElement> historyElement = History.getHistory().get(anime);
+    if (historyElement.isPresent()) {
+      if (historyElement.get().contains(episode))
+        History.getHistory().getHistoryEpisode(historyElement.get(), episode)
+                .ifPresent((historyEpisode -> episode.setSecondsWatched(historyEpisode.getEpisode().getSecondsWatched())));
+      else historyElement.get().addEpisode(new HistoryEpisode(episode, LocalDateTime.now()));
+    } else
+      History.getHistory().add(new HistoryElement(anime, new HistoryEpisode(episode, LocalDateTime.now())));
+    FilesUtility.saveHistory();
   }
 }

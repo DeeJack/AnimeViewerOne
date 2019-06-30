@@ -31,7 +31,7 @@ public class OtakuStreamSource extends ParsedHttpSource {
 
   @Override
   protected String getPagesByDoc(Document document) {
-    Element lastElement = document.getElementsByClass("last").first();
+    Element lastElement = document.getElementsByClass("page").last();
     if (lastElement == null) {
       Element currentPage = document.getElementsByClass("current").first();
       if (currentPage == null)
@@ -40,7 +40,6 @@ public class OtakuStreamSource extends ParsedHttpSource {
     }
     String href = lastElement.attr("href");
     String page = href.split("/")[href.split("/").length - 2];
-    System.err.println(href);
     return page;
   }
 
@@ -75,7 +74,6 @@ public class OtakuStreamSource extends ParsedHttpSource {
       if (filter.getFilterValue() != null && !filter.getFilterValue().equals(""))
         url.append(filter.getFilterId()).append("=").append(filter.getFilterValue()).append("&");
     }
-    System.out.println(url);
     return ConnectionUtility.connect(url.substring(0, url.length() - 1), true);
   }
 

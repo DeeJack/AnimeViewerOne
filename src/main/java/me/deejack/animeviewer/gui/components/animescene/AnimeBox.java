@@ -26,7 +26,7 @@ public class AnimeBox extends StackPane {
     this.anime = anime;
     this.onRequestAnimeTab = onRequestAnimeTab;
     this.firstTab = firstTab;
-    Tooltip.install(this, new Tooltip(LocalizedApp.getInstance().getString("AnimeBoxTooltip")));
+    Tooltip.install(this, new Tooltip(anime.getAnimeInformation().getName() + "\n" + LocalizedApp.getInstance().getString("AnimeBoxTooltip")));
     reload();
   }
 

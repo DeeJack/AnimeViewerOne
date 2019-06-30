@@ -17,7 +17,6 @@ import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.history.History;
-import me.deejack.animeviewer.logic.history.HistoryElement;
 import me.deejack.animeviewer.logic.history.HistoryEpisode;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
@@ -37,6 +36,7 @@ public class StreamingController implements BaseScene {
   private String title = "";
   private ControlsLayerTask cursorTask;
   private ButtonBack buttonBack;
+  private BottomBar bottomBar;
 
   public StreamingController(MediaPlayer mediaPlayer, Episode episode, Anime anime) {
     this.mediaPlayer = mediaPlayer;
@@ -57,17 +57,8 @@ public class StreamingController implements BaseScene {
   }
 
   public void setupEpisode() {
-    if (anime == null)
-      return;
-    Optional<HistoryElement> historyElement = History.getHistory().get(anime);
-    if (historyElement.isPresent()) {
-      if (historyElement.get().getEpisodesHistory().contains(episode))
-        History.getHistory().getHistoryEpisode(historyElement.get(), episode)
-                .ifPresent((historyEpisode -> episode.setSecondsWatched(historyEpisode.getEpisode().getSecondsWatched())));
-      else historyElement.get().addEpisode(new HistoryEpisode(episode, LocalDateTime.now()));
-    } else
-      History.getHistory().add(new HistoryElement(anime, new HistoryEpisode(episode, LocalDateTime.now())));
-    if (episode.getSecondsWatched() > 0)
+    StreamingUtility.addEpisodeToHistory(anime, episode);
+    if (episode != null && episode.getSecondsWatched() > 0)
       mediaPlayer.setStartTime(Duration.seconds(episode.getSecondsWatched()));
   }
 
@@ -75,7 +66,7 @@ public class StreamingController implements BaseScene {
     ButtonNext buttonNext = new ButtonNext(anime, episode, isNewTab, currentTab);
     MediaViewStreaming mediaView = new MediaViewStreaming(mediaPlayer, root);
     mediaView.setMediaPlayer(mediaPlayer);
-    BottomBar bottomBar = new BottomBar(root, mediaPlayer, buttonNext, title, mediaView);
+    bottomBar = new BottomBar(root, mediaPlayer, buttonNext, title, mediaView);
     root.getChildren().add(0, mediaView);
     cursorTask = bottomBar.getCursorTask();
     buttonBack = bottomBar.getButtonBack();
@@ -101,7 +92,7 @@ public class StreamingController implements BaseScene {
   private void checkDoubleClick(MouseEvent mouseEvent) {
     if (mouseEvent.getButton() == MouseButton.PRIMARY &&
             mouseEvent.getClickCount() == 2)
-      SceneUtility.getStage().setFullScreen(!SceneUtility.getStage().isFullScreen());
+      bottomBar.clickFullScreen();
   }
 
   public void onFinish() {
@@ -114,7 +105,6 @@ public class StreamingController implements BaseScene {
     cursorTask.setInterrupted(true);
     mediaPlayer.dispose();
     SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
-    SceneUtility.getStage().setAlwaysOnTop(false);
   }
 
   private void addNextEpisodeToHistory() {

@@ -1,11 +1,12 @@
 package me.deejack.animeviewer.logic.utils;
 
-import java.io.IOException;
 import me.deejack.animeviewer.logic.connection.SimpleSiteConnection;
 import me.deejack.animeviewer.logic.connection.SiteConnection;
 import me.deejack.animeviewer.logic.customexception.NoConnectionException;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
+
+import java.io.IOException;
 
 /**
  * A utility class for the connection
@@ -23,8 +24,6 @@ public final class ConnectionUtility {
   public static void setSiteConnection(SiteConnection siteConnection) {
     ConnectionUtility.siteConnection = siteConnection;
   }
-
-  // TODO mettere direttamente qua il pageExists
 
   /**
    * Get the response of the connection to the source
@@ -56,8 +55,6 @@ public final class ConnectionUtility {
       throw new NoConnectionException(link, exc);
     }
   }
-
-  // TODO NoConnectionException? Sicuro?
 
   /**
    * Get the document giving the Response of a connection

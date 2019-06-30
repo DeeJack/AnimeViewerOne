@@ -1,8 +1,5 @@
 package me.deejack.animeviewer.logic.defaultsources.animeleggendari;
 
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.anime.dto.Genre;
 import me.deejack.animeviewer.logic.models.anime.AnimeImpl;
@@ -12,6 +9,11 @@ import me.deejack.animeviewer.logic.utils.GeneralUtility;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AnimeLeggendariAnime extends AnimeImpl {
 
@@ -32,8 +34,8 @@ public class AnimeLeggendariAnime extends AnimeImpl {
     if (getAnimeInformation().getGenres() == null)
       getAnimeInformation().setGenres(new ArrayList<>());
     if (genresMatcher.find()) {
-      for (String genere : genresMatcher.group(1).split(", "))
-        getAnimeInformation().getGenres().add(new Genre(genere.trim()));
+      for (String genre : genresMatcher.group(1).split(", "))
+        getAnimeInformation().getGenres().add(new Genre(genre.trim()));
     }
     getAnimeInformation().setReleaseYear(getYear(infos));
     setPlot(infos);
@@ -79,5 +81,10 @@ public class AnimeLeggendariAnime extends AnimeImpl {
     if (title.equalsIgnoreCase("1"))
       return null;
     return new AnimeLeggendariEpisode(title, number, link, null, getAnimeInformation().getName());
+  }
+
+  @Override
+  public void afterEpisodeLoaded(List<Episode> episodes) {
+
   }
 }

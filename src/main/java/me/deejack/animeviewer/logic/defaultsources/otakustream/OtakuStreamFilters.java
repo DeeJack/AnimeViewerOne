@@ -1,12 +1,13 @@
 package me.deejack.animeviewer.logic.defaultsources.otakustream;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import me.deejack.animeviewer.gui.components.filters.ComboBoxFilter;
 import me.deejack.animeviewer.gui.components.filters.Filter;
 import me.deejack.animeviewer.gui.components.filters.MultiSelectionFilter;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import org.jsoup.nodes.Document;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public final class OtakuStreamFilters {
 
@@ -20,6 +21,15 @@ public final class OtakuStreamFilters {
             getPremiere(page),
             getStatus(page),
             getLang(page),
+            getSort(page)
+    };
+  }
+
+  public static Filter[] getMovieFilters() {
+    Document page = ConnectionUtility.getPage("https://otakustream.tv/movie/?", false);
+    return new Filter[]{
+            getGenres(page),
+            getPremiere(page),
             getSort(page)
     };
   }

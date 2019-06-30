@@ -6,25 +6,23 @@ import javafx.scene.media.MediaView;
 
 public class MediaViewStreaming extends MediaView {
   private final MediaPlayer mediaPlayer;
-  private final Pane root;
 
   public MediaViewStreaming(MediaPlayer mediaPlayer, Pane root) {
     super(mediaPlayer);
     this.mediaPlayer = mediaPlayer;
-    this.root = root;
-    root.heightProperty().addListener((event, oldValue, newValue) -> onSizeChange());
-    root.widthProperty().addListener((event, oldValue, newValue) -> onSizeChange());
+    root.heightProperty().addListener((event, oldValue, newValue) -> onSizeChange(root.getWidth(), newValue.doubleValue()));
+    root.widthProperty().addListener((event, oldValue, newValue) -> onSizeChange(newValue.doubleValue(), root.getWidth()));
   }
 
-  public void onSizeChange() {
-    if (mediaPlayer.getMedia().getWidth() > root.getWidth()) {
-      setFitWidth(root.getWidth());
+  public void onSizeChange(double width, double height) {
+    if (mediaPlayer.getMedia().getWidth() > width) {
+      setFitWidth(width);
     }
-    if (mediaPlayer.getMedia().getHeight() > root.getHeight()) {
-      setFitHeight(root.getHeight());
+    if (mediaPlayer.getMedia().getHeight() > height) {
+      setFitHeight(height);
       return;
     }
-    setFitWidth(root.getWidth());
-    setFitHeight(root.getHeight());
+    setFitWidth(width);
+    setFitHeight(height);
   }
 }

@@ -62,7 +62,7 @@ public final class LoadingUtility {
     SceneUtility.getStage().getScene().setCursor(Cursor.DEFAULT);
     Region root = (Region) SceneUtility.getStage().getScene().getRoot();
     if (root instanceof TabPane)
-      root = (Region) ((TabPane) root).getTabs().get(0).getContent();
+      root = (Region) ((TabPane) root).getSelectionModel().getSelectedItem().getContent();
     if (root.lookup("#loadingLayer") == null)
       return;
     ((Pane) root).getChildren().remove(root.lookup("#loadingLayer"));

@@ -6,6 +6,8 @@ import me.deejack.animeviewer.logic.models.episode.Episode;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.util.List;
+
 public class AnimePlanetAnime extends AnimeImpl {
   public AnimePlanetAnime(String url, AnimeInformation information) {
     super(url, information);
@@ -24,5 +26,10 @@ public class AnimePlanetAnime extends AnimeImpl {
   @Override
   protected Episode parseEpisode(Element element) {
     return null;
+  }
+
+  @Override
+  public void afterEpisodeLoaded(List<Episode> episodes) {
+
   }
 }

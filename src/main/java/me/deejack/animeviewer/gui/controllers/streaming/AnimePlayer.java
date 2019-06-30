@@ -80,7 +80,8 @@ public class AnimePlayer {
       currentTab.setContent(streaming.getRoot());
       streaming.getRoot().setMinWidth(StackPane.USE_PREF_SIZE);
       streaming.getRoot().setMinHeight(StackPane.USE_PREF_SIZE);
-      streaming.getRoot().prefHeightProperty().bind(currentTab.getTabPane().heightProperty());
+      StackPane header = (StackPane) currentTab.getTabPane().lookup(".tab-header-area");
+      streaming.getRoot().prefHeightProperty().bind(currentTab.getTabPane().heightProperty().subtract(header.getHeight()));
       streaming.getRoot().prefWidthProperty().bind(currentTab.getTabPane().widthProperty());
     } else
       setRoot(streaming);

@@ -1,5 +1,6 @@
 package me.deejack.animeviewer.gui.components.appupdates;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -49,12 +50,15 @@ public class AppUpdateDialog extends Dialog {
   }
 
   private void executeNewVersion() {
-    try {
-      LocalAppUpdate.executeNewVersion(fileVersion.getPath(), new File(App.class.getProtectionDomain().getCodeSource().getLocation()
-              .toURI()).getPath(), this);
-    } catch (URISyntaxException e) {
-      handleException(new RuntimeException("Exception while opening the new version of the app", e));
-    }
+    Platform.runLater(() -> {
+      close();
+      try {
+        LocalAppUpdate.executeNewVersion(fileVersion.getPath(), new File(App.class.getProtectionDomain().getCodeSource().getLocation()
+                .toURI()).getPath());
+      } catch (URISyntaxException e) {
+        handleException(new RuntimeException("Exception while opening the new version of the app", e));
+      }
+    });
   }
 
   private boolean requestConfirm(SingleDownload download) {

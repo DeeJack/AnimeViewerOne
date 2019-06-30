@@ -1,7 +1,5 @@
 package me.deejack.animeviewer.gui.controllers;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
@@ -10,6 +8,9 @@ import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class HistoryController implements BaseScene {
   private final Parent root;

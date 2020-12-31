@@ -1,6 +1,6 @@
 package me.deejack.animeviewer.logic.defaultsources.otakustream;
 
-import me.deejack.animeviewer.gui.components.filters.Filter;
+import me.deejack.animeviewer.logic.filters.Filter;
 import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.anime.dto.AnimeStatus;

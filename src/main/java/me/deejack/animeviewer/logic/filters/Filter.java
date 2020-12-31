@@ -1,4 +1,4 @@
-package me.deejack.animeviewer.gui.components.filters;
+package me.deejack.animeviewer.logic.filters;
 
 import javafx.scene.Node;
 

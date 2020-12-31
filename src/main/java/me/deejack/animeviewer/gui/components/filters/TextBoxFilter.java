@@ -2,6 +2,7 @@ package me.deejack.animeviewer.gui.components.filters;
 
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
+import me.deejack.animeviewer.logic.filters.Filter;
 
 public class TextBoxFilter extends TextField implements Filter {
   private final String textLabel;

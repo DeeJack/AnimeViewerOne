@@ -1,8 +1,5 @@
 package me.deejack.animeviewer.gui.components.download;
 
-import com.github.plushaze.traynotification.animations.Animations;
-import com.github.plushaze.traynotification.notification.Notifications;
-import com.github.plushaze.traynotification.notification.TrayNotification;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -50,11 +47,12 @@ public class SingleDownload {
     });
     downloadAsync.addFailListener((exc) -> {
       Platform.runLater(() -> {
-        TrayNotification notification = new TrayNotification("Download error",
-                LocalizedApp.getInstance().getString("ErrorDownload"),
-                Notifications.ERROR);
-        notification.setAnimation(Animations.FADE);
-        notification.showAndDismiss(Duration.seconds(2));
+        // TrayNotification notification = new TrayNotification("Download error",
+        //         LocalizedApp.getInstance().getString("ErrorDownload"),
+        //         Notifications.ERROR);
+        // notification.setAnimation(Animations.FADE);
+        // notification.showAndDismiss(Duration.seconds(2));
+        // TODO: replace with something that works
       });
       logError(exc);
     });

@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import me.deejack.animeviewer.logic.filters.Filter;
 
 public class MultiSelectionFilter extends ListView<MultiComboItem> implements Filter {
   private final Map<String, String> items;

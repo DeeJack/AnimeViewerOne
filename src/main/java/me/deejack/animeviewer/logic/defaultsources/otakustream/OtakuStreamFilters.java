@@ -1,7 +1,7 @@
 package me.deejack.animeviewer.logic.defaultsources.otakustream;
 
 import me.deejack.animeviewer.gui.components.filters.ComboBoxFilter;
-import me.deejack.animeviewer.gui.components.filters.Filter;
+import me.deejack.animeviewer.logic.filters.Filter;
 import me.deejack.animeviewer.gui.components.filters.MultiSelectionFilter;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import org.jsoup.nodes.Document;

@@ -1,6 +1,6 @@
 package me.deejack.animeviewer.logic.defaultsources.animeplanet;
 
-import me.deejack.animeviewer.gui.components.filters.Filter;
+import me.deejack.animeviewer.logic.filters.Filter;
 import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.source.ParsedHttpSource;

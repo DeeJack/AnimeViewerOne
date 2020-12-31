@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -99,8 +100,14 @@ public final class SceneUtility {
   public static Parent loadParent(String path) {
     Parent parent = null;
     try {
-      parent = FXMLLoader.load(App.class.getResource(path),
+      try {
+        parent = FXMLLoader.load(App.class.getResource(path),
               ResourceBundle.getBundle("languages/messages", Locale.getDefault()));
+      } catch (MissingResourceException e) {
+        parent = FXMLLoader.load(App.class.getResource(path),
+              ResourceBundle.getBundle("languages/messages", Locale.US));
+      }
+      
       parent.getStylesheets().add("/assets/style.css");
     } catch (IOException ex) {
       handleException(ex);

@@ -1,0 +1,1058 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="AnimeViewerOne:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8f506d06-e574-482b-8f8f-a26f7854f767" name="Default Changelist" comment="small things">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/filters/ComboBoxFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/filters/ComboBoxFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/filters/Filter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/filters/Filter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/filters/HiddenSidebarBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/filters/HiddenSidebarBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/filters/MultiSelectionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/filters/MultiSelectionFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/filters/TextBoxFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/filters/TextBoxFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/animeleggendari/AnimeLeggendariSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/animeleggendari/AnimeLeggendariSource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/animeplanet/AnimePlanetSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/animeplanet/AnimePlanetSource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/dreamsub/DreamSubSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/dreamsub/DreamSubSource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/otakustream/OtakuStreamFilters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/otakustream/OtakuStreamFilters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/otakustream/OtakuStreamSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/otakustream/OtakuStreamSource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/otakustream/movies/OtakuMovies.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/defaultsources/otakustream/movies/OtakuMovies.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/models/source/FilteredSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/models/source/FilteredSource.java" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="557">
+              <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>setMin</find>
+    </findStrings>
+    <dirStrings>
+      <dir>C:\Users\Lorenzo\IdeaProjects\AnimeViewerOne\src\main\java\me\deejack\animeviewer\gui\components\download</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/dialogs/ChooseSourceDialog.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/languages/messages_en_US.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/utils/GeneralUtility.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/favorite/FavoriteAnime.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/async/DownloadAsync.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/favorite/Favorite.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/streaming/LabelTime.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/streaming/SliderTime.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/models/anime/ParsedHttpAnime.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/scenes/animeDetailResp.fxml" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/animedetail/AnimeInfoBox.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/connection/CustomConnection.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/download/DownloadUtility.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/models/episode/HttpEpisode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/updates/SingleAnimeUpdate.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/streaming/ButtonNext.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/animedetail/ListViewEpisodes.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/animedetail/ItemEpisode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/streaming/StreamingController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/AnimeSceneController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/history/HistoryElement.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/favorites/HistoryItem.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/utils/SceneUtility.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/favorites/SingleFavorite.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/async/LoadPageAsync.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/async/FilterAsync.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/streaming/ControlsLayerTask.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/utils/LoadingUtility.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/streaming/AnimePlayer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/bypasser/StreamingSiteBypasser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/bypasser/defaultbypasser/GeneralBypasser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/utils/WebBypassUtility.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/history/History.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/general/ButtonFavorite.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/general/ButtonHistory.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/scenes/select.fxml" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/streaming/BoxExternalStreaming.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/animescene/AnimeBox.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/appupdates/UpdateAvailableDialog.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/scenes/download/singleDownload.fxml" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/download/DownloadController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/download/SingleDownload.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/appupdates/AppUpdateDialog.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/utils/FilesManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/download/CancelDownload.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/download/RetryDownload.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/App.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/githubupdates/Github.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/todo" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/AnimeDetailController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/filters/Filter.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="125" />
+    <option name="y" value="55" />
+    <option name="width" value="1605" />
+    <option name="height" value="880" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="AnimeViewerOne" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AnimeViewerOne" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AnimeViewerOne" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AnimeViewerOne" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AnimeViewerOne" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AnimeViewerOne" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AnimeViewerOne" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AnimeViewerOne" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="AnimeViewerOne" type="58d84e3e:PackageViewProjectNode" />
+              <item name="AnimeViewerOne" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="AnimeViewerOne" type="58d84e3e:PackageViewProjectNode" />
+              <item name="AnimeViewerOne" type="616d4139:PackageViewModuleNode" />
+              <item name="me.deejack.animeviewer" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="ToolWindowRun.ShowToolbar" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555314283707" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="me.deejack.animeviewer.logic.filters" />
+      <recent name="me.deejack.animeviewer.gui.components.loading" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Lorenzo\IdeaProjects\AnimeViewerOne\lib" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.JavaFxChecker">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="C:/Program Files/Java/jdk-11.0.2" />
+      <option name="MAIN_CLASS_NAME" value="me.deejack.animeviewer.gui.App" />
+      <module name="AnimeViewerOne" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="me.deejack.animeviewer.gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Asd" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="me.deejack.animeviewer.logic.models.source.asd.Asd" />
+      <module name="AnimeViewerOne" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="me.deejack.animeviewer.logic.models.source.asd.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FavoriteUpdates" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="me.deejack.animeviewer.logic.favorite.FavoriteUpdates" />
+      <module name="AnimeViewerOne" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="me.deejack.animeviewer.logic.favorite.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InstrumentationAgent" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="me.deejack.animeviewer.gui.InstrumentationAgent" />
+      <module name="AnimeViewerOne" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="me.deejack.animeviewer.gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JavaFxChecker" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8.0_172" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="me.deejack.animeviewer.gui.JavaFxChecker" />
+      <module name="AnimeViewerOne" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="me.deejack.animeviewer.gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.App" />
+      <item itemvalue="Application.Asd" />
+      <item itemvalue="Application.FavoriteUpdates" />
+      <item itemvalue="Application.InstrumentationAgent" />
+      <item itemvalue="Application.JavaFxChecker" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.JavaFxChecker" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.InstrumentationAgent" />
+        <item itemvalue="Application.FavoriteUpdates" />
+        <item itemvalue="Application.Asd" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f506d06-e574-482b-8f8f-a26f7854f767" name="Default Changelist" comment="" />
+      <created>1552034745515</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1552034745515</updated>
+      <workItem from="1552034750905" duration="6178000" />
+      <workItem from="1552382415511" duration="6711000" />
+      <workItem from="1552462210699" duration="245000" />
+      <workItem from="1552462524805" duration="5686000" />
+      <workItem from="1552551832055" duration="3937000" />
+      <workItem from="1552600827373" duration="2746000" />
+      <workItem from="1552634305711" duration="4509000" />
+      <workItem from="1552778717818" duration="129000" />
+      <workItem from="1552779251516" duration="15606000" />
+      <workItem from="1553132051269" duration="739000" />
+      <workItem from="1553134109057" duration="4761000" />
+      <workItem from="1553239864602" duration="1680000" />
+      <workItem from="1553246935257" duration="2456000" />
+      <workItem from="1553472137234" duration="333000" />
+      <workItem from="1553500909153" duration="1708000" />
+      <workItem from="1553521936713" duration="126000" />
+      <workItem from="1553588242790" duration="2112000" />
+      <workItem from="1553820543264" duration="1483000" />
+      <workItem from="1554109287172" duration="174000" />
+      <workItem from="1554109546772" duration="767000" />
+      <workItem from="1554150207415" duration="111000" />
+      <workItem from="1554287182816" duration="2976000" />
+      <workItem from="1554656725296" duration="83000" />
+      <workItem from="1554794030141" duration="4011000" />
+      <workItem from="1554805638791" duration="3906000" />
+      <workItem from="1554877762972" duration="8000" />
+      <workItem from="1554878158221" duration="4634000" />
+      <workItem from="1554991365263" duration="154000" />
+      <workItem from="1555312139014" duration="2133000" />
+      <workItem from="1555432718589" duration="393000" />
+      <workItem from="1555768763304" duration="753000" />
+      <workItem from="1555776876734" duration="7813000" />
+      <workItem from="1555954626213" duration="133000" />
+      <workItem from="1556746837487" duration="2920000" />
+      <workItem from="1556749883900" duration="178000" />
+      <workItem from="1556750197103" duration="151000" />
+      <workItem from="1556777692224" duration="342000" />
+      <workItem from="1556783599066" duration="1775000" />
+      <workItem from="1556785495728" duration="1529000" />
+      <workItem from="1556788301778" duration="35000" />
+      <workItem from="1556808600675" duration="311000" />
+      <workItem from="1556871468871" duration="278000" />
+      <workItem from="1557219382571" duration="799000" />
+      <workItem from="1557314109665" duration="580000" />
+      <workItem from="1557588739478" duration="96000" />
+      <workItem from="1562352707127" duration="2342000" />
+    </task>
+    <task id="LOCAL-00001" summary="maybe broken">
+      <created>1552311078798</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1552311078798</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Broken :(">
+      <created>1552393689475</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1552393689475</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Broken :(">
+      <created>1552503094446</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1552503094446</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Broken :(">
+      <created>1552577546347</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1552577546347</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Something">
+      <created>1552651638529</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1552651638529</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Anime updates pt 1">
+      <created>1552814888933</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1552814888933</updated>
+    </task>
+    <task id="LOCAL-00007" summary="IDR">
+      <created>1552923575865</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1552923575865</updated>
+    </task>
+    <task id="LOCAL-00008" summary="IDR">
+      <created>1553132753153</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1553132753153</updated>
+    </task>
+    <task id="LOCAL-00009" summary="IDR">
+      <created>1553187586613</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1553187586613</updated>
+    </task>
+    <task id="LOCAL-00010" summary="IDR">
+      <created>1553275444440</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1553275444440</updated>
+    </task>
+    <task id="LOCAL-00011" summary="IDR">
+      <created>1553522037567</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1553522037567</updated>
+    </task>
+    <task id="LOCAL-00012" summary="javafx not found">
+      <created>1554038206609</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1554038206609</updated>
+    </task>
+    <task id="LOCAL-00013" summary="dialog width">
+      <created>1554150295195</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1554150295195</updated>
+    </task>
+    <task id="LOCAL-00014" summary="something that doesn't work">
+      <created>1554462513314</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1554462513314</updated>
+    </task>
+    <task id="LOCAL-00015" summary="trying animedetail percentages, dialogs on http errors">
+      <created>1554823783209</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1554823783209</updated>
+    </task>
+    <task id="LOCAL-00016" summary="streaming nei tab, ma non funziona per nulla">
+      <created>1554891542467</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1554891542467</updated>
+    </task>
+    <task id="LOCAL-00017" summary="streaming nei tab, ma non funziona per nulla">
+      <created>1555432784356</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1555432784356</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fix, began tbe sitebypasser">
+      <created>1555954744693</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1555954744693</updated>
+    </task>
+    <task id="LOCAL-00019" summary="just some little fix and enhancement">
+      <created>1556750325049</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1556750325050</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Download, app update, touch">
+      <created>1556786404657</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1556786404657</updated>
+    </task>
+    <task id="LOCAL-00021" summary="small things">
+      <created>1556788188526</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1556788188526</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="100530000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18456376" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32941177" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4966443" weight="0.40882352" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32941177" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32941177" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="CheckStyle" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5033557" side_tool="true" weight="0.26617646" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49932885" weight="0.32941177" />
+      <window_info anchor="bottom" id="Database Changes" order="12" />
+      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.4966443" weight="0.32794118" />
+      <window_info anchor="bottom" id="Statistic" order="14" weight="0.60588235" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Coverage" order="9" side_tool="true" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="maybe broken" />
+    <MESSAGE value="Broken :(" />
+    <MESSAGE value="Something" />
+    <MESSAGE value="Anime updates pt 1" />
+    <MESSAGE value="IDR" />
+    <MESSAGE value="javafx not found" />
+    <MESSAGE value="dialog width" />
+    <MESSAGE value="something that doesn't work" />
+    <MESSAGE value="trying animedetail percentages, dialogs on http errors" />
+    <MESSAGE value="streaming nei tab, ma non funziona per nulla" />
+    <MESSAGE value="fix, began tbe sitebypasser" />
+    <MESSAGE value="just some little fix and enhancement" />
+    <MESSAGE value="Download, app update, touch" />
+    <MESSAGE value="small things" />
+    <option name="LAST_COMMIT_MESSAGE" value="small things" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/download/DownloadUtility.java</url>
+          <line>94</line>
+          <properties />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/download/DownloadUtility.java</url>
+          <line>105</line>
+          <properties />
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/download/DownloadUtility.java</url>
+          <line>103</line>
+          <properties />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/AnimeViewerOne$JavaFxChecker.ic" NAME="JavaFxChecker Coverage Results" MODIFIED="1556785408920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>me.deejack.animeviewer.gui.*</FILTER>
+    </SUITE>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/HistoryController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="23" column="20" lean-forward="true" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/utils/SceneUtility.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="148" column="25" lean-forward="true" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/history/HistoryElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="39" column="39" lean-forward="true" selection-start-line="39" selection-start-column="39" selection-end-line="39" selection-end-column="39" />
+          <folding>
+            <element signature="e#1061#1062#0" expanded="true" />
+            <element signature="e#1093#1094#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/animedetail/AnimeInfoBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="35" column="34" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/javafx-src.zip!/javafx/scene/Node.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/javafx-src.zip!/javafx/scene/input/TouchEvent.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/jre/lib/rt.jar!/sun/nio/cs/StreamDecoder.class" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/async/LoadPageAsync.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="4" column="6" lean-forward="true" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/async/FilterAsync.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/favorites/SingleFavorite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="34" column="54" selection-start-line="34" selection-start-column="54" selection-end-line="34" selection-end-column="54" />
+          <folding>
+            <element signature="e#3676#3677#0" expanded="true" />
+            <element signature="e#3720#3721#0" expanded="true" />
+            <element signature="e#3755#3756#0" expanded="true" />
+            <element signature="e#3784#3785#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/streaming/StreamingController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/history/HistoryEpisode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="98">
+          <caret line="21" column="19" lean-forward="true" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/utils/LoadingUtility.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="34" column="5" lean-forward="true" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/streaming/ControlsLayerTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="86" column="32" lean-forward="true" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/streaming/StreamingUtility.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/bypasser/StreamingSiteBypasser.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/bypasser/defaultbypasser/GeneralBypasser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/utils/WebBypassUtility.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/extensions/ExtensionLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1056">
+          <caret line="55" column="42" selection-start-line="55" selection-start-column="42" selection-end-line="55" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/bypasser/defaultbypasser/CloudflareBypasser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/streaming/AnimePlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="571">
+          <caret line="84" column="25" selection-start-line="84" selection-start-column="25" selection-end-line="84" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/javafx-src.zip!/javafx/application/Application.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/general/ButtonFavorite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/general/ButtonHistory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/scenes/select.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="864">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/streaming/BoxExternalStreaming.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="22" column="36" lean-forward="true" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/javafx-src.zip!/javafx/scene/layout/GridPane.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/resources/scenes/home.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="533">
+          <caret line="62" column="16" selection-start-line="62" selection-start-column="16" selection-end-line="72" selection-end-column="29" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/history/History.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="571">
+          <caret line="73" column="27" selection-start-line="73" selection-start-column="27" selection-end-line="73" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/models/anime/ParsedHttpAnime.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59">
+          <caret line="41" column="68" selection-start-line="41" selection-start-column="68" selection-end-line="41" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/javafx-src.zip!/javafx/scene/input/MouseEvent.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/download/DownloadsWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/appupdates/UpdateAvailableDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/scenes/download/singleDownload.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="30" column="30" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="30" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/appupdates/AppUpdateDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="15" column="27" lean-forward="true" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/download/DownloadController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="98" column="54" lean-forward="true" selection-start-line="98" selection-start-column="54" selection-end-line="98" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/utils/FilesManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="53">
+          <caret line="22" column="28" lean-forward="true" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/download/CancelDownload.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/download/RetryDownload.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="29" lean-forward="true" selection-start-column="29" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/download/SingleDownload.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="56" column="20" lean-forward="true" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="20" />
+          <folding>
+            <element signature="e#2649#2650#0" expanded="true" />
+            <element signature="e#2717#2718#0" expanded="true" />
+            <element signature="e#2771#2772#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/async/DownloadAsync.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/languages/messages_en_US.properties">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="97" selection-start-line="97" selection-end-line="97" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="ResourceBundle" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/githubupdates/Github.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="64" column="17" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/todo">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="3" column="46" selection-start-line="3" selection-start-column="46" selection-end-line="3" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/controllers/AnimeDetailController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="82" column="5" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/gui/components/animescene/AnimeBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="557">
+          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+          <folding>
+            <element signature="e#2905#2906#0" expanded="true" />
+            <element signature="e#2976#2977#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/filters/Filter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/models/source/FilteredSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="45" column="6" selection-start-line="45" selection-start-column="6" selection-end-line="45" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/deejack/animeviewer/logic/models/source/AnimeSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="4" column="3" lean-forward="true" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="557">
+          <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>AnimeViewerOne:jar</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>AnimeViewerOne</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: com.google.code.gson:gson:2.8.5</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

@@ -9,7 +9,15 @@ import static me.deejack.animeviewer.gui.App.getSite;
 
 public final class LocalizedApp {
   private static final LocalizedApp localizedApp = new LocalizedApp();
-  private ResourceBundle resourceBundle = ResourceBundle.getBundle("languages/messages", Locale.getDefault());
+  private ResourceBundle resourceBundle;
+
+  {
+    try {
+      resourceBundle = ResourceBundle.getBundle("languages/messages", Locale.getDefault());
+    } catch (MissingResourceException e) {
+      resourceBundle = ResourceBundle.getBundle("languages/messages", Locale.US);
+    }
+  }
 
   private LocalizedApp() {
   }

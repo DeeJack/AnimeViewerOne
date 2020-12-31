@@ -1,6 +1,6 @@
 package me.deejack.animeviewer.gui.bypasser.defaultbypasser;
 
-import com.sun.javafx.webkit.WebConsoleListener;
+//import com.sun.javafx.webkit.WebConsoleListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javafx.concurrent.Worker;
@@ -14,7 +14,6 @@ import me.deejack.animeviewer.gui.bypasser.SiteBypasser;
 import me.deejack.animeviewer.gui.utils.WebBypassUtility;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.utils.UserAgents;
-import netscape.javascript.JSException;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
@@ -39,7 +38,7 @@ public class GeneralBypasser implements SiteBypasser {
         engine.executeScript("document.getElementById('videooverlay').click();");
 
         if (document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src") == null)
-          throw new JSException("Video attribute SRC is null :(, link: " + link);
+          throw new Exception("Video attribute SRC is null :(, link: " + link);
         streamingLink = url.getHost() + document.getElementsByTagName("video").item(0).getAttributes().getNamedItem("src").getTextContent();
         //streamingLink = finalUrl.getHost() + "/stream/" + document.getElementById("lqEH1").getTextContent();
       } catch (Exception jsShit) {
@@ -99,9 +98,9 @@ public class GeneralBypasser implements SiteBypasser {
         findStreamingLink(document, engine, callback, url, unresolvedLink);
       }
     });
-    WebConsoleListener.setDefaultListener((webView, message, lineNumber, sourceId) -> {
+    /*WebConsoleListener.setDefaultListener((webView, message, lineNumber, sourceId) -> {
       System.out.println(message + "[at " + lineNumber + "]");
-    });
+    });*/
     engine.load(unresolvedLink);
     engine.getLoadWorker().exceptionProperty().addListener(((observable, oldValue, newValue) -> newValue.printStackTrace()));
     engine.locationProperty().addListener((event, oldValue, newValue) -> engine.getLoadWorker().cancel());

@@ -1,7 +1,9 @@
 package me.deejack.animeviewer.gui.components.dialogs;
 
-import com.sun.javafx.collections.ObservableListWrapper;
+//import com.sun.javafx.collections.ObservableListWrapper;
 import java.util.List;
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -17,7 +19,7 @@ public class ChooseSourceDialog extends Dialog {
   private ListView<StreamingLink> linkListView;
 
   public ChooseSourceDialog(List<StreamingLink> links) {
-    initialize(new ObservableListWrapper<>(links));
+    initialize(FXCollections.observableList(links));
     registerEvents();
   }
 

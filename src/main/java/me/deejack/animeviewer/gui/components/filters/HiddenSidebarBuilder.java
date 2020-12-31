@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.async.FilterAsync;
 import me.deejack.animeviewer.gui.components.general.HiddenSideBar;
+import me.deejack.animeviewer.logic.filters.Filter;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 public class HiddenSidebarBuilder {

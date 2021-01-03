@@ -20,7 +20,7 @@ public class FilterAsync extends Task<List<Anime>> {
 
   @Override
   protected List<Anime> call() {
-    return App.getSite().filter(filters, page);
+    return App.getSite().filter(filters.getFilters(), page);
   }
 
   @Override

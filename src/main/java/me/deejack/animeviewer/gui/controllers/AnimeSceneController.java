@@ -35,7 +35,7 @@ public class AnimeSceneController implements BaseScene {
   private int currentPage;
 
   public AnimeSceneController(List<Anime> elements, int page, boolean isSearch, HiddenSidebarBuilder filters, String search) {
-    elements.add(new DreamsubAnime("Test", "https://www.dreamsub.stream/anime/test", "https://www.dreamsub.stream/anime/test"));
+   // elements.add(new DreamsubAnime("Test", "https://www.dreamsub.stream/anime/test", "https://www.dreamsub.stream/anime/test"));
     currentPage = page;
     this.isSearch = isSearch;
     this.filters = filters;

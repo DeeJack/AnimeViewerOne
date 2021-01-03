@@ -12,6 +12,10 @@ import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 
 import java.io.File;
 
+import com.github.deejack.traynotification.animations.Animations;
+import com.github.deejack.traynotification.notification.Notifications;
+import com.github.deejack.traynotification.notification.TrayNotification;
+
 import static me.deejack.animeviewer.gui.controllers.download.DownloadUtility.toMB;
 import static me.deejack.animeviewer.logic.utils.GeneralUtility.logError;
 
@@ -47,11 +51,11 @@ public class SingleDownload {
     });
     downloadAsync.addFailListener((exc) -> {
       Platform.runLater(() -> {
-        // TrayNotification notification = new TrayNotification("Download error",
-        //         LocalizedApp.getInstance().getString("ErrorDownload"),
-        //         Notifications.ERROR);
-        // notification.setAnimation(Animations.FADE);
-        // notification.showAndDismiss(Duration.seconds(2));
+        TrayNotification notification = new TrayNotification("Download error",
+                LocalizedApp.getInstance().getString("ErrorDownload"),
+                Notifications.ERROR);
+        notification.setAnimation(Animations.FADE);
+        notification.showAndDismiss(Duration.seconds(2));
         // TODO: replace with something that works
       });
       logError(exc);

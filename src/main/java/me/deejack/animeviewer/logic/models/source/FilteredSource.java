@@ -34,7 +34,7 @@ public interface FilteredSource extends AnimeSource {
    * @param page    The page that needs to be loaded
    * @return the list of the resulting anime
    */
-  List<Anime> filter(HiddenSidebarBuilder filters, int page);
+  List<Anime> filter(Filter[] filters, int page);
 
   /**
    * Get the number of pages

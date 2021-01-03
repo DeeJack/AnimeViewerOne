@@ -2,14 +2,11 @@ package me.deejack.animeviewer.logic.defaultsources.dreamsub;
 
 import me.deejack.animeviewer.gui.components.filters.ComboBoxFilter;
 import me.deejack.animeviewer.logic.filters.Filter;
-import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.source.ParsedHttpSource;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import org.jsoup.Connection;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -18,22 +15,22 @@ public class DreamSubSource extends ParsedHttpSource {
   Map<String, String> genres = new LinkedHashMap<>();
 
   public DreamSubSource() {
-    super("https://www.dreamsub.stream", "https://www.dreamsub.stream/res/img/logoDS2.png");
+    super("https://www.dreamsub.stream", "https://web.archive.org/web/20190512024350im_/https://www.dreamsub.stream/res/img/logoDS2.png");
   }
 
   @Override
   public String animeSelector() {
-    return "ul.tvSeriesList > li";
+    return "#main-content > div.goblock > div.goblock-content > div.tvBlock";
   }
 
   @Override
   public Anime animeFromElement(Element element) {
     String name = element.getElementsByClass("tvTitle").first().text();
     String url = getBaseUrl() + element.getElementsByClass("showStreaming").first()
-            .getElementsByTag("a").get(1).attr("href");
-    String imageUrl = getBaseUrl() +
-            element.getElementsByClass("cover").get(0).attr("style")
-                    .replaceAll("background: url\\(", "").replaceAll("\\) no-repeat center", "");
+            .getElementsByTag("a").get(0).attr("href");
+    String imageUrl = "https:" +
+      element.getElementsByClass("cover").get(0).attr("style")
+                    .replaceAll("--image-url:url\\(", "").replaceAll("\\) no-repeat center", "").replace(")", "");
 
     return new DreamsubAnime(name, url, imageUrl);
   }
@@ -45,13 +42,13 @@ public class DreamSubSource extends ParsedHttpSource {
 
   @Override
   public Connection.Response searchAnimeRequest(int page, String search) {
-    return ConnectionUtility.connect(getBaseUrl() + "/search/" + search + "?page=" + page, false);
+    return ConnectionUtility.connect(getBaseUrl() + "/search/?q=" + search + "&page=" + page, true);
   }
 
   @Override
-  public Connection.Response filterRequest(int page, HiddenSidebarBuilder filters) {
+  public Connection.Response filterRequest(int page, Filter[] filters) {
     StringBuilder url = new StringBuilder(getBaseUrl() + "/filter?");
-    for (Filter filter : filters.getFilters()) {
+    for (Filter filter : filters) {
       url.append(filter.getFilterId()).append("=").append(filter.getFilterValue()).append("&");
     }
     url.append("page=").append(page);
@@ -68,12 +65,12 @@ public class DreamSubSource extends ParsedHttpSource {
   }
 
   private Map<String, String> getGenres() {
-    if (genres.isEmpty()) {
+    /*if (genres.isEmpty()) {
       Document homePage = ConnectionUtility.getPage(getBaseUrl(), false);
       Elements genreElements = homePage.getElementById("genere").getElementsByTag("option");
       for (Element el : genreElements)
         genres.put(el.text(), el.text().toLowerCase());
-    }
+    }*/
     return genres;
   }
 

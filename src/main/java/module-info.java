@@ -1,4 +1,4 @@
-module asd {
+open module asd {
     requires javafx.controls;
     requires javafx.base;
     requires javafx.media;
@@ -11,6 +11,7 @@ module asd {
     requires com.google.gson;
     requires fontawesomefx;
     requires java.instrument;
+    requires TrayNotification;
 
-    opens me.deejack.animeviewer.gui;
+    exports me.deejack.animeviewer.gui.components.general;
 }

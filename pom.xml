@@ -44,11 +44,11 @@
             <artifactId>fontawesomefx</artifactId>
             <version>8.9</version>
         </dependency>
-        <!-- <dependency>
-            <groupId>com.github.PlusHaze</groupId>
+        <dependency>
+            <groupId>com.github.DeeJack</groupId>
             <artifactId>TrayNotification</artifactId>
-            <version>5393c3a54f582809d2d37bb90dcbf8cb3a8be21a</version>
-        </dependency> -->
+            <version>0.4</version>
+        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>

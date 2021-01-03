@@ -4,14 +4,12 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import me.deejack.animeviewer.gui.connection.CustomConnection;
 import me.deejack.animeviewer.gui.scenes.EventHandler;
 import me.deejack.animeviewer.gui.utils.FilesUtility;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
-import me.deejack.animeviewer.logic.defaultsources.animeleggendari.AnimeLeggendariSource;
 import me.deejack.animeviewer.logic.defaultsources.dreamsub.DreamSubSource;
-import me.deejack.animeviewer.logic.defaultsources.otakustream.OtakuStreamSource;
-import me.deejack.animeviewer.logic.defaultsources.otakustream.movies.OtakuMovies;
 import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
 import me.deejack.animeviewer.logic.history.History;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
@@ -79,6 +77,13 @@ public class App extends Application {
 
       loadHistory();
       FilesUtility.loadFavorite();
+
+      /*
+       * TrayNotification notification = new TrayNotification("Download error",
+       * LocalizedApp.getInstance().getString("ErrorDownload"), Notifications.ERROR);
+       * notification.setAnimation(Animations.FADE);
+       * notification.showAndDismiss(Duration.seconds(2));
+       */
       // new GithubConnection().checkUpdatesAsync();
     } catch (Exception exc) {
       logError(exc);
@@ -97,9 +102,6 @@ public class App extends Application {
   private void loadExtensions() {
     SITES.addAll(ExtensionLoader.loadExtension());
     SITES.add(new DreamSubSource());
-    SITES.add(new OtakuStreamSource());
-    SITES.add(new OtakuMovies());
-    SITES.add(new AnimeLeggendariSource());
   }
 
   private void loadHistory() {

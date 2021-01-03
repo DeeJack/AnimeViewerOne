@@ -81,7 +81,7 @@ public final class SceneUtility {
           if (link.equals(""))
             return null;
           System.err.println("DOWNLOADING IMAGE " + link);
-          Connection.Response response = ConnectionUtility.connect(link, false);
+          Connection.Response response = ConnectionUtility.connect(link, true);
           Path tempPath = Files.createTempFile(Paths.get(TMP_PATH), null, link.substring(link.lastIndexOf("")));
           Files.write(tempPath, response.bodyAsBytes());
           imagesCache.put(link, tempPath.toString());

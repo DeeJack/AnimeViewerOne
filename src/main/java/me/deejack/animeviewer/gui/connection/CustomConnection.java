@@ -3,12 +3,14 @@ package me.deejack.animeviewer.gui.connection;
 import java.io.IOException;
 import java.net.HttpCookie;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -68,13 +70,14 @@ public class CustomConnection implements SiteConnection {
         return null;
       }
       return getResponse(pageLink, followRedirects, cookies);
-    } catch (IOException | InterruptedException ex) {
+    } catch (IOException | InterruptedException | NoSuchAlgorithmException ex) {
       handleException(new NoConnectionException(pageLink, ex));
       return null;
     }
   }
 
-  private Connection.Response getResponse(String pageLink, boolean followRedirects, Map<String, String> cookies) throws IOException, InterruptedException {
+  private Connection.Response getResponse(String pageLink, boolean followRedirects, Map<String, String> cookies) throws IOException, InterruptedException,
+      NoSuchAlgorithmException {
     Connection.Response connection;
     int countConnections = 0;
     do {
@@ -90,7 +93,7 @@ public class CustomConnection implements SiteConnection {
       App.getSite().setSession(session);*/
   }
 
-  private Connection.Response execute(String url, Map<String, String> cookies, boolean followRedirects) throws IOException {
+  private Connection.Response execute(String url, Map<String, String> cookies, boolean followRedirects) throws IOException, NoSuchAlgorithmException {
     return Jsoup.connect(url)
             .method(Connection.Method.GET)
             .followRedirects(followRedirects)

@@ -84,7 +84,7 @@ public abstract class AnimeImpl extends ParsedHttpAnime {
   public void saveImageToFile(File output) {
     try {
       String link = getAnimeInformation().getImageUrl();
-      Connection.Response response = ConnectionUtility.connect(link, false);
+      Connection.Response response = ConnectionUtility.connect(link, true);
       Files.write(Paths.get(output.toURI()), response.bodyAsBytes());
     } catch (IOException e) {
       GeneralUtility.logError(e);

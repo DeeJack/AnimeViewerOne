@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class DreamSubSource extends ParsedHttpSource {
   Map<String, String> genres = new LinkedHashMap<>();
@@ -41,12 +42,12 @@ public class DreamSubSource extends ParsedHttpSource {
   }
 
   @Override
-  public Connection.Response searchAnimeRequest(int page, String search) {
-    return ConnectionUtility.connect(getBaseUrl() + "/search/?q=" + search + "&page=" + page, true);
+  public Optional<Connection.Response> searchAnimeRequest(int page, String search) {
+    return ConnectionUtility.connect(getBaseUrl() + "/search/?q=" + search + "&page=" + (page - 1), true);
   }
 
   @Override
-  public Connection.Response filterRequest(int page, Filter[] filters) {
+  public Optional<Connection.Response> filterRequest(int page, Filter[] filters) {
     StringBuilder url = new StringBuilder(getBaseUrl() + "/filter?");
     for (Filter filter : filters) {
       url.append(filter.getFilterId()).append("=").append(filter.getFilterValue()).append("&");

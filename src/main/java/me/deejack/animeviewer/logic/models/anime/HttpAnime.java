@@ -1,11 +1,12 @@
 package me.deejack.animeviewer.logic.models.anime;
 
 import com.google.gson.annotations.Expose;
-import java.util.List;
 import me.deejack.animeviewer.logic.anime.AnimeInformation;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import org.jsoup.Connection;
+
+import java.util.List;
 
 /**
  * Ora che ho definito cosa può fare un anime, definisco come farlo tramite connessioni, però non conosco
@@ -30,7 +31,7 @@ public abstract class HttpAnime implements Anime {
 
   protected Connection.Response animePageRequest() {
     if (animePageResponse == null || animePageResponse.statusCode() != 200)
-      animePageResponse = ConnectionUtility.connect(url, false);
+      ConnectionUtility.connect(url, true).ifPresent(response -> animePageResponse = response);
     animePageResponse.bufferUp();
     return animePageResponse;
   }
@@ -46,6 +47,6 @@ public abstract class HttpAnime implements Anime {
 
   @Override
   public boolean equals(Object otherAnime) {
-    return otherAnime instanceof Anime && ((Anime)otherAnime).getUrl().equalsIgnoreCase(getUrl());
+    return otherAnime instanceof Anime && ((Anime) otherAnime).getUrl().equalsIgnoreCase(getUrl());
   }
 }

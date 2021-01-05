@@ -1,17 +1,5 @@
 package me.deejack.animeviewer.gui.utils;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +13,14 @@ import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.scenes.BaseScene;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
-import org.jsoup.Connection;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.logic.utils.GeneralUtility.TMP_PATH;
@@ -81,11 +76,13 @@ public final class SceneUtility {
           if (link.equals(""))
             return null;
           System.err.println("DOWNLOADING IMAGE " + link);
-          Connection.Response response = ConnectionUtility.connect(link, true);
+          var responseOptional = ConnectionUtility.connect(link, true);
+          if (responseOptional.isEmpty())
+            return null;
           Path tempPath = Files.createTempFile(Paths.get(TMP_PATH), null, link.substring(link.lastIndexOf("")));
-          Files.write(tempPath, response.bodyAsBytes());
+          Files.write(tempPath, responseOptional.get().bodyAsBytes());
           imagesCache.put(link, tempPath.toString());
-          return new Image(new ByteArrayInputStream(response.bodyAsBytes()));
+          return new Image(new ByteArrayInputStream(responseOptional.get().bodyAsBytes()));
         }
       }
     };
@@ -102,12 +99,12 @@ public final class SceneUtility {
     try {
       try {
         parent = FXMLLoader.load(App.class.getResource(path),
-              ResourceBundle.getBundle("languages/messages", Locale.getDefault()));
+                ResourceBundle.getBundle("languages/messages", Locale.getDefault()));
       } catch (MissingResourceException e) {
         parent = FXMLLoader.load(App.class.getResource(path),
-              ResourceBundle.getBundle("languages/messages", Locale.US));
+                ResourceBundle.getBundle("languages/messages", Locale.US));
       }
-      
+
       parent.getStylesheets().add("/assets/style.css");
     } catch (IOException ex) {
       handleException(ex);

@@ -1,18 +1,18 @@
 package me.deejack.animeviewer.logic.models.anime;
 
 import com.google.gson.annotations.Expose;
+import me.deejack.animeviewer.logic.anime.AnimeInformation;
+import me.deejack.animeviewer.logic.async.events.SuccessListener;
+import me.deejack.animeviewer.logic.models.episode.Episode;
+import me.deejack.animeviewer.logic.utils.ConnectionUtility;
+import me.deejack.animeviewer.logic.utils.GeneralUtility;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import me.deejack.animeviewer.logic.anime.AnimeInformation;
-import me.deejack.animeviewer.logic.async.events.SuccessListener;
-import me.deejack.animeviewer.logic.models.episode.Episode;
-import me.deejack.animeviewer.logic.utils.ConnectionUtility;
-import me.deejack.animeviewer.logic.utils.GeneralUtility;
-import org.jsoup.Connection;
 
 /**
  * Represent an anime in the source
@@ -82,13 +82,14 @@ public abstract class AnimeImpl extends ParsedHttpAnime {
   }
 
   public void saveImageToFile(File output) {
-    try {
-      String link = getAnimeInformation().getImageUrl();
-      Connection.Response response = ConnectionUtility.connect(link, true);
-      Files.write(Paths.get(output.toURI()), response.bodyAsBytes());
-    } catch (IOException e) {
-      GeneralUtility.logError(e);
-    }
+    String link = getAnimeInformation().getImageUrl();
+    ConnectionUtility.connect(link, true).ifPresent(response -> {
+      try {
+        Files.write(Paths.get(output.toURI()), response.bodyAsBytes());
+      } catch (IOException e) {
+        GeneralUtility.logError(e);
+      }
+    });
   }
 
   public AnimeInformation getAnimeInformation() {

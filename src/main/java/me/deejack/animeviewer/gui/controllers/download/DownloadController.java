@@ -1,10 +1,5 @@
 package me.deejack.animeviewer.gui.controllers.download;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 import javafx.scene.image.Image;
 import me.deejack.animeviewer.gui.App;
 import me.deejack.animeviewer.gui.components.download.DownloadsWindow;
@@ -16,7 +11,12 @@ import me.deejack.animeviewer.logic.async.events.SuccessListener;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
-import org.jsoup.Connection;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.showWaitAndLoad;
@@ -84,18 +84,20 @@ public final class DownloadController {
   }
 
   private void processLink(StreamingLink downloadLink, WebBypassUtility.Callback<String> callBack) {
-    Connection.Response response = ConnectionUtility.connect(downloadLink.getLink(), false);
-    if (response.contentType().contains("video")) {
-      callBack.onSuccess(downloadLink.getLink());
-    } else
-      WebBypassUtility.bypassSite(downloadLink.getLink(), callBack);
+    ConnectionUtility.connect(downloadLink.getLink(), false).ifPresentOrElse(response -> {
+      if (response.contentType().contains("video")) {
+        callBack.onSuccess(downloadLink.getLink());
+      } else
+        WebBypassUtility.bypassSite(downloadLink.getLink(), callBack);
+    }, () -> callBack.onSuccess("Failed"));
   }
 
   private void startDownload(String downloadLink, Episode episode, String animeName, File destination, SuccessListener finishListener) {
-    if (destination.isDirectory())
-      destination = new File(destination.getPath() + File.separator + animeName + " - " + episode.getNumber() + ".mp4");
+    File file = destination;
+    if (file.isDirectory())
+      file = new File(file.getPath() + File.separator + animeName + " - " + episode.getNumber() + ".mp4");
 
-    DownloadsWindow.getInstance().addDownload(new SingleDownload(destination, downloadLink, episode.getTitle()));
+    DownloadsWindow.getInstance().addDownload(new SingleDownload(file, downloadLink, episode.getTitle()));
     System.out.println("DOWNLOADING " + downloadLink);
     if (!DownloadsWindow.getInstance().getStage().isShowing()) {
       DownloadsWindow.getInstance().getStage().show();

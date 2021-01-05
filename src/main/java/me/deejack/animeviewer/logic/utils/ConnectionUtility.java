@@ -7,6 +7,7 @@ import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * A utility class for the connection
@@ -33,7 +34,7 @@ public final class ConnectionUtility {
    * @return The response of the connection
    * @throws NoConnectionException if the connection isn't possible for some reasons
    */
-  public static Connection.Response connect(String link, boolean followRedirects) throws NoConnectionException {
+  public static Optional<Connection.Response> connect(String link, boolean followRedirects) throws NoConnectionException {
     return siteConnection.connect(link, followRedirects);
   }
 
@@ -47,10 +48,10 @@ public final class ConnectionUtility {
    */
   public static Document getPage(String link, boolean followRedirects) throws NoConnectionException {
     try {
-      Connection.Response response = connect(link, followRedirects);
-      if (response == null)
-        throw new NoConnectionException(link, new RuntimeException("Response null"));
-      return response.parse();
+      var response = connect(link, followRedirects);
+      if (response.isEmpty())
+        throw new NoConnectionException(link, new RuntimeException("Response empty"));
+      return response.get().parse();
     } catch (IOException exc) {
       throw new NoConnectionException(link, exc);
     }

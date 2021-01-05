@@ -1,16 +1,5 @@
 package me.deejack.animeviewer.gui.connection;
 
-import java.io.IOException;
-import java.net.HttpCookie;
-import java.net.URL;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
-
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -22,6 +11,17 @@ import me.deejack.animeviewer.logic.utils.UserAgents;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
+import java.io.IOException;
+import java.net.HttpCookie;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
+
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 
@@ -30,11 +30,11 @@ public class CustomConnection implements SiteConnection {
   private CountDownLatch lock = new CountDownLatch(1);
 
   @Override
-  public Connection.Response connect(String pageLink, boolean followRedirects) throws NoConnectionException {
+  public Optional<Connection.Response> connect(String pageLink, boolean followRedirects) throws NoConnectionException {
     System.out.println("Connecting " + pageLink);
     URL pageUrl = verifyURL(pageLink);
     if (pageUrl == null)
-      return null;
+      return Optional.empty();
 
     AtomicReference<List<HttpCookie>> httpCookies = new AtomicReference<>();
     Map<String, String> cookies = new HashMap<>();
@@ -43,7 +43,7 @@ public class CustomConnection implements SiteConnection {
 
     /*if (App.getSite() != null && App.getSite().getSession() != null)
       cookies.putAll(App.getSite().getSession().getCookies());*/
-    if(!pageLink.endsWith(".jpg"))
+    if (!pageLink.endsWith(".jpg"))
       System.out.println("Connecting to " + pageLink);
     try {
       Connection.Response response = execute(pageLink, cookies, followRedirects);
@@ -61,23 +61,22 @@ public class CustomConnection implements SiteConnection {
       } else {
         /*cookies.putAll(cookiesToMap(cookieManager.getCookieStore().getCookies()));
         saveToSession(pageUrl.getHost(), cookies);*/
-        return response;
+        return Optional.of(response);
       }
       boolean success = lock.await(25, TimeUnit.SECONDS);
       if (!success) {
         Platform.runLater(() -> new Alert(Alert.AlertType.WARNING, LocalizedApp.getInstance().getString("AlertTimeout"), ButtonType.OK).show());
         hideWaitLoad();
-        return null;
+        return Optional.empty();
       }
-      return getResponse(pageLink, followRedirects, cookies);
-    } catch (IOException | InterruptedException | NoSuchAlgorithmException ex) {
+      return Optional.of(getResponse(pageLink, followRedirects, cookies));
+    } catch (IOException | InterruptedException ex) {
       handleException(new NoConnectionException(pageLink, ex));
-      return null;
+      return Optional.empty();
     }
   }
 
-  private Connection.Response getResponse(String pageLink, boolean followRedirects, Map<String, String> cookies) throws IOException, InterruptedException,
-      NoSuchAlgorithmException {
+  private Connection.Response getResponse(String pageLink, boolean followRedirects, Map<String, String> cookies) throws IOException, InterruptedException {
     Connection.Response connection;
     int countConnections = 0;
     do {
@@ -93,7 +92,7 @@ public class CustomConnection implements SiteConnection {
       App.getSite().setSession(session);*/
   }
 
-  private Connection.Response execute(String url, Map<String, String> cookies, boolean followRedirects) throws IOException, NoSuchAlgorithmException {
+  private Connection.Response execute(String url, Map<String, String> cookies, boolean followRedirects) throws IOException {
     return Jsoup.connect(url)
             .method(Connection.Method.GET)
             .followRedirects(followRedirects)
@@ -101,7 +100,7 @@ public class CustomConnection implements SiteConnection {
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
             .cookies(cookies)
-            .timeout(10 * 1000)
+            .timeout(30 * 1000)
             .execute();
   }
 

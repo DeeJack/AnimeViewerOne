@@ -12,7 +12,6 @@ import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.ConnectionUtility;
-import org.jsoup.Connection;
 
 import java.io.IOException;
 
@@ -59,13 +58,12 @@ public class AnimePlayer {
   }
 
   private void extractVideo(String link) {
-    Connection.Response response = ConnectionUtility.connect(link, true);
-    if (response == null)
-      return;
-    if (response.contentType().contains("video")) {
-      setUpStreamingScene(link);
-    } else
-      WebBypassUtility.bypassSite(link, this::setUpStreamingScene);
+    ConnectionUtility.connect(link, true).ifPresent(response -> {
+      if (response.contentType().contains("video")) {
+        setUpStreamingScene(link);
+      } else
+        WebBypassUtility.bypassSite(link, this::setUpStreamingScene);
+    });
   }
 
   private void setUpStreamingScene(String link) {

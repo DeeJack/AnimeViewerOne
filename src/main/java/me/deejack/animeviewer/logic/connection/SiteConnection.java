@@ -3,6 +3,8 @@ package me.deejack.animeviewer.logic.connection;
 import me.deejack.animeviewer.logic.customexception.NoConnectionException;
 import org.jsoup.Connection;
 
+import java.util.Optional;
+
 /**
  * A functional interface (callable with the lambdas) with a method who is called when the program needs to be connected
  * to a source
@@ -17,5 +19,5 @@ public interface SiteConnection {
    * @return The response of the connection
    * @throws NoConnectionException If it can't connect to the source for some reasons
    */
-  Connection.Response connect(String url, boolean followRedirects) throws NoConnectionException;
+  Optional<Connection.Response> connect(String url, boolean followRedirects) throws NoConnectionException;
 }

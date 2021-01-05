@@ -1,11 +1,11 @@
 package me.deejack.animeviewer.logic.models.source;
 
-import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.logic.filters.Filter;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import org.jsoup.Connection;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Contains the methods for connecting to a source
@@ -30,7 +30,7 @@ public abstract class HttpSource implements FilteredSource {
 
   @Override
   public List<Anime> searchAnime(String search, int page) {
-    return parseAnimeList(searchAnimeRequest(page, search));
+    return parseAnimeList(searchAnimeRequest(page, search).get());
   }
 
   public String getBaseUrl() {
@@ -52,14 +52,14 @@ public abstract class HttpSource implements FilteredSource {
 
   @Override
   public List<Anime> filter(Filter[] filters, int page) {
-    return parseAnimeList(filterRequest(page, filters));
+    return parseAnimeList(filterRequest(page, filters).get());
   }
 
   public abstract Connection.Response popularAnimeRequest(int page);
 
-  public abstract Connection.Response searchAnimeRequest(int page, String search);
+  public abstract Optional<Connection.Response> searchAnimeRequest(int page, String search);
 
-  public abstract Connection.Response filterRequest(int page, Filter[] filters);
+  public abstract Optional<Connection.Response> filterRequest(int page, Filter[] filters);
 
   public abstract List<Anime> parseAnimeList(Connection.Response response);
 

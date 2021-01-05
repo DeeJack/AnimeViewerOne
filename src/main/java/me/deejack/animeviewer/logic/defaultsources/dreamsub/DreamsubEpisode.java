@@ -1,18 +1,18 @@
 package me.deejack.animeviewer.logic.defaultsources.dreamsub;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.models.episode.EpisodeImpl;
-import me.deejack.animeviewer.logic.utils.ConnectionUtility;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DreamsubEpisode extends EpisodeImpl {
 
@@ -41,8 +41,8 @@ public class DreamsubEpisode extends EpisodeImpl {
         continue;
       Element elementLink = elements.first();
       String url = elementLink.attr("href");
-      if (url.contains("keepem"))
-        url = ConnectionUtility.connect(url, true).url().toString();
+      //if (url.contains("keepem"))
+      //url = ConnectionUtility.connect(url, true).url().toString();
       Pattern pattern = Pattern.compile(".*(\\d{4})p|(\\d{3})p.*");
       Matcher matcher = pattern.matcher(url);
       int resolution = matcher.find() ? GeneralUtility.tryParse(matcher.group(1))

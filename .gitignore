@@ -39,3 +39,12 @@ hs_err_pid*
 
 .idea/*
 .idea/
+*.iml
+.settings/
+.settings/*
+.vscode/
+.vscode/*
+.classpath
+.project
+AnimeViewerOne.iml
+.factorypath

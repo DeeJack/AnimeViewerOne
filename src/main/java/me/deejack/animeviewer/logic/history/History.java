@@ -1,20 +1,17 @@
 package me.deejack.animeviewer.logic.history;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.models.episode.Episode;
+import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
+import me.deejack.animeviewer.logic.serialization.JsonValidator;
+
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import me.deejack.animeviewer.logic.models.anime.Anime;
-import me.deejack.animeviewer.logic.models.episode.Episode;
-import me.deejack.animeviewer.logic.serialization.AnimeSerializer;
-import me.deejack.animeviewer.logic.serialization.JsonValidator;
 
 public final class History {
   public static final File CONFIG_DIR = new File(System.getProperty("user.home") + File.separator +

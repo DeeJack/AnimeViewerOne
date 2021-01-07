@@ -1,10 +1,5 @@
 package me.deejack.animeviewer.gui.controllers.download;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -25,6 +20,12 @@ import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;

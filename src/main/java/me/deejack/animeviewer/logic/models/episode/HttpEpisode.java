@@ -22,7 +22,7 @@ public abstract class HttpEpisode implements Episode {
   }
 
   public Optional<Connection.Response> episodePageRequest() {
-    return ConnectionUtility.connect(url, false);
+    return ConnectionUtility.connect(url, true);
   }
 
   @Override

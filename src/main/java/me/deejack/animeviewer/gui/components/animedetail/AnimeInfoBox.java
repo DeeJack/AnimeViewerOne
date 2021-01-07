@@ -1,7 +1,5 @@
 package me.deejack.animeviewer.gui.components.animedetail;
 
-import java.awt.Desktop;
-import java.net.URI;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,10 +15,13 @@ import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
 
+import java.awt.*;
+import java.net.URI;
+
 public class AnimeInfoBox extends HBox {
   private final Anime anime;
-  private Hyperlink reloadLink;
   private final LocalizedApp app = LocalizedApp.getInstance();
+  private Hyperlink reloadLink;
 
   public AnimeInfoBox(Anime anime) {
     this.anime = anime;

@@ -16,7 +16,7 @@ public class DreamSubSource extends ParsedHttpSource {
   Map<String, String> genres = new LinkedHashMap<>();
 
   public DreamSubSource() {
-    super("https://www.dreamsub.stream", "https://web.archive.org/web/20190512024350im_/https://www.dreamsub.stream/res/img/logoDS2.png");
+    super("https://www.dreamsub.stream", "https://dreamsub.stream/favicon.ico");
   }
 
   @Override
@@ -30,7 +30,7 @@ public class DreamSubSource extends ParsedHttpSource {
     String url = getBaseUrl() + element.getElementsByClass("showStreaming").first()
             .getElementsByTag("a").get(0).attr("href");
     String imageUrl = "https:" +
-      element.getElementsByClass("cover").get(0).attr("style")
+            element.getElementsByClass("cover").get(0).attr("style")
                     .replaceAll("--image-url:url\\(", "").replaceAll("\\) no-repeat center", "").replace(")", "");
 
     return new DreamsubAnime(name, url, imageUrl);

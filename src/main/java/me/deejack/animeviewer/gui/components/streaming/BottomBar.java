@@ -16,8 +16,8 @@ public class BottomBar extends HBox {
   private final Pane root;
   private final MediaPlayer mediaPlayer;
   private final ControlsLayerTask cursorTask;
-  private ButtonBack buttonBack;
   private final MediaViewStreaming mediaView;
+  private ButtonBack buttonBack;
   private FullScreenImage fullScreen;
 
   public BottomBar(Pane root, MediaPlayer mediaPlayer, ButtonNext buttonNext, String title, MediaViewStreaming mediaView) {

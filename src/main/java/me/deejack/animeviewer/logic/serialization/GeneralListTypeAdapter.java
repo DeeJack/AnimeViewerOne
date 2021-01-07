@@ -1,20 +1,10 @@
 package me.deejack.animeviewer.logic.serialization;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import me.deejack.animeviewer.gui.App;
-import me.deejack.animeviewer.logic.extensions.ExtensionLoader;
-import me.deejack.animeviewer.logic.models.source.FilteredSource;
 
 public class GeneralListTypeAdapter<T> implements JsonSerializer, JsonDeserializer {
   private static final String CLASS_NAME_FIELD = "CLASSNAME";

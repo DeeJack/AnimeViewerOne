@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.deejack</groupId>
@@ -66,7 +67,7 @@
             <artifactId>javafx-base</artifactId>
             <version>15.0.1</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
@@ -98,6 +99,15 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.5</version>
                 <configuration>
+                    <options>
+                        <!--<option> - -add-exports</option>
+                        <option>javafx.media/com.sun.media.jfxmedia.locator=asd</option>-->
+                        <option>--add-opens</option>
+                        <option>javafx.media/com.sun.media.jfxmedia.locator=asd</option>
+                        <option>--add-opens</option>
+                        <option>javafx.media/javafx.scene.media=asd</option>
+                    </options>
+                    <!-- !IMPORTANT! https://stackoverflow.com/questions/56459093/openjfx-custom-runtime-image-using-maven-and-jlink-module-exports-or-command-l -->
                     <mainClass>me.deejack.animeviewer.gui.App</mainClass>
                 </configuration>
             </plugin>
@@ -106,7 +116,13 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <release>11</release>
+                    <compilerArgs>
+                        <arg>--add-exports</arg>
+                        <arg>javafx.media/com.sun.media.jfxmedia.locator=asd</arg>
+                        <arg>--add-opens</arg>
+                        <arg>javafx.scene.media=asd</arg>
+                    </compilerArgs>
+                    <release>15</release>
                 </configuration>
             </plugin>
             <plugin>

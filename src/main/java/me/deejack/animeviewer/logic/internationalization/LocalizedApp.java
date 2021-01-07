@@ -1,9 +1,10 @@
 package me.deejack.animeviewer.logic.internationalization;
 
+import me.deejack.animeviewer.gui.utils.SceneUtility;
+
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import me.deejack.animeviewer.gui.utils.SceneUtility;
 
 import static me.deejack.animeviewer.gui.App.getSite;
 
@@ -20,6 +21,10 @@ public final class LocalizedApp {
   }
 
   private LocalizedApp() {
+  }
+
+  public static LocalizedApp getInstance() {
+    return localizedApp;
   }
 
   public void loadResourceBundle(Locale newLocale) {
@@ -43,9 +48,5 @@ public final class LocalizedApp {
     return message.contains("{SiteName}") ?
             message.replaceAll("\\{SiteName}", getSite().getName()) :
             message;
-  }
-
-  public static LocalizedApp getInstance() {
-    return localizedApp;
   }
 }

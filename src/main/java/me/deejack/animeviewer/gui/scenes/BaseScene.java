@@ -12,12 +12,14 @@ public interface BaseScene {
 
   /**
    * Get the title for the window or the tab if is in a new tab
+   *
    * @return the title of this scene
    */
   String getTitle();
 
   /**
    * Get the name of the scene, not affect the window
+   *
    * @return the name of this scene
    */
   String getName();

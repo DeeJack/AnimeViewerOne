@@ -1,17 +1,18 @@
 package me.deejack.animeviewer.gui.components.animedetail;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import me.deejack.animeviewer.gui.controllers.download.DownloadController;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 

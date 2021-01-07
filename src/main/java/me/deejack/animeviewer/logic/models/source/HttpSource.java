@@ -41,13 +41,13 @@ public abstract class HttpSource implements FilteredSource {
     return iconUrl;
   }
 
-  public void setPages(int pages) {
-    this.pages = pages;
-  }
-
   @Override
   public int getPages() {
     return pages;
+  }
+
+  public void setPages(int pages) {
+    this.pages = pages;
   }
 
   @Override

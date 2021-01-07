@@ -1,11 +1,12 @@
 package me.deejack.animeviewer.logic.history;
 
 import com.google.gson.annotations.Expose;
+import me.deejack.animeviewer.logic.models.anime.Anime;
+import me.deejack.animeviewer.logic.models.episode.Episode;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import me.deejack.animeviewer.logic.models.anime.Anime;
-import me.deejack.animeviewer.logic.models.episode.Episode;
 
 public class HistoryElement {
   @Expose

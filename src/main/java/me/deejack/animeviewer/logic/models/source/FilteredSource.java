@@ -1,7 +1,6 @@
 package me.deejack.animeviewer.logic.models.source;
 
 import me.deejack.animeviewer.logic.filters.Filter;
-import me.deejack.animeviewer.gui.components.filters.HiddenSidebarBuilder;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 
 import java.util.List;

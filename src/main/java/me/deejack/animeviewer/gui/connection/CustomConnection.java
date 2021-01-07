@@ -43,7 +43,7 @@ public class CustomConnection implements SiteConnection {
 
     /*if (App.getSite() != null && App.getSite().getSession() != null)
       cookies.putAll(App.getSite().getSession().getCookies());*/
-    if (!pageLink.endsWith(".jpg"))
+    if (!pageLink.contains(".jpg") && !pageLink.contains(".png"))
       System.out.println("Connecting to " + pageLink);
     try {
       Connection.Response response = execute(pageLink, cookies, followRedirects);
@@ -71,7 +71,8 @@ public class CustomConnection implements SiteConnection {
       }
       return Optional.of(getResponse(pageLink, followRedirects, cookies));
     } catch (IOException | InterruptedException ex) {
-      handleException(new NoConnectionException(pageLink, ex));
+      if (!pageLink.contains(".jpg") && !pageLink.contains(".png"))
+        handleException(new NoConnectionException(pageLink, ex));
       return Optional.empty();
     }
   }
@@ -93,6 +94,12 @@ public class CustomConnection implements SiteConnection {
   }
 
   private Connection.Response execute(String url, Map<String, String> cookies, boolean followRedirects) throws IOException {
+    return execute(url, cookies, followRedirects, "");
+  }
+
+  private Connection.Response execute(String url, Map<String, String> cookies, boolean followRedirects, String referer) throws IOException {
+    var baseUrl = "https://" + new URL(url).getHost().replaceAll("cdn2.", "") + "/";
+
     return Jsoup.connect(url)
             .method(Connection.Method.GET)
             .followRedirects(followRedirects)
@@ -101,6 +108,7 @@ public class CustomConnection implements SiteConnection {
             .ignoreContentType(true)
             .cookies(cookies)
             .timeout(30 * 1000)
+            .header("Referer", baseUrl)
             .execute();
   }
 

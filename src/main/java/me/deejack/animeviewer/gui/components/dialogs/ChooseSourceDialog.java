@@ -1,7 +1,6 @@
 package me.deejack.animeviewer.gui.components.dialogs;
 
 //import com.sun.javafx.collections.ObservableListWrapper;
-import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +10,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.StackPane;
 import me.deejack.animeviewer.logic.anime.dto.StreamingLink;
 import me.deejack.animeviewer.logic.async.events.Listener;
+
+import java.util.List;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 

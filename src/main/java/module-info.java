@@ -1,4 +1,4 @@
-open module asd {
+open module AnimeViewer {
     requires javafx.controls;
     requires javafx.base;
     requires javafx.media;

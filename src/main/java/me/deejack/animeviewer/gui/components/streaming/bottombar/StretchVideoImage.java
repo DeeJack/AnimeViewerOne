@@ -24,7 +24,7 @@ public class StretchVideoImage extends ImageView {
 
   private void stretchVideo(MediaView mediaView, Pane root) {
     mediaView.setPreserveRatio(!mediaView.isPreserveRatio());
-    if(!mediaView.isPreserveRatio())
+    if (!mediaView.isPreserveRatio())
       root.layoutBoundsProperty().addListener((event, oldValue, newValue) -> onSizeChange(mediaView));
     setImage(mediaView.isPreserveRatio() ? stretchVideoFull : stretchVideoSmall);
     onSizeChange(mediaView);

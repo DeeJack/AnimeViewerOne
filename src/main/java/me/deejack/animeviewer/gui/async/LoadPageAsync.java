@@ -23,7 +23,7 @@ public class LoadPageAsync extends Task<List<Anime>> {
 
   @Override
   protected List<Anime> call() {
-    return isSearch ?  App.getSite().searchAnime(search, page) : App.getSite().filter(filters.getFilters(), page);
+    return isSearch ? App.getSite().searchAnime(search, page) : App.getSite().filter(filters.getFilters(), page);
   }
 
   @Override

@@ -1,12 +1,13 @@
 package me.deejack.animeviewer.logic.favorite;
 
 import com.google.gson.annotations.Expose;
-import java.io.File;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
+
+import java.io.File;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FavoriteAnime {
   private static final AtomicInteger counter = new AtomicInteger(0);

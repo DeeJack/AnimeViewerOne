@@ -24,9 +24,9 @@ import static me.deejack.animeviewer.logic.history.History.CONFIG_DIR;
  */
 public final class FavoritesUpdates {
   private static final FavoritesUpdates instance = new FavoritesUpdates();
+  private final LocalDate today = LocalDate.now();
   @Expose
   private Map<LocalDate, List<AnimeUpdates>> updatesByDay = new HashMap<>();
-  private final LocalDate today = LocalDate.now();
 
   private FavoritesUpdates() {
   }

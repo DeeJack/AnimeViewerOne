@@ -3,7 +3,7 @@ package me.deejack.animeviewer.logic.utils;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -32,7 +32,7 @@ public final class FilesManager {
   }
 
   public static void writeToFile(File output, String text) {
-    try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(output.toURI()), Charset.forName("UTF-8"), StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
+    try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(output.toURI()), StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
       writer.write(text);
     } catch (IOException e) {
       GeneralUtility.logError(e);

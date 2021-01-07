@@ -49,20 +49,6 @@ public class App extends Application {
   @Override
   public void start(Stage primaryStage) {
     try {
-      /*
-       * WebView view = new WebView();
-       * view.getEngine().load("https://otakustream.tv/anime/black-clover-2017/");
-       * view.getEngine().getLoadWorker().stateProperty().addListener(((observable,
-       * oldValue, newValue) -> { view.getEngine().
-       * executeScript("fetch('https://otakustream.tv/api/tools.php', {" +
-       * "method: 'POST', " +
-       * "    headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: 'action=load_episodes&offset=0&parentId=17062'}).then("
-       * + "function(response) { response.text().then(function(data) {" +
-       * "        document.getElementsByTagName('html')[0].innerHTML = data;" +
-       * "      });});");
-       * System.out.println(view.getEngine().getDocument().getElementsByTagName("html"
-       * ).item(0).getTextContent()); }));
-       */
       instance = this;
       SceneUtility.setStage(primaryStage);
       StackPane pane = new StackPane(/* view */);
@@ -77,12 +63,6 @@ public class App extends Application {
       loadHistory();
       FilesUtility.loadFavorite();
 
-      /*
-       * TrayNotification notification = new TrayNotification("Download error",
-       * LocalizedApp.getInstance().getString("ErrorDownload"), Notifications.ERROR);
-       * notification.setAnimation(Animations.FADE);
-       * notification.showAndDismiss(Duration.seconds(2));
-       */
       // new GithubConnection().checkUpdatesAsync();
     } catch (Exception exc) {
       logError(exc);

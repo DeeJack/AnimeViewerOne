@@ -1,6 +1,5 @@
 package me.deejack.animeviewer.gui.components.animedetail;
 
-import java.util.Objects;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -9,6 +8,8 @@ import javafx.scene.layout.BorderPane;
 import me.deejack.animeviewer.logic.async.events.Listener;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+
+import java.util.Objects;
 
 public class ListViewEpisodes extends ListView<ItemEpisode> {
   private final Anime anime;

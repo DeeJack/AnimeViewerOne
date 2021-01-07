@@ -1,8 +1,9 @@
 package me.deejack.animeviewer.logic.serialization;
 
 import com.google.gson.JsonParser;
-import java.io.IOException;
 import me.deejack.animeviewer.logic.history.History;
+
+import java.io.IOException;
 
 public class JsonValidator {
   public static void main(String[] args) {
@@ -14,7 +15,7 @@ public class JsonValidator {
   }
 
   public static boolean isValid(String json) {
-    if(json.trim().isEmpty())
+    if (json.trim().isEmpty())
       return true;
     try {
       new JsonParser().parse(json).getAsJsonObject();

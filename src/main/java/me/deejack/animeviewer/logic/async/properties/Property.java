@@ -1,10 +1,11 @@
 package me.deejack.animeviewer.logic.async.properties;
 
+import me.deejack.animeviewer.logic.async.events.Listener;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import me.deejack.animeviewer.logic.async.events.Listener;
 
 public class Property<T> {
   /**

@@ -1,11 +1,12 @@
 package me.deejack.animeviewer.gui.scenes;
 
-import java.io.File;
-import java.util.Objects;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import me.deejack.animeviewer.gui.utils.LoadingUtility;
 import me.deejack.animeviewer.logic.utils.GeneralUtility;
+
+import java.io.File;
+import java.util.Objects;
 
 public final class EventHandler {
   private EventHandler() {

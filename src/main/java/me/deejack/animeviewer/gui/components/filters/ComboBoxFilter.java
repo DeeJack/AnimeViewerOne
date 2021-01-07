@@ -1,9 +1,10 @@
 package me.deejack.animeviewer.gui.components.filters;
 
-import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import me.deejack.animeviewer.logic.filters.Filter;
+
+import java.util.Map;
 
 public class ComboBoxFilter extends ComboBox<String> implements Filter {
   private final String label;

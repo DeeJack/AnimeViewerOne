@@ -1,10 +1,11 @@
 package me.deejack.animeviewer.logic.anime.dto;
 
 import com.google.gson.annotations.Expose;
+import me.deejack.animeviewer.logic.models.episode.Episode;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import me.deejack.animeviewer.logic.models.episode.Episode;
 
 /**
  * A class representing a season, with a list of episode and a name

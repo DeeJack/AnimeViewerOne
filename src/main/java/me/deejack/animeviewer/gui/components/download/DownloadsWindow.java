@@ -1,7 +1,5 @@
 package me.deejack.animeviewer.gui.components.download;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -12,6 +10,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class DownloadsWindow {
   private static final DownloadsWindow instance = new DownloadsWindow();

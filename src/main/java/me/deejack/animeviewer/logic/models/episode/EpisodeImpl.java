@@ -1,6 +1,7 @@
 package me.deejack.animeviewer.logic.models.episode;
 
 import com.google.gson.annotations.Expose;
+
 import java.time.LocalDate;
 
 public abstract class EpisodeImpl extends HttpEpisode {

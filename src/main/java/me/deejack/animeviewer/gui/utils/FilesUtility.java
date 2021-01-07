@@ -1,9 +1,10 @@
 package me.deejack.animeviewer.gui.utils;
 
-import java.io.File;
-import java.io.IOException;
 import me.deejack.animeviewer.logic.favorite.Favorite;
 import me.deejack.animeviewer.logic.history.History;
+
+import java.io.File;
+import java.io.IOException;
 
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;
 

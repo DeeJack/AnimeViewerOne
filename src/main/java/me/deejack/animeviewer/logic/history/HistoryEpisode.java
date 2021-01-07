@@ -1,8 +1,9 @@
 package me.deejack.animeviewer.logic.history;
 
 import com.google.gson.annotations.Expose;
-import java.time.LocalDateTime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+
+import java.time.LocalDateTime;
 
 public class HistoryEpisode {
   @Expose

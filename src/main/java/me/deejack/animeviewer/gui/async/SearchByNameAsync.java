@@ -1,10 +1,11 @@
 package me.deejack.animeviewer.gui.async;
 
-import java.util.List;
 import javafx.concurrent.Task;
 import me.deejack.animeviewer.gui.controllers.AnimeSceneController;
 import me.deejack.animeviewer.gui.utils.SceneUtility;
 import me.deejack.animeviewer.logic.models.anime.Anime;
+
+import java.util.List;
 
 import static me.deejack.animeviewer.gui.App.getSite;
 

@@ -1,8 +1,7 @@
 package me.deejack.animeviewer.gui.bypasser.defaultbypasser;
 
 //import com.sun.javafx.webkit.WebConsoleListener;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 import javafx.concurrent.Worker;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -17,6 +16,9 @@ import me.deejack.animeviewer.logic.utils.UserAgents;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static me.deejack.animeviewer.gui.utils.LoadingUtility.hideWaitLoad;
 import static me.deejack.animeviewer.gui.utils.SceneUtility.handleException;

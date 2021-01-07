@@ -15,7 +15,7 @@ public class ProgressBarBuffer extends ProgressBar {
 
   public void setOnChange() {
     mediaPlayer.bufferProgressTimeProperty().addListener((event, oldValue, newValue) -> {
-      if(mediaPlayer.getBufferProgressTime() == null || mediaPlayer.getTotalDuration() == null)
+      if (mediaPlayer.getBufferProgressTime() == null || mediaPlayer.getTotalDuration() == null)
         return;
       double bufferedProgressPercent = (mediaPlayer.getBufferProgressTime().toSeconds() * 100) / mediaPlayer.getTotalDuration().toSeconds();
       setProgress(bufferedProgressPercent / 100);

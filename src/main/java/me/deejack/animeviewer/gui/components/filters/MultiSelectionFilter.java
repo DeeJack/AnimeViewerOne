@@ -1,13 +1,14 @@
 package me.deejack.animeviewer.gui.components.filters;
 
-import java.util.Map;
-import java.util.stream.Collectors;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import me.deejack.animeviewer.logic.filters.Filter;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MultiSelectionFilter extends ListView<MultiComboItem> implements Filter {
   private final Map<String, String> items;

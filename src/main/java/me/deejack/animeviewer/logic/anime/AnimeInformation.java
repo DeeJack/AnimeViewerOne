@@ -1,9 +1,10 @@
 package me.deejack.animeviewer.logic.anime;
 
 import com.google.gson.annotations.Expose;
-import java.util.List;
 import me.deejack.animeviewer.logic.anime.dto.Genre;
 import me.deejack.animeviewer.logic.anime.dto.Status;
+
+import java.util.List;
 
 /**
  * A class that contains the main information about a anime, that sometimes (like in dreamsub) can be obtained without

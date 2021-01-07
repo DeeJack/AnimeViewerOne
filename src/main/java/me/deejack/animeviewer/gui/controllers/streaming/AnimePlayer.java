@@ -86,8 +86,31 @@ public class AnimePlayer {
   }
 
   private StreamingController setupPlayer(String link) {
-    StreamingController streaming = new StreamingController(new MediaPlayer(new Media(link)), episode, anime);
+    var media = new Media(link);
+    //addCustomHeader("", "", media);
+    var streaming = new StreamingController(new MediaPlayer(media), episode, anime);
     streaming.setUpPlayer(isNewTab, currentTab);
     return streaming;
   }
+/*
+  private void addCustomHeader(String key, String value, Media media) {
+      if (System.getSecurityManager() == null) {
+        Field locatorField = media.getClass().getDeclaredField("jfxLocator");
+        locatorField.setAccessible(true);
+        Locator locator = (Locator) locatorField.get(media);
+        locator.setConnectionProperty("Referer", "https://dreamsub.stream/");
+      }
+      else {
+    AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
+      try {
+        Field locatorField = Locator.class.getDeclaredField("connectionProperties");
+        locatorField.setAccessible(true);
+        var resources = (Map<String, Object>) locatorField.get(media);
+        //locator.setConnectionProperty("Referer", "https://dreamsub.stream/anime/black-clover/1");
+      } catch (Exception e) {
+        handleException(e);
+      }
+      return null;
+    });
+  }*/
 }

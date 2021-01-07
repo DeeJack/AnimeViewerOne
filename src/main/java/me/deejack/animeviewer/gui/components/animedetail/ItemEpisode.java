@@ -1,6 +1,5 @@
 package me.deejack.animeviewer.gui.components.animedetail;
 
-import java.time.Duration;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
@@ -14,6 +13,8 @@ import me.deejack.animeviewer.logic.history.HistoryEpisode;
 import me.deejack.animeviewer.logic.internationalization.LocalizedApp;
 import me.deejack.animeviewer.logic.models.anime.Anime;
 import me.deejack.animeviewer.logic.models.episode.Episode;
+
+import java.time.Duration;
 
 public class ItemEpisode extends HBox {
   private final Episode episode;

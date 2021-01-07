@@ -26,7 +26,7 @@ public class SimpleSiteConnection implements SiteConnection {
               .followRedirects(followRedirects)
               .timeout(60 * 1000)
               .ignoreContentType(true)
-        .execute(); // 1
+              .execute(); // 1
     } catch (IOException e) {
       throw new NoConnectionException(url, e);
     }
